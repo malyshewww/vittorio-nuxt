@@ -1,0 +1,65 @@
+:root {
+	--font-family: "Mulish", sans-serif;
+	--second-family: "FoglihtenNo06", sans-serif;
+
+	--bg-dark: #24221f;
+	--bg-smoke: #3c3a37;
+	--bg-milk: #f8f5f1;
+	--bg-white: #fffdfa;
+	--text-smoke: #3c3a37;
+	--text-gray: #797672;
+	--text-white: #fffdfa;
+	--border-smoke: #3c3a37;
+	--border-milk: #f8f5f1;
+	--border-gray: #797672;
+	--icon-smoke: #3c3a37;
+	--icon-milk: #f8f5f1;
+	--icon-gray: #797672;
+	--product-legend: #382d32;
+	--product-santal-leather: #7e4725;
+	--product-protagonist: #877553;
+	--product-musk-melody: #713b3b;
+	--product-essay: #625e37;
+	--product-ethnos-v: #394c4b;
+	--product-erato: #4b7078;
+	--product-voice-of-the-sea: #2e4568;
+	--product-velvet-peony: #70445c;
+	--system-error: #e43b1d;
+	--system-disabled: #aca8a1;
+	--system-success: #21956c;
+
+	--main-color: #3c3a37;
+	--font-weight: 400;
+	--font-size: 16px;
+}
+
+// Минимальная ширина страницы
+$minWidth: 320;
+// Ширина полотна (макета)
+$maxWidth: 1920;
+// Ширина ограничивающего контейнера (0 = нет ограничения)
+$maxWidthContainer: 1710;
+
+// Общий отступ у контейнера
+// (30 = по 15px слева и справа, 0 = нет отступа)
+$containerPadding: 30;
+
+// Тип адаптива:
+// 1 = отзывчивость (у контейнера нет брейкпоинтов),
+// 2 = по брейк-поинтам (контейнер меняет свою ширину по брейк-поинтам)
+$responsiveType: 1;
+
+// Ширина страбатывания первого брейкпоинта
+$containerWidth: $maxWidthContainer + $containerPadding;
+// Брейкпоинты
+$pc: $containerWidth + px;
+$xs: 479.98px;
+$sm: 576px;
+$md: 767.98px;
+$lg: 991.98px;
+$xl: 1024px;
+$xxl: 1200px;
+$xxxl: 1400px;
+
+$time: 0.25s;
+$ttm: cubic-bezier(0.25, 0.74, 0.22, 0.99);
