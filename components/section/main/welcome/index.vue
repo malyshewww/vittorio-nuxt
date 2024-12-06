@@ -76,7 +76,7 @@ function toggleHiddenBlock() {
    }
 }
 .welcome {
-   padding: 160px 0 0;
+   padding: 160px 0 180px;
    &__body {
       display: grid;
       grid-template-columns: 100%;

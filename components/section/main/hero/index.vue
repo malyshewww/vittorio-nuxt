@@ -1,7 +1,7 @@
 <template lang="pug">
 	div.main-hero
-		.main-hero__image
-			img(:src="`/images/main/bg.jpg`" alt="main bg")
+		.main-hero__logo
+			img(:src="`/images/logo-white-big.svg`")
 		.main-hero__body
 			.main-hero__content
 				.main-hero__contnet-left 
@@ -54,9 +54,17 @@ onMounted(() => {
 <style lang="scss" scoped>
 .main-hero {
    height: 100vh;
-   position: relative;
-   padding: 4.082vh 2.604vw;
+   padding: 20px 2.604vw 40px;
    font-family: var(--second-family);
+   position: relative;
+   z-index: 2;
+   &__logo {
+      width: 240px;
+      position: absolute;
+      inset: 0;
+      top: 20px;
+      margin: auto;
+   }
    &__body {
       height: 100%;
       display: flex;
@@ -95,6 +103,8 @@ onMounted(() => {
       & svg {
          width: 23px;
          height: 32px;
+         transform: translateY(10px);
+         animation: bounce 1s infinite alternate;
          & path {
             fill: var(--bg-milk);
          }

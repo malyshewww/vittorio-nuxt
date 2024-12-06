@@ -1,5 +1,4 @@
 <template lang="pug">
-	SectionMainHero
 	SectionMainFragrances(:countries="data.countries")
 	SectionMainNotes(:products="data.products")
 	SectionMainWelcome(:text="data.text")
@@ -21,27 +20,6 @@ definePageMeta({
 const { data, status, error } = useFrontData();
 
 onMounted(() => {});
-
-// const runtimeConfig = useRuntimeConfig();
-// const {
-//    data: front,
-//    status,
-//    error,
-// } = await useAsyncData(
-//    "front",
-//    () =>
-//       $fetch(
-//          `${runtimeConfig.public.apiBase}/wsapi/packs/front?_format=json`,
-//          {}
-//       ),
-//    {
-//       transform: ({ data, links, meta, metatag }) => {
-//          return {
-//             products: data.country_front,
-//          };
-//       },
-//    }
-// );
 </script>
 
 <style lang="scss" scoped></style>

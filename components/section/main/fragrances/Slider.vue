@@ -212,15 +212,19 @@ const slides = [
    padding: 50px;
    max-width: 460px;
    position: relative;
-   &::after {
+   overflow: hidden;
+   &::before {
       content: "";
-      display: block;
       position: absolute;
-      width: 1px;
-      height: 100%;
-      background-color: var(--bg-smoke);
       top: 0;
-      right: 0;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      border: 1px solid var(--bg-smoke);
+      border-left: 0;
+      border-bottom: 0;
+      pointer-events: none;
+      transform: translateX(-100%);
    }
 }
 .fragrances-slide {

@@ -1,7 +1,10 @@
 <template lang="pug">
-	div(ref="scroller" data-scroll-container)
+	SectionMainHeroVideo
+	div(ref="scroller" data-scroll-container)#data-scroll-container.scroller
 		.page
-			slot
+			SectionMainHero
+			.page-sections
+				slot
 		AppFooter
 </template>
 
@@ -19,36 +22,22 @@ const scroller = ref("");
 const scrollInstance = ref(null);
 
 const isLock = ref(false);
-console.log("for commit");
 
 onMounted(() => {
-   scrollInstance.value = new LocomotiveScroll({
-      el: scroller.value, // Убедитесь, что у вас есть контейнер с этим атрибутом
-      smooth: true,
-      // for tablet smooth
-      tablet: { smooth: true },
-      // for mobile
-      smartphone: { smooth: true },
-   });
-   scrollInstance.value.on("scroll", ScrollTrigger.update);
+   setTimeout(() => {
+      ScrollTrigger.refresh();
+   }, 1000);
+   const { bodyScrollBar } = useScrollbar();
    ScrollTrigger.scrollerProxy(scroller.value, {
       scrollTop(value) {
-         return arguments.length
-            ? scrollInstance.value.scrollTo(value, 0, 0)
-            : scrollInstance.value.scroll.instance.scroll.y;
-      },
-      getBoundingClientRect() {
-         return {
-            top: 0,
-            left: 0,
-            width: window.innerWidth,
-            height: window.innerHeight,
-         };
+         if (arguments.length > 0) {
+            bodyScrollBar.scrollTop = value;
+         }
+         return bodyScrollBar.scrollTop;
       },
    });
-
-   // console.log(locoScroll.value);
-   // const { scrollInstance: locoScroll } = useLocomotiveScroll(scroller.value);
+   bodyScrollBar.addListener(ScrollTrigger.update);
+   ScrollTrigger.defaults({ scroller: scroller.value });
    // gsap.from(".line", {
    //    scrollTrigger: {
    //       trigger: ".line-1",
@@ -61,51 +50,34 @@ onMounted(() => {
    //    transformOrigin: "left center",
    //    ease: "none",
    // });
-   const trigger = document.querySelector("button[data-href='#welcome']");
-   const target = document.querySelector("#welcome");
-   trigger?.addEventListener("click", () => {
-      scrollInstance.value.scrollTo(target);
-      // isLock.value = !isLock.value;
-      // isLock.value ? locoScroll.stop() : locoScroll.start();
-   });
-   new ResizeObserver(() => scrollInstance.value.update()).observe(
-      document.querySelector("[data-scroll-container]")
-   );
+   // const trigger = document.querySelector("button[data-href='#welcome']");
+   // const target = document.querySelector("#welcome");
+   // trigger?.addEventListener("click", () => {
+   //    scrollInstance.value.scrollTo(target);
+   // });
+   // new ResizeObserver(() => scrollInstance.value.update()).observe(
+   //    document.querySelector("[data-scroll-container]")
+   // );
 });
 </script>
 
 <style lang="scss" scoped>
 .page {
-   padding: 0px 0 180px;
+   padding: 0px 0 0px;
 }
-.section {
-   height: 100vh;
-   background-color: gray;
-   font-size: 80px;
-   &-one {
-      opacity: 0.8;
-   }
-   &-two {
-      opacity: 0.6;
-   }
-}
-.trigger {
-   width: 200px;
-   height: 40px;
-   font-size: 20px;
-   color: white;
-   position: fixed;
-   top: 0;
-   left: 0;
-   z-index: 20;
-}
-.line {
-   width: 100%;
-   max-width: 800px;
-   height: 8px;
-   margin: 0 0 10px 0;
+.page-sections {
+   background-color: var(--bg-milk);
    position: relative;
-   display: inline-block;
-   background-color: rgba(255, 255, 255, 1);
+   z-index: 2;
+}
+.scroller {
+   height: 100vh;
+   overflow: hidden;
+}
+.scrollbar-track-x {
+   display: none !important;
+}
+.scrollbar-track {
+   z-index: 2 !important;
 }
 </style>

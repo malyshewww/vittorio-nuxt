@@ -51,8 +51,10 @@ const props = defineProps({
 </script>
 
 <style lang="scss" scoped>
-.main-note {
+.note-card {
    height: 980px;
+}
+.main-note {
    font-family: var(--second-family);
    color: var(--bg-white);
    position: relative;
@@ -212,7 +214,6 @@ const props = defineProps({
    }
 }
 .info-note {
-   height: 980px;
    display: grid;
    grid-template-columns: repeat(2, 1fr);
    align-items: start;

@@ -2,20 +2,15 @@
 	section.fragrances
 		.container
 			.fragrances__body
-				.fragrances__header.header-fragrances
-					h2.header-fragrances__title 
-						span.header-fragrances__label
-						span.header-fragrances__text Мир ароматов Vittorio
-					.fragrances__content-inner
-						.fragrances__content
-							p Витторио — парфюмер-путешественник, чьи шаги прочерчивают карту мира в поисках самых неповторимых ароматов. Из далёких уголков планеты он приносит с собой не только запахи, но и истории, культуры, и вдохновение. Парфюмерный бренд Vittorio — мост между мирами, соединяющий экзотику и роскошь, ставящий в центр внимания уникальность и качество. Для тех, кто ищет нечто большее, чем просто аромат — для тех, кто жаждет погружения в мир чувств и приключений. Добро пожаловать в мир ароматов, добро пожаловать в мир Vittorio.
-							UiLinkLine(text="Узнать больше" :isAnchor="true" path="#welcome")
-				.fragrances__location.location-fragrances
+				SectionMainFragrancesHeading
+				.fragrances__location.location-fragrances(ref="locationBlock" :class="className")
 					.location-fragrances__wrapper
 						SectionMainFragrancesSlider(:countries="countries" :isEnableAutoplay="state.isEnableAutoplay" :current-slide-index="state.currentSlideIndex" @change-area="changeArea")
-						.location-fragrances__map
-							img(:src="`/images/sections/fragrances/map.png`" alt="карта")
-							SectionMainFragrancesMap(:active-area="activeArea" @stop-autoplay="stopAutoplay" @start-autoplay="startAutoplay")
+						.location-fragrances__map-wrap
+							.location-fragrances__line
+							.location-fragrances__map
+								img(:src="`/images/sections/fragrances/map.png`" alt="карта")
+								SectionMainFragrancesMap(:active-area="activeArea" :countries="countries" @stop-autoplay="stopAutoplay" @start-autoplay="startAutoplay")
 </template>
 
 <script setup>
@@ -43,6 +38,25 @@ const startAutoplay = (newStatus) => {
    state.isEnableAutoplay = newStatus;
 };
 
+const locationBlock = ref(null);
+const className = ref("");
+
+onMounted(() => {
+   const toggleClassname = (isVisible) => {
+      if (isVisible) {
+         className.value = "active";
+      } else {
+         className.value = "";
+      }
+   };
+   const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+         toggleClassname(entry.isIntersecting);
+      });
+   });
+   observer.observe(locationBlock.value);
+});
+
 // watch(
 //    () => state,
 //    (newValue, oldValue) => {
@@ -61,76 +75,39 @@ const startAutoplay = (newStatus) => {
       flex-direction: column;
       gap: 140px;
    }
-   &__header {
-   }
-   &__title {
-   }
-   &__label {
-   }
-   &__text {
-   }
-   &__content-inner {
-      max-width: 957px;
-      margin-top: -68px;
-      margin-left: auto;
-   }
-   &__content {
-      display: flex;
-      flex-direction: column;
-      gap: 36px;
-      font-weight: 400;
-      font-size: 18px;
-      line-height: 26px;
-      color: var(--bg-smoke);
-   }
 }
-.header-fragrances {
-   display: flex;
-   flex-direction: column;
-   padding: 0 150px;
-   &__title {
-      font-weight: 500;
-      font-size: 96px;
-      line-height: 124px;
-      text-transform: uppercase;
-      color: var(--bg-smoke);
-      position: relative;
-      font-family: var(--second-family);
-      max-width: 764px;
-   }
-   &__label {
-      display: block;
-      width: 200px;
-      height: 100px;
-      background-image: url("/images/sections/fragrances/signature.svg");
-      background-repeat: no-repeat;
-      background-position: center;
-      position: absolute;
-      top: -72px;
-      transform: translateX(-50%);
-   }
-}
-
 .location-fragrances {
    position: relative;
-   &::before {
-      content: "";
-      display: block;
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 1px;
-      background-color: var(--bg-smoke);
-   }
    &__wrapper {
       display: flex;
       align-items: flex-start;
-      gap: 100px;
+   }
+   &__map-wrap {
+      position: relative;
+      padding-top: 50px;
+      padding-left: 50px;
+      &::before {
+         content: "";
+         display: block;
+         position: absolute;
+         top: 0;
+         left: 0;
+         width: 0%;
+         height: 1px;
+         background-color: var(--bg-smoke);
+         pointer-events: none;
+      }
    }
    &__map {
       position: relative;
-      margin-top: 50px;
+   }
+   &.active {
+      & .location-fragrances__map-wrap::before {
+         animation: animLineRight 1s ease 2.5s forwards;
+      }
+      & .fragrances-slider::before {
+         animation: animLine 3s ease 1s forwards;
+      }
    }
 }
 </style>

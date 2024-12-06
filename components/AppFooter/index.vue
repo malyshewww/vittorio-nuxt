@@ -1,5 +1,5 @@
 <template lang="pug">
-	footer.footer
+	footer.footer(ref="footer" :class="className")
 		.container
 			.footer__body 
 				.footer__main.main-footer(v-if="route.name !== 'contacts'")
@@ -41,25 +41,71 @@ const getYear = computed(() => {
    return new Date().getFullYear();
 });
 const route = useRoute();
+
+const footer = ref(null);
+const className = ref("");
+
+onMounted(() => {
+   const toggleClassname = (isVisible) => {
+      if (isVisible) {
+         className.value = "active";
+      } else {
+         className.value = "";
+      }
+   };
+   const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+         toggleClassname(entry.isIntersecting);
+      });
+   });
+   observer.observe(footer.value);
+});
 </script>
 
 <style lang="scss">
 .footer {
    position: relative;
+   background-color: var(--bg-milk);
    .page--contacts & {
-      &::before {
+      &::before,
+      &::after {
          content: none;
+      }
+   }
+   &.active {
+      &::before {
+         animation-play-state: running;
+         animation: animLineFooterLeft 1s ease 1s forwards;
+      }
+      &::after {
+         animation: animLineFooterRight 2.5s ease 1s forwards;
+         animation-play-state: running;
       }
    }
    &::before {
       content: "";
-      display: block;
       position: absolute;
       top: 0;
       left: 0;
-      width: 100%;
+      width: 50%;
       height: 1px;
       background-color: var(--bg-smoke);
+      pointer-events: none;
+      transform: translateX(-100%);
+   }
+   &::after {
+      content: "";
+      position: absolute;
+      display: block;
+      top: 0;
+      left: 50%;
+      width: 0px;
+      height: 0px;
+      border: 0px solid var(--bg-smoke);
+      border-right: 0;
+      border-bottom: 0;
+      pointer-events: none;
+      transform: translateX(-100%);
    }
    &__body {
    }
