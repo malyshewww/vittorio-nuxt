@@ -19,6 +19,8 @@ definePageMeta({
 
 const { data, status, error } = useFrontData();
 
+console.log(data);
+
 onMounted(() => {});
 </script>
 

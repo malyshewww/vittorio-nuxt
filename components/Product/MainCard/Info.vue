@@ -2,21 +2,31 @@
 	.product-card__info.product-info
 		.product-info__header
 			UiButtonLine(text="назад" @button-action="goBack")
-			h2.product-info__title {{info.title}}
+			h2.product-info__title(v-if="info.title" v-html="info.title")
 			.product-info__capacity 
 				| Объём
-				span.product-info__capacity-value {{info.capacity}} мл
-		.product-info__characteristics.product-characteristics
+				span.product-info__capacity-value {{info.variations[0].field_volume[0]}}
+		.product-info__characteristics.product-characteristics(v-if="options.length")
 			ul.product-characteristics__list
-				li.product-characteristics__item(v-for="(item, idx) in info.characteristics" :key="idx")
-					span.product-characteristics__label {{item.label}}
-					span.product-characteristics__value {{item.value}}
+				li.product-characteristics__item(v-if="info.field_fragrance_group")
+					span.product-characteristics__label группа аромата
+					span.product-characteristics__value {{info.field_fragrance_group}}
+				li.product-characteristics__item(v-if="info.field_top_notes")
+					span.product-characteristics__label верхние ноты
+					span.product-characteristics__value {{info.field_top_notes}}
+				li.product-characteristics__item(v-if="info.field_heart_notes")
+					span.product-characteristics__label ноты сердца
+					span.product-characteristics__value {{info.field_heart_notes}}
+				li.product-characteristics__item(v-if="info.field_base_notes")
+					span.product-characteristics__label базовые ноты
+					span.product-characteristics__value {{info.field_base_notes}}
 		.product-info__footer
 			.product-info__prices
-				.product-info__price {{formatNumber(info.price.new)}}
-				.product-info__price-old {{formatNumber(info.price.old)}}
+				.product-info__price {{(info.variations[0].price[0])}}
+				.product-info__price-old {{(info.variations[0].list_price[0])}}
 			UiButtonPrimary(title="Купить на сайте")
-			UiStores
+			.product-info__stores(v-if="info.field_goldapple.length || info.field_leturu.length")
+				UiStores(:link-apple="info.field_goldapple[0].url || ''" :link-letu="info.field_leturu[0].url || ''")
 </template>
 
 <script setup>
@@ -24,6 +34,11 @@ defineProps({
    info: {
       type: Object,
       required: true,
+   },
+   options: {
+      type: Array,
+      required: true,
+      default: [],
    },
 });
 
@@ -65,6 +80,7 @@ const goBack = () => {
       font-weight: 700;
    }
    &__characteristics {
+      width: 100%;
    }
    &__footer {
       display: flex;

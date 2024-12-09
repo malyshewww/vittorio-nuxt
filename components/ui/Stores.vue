@@ -2,11 +2,11 @@
 	.stores(:class="classNames")
 		ul.stores__list
 			li.stores__item
-				a(href="/" target="_blank").stores__link
+				a(:href="`${linkApple ? linkApple : '/'}`" target="_blank").stores__link
 					img(v-if="isFooterStores" :src="`/images/icons/stores/gold-apple-small.png`")
 					img(v-else :src="`/images/icons/stores/gold-apple.png`")
 			li.stores__item
-				a(href="/" target="_blank").stores__link
+				a(:href="`${linkLetu ? linkLetu : '/'}`" target="_blank").stores__link
 					img(v-if="isFooterStores" :src="`/images/icons/stores/letual-small.png`")
 					img(v-else :src="`/images/icons/stores/letual.png`")
 </template>
@@ -20,8 +20,18 @@ const props = defineProps({
    },
    isFooterStores: {
       type: Boolean,
-      required: true,
+      required: false,
       default: false,
+   },
+   linkApple: {
+      required: false,
+      type: String,
+      default: "",
+   },
+   linkLetu: {
+      required: false,
+      type: String,
+      default: "",
    },
 });
 </script>

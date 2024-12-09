@@ -12,15 +12,4 @@
 				p Добро пожаловать в мир Vittorio — мир, где каждый аромат рассказывает свою уникальную историю и дарит незабываемые эмоции.
 </template>
 
-<style lang="scss" scoped>
-.product-card {
-   &__content {
-      display: flex;
-      justify-content: center;
-      margin-top: 100px;
-   }
-   & .content {
-      max-width: 890px;
-   }
-}
-</style>
+<style lang="scss" scoped></style>

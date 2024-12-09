@@ -1,21 +1,21 @@
 <template lang="pug">
-	nuxt-link(to="/catalog/1").preview-card__slider.preview-slider
+	nuxt-link(:to="url").preview-card__slider.preview-slider
 		div(ref="imageSlider").preview-card__images
 			.image-switch
 				.image-switch__item(v-for="(image, idx) in images" :key="idx" @mouseenter="switchImages(idx)" @mouseleave="initialState" :class="{active: currentImage === idx}")
-					.image-switch__picture
-						picture
-							//- source(type="image/webp" :srcset="`/images/flat-card/flat-${idx+1}.webp`")
-							//- source(:srcset="`/images/flat-card/flat-${idx+1}.png`")
-							img(:src="`/images//${image}.jpg`" alt="alt")
-		.preview-slider__pagination.image-pagination
+					.image-switch__picture(v-html="image.markup")
+		.preview-slider__pagination.image-pagination(v-if="images.length > 1")
 			ul.image-pagination__list
 				li.image-pagination__item(v-for="(image, idx) in images" :key="idx" :class="{active: currentImage === idx}" @click="switchImages(idx)")
-		.swiper-pagination(ref="imagePagination")
+		.swiper-pagination(v-if="images.length > 1" ref="imagePagination")
 </template>
 
 <script setup>
 defineProps({
+   url: {
+      type: String,
+      required: true,
+   },
    images: {
       type: Object,
       required: true,
@@ -32,7 +32,7 @@ const initialState = () => {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .preview-card {
    &__slider {
       width: 100%;
@@ -114,6 +114,12 @@ const initialState = () => {
       top: 0;
       transform: translateX(-50%);
       //   z-index: var(--bg-midnight-100);
+      & > * {
+         width: 100%;
+         & > * {
+            width: 100%;
+         }
+      }
       @media screen and (max-width: $xl) {
          opacity: 1;
          position: static;

@@ -1,6 +1,6 @@
 <template lang="pug">
 	SectionMainHeroVideo
-	div(ref="scroller" data-scroll-container)#data-scroll-container.scroller
+	div(ref="scroller").scroller
 		.page
 			SectionMainHero
 			.page-sections
@@ -9,19 +9,9 @@
 </template>
 
 <script setup>
-// import { LocomotiveScroll } from "locomotive-scroll";
-// import { useLocomotiveScroll } from "@/composables/useLocomotiveScroll";
-// useLocomotiveScroll();
-const {
-   $LocomotiveScroll: LocomotiveScroll,
-   $gsap: gsap,
-   $ScrollTrigger: ScrollTrigger,
-} = useNuxtApp();
+const { $ScrollTrigger: ScrollTrigger } = useNuxtApp();
 
-const scroller = ref("");
-const scrollInstance = ref(null);
-
-const isLock = ref(false);
+const scroller = ref(null);
 
 onMounted(() => {
    setTimeout(() => {
@@ -69,6 +59,7 @@ onMounted(() => {
    background-color: var(--bg-milk);
    position: relative;
    z-index: 2;
+   overflow: hidden;
 }
 .scroller {
    height: 100vh;
@@ -78,6 +69,6 @@ onMounted(() => {
    display: none !important;
 }
 .scrollbar-track {
-   z-index: 2 !important;
+   z-index: 30 !important;
 }
 </style>

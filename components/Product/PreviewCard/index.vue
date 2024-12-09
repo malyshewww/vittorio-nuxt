@@ -1,17 +1,19 @@
 <template lang="pug">
 	article.preview-card
 		.preview-card__body
-			ProductPreviewCardSlider(:images="card.images")
+			ProductPreviewCardSlider(:images="card.field_images" :url="card.url")
 			.preview-card__main
-				nuxt-link(to="/catalog/1").preview-card__title {{card.title}}
-				ul.preview-card__list
+				nuxt-link(:to="card.url" v-if="card.title").preview-card__title 
+					span(v-html="card.title")
+				ul.preview-card__list(v-if="card.field_fragrance_group")
 					li.preview-card__list-item
 						span.preview-card__label группа аромата
-						span.preview-card__value {{card.group}}
-				.preview-card__capacity {{card.capacity}}
-				.preview-card__prices
-					.preview-card__price-old {{formatNumber(card.oldPrice)}}
-					.preview-card__price {{formatNumber(card.price)}}
+						span.preview-card__value {{card.field_fragrance_group}}
+				.preview-card__bottom
+					.preview-card__capacity(v-if="card.field_volume") {{card.field_volume}}
+					.preview-card__prices
+						.preview-card__price-old(v-if="card.list_price") {{card.list_price}}
+						.preview-card__price {{card.price}}
 </template>
 
 <script setup>
@@ -35,6 +37,9 @@ const props = defineProps({
       }
    }
    &__body {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
    }
    &__main {
       padding: 24px 0;
@@ -45,6 +50,7 @@ const props = defineProps({
       justify-content: space-between;
       flex-wrap: wrap;
       gap: 12px;
+      flex: 1 1 auto;
       &::before {
          content: "";
          position: absolute;
@@ -100,6 +106,13 @@ const props = defineProps({
    }
    &__price {
       font-weight: 700;
+   }
+   &__bottom {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      margin-top: auto;
    }
 }
 </style>

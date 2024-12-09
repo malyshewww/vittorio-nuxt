@@ -1,44 +1,45 @@
 <template lang="pug">
-	section.note-card.main-note(:class="`main-note--${product.key}`")
-		h2.main-note__title(v-if="product.title")
-			span(v-html="product.title")
-		.main-note__preview.preview-note
-			.preview-note__image-wrap
-				.preview-note__image.ibg(v-if="product.field_image_on_gradient" v-html="product.field_image_on_gradient[0].markup")
-					//- img(:src="`/images/main/legend_fragment.jpg`" alt="fragment")
-				nuxt-link(:to="product.url").main-note__circle
-			.preview-note__description(v-if="product.field_title_on_gradient" v-html="product.field_title_on_gradient")
-		.main-note__image.ibg(v-if="product.field_bg_image" v-html="product.field_bg_image[0].markup")
-			//- img(:src="`/images/main/legend_scene.jpg`" alt="product")
-	section.note-card.info-note
-		.info-note__content
-			h2.info-note__title(v-if="product.title" v-html="product.title")
-			.info-note__text(v-if="product.field_description_aroma" v-html="product.field_description_aroma")
-			.info-note__characteristics.characteristics
-				ul.characteristics__list
-					li.characteristics__item(v-if="product.field_fragrance_group")
-						span.characteristics__label группа аромата
-						span.characteristics__value {{product.field_fragrance_group}}
-					li.characteristics__item(v-if="product.field_top_notes")
-						span.characteristics__label верхние ноты
-						span.characteristics__value {{product.field_top_notes}}
-					li.characteristics__item(v-if="product.field_heart_notes")
-						span.characteristics__label ноты сердца
-						span.characteristics__value {{product.field_heart_notes}}
-					li.characteristics__item(v-if="product.field_base_notes")
-						span.characteristics__label базовые ноты
-						span.characteristics__value {{product.field_base_notes}}
-		.info-note__product
-			.product-note
-				.product-note__image-wrap
-					.product-note__image.ibg(v-html="product.field_image_product_front[0].markup")
-						//- img(:src="`/images/main/legend_product.jpg`" alt="product")
-					.product-note__decor-title(v-if="product.field_svg_title")
-						img(:src="product.field_svg_title[0].markup" :alt="product.field_svg_title[0].alt")
-					button(type="button").product-note__button В корзину
-				.product-note__options(v-if="product.price || product.volume")
-					.product-note__option(v-if="product.volume") {{product.volume}}
-					.product-note__option(v-if="product.price") {{product.price}}
+	.note-sections
+		section.note-card.main-note(:class="`main-note--${product.key}`")
+			h2.main-note__title(v-if="product.title")
+				span(v-html="product.title")
+			.main-note__preview.preview-note
+				.preview-note__image-wrap
+					.preview-note__image.ibg(v-if="product.field_image_on_gradient" v-html="product.field_image_on_gradient[0].markup")
+						//- img(:src="`/images/main/legend_fragment.jpg`" alt="fragment")
+					nuxt-link(:to="product.url").main-note__circle
+				.preview-note__description(v-if="product.field_title_on_gradient" v-html="product.field_title_on_gradient")
+			.main-note__image.ibg(v-if="product.field_bg_image" v-html="product.field_bg_image[0].markup")
+				//- img(:src="`/images/main/legend_scene.jpg`" alt="product")
+		section.note-card.info-note
+			.info-note__content
+				h2.info-note__title(v-if="product.title" v-html="product.title")
+				.info-note__text(v-if="product.field_description_aroma" v-html="product.field_description_aroma")
+				.info-note__characteristics.characteristics
+					ul.characteristics__list
+						li.characteristics__item(v-if="product.field_fragrance_group")
+							span.characteristics__label группа аромата
+							span.characteristics__value {{product.field_fragrance_group}}
+						li.characteristics__item(v-if="product.field_top_notes")
+							span.characteristics__label верхние ноты
+							span.characteristics__value {{product.field_top_notes}}
+						li.characteristics__item(v-if="product.field_heart_notes")
+							span.characteristics__label ноты сердца
+							span.characteristics__value {{product.field_heart_notes}}
+						li.characteristics__item(v-if="product.field_base_notes")
+							span.characteristics__label базовые ноты
+							span.characteristics__value {{product.field_base_notes}}
+			.info-note__product
+				.product-note
+					.product-note__image-wrap
+						.product-note__image.ibg(v-html="product.field_image_product_front[0].markup")
+							//- img(:src="`/images/main/legend_product.jpg`" alt="product")
+						.product-note__decor-title(v-if="product.field_svg_title")
+							img(:src="product.field_svg_title[0].markup" :alt="product.field_svg_title[0].alt")
+						button(type="button").product-note__button В корзину
+					.product-note__options(v-if="product.price || product.volume")
+						.product-note__option(v-if="product.volume") {{product.volume}}
+						.product-note__option(v-if="product.price") {{product.price}}
 </template>
 
 <script setup>
@@ -51,8 +52,17 @@ const props = defineProps({
 </script>
 
 <style lang="scss" scoped>
+// .note-sections {
+//    position: sticky;
+//    top: 0;
+// }
 .note-card {
    height: 980px;
+   // height: 100vh;
+   // width: 100%;
+   // position: absolute;
+   // top: 0;
+   // left: 0;
 }
 .main-note {
    font-family: var(--second-family);

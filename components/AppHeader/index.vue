@@ -25,9 +25,19 @@ defineProps({
 
 <style lang="scss" scoped>
 .header {
+   position: fixed;
+   left: 0;
+   top: 0;
+   width: 100%;
    color: var(--bg-white);
+   background-color: var(--bg-milk);
    min-height: 80px;
    padding: 8px 0 8px;
+   z-index: 10;
+   transition: transform $time * 2 ease;
+   &.hidden {
+      transform: translateY(-120%);
+   }
    &__body {
       display: flex;
       justify-content: space-between;

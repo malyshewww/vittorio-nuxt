@@ -32,5 +32,23 @@ defineProps({
    letter-spacing: 0.02em;
    text-transform: uppercase;
    color: var(--bg-white);
+   transition: background-color $time * 2 $ttm, opacity $time * 2 $ttm,
+      color $time * 2 $ttm;
+   @media (any-hover: hover) {
+      &:hover {
+         background-color: var(--bg-dark);
+      }
+      &:active {
+         color: rgba(#ffffff, 0.6);
+      }
+   }
+   &:active {
+      color: rgba(#ffffff, 0.6);
+   }
+   &.disabled,
+   &:disabled {
+      background-color: var(--system-disabled);
+      pointer-events: none;
+   }
 }
 </style>

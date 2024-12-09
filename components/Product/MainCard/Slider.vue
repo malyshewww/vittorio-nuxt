@@ -6,13 +6,13 @@
 			.vertical-slider.swiper(ref="thumbSlider")
 				.vertical-slider__wrapper.swiper-wrapper
 					.vertical-slider__item.swiper-slide(v-for="(image, index) in images" :key="index" @click="changeSlide(index)")
-						.vertical-slider__image.ibg
-							img(:src="`/images/notes/${image}.jpg`" :alt="image")
+						.vertical-slider__image.ibg(v-html="image.markup")
+							//- img(:src="`/images/notes/${image}.jpg`" :alt="image")
 		.main-slider.swiper(ref="mainSlider")
 			.main-slider__wrapper.swiper-wrapper
 				.main-slider__item.swiper-slide(v-for="(image, index) in images" :key="index")
-					a(:href="`/images/notes/${image}.jpg`" data-fancybox="gallery").main-slider__image.ibg
-						img(:src="`/images/notes/${image}.jpg`" :alt="image")
+					a(:href="image.raw" data-fancybox="gallery").main-slider__image.ibg(v-html="image.markup")
+						//- img(:src="`/images/notes/${image}.jpg`" :alt="image")
 			UiSliderButton(direction="prev")
 			UiSliderButton(direction="next")
 </template>
@@ -68,6 +68,15 @@ const initSlider = (direction) => {
             slidesPerView: 3,
          },
       },
+      on: {
+         init: function (swiper) {
+            const slides = swiper.slides;
+            if (slides.length <= 3) {
+               buttonPrev.remove();
+               buttonNext.remove();
+            }
+         },
+      },
    });
    const mainButtonPrev = mainSlider.value.querySelector(".slider-button-prev");
    const mainButtonNext = mainSlider.value.querySelector(".slider-button-next");
@@ -82,6 +91,15 @@ const initSlider = (direction) => {
       navigation: {
          nextEl: mainButtonNext,
          prevEl: mainButtonPrev,
+      },
+      on: {
+         init: function (swiper) {
+            const slides = swiper.slides;
+            if (slides.length <= 1) {
+               mainButtonPrev.remove();
+               mainButtonNext.remove();
+            }
+         },
       },
    });
 };
@@ -102,7 +120,7 @@ onMounted(() => {
 });
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .product-card {
    &__slider {
       display: flex;

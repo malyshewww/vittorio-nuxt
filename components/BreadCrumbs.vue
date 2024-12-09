@@ -4,7 +4,7 @@
 			nav.breadcrumbs__body
 				ul.breadcrumbs__list
 					li.breadcrumbs__item(v-for="item, index in list")
-						nuxt-link(:to="item.path" :class="{ disabled: index === list.length - 1 }").breadcrumbs__link {{item.title}}
+						nuxt-link(:to="item.url" :class="{ disabled: index === list.length - 1 }").breadcrumbs__link {{item.text}}
 </template>
 
 <script setup>
@@ -17,7 +17,6 @@ defineProps({
 </script>
 
 <style lang="scss" scoped>
-// @import "../assets/scss/mixins.scss";
 .breadcrumbs {
    margin-bottom: 20px;
    &__list {
@@ -47,39 +46,10 @@ defineProps({
    &__link {
       font-size: 14px;
       line-height: 18px;
+      &.disabled {
+         user-select: none;
+         pointer-events: none;
+      }
    }
-   //    &__item {
-   //       @media screen and (max-width: $xl) {
-   //          &:not(:last-child) {
-   //             display: none;
-   //          }
-   //       }
-   //    }
-   //    &__link {
-   //       display: grid;
-   //       place-items: center;
-   //       text-align: center;
-   //       gap: 12px;
-   //       padding: 3px 15px;
-   //       min-height: 27px;
-   //       border: 1px solid var(--bg-gray);
-   //       border-radius: 100px;
-   //       font-size: 14px;
-   //       line-height: 130%;
-   //       color: var(--text-gray);
-   //       transition: border-color $time ease 0s, color $time ease 0s;
-   //       &.disabled {
-   //          background-color: var(--bg-white-dirt);
-   //          color: var(--text-midnight-100);
-   //          border-color: transparent;
-   //          pointer-events: none;
-   //       }
-   //       @media (any-hover: hover) {
-   //          &:hover {
-   //             border-color: var(--text-gray);
-   //             color: var(--text-midnight-100);
-   //          }
-   //       }
-   //    }
 }
 </style>

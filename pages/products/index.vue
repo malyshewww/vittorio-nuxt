@@ -1,13 +1,13 @@
 <template lang="pug">
 	div
-		BreadCrumbs(:list="breadcrumbs")
+		BreadCrumbs(:list="catalog.breadcrumb")
 		main.main.catalog
 			.container
 				PageTop(title="Коллекция ароматов")
 				.catalog__body
 					.catalog__content
-						p Долгое время ароматы Витторио были доступны лишь избранным. Сегодня бренд Vittorio рад представить свою новую линейку уникальных ароматов для ценителей парфюмерного искусства в России. Мы понимаем, что настоящая магия ароматов должна быть доступна каждому, кто ценит подлинную красоту и элегантность. Вдохновлённый богатством культур и природы, Витторио создал коллекцию, которая объединяет в себе его непревзойдённое мастерство и доступность для широкой аудитории.
-					ProductPreviewCard(v-for="(item, index) in products" :key="index" :card="item")
+						ContentBlock(:content="catalog.text")
+					ProductPreviewCard(v-for="(item, index) in catalog.products" :key="index" :card="item")
 </template>
 
 <script setup>
@@ -15,91 +15,24 @@ useHead({
    bodyAttrs: { class: `page--catalog` },
 });
 
-const breadcrumbs = [
-   {
-      title: "Главная",
-      path: "/",
-   },
-   {
-      title: "Коллекция ароматов",
-      path: "/",
-   },
-];
+const runtimeConfig = useRuntimeConfig();
+const url = `${runtimeConfig.public.apiBase}/products?_format=json`;
 
-const products = [
-   {
-      images: ["erato", "essay"],
-      title: "Legend № 11.01",
-      group: "фужерный, фруктовый",
-      capacity: "100 мл",
-      oldPrice: "9560",
-      price: "7890",
+const {
+   data: catalog,
+   status,
+   error,
+} = await useAsyncData("catalog", () => $fetch(url, {}), {
+   transform: (res) => {
+      const { data, breadcrumb, links, meta, metatag, text } = res;
+      return {
+         breadcrumb,
+         products: data,
+         text,
+         metatag,
+      };
    },
-   {
-      images: ["erato", "essay"],
-      title: "Musk Melody",
-      group: "древесные, цветочные, мускусные",
-      capacity: "100 мл",
-      oldPrice: "10100",
-      price: "9999",
-   },
-   {
-      images: ["erato", "essay"],
-      title: "Legend № 11.01",
-      group: "фужерный, фруктовый",
-      capacity: "100 мл",
-      oldPrice: "9560",
-      price: "7890",
-   },
-   {
-      images: ["erato", "essay"],
-      title: "Musk Melody",
-      group: "древесные, цветочные, мускусные",
-      capacity: "100 мл",
-      oldPrice: "10100",
-      price: "9999",
-   },
-   {
-      images: ["erato", "essay"],
-      title: "Musk Melody",
-      group: "древесные, цветочные, мускусные",
-      capacity: "100 мл",
-      oldPrice: "10100",
-      price: "9999",
-   },
-   {
-      images: ["erato", "essay"],
-      title: "Musk Melody",
-      group: "древесные, цветочные, мускусные",
-      capacity: "100 мл",
-      oldPrice: "10100",
-      price: "9999",
-   },
-   {
-      images: ["erato", "essay"],
-      title: "Legend № 11.01",
-      group: "фужерный, фруктовый",
-      capacity: "100 мл",
-      oldPrice: "9560",
-      price: "7890",
-   },
-   {
-      images: ["erato", "essay"],
-      title: "Musk Melody",
-      group: "древесные, цветочные, мускусные",
-      capacity: "100 мл",
-      oldPrice: "10100",
-      price: "9999",
-   },
-   {
-      images: ["erato", "essay"],
-      title: "Musk Melody",
-      group: "древесные, цветочные, мускусные",
-      capacity: "100 мл",
-      oldPrice: "10100",
-      price: "9999",
-   },
-];
+});
 </script>
 
 <style lang="scss" scoped>
