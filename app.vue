@@ -3,7 +3,24 @@
 		NuxtPage
 </template>
 
-<script setup></script>
+<script setup>
+import { useMainInfoStore } from "~/stores/maininfo.js";
+
+const mainInfoStore = useMainInfoStore();
+
+const runtimeConfig = useRuntimeConfig();
+const url = `${runtimeConfig.public.apiBase}/wsapi/packs/site_info`;
+
+const { data: mainInfoData } = await useFetch(url);
+
+onServerPrefetch(async () => {
+   try {
+      await mainInfoStore.setData(mainInfoData.value);
+   } catch (error) {
+      console.log("Error", error);
+   }
+});
+</script>
 
 <style lang="scss">
 @import "~/assets/scss/nullstyle.scss";

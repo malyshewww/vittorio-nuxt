@@ -30,4 +30,7 @@
       animation: bg-animation 0.2s infinite;
    }
 }
+.main-hero__image img {
+   width: 100%;
+}
 </style>

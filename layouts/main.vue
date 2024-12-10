@@ -6,6 +6,8 @@
 			.page-sections
 				slot
 		AppFooter
+	UiButtonScrollUp
+	NotesNavigation
 </template>
 
 <script setup>

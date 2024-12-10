@@ -69,7 +69,7 @@ onMounted(() => {
 <style lang="scss" scoped>
 .fragrances {
    padding: 252px 0 140px;
-   background-color: var(--bg-white);
+   background-color: var(--bg-milk);
    &__body {
       display: flex;
       flex-direction: column;

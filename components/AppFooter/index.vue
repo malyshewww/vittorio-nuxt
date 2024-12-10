@@ -29,7 +29,7 @@
 					.bottom-footer__item
 						.footer__copy © {{getYear}}. Vittorio 
 					.bottom-footer__item.bottom-footer__item--politic
-						nuxt-link(to="/page/text").footer__politic Политика конфиденциальности
+						UiLinkUnderLine(text="Политика конфиденциальности" path="/page/politic" :is-blank="true")
 					.bottom-footer__item.company-footer
 						.company-footer__caption Создание сайта:
 						a(href="https://webshop.ru/" target="_blank").company-footer__logo
@@ -112,30 +112,6 @@ onMounted(() => {
    &__main {
    }
    &__copy {
-   }
-   &__politic {
-      position: relative;
-      transition: color $time * 2 $ttm;
-      &::before {
-         content: "";
-         width: 100%;
-         height: 1px;
-         border-bottom: 1px solid currentColor;
-         position: absolute;
-         bottom: 0;
-         left: 0;
-         transform: scale(0);
-         transition: transform $time * 2 $ttm;
-         transform-origin: center center;
-      }
-      @media (any-hover: hover) {
-         &:hover {
-            color: var(--bg-smoke);
-            &::before {
-               transform: scale(1);
-            }
-         }
-      }
    }
 }
 .main-footer {

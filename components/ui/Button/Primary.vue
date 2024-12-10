@@ -1,5 +1,6 @@
 <template lang="pug">
-	button(:type="type").btn {{title}}
+	nuxt-link(v-if="isLink" :to="path" :class="classNames").btn {{title}}
+	button(v-else :type="type").btn {{title}}
 </template>
 
 <script setup>
@@ -12,6 +13,21 @@ defineProps({
    title: {
       type: String,
       required: true,
+   },
+   isLink: {
+      type: Boolean,
+      required: false,
+      default: false,
+   },
+   path: {
+      type: String,
+      required: false,
+      default: "",
+   },
+   classNames: {
+      type: String,
+      required: false,
+      default: "",
    },
 });
 </script>
@@ -34,6 +50,10 @@ defineProps({
    color: var(--bg-white);
    transition: background-color $time * 2 $ttm, opacity $time * 2 $ttm,
       color $time * 2 $ttm;
+   &.btn-small {
+      min-height: 40px;
+      padding: 10px 20px;
+   }
    @media (any-hover: hover) {
       &:hover {
          background-color: var(--bg-dark);

@@ -12,6 +12,7 @@
 				button(type="button").header__cart.cart-header
 					span.cart-header__text Корзина
 					span.cart-header__count (0)
+	//- AppHeaderMenu
 </template>
 
 <script setup>

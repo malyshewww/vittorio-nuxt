@@ -59,6 +59,17 @@ const props = defineProps({
          min-height: 32px;
          padding: 7px 15px;
       }
+      .header-stores & {
+         min-height: 32px;
+         padding: 7px 15px;
+         border: 1px solid var(--text-gray);
+         filter: invert(1);
+         @media (any-hover: hover) {
+            &:hover {
+               filter: invert(0);
+            }
+         }
+      }
       @media (any-hover: hover) {
          &:hover {
             filter: invert(1);

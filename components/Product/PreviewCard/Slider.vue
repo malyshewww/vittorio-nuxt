@@ -106,7 +106,7 @@ const initialState = () => {
       height: 100%;
       display: flex;
       align-items: center;
-      background-color: var(--bg-white);
+      background-color: var(--bg-milk);
       justify-content: center;
       left: 50%;
       opacity: 0;
@@ -116,8 +116,10 @@ const initialState = () => {
       //   z-index: var(--bg-midnight-100);
       & > * {
          width: 100%;
+         height: 100%;
          & > * {
             width: 100%;
+            height: 100%;
          }
       }
       @media screen and (max-width: $xl) {
