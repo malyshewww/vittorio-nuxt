@@ -1,11 +1,11 @@
 <template lang="pug">
 	.stores(:class="classNames")
 		ul.stores__list
-			li.stores__item
+			li.stores__item(v-if="linkApple")
 				a(:href="`${linkApple ? linkApple : '/'}`" target="_blank").stores__link
 					img(v-if="isFooterStores" :src="`/images/icons/stores/gold-apple-small.png`")
 					img(v-else :src="`/images/icons/stores/gold-apple.png`")
-			li.stores__item
+			li.stores__item(v-if="linkLetu")
 				a(:href="`${linkLetu ? linkLetu : '/'}`" target="_blank").stores__link
 					img(v-if="isFooterStores" :src="`/images/icons/stores/letual-small.png`")
 					img(v-else :src="`/images/icons/stores/letual.png`")

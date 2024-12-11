@@ -1,18 +1,24 @@
 <template lang="pug">
 	.contacts__actions.actions-contacts
-		.actions-contacts__item
+		.actions-contacts__item(v-if="links.field_phone")
 			.actions-contacts__caption Телефон
-			a(href="tel:88006009404").actions-contacts__link 8 800 600-94-04
-		.actions-contacts__item
+			a(:href="`tel:${formatPhone(links.field_phone)}`").actions-contacts__link {{links.field_phone}}
+		.actions-contacts__item(v-if="links.field_e_mail")
 			.actions-contacts__caption Электронная почта
-			a(href="mailto:info@s-parfum.ru").actions-contacts__link info@s-parfum.ru
+			a(:href="`mailto:${links.field_e_mail}`").actions-contacts__link {{links.field_e_mail}}
 		.actions-contacts__item
 			.actions-contacts__caption Мы в соцсетях
 			UiSocial
-		.actions-contacts__item
+		.actions-contacts__item(v-if="links.field_goldapple || links.field_leturu")
 			.actions-contacts__caption Ароматы Vittorio можно приобрести в магазинах
-			UiStores(:isFooterStores="false")
+			UiStores(:isFooterStores="false" :link-apple="links.field_goldapple" :link-letu="links.field_leturu")
 </template>
+
+<script setup>
+import { useMainInfoStore } from "~/stores/maininfo.js";
+const mainInfoStore = useMainInfoStore();
+const { links } = mainInfoStore;
+</script>
 
 <style lang="scss" scoped>
 .actions-contacts {

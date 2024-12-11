@@ -1,6 +1,7 @@
 <template lang="pug">
 	NuxtLayout
 		NuxtPage
+	AppCart
 </template>
 
 <script setup>
@@ -23,6 +24,9 @@ onServerPrefetch(async () => {
 </script>
 
 <style lang="scss">
+.app-cart {
+   // background: black !important;
+}
 @import "~/assets/scss/nullstyle.scss";
 @import "~/assets/scss/keyframes.scss";
 @import "~/assets/scss/mixins.scss";

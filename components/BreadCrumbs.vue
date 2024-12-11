@@ -46,6 +46,12 @@ defineProps({
    &__link {
       font-size: 14px;
       line-height: 18px;
+      transition: color $time * 2 $ttm;
+      @media (any-hover: hover) {
+         &:hover {
+            color: var(--text-gray);
+         }
+      }
       &.disabled {
          user-select: none;
          pointer-events: none;

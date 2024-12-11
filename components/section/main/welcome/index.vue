@@ -4,13 +4,13 @@
 			.welcome__body
 				.welcome__heading
 					h2.welcome__title Добро пожаловать в мир Vittorio
-				.welcome__video-wrap
+				.welcome__video-wrap(ref="videoWrap")
 					.welcome__video.ibg
-						//- video(loop muted playsinline autoplay)
-						//- 	source(src="/video-welcome.mp4" type="video/mp4")
-						//- 	p.
-						//- 		Ваш браузер не поддерживает встроенные видео. Попробуйте скачать его по
-						//- 		| #[a(href="/video-welcome.mp4") этой ссылке]
+						video(loop muted playsinline autoplay)
+							source(src="/welcome.mp4" type="video/mp4")
+							p.
+								Ваш браузер не поддерживает встроенные видео. Попробуйте скачать его по
+								| #[a(href="/welcome.mp4") этой ссылке]
 				.welcome__main
 					.welcome__images.welcome__images--left
 						.welcome__image.welcome__image-big
@@ -29,6 +29,8 @@
 </template>
 
 <script setup>
+const { $gsap: gsap } = useNuxtApp();
+
 const props = defineProps({
    text: {
       required: true,
@@ -46,11 +48,48 @@ const state = reactive({
 const hiddenBlockContent = ref(null);
 const hiddenBlockWrap = ref(null);
 
+const videoWrap = ref(null);
+const video = ref(null);
+
+const animation = () => {
+   gsap.to(videoWrap.value, {
+      clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+      scrollTrigger: {
+         trigger: videoWrap.value,
+         start: "bottom bottom+=52px",
+         end: "+=100%",
+         pin: true,
+         pinSpacing: true,
+         scrub: true,
+         pinSpacing: 0,
+      },
+   });
+   const images = gsap.utils.toArray(".welcome__image");
+   images.forEach((img, index) => {
+      gsap.fromTo(
+         img,
+         { y: 100, autoAlpha: 1 },
+         {
+            y: -100,
+            autoAlpha: 1,
+            scrollTrigger: {
+               trigger: img,
+               start: "top bottom",
+               end: "top top+=100",
+               toggleActions: "play none none reverse",
+               scrub: index + 1 / 2,
+            },
+         }
+      );
+   });
+};
+
 onMounted(() => {
    state.textHeight = hiddenBlockContent.value.content.clientHeight;
    if (state.textHeight > hiddenBlockWrap.value.clientHeight) {
       state.isVisible = true;
    }
+   animation();
 });
 
 function toggleHiddenBlock() {
@@ -80,6 +119,7 @@ function toggleHiddenBlock() {
    &__body {
       display: grid;
       grid-template-columns: 100%;
+      justify-items: center;
       gap: 100px;
    }
    &__heading {
@@ -101,8 +141,15 @@ function toggleHiddenBlock() {
       margin: 0 auto;
       display: flex;
       justify-content: center;
+      clip-path: polygon(10% 100%, 88% 100%, 88% 100%, 10% 100%);
+      min-height: 760px;
    }
    &__video {
+      // position: absolute;
+      // inset: 0;
+      // height: 100%;
+      // position: absolute;
+      // inset: 0;
       width: 100%;
       overflow: hidden;
       padding-bottom: math.div(760, 1520) * 100%;

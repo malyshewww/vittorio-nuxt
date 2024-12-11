@@ -1,7 +1,7 @@
 <template lang="pug">
-	.form-item
+	.form-item.hide-scroller
 		.form-field
-			textarea(:name="name" :placeholder="placeholder" @mouseenter="stopScroll")
+			textarea(:name="name" :placeholder="placeholder")
 		FormErrorMessage(v-if="!isValid" :text="errorMessage")
 </template>
 
@@ -25,6 +25,18 @@ defineProps({
       required: false,
       default: "Поле обязательно для заполнения",
    },
+});
+onMounted(() => {
+   const el = document.querySelectorAll(".hide-scroller");
+   if (el.length > 0) {
+      el.forEach((item) => {
+         {
+            ["touchmove", "mousewheel", "wheel"].forEach((eventType) => {
+               item.addEventListener(eventType, (e) => e.stopPropagation());
+            });
+         }
+      });
+   }
 });
 </script>
 

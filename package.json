@@ -13,12 +13,11 @@
       "@fancyapps/ui": "^5.0.36",
       "@pinia/nuxt": "^0.7.0",
       "gsap": "^3.12.5",
-      "locomotive-scroll": "^4.1.4",
-      "nuxt": "^3.14.159",
+      "nuxt": "^3.13.0",
       "pinia": "^2.2.6",
       "smooth-scrollbar": "^8.8.4",
       "swiper": "^11.1.14",
-      "vue": "^3.5.11",
+      "vue": "latest",
       "vue-router": "^4.4.5"
    },
    "devDependencies": {

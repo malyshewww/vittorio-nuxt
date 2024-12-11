@@ -4,7 +4,6 @@ import autoprefixer from "autoprefixer";
 import postCssSortMediaQueries from "postcss-sort-media-queries";
 
 export default defineNuxtConfig({
-   compatibilityDate: "2024-04-03",
    devtools: { enabled: true },
    modules: ["@pinia/nuxt"],
    runtimeConfig: {
@@ -12,6 +11,7 @@ export default defineNuxtConfig({
          apiBase: process.env.NUXT_PUBLIC_API_BASE_URL,
       },
    },
+   // ssr: true,
    app: {
       head: {
          htmlAttrs: {
@@ -74,15 +74,16 @@ export default defineNuxtConfig({
          ],
       },
    },
+
    vite: {
-      server: {
-         port: 3001,
-         host: "0.0.0.0",
-         strictPort: true,
-         hmr: {
-            port: 3001,
-         },
-      },
+      // server: {
+      //    port: 3001,
+      //    host: "0.0.0.0",
+      //    strictPort: true,
+      //    hmr: {
+      //       port: 3001,
+      //    },
+      // },
       css: {
          postcss: {
             plugins: [
@@ -97,10 +98,11 @@ export default defineNuxtConfig({
                // api: "modern",
                // silenceDeprecations: ["import"],
                additionalData:
-                  '@use "sass:math"; @use "~/assets/scss/mixins.scss" as *; @import "~/assets/scss/vars.scss";',
+                  '@use "sass:math"; @import "~/assets/scss/mixins.scss"; @import "~/assets/scss/vars.scss";',
                silenceDeprecations: ["legacy-js-api"],
             },
          },
       },
    },
+   compatibilityDate: "2024-12-11",
 });

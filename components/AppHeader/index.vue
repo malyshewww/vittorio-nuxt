@@ -1,8 +1,8 @@
 <template lang="pug">
-	header.header(:class="isColor === 'white' ? 'header-white' : 'header-dark'")
+	header.header(:class="{ active: menuStore.isOpen, 'header-white': isColor === 'white', 'header-dark': isColor === 'dark'}")
 		.container
 			.header__body
-				button(type="button").header__burger.burger
+				button(type="button" @click="openMenu").header__burger.burger
 					span.burger__lines
 				nuxt-link(to="/").header__logo.logo
 					picture
@@ -12,16 +12,28 @@
 				button(type="button").header__cart.cart-header
 					span.cart-header__text Корзина
 					span.cart-header__count (0)
-	//- AppHeaderMenu
+	AppHeaderMenu(:is-open-menu="menuStore.isOpen")
 </template>
 
 <script setup>
+import { useMenuStore } from "~/stores/menu.js";
+
 defineProps({
    isColor: {
       type: String,
-      required: true,
+      required: false,
+      default: "",
    },
 });
+
+const menuStore = useMenuStore();
+
+const headerMenu = ref(null);
+
+const openMenu = () => {
+   menuStore.toggleMenu();
+   bodyLock(menuStore.isOpen);
+};
 </script>
 
 <style lang="scss" scoped>
@@ -34,10 +46,17 @@ defineProps({
    background-color: var(--bg-milk);
    min-height: 80px;
    padding: 8px 0 8px;
-   z-index: 10;
-   transition: transform $time * 2 ease;
+   z-index: 21;
+   transition: transform $time * 2 ease, background-color $time $ttm;
    &.hidden {
       transform: translateY(-120%);
+   }
+   &.active {
+      background-color: var(--bg-dark);
+      & .header__logo {
+         opacity: 0;
+         pointer-events: none;
+      }
    }
    &__body {
       display: flex;
@@ -51,12 +70,11 @@ defineProps({
       width: 132px;
       height: 64px;
       display: block;
+      transition: opacity $time $ttm;
    }
    &__cart {
       color: currentColor;
    }
-}
-.container {
 }
 .burger {
    width: 64px;

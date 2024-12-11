@@ -1,9 +1,9 @@
 <template lang="pug">
 	div
-		BreadCrumbs(:list="breadcrumb")
+		BreadCrumbs(:list="contacts.breadcrumb")
 		main.main.contacts
 			.container
-				PageTop(title="Контакты")
+				PageTop(:title="contacts.title")
 				.contacts__body
 					SectionContactsActions
 					SectionContactsForm
@@ -15,16 +15,26 @@
 useHead({
    bodyAttrs: { class: `page--contacts` },
 });
-const breadcrumb = [
-   {
-      title: "Главная",
-      path: "/",
+
+const runtimeConfig = useRuntimeConfig();
+const url = `${runtimeConfig.public.apiBase}/contacts?_format=json`;
+
+const {
+   data: contacts,
+   status,
+   error,
+} = await useAsyncData("contacts", () => $fetch(url, {}), {
+   transform: (res) => {
+      console.log(res);
+      const { breadcrumb, data, metatag } = res;
+      return {
+         breadcrumb,
+         metatag,
+         title: data.title,
+      };
    },
-   {
-      title: "Контакты",
-      path: "/",
-   },
-];
+});
+
 onMounted(() => {});
 </script>
 

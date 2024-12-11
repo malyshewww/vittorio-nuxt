@@ -1,5 +1,5 @@
 <template lang="pug">
-	.header__menu.menu-header
+	.header__menu.menu-header(:class="{active: isOpenMenu}")
 		.container
 			.menu-header__body
 				.menu-header__top
@@ -18,9 +18,9 @@
 					.menu-header__actions
 						.menu-header__logo
 							img(:src="`/images/logo-menu.svg`" alt="logo")
-						.menu-header__stores.stores-header
+						.menu-header__stores.stores-header(v-if="links.field_goldapple || links.field_leturu")
 							.stores-header__caption Ароматы Vittorio можно приобрести в магазинах:
-							UiStores(class-names="header-stores" :isFooterStores="true")
+							UiStores(class-names="header-stores" :isFooterStores="true" :link-apple="links.field_goldapple" :link-letu="links.field_leturu")
 					.menu-header__inner
 						.menu-header__copy © 2024. Vittorio
 						UiLinkUnderLine(text="Политика конфиденциальности" path="/page/politic" :is-blank="true" class-names="link-white")
@@ -28,12 +28,22 @@
 
 <script setup>
 import { useMainInfoStore } from "~/stores/maininfo";
+import { useMenuStore } from "~/stores/menu";
+
 const mainInfoStore = useMainInfoStore();
-const { menuMain, menuProduct } = mainInfoStore;
+const { menuMain, menuProduct, links } = mainInfoStore;
 
 const setNumber = (num) => {
    return num < 10 ? " 0" + num : " " + num;
 };
+
+defineProps({
+   isOpenMenu: {
+      type: Boolean,
+      required: true,
+      default: false,
+   },
+});
 </script>
 
 <style lang="scss">
@@ -44,10 +54,17 @@ const setNumber = (num) => {
    background-color: var(--bg-dark);
    height: 100dvh;
    width: 100%;
+   opacity: 0;
+   pointer-events: none;
+   transition: opacity $time * 2 $ttm;
+   &.active {
+      pointer-events: all;
+      opacity: 1;
+   }
    &__body {
       max-width: 1520px;
       margin: 0 auto;
-      padding: calc(var(--header-height) + 80px) 0 100px;
+      padding: 16.327vh 0 10.204vh;
    }
    &__top {
       display: flex;
@@ -59,7 +76,7 @@ const setNumber = (num) => {
       gap: 20px;
       justify-content: space-between;
       align-items: flex-end;
-      margin-top: 62px;
+      margin-top: 6.327vh;
    }
    &__actions {
       flex: 0 1 620px;
@@ -84,7 +101,22 @@ const setNumber = (num) => {
    }
 }
 .menu-main {
-   flex: 0 1 559px;
+   flex: 0 1 600px;
+   overflow-y: auto;
+   height: 32.653vh;
+   &::-webkit-scrollbar {
+      background-color: transparent;
+      width: 2px;
+   }
+   &::-webkit-scrollbar-track {
+      background: var(--bg-smoke);
+      opacity: 0.2;
+      width: 2px;
+   }
+   &::-webkit-scrollbar-thumb {
+      background: var(--text-gray);
+      width: 2px;
+   }
    &__list {
       @include reset-list;
       display: flex;
@@ -129,7 +161,7 @@ const setNumber = (num) => {
 .menu-notes {
    flex: 0 1 620px;
    padding-right: 78px;
-   height: 596px;
+   height: 60.816vh;
    overflow-y: auto;
    &::-webkit-scrollbar {
       background-color: transparent;
