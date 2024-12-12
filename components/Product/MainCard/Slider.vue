@@ -11,7 +11,7 @@
 		.main-slider.swiper(ref="mainSlider")
 			.main-slider__wrapper.swiper-wrapper
 				.main-slider__item.swiper-slide(v-for="(image, index) in images" :key="index")
-					a(:href="image.raw" data-fancybox="gallery").main-slider__image.ibg(v-html="image.markup")
+					a(:href="image.raw" data-fancybox="gallery" v-html="image.markup").main-slider__image.ibg
 						//- img(:src="`/images/notes/${image}.jpg`" :alt="image")
 			UiSliderButton(direction="prev")
 			UiSliderButton(direction="next")
@@ -121,6 +121,8 @@ onMounted(() => {
 </script>
 
 <style lang="scss">
+@use "sass:math";
+@use "~/assets/scss/_vars" as *;
 .product-card {
    &__slider {
       display: flex;

@@ -208,6 +208,7 @@ const slides = [
 </script>
 
 <style lang="scss">
+@use "sass:math";
 .fragrances-slider {
    padding: 50px;
    max-width: 460px;

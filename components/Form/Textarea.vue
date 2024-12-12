@@ -41,6 +41,7 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
+@use "~/assets/scss/_vars" as *;
 .form-field {
    display: flex;
 }

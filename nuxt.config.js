@@ -2,6 +2,7 @@
 import { defineNuxtConfig } from "nuxt/config";
 import autoprefixer from "autoprefixer";
 import postCssSortMediaQueries from "postcss-sort-media-queries";
+import { fileURLToPath } from "url";
 
 export default defineNuxtConfig({
    devtools: { enabled: true },
@@ -11,7 +12,19 @@ export default defineNuxtConfig({
          apiBase: process.env.NUXT_PUBLIC_API_BASE_URL,
       },
    },
-   // ssr: true,
+   // styleResources: {
+   //    scss: ["./assets/scss/_vars.scss", "./assets/scss/_mixins.scss"],
+   // },
+   // content: {
+   //    watch: {
+   //       ws: {
+   //          hostname: "dev.localhost", // 0.0.0.0
+   //          port: "8002", // 8000
+   //          showURL: true,
+   //       },
+   //    },
+   // },
+   ssr: true,
    app: {
       head: {
          htmlAttrs: {
@@ -74,14 +87,17 @@ export default defineNuxtConfig({
          ],
       },
    },
-
+   devServer: {
+      host: "dev.localhost",
+      port: 3000,
+   },
    vite: {
       // server: {
-      //    port: 3001,
-      //    host: "0.0.0.0",
+      //    port: 8002,
+      //    host: "dev.localhost",
       //    strictPort: true,
       //    hmr: {
-      //       port: 3001,
+      //       port: 8002,
       //    },
       // },
       css: {
@@ -95,10 +111,7 @@ export default defineNuxtConfig({
          },
          preprocessorOptions: {
             scss: {
-               // api: "modern",
-               // silenceDeprecations: ["import"],
-               additionalData:
-                  '@use "sass:math"; @import "~/assets/scss/mixins.scss"; @import "~/assets/scss/vars.scss";',
+               // additionalData: "",
                silenceDeprecations: ["legacy-js-api"],
             },
          },

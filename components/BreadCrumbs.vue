@@ -17,10 +17,12 @@ defineProps({
 </script>
 
 <style lang="scss" scoped>
+@use "assets/scss/_vars" as *;
+@use "assets/scss/_mixins" as m;
 .breadcrumbs {
    margin-bottom: 20px;
    &__list {
-      @include reset-list;
+      @include m.reset-list;
       display: flex;
       align-items: center;
       gap: 12px;

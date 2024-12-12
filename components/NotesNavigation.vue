@@ -123,6 +123,8 @@ const list = [
 </script>
 
 <style lang="scss">
+@use "assets/scss/_vars" as *;
+@use "assets/scss/_mixins" as m;
 .notes-navigation {
    position: fixed;
    bottom: 0;
@@ -157,7 +159,7 @@ const list = [
       //   margin-right: calc(332px - 16px);
    }
    &__list {
-      @include reset-list;
+      @include m.reset-list;
    }
    &__item {
       flex-shrink: 0;

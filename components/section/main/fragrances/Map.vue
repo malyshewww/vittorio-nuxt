@@ -330,6 +330,7 @@ onMounted(() => {});
 </script>
 
 <style lang="scss">
+@use "~/assets/scss/_vars" as *;
 .fragrances {
    &__svg {
       position: absolute;

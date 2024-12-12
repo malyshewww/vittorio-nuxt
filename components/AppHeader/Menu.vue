@@ -5,8 +5,8 @@
 				.menu-header__top
 					nav.menu.menu-main
 						ul.menu-main__list
-							li.menu-main__item(v-for="(item, index) in menuMain" :key="index")
-								nuxt-link(:to="item.url").menu-main__link
+							li.menu-main__item(v-for="(item, index) in newMenu" :key="index")
+								nuxt-link(:to="{ path: item.url.href}").menu-main__link
 									span(v-html="item.title")
 					nav.menu.menu-notes
 						ul.menu-notes__list
@@ -44,9 +44,20 @@ defineProps({
       default: false,
    },
 });
+
+const newMenu = computed(() => {
+   return menuMain.map((item) => {
+      return {
+         ...item,
+         hash: item.url.href == "/about" ? "#about" : false,
+      };
+   });
+});
 </script>
 
 <style lang="scss">
+@use "assets/scss/_vars" as *;
+@use "assets/scss/_mixins" as m;
 .menu-header {
    color: var(--bg-white);
    position: fixed;
@@ -118,7 +129,7 @@ defineProps({
       width: 2px;
    }
    &__list {
-      @include reset-list;
+      @include m.reset-list;
       display: flex;
       flex-direction: column;
       align-items: flex-start;
@@ -177,7 +188,7 @@ defineProps({
       width: 2px;
    }
    &__list {
-      @include reset-list;
+      @include m.reset-list;
       display: flex;
       flex-direction: column;
       gap: 12px;

@@ -63,6 +63,8 @@ onMounted(() => {
 </script>
 
 <style lang="scss">
+@use "assets/scss/_vars" as *;
+@use "assets/scss/_mixins" as m;
 .footer {
    position: relative;
    background-color: var(--bg-milk);
@@ -171,7 +173,7 @@ onMounted(() => {
       height: 100%;
    }
    &__list {
-      @include reset-list;
+      @include m.reset-list;
       display: flex;
       align-items: center;
       gap: 12px;

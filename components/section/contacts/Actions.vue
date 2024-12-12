@@ -21,6 +21,7 @@ const { links } = mainInfoStore;
 </script>
 
 <style lang="scss" scoped>
+@use "~/assets/scss/_vars" as *;
 .actions-contacts {
    display: grid;
    grid-template-columns: 100%;

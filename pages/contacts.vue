@@ -1,6 +1,6 @@
 <template lang="pug">
 	div
-		BreadCrumbs(:list="contacts.breadcrumb")
+		//- BreadCrumbs(:list="contacts.breadcrumb")
 		main.main.contacts
 			.container
 				PageTop(:title="contacts.title")
@@ -39,6 +39,7 @@ onMounted(() => {});
 </script>
 
 <style lang="scss" scoped>
+@use "sass:math";
 .page--contacts {
    & .top-page {
       margin-bottom: 0;

@@ -33,6 +33,9 @@ const initialState = () => {
 </script>
 
 <style lang="scss">
+@use "sass:math";
+@use "assets/scss/_vars" as *;
+@use "assets/scss/_mixins" as m;
 .preview-card {
    &__slider {
       width: 100%;
@@ -68,38 +71,38 @@ const initialState = () => {
    left: 0;
    top: 0;
    z-index: 5;
-   @media screen and (max-width: $xl) {
-      position: static;
-   }
-   &__item {
-      flex-grow: 1;
-      @media screen and (max-width: $xl) {
-         flex-grow: 0;
-         flex-shrink: 0;
-         width: 100%;
-      }
-      @media screen and (min-width: $xl) {
-         &.active {
-            & .image-switch__picture {
-               opacity: 1;
-               z-index: 1;
-            }
-         }
-         &:first-child .image-switch__picture {
-            opacity: 1;
-            z-index: -1;
-         }
-         @media (any-hover: hover) {
-            &:hover {
-               cursor: pointer;
-               & .image-switch__picture {
-                  opacity: 1;
-                  z-index: -1;
-               }
-            }
-         }
-      }
-   }
+   // @media screen and (max-width: $xl) {
+   //    position: static;
+   // }
+   // &__item {
+   //    flex-grow: 1;
+   //    @media screen and (max-width: $xl) {
+   //       flex-grow: 0;
+   //       flex-shrink: 0;
+   //       width: 100%;
+   //    }
+   //    @media screen and (min-width: $xl) {
+   //       &.active {
+   //          & .image-switch__picture {
+   //             opacity: 1;
+   //             z-index: 1;
+   //          }
+   //       }
+   //       &:first-child .image-switch__picture {
+   //          opacity: 1;
+   //          z-index: -1;
+   //       }
+   //       @media (any-hover: hover) {
+   //          &:hover {
+   //             cursor: pointer;
+   //             & .image-switch__picture {
+   //                opacity: 1;
+   //                z-index: -1;
+   //             }
+   //          }
+   //       }
+   //    }
+   // }
    &__picture {
       position: absolute;
       width: 100%;
@@ -140,7 +143,7 @@ const initialState = () => {
    transform: translateY(100%);
    transition: opacity $time * 2 $ttm, transform $time * 2 $ttm;
    &__list {
-      @include reset-list;
+      @include m.reset-list;
       display: flex;
       align-items: center;
       justify-content: center;

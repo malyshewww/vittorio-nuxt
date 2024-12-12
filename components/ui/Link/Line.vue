@@ -27,6 +27,7 @@ defineProps({
 </script>
 
 <style lang="scss" scoped>
+@use "assets/scss/_vars" as *;
 .link-line {
    font-weight: 500;
    font-size: 20px;

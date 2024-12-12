@@ -21,13 +21,14 @@ const props = defineProps({
    },
    classNames: {
       type: String,
-      required: true,
+      required: false,
       default: "",
    },
 });
 </script>
 
 <style lang="scss">
+@use "~/assets/scss/_vars" as *;
 .link-under {
    position: relative;
    transition: color $time * 2 $ttm;

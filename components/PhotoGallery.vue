@@ -50,6 +50,8 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
+@use "sass:math";
+@use "~/assets/scss/_vars" as *;
 .gallery {
    padding-top: 140px;
 }

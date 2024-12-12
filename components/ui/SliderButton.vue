@@ -12,6 +12,7 @@ defineProps({
 </script>
 
 <style lang="scss" scoped>
+@use "~/assets/scss/_vars" as *;
 .slider-button {
    width: 48px;
    height: 48px;

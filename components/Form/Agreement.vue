@@ -3,6 +3,7 @@
 </template>
 
 <style lang="scss" scoped>
+@use "~/assets/scss/_vars" as *;
 .form {
    &__agreement {
       font-size: 14px;

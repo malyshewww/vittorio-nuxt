@@ -51,6 +51,9 @@ const props = defineProps({
 </script>
 
 <style lang="scss" scoped>
+@use "sass:math";
+@use "assets/scss/_vars" as *;
+@use "assets/scss/_mixins" as m;
 .note-sections {
 }
 .note-card {
@@ -329,7 +332,7 @@ const props = defineProps({
 }
 .characteristics {
    &__list {
-      @include reset-list;
+      @include m.reset-list;
       display: flex;
       flex-direction: column;
       gap: 16px;

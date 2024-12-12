@@ -1,5 +1,5 @@
 <template lang="pug">
-	.social(:class="props.classNames")
+	.social(:class="classNames")
 		ul.social__list
 			li.social__item(v-if="links.field_vk")
 				a(:href="links.field_vk" target="_blank").social__link Vk
@@ -25,9 +25,11 @@ const props = defineProps({
 </script>
 
 <style lang="scss" scoped>
+@use "assets/scss/_vars" as *;
+@use "assets/scss/_mixins" as m;
 .social {
    &__list {
-      @include reset-list;
+      @include m.reset-list;
       display: flex;
       align-items: center;
       gap: 16px;

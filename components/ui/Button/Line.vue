@@ -17,6 +17,7 @@ defineProps({
    classNames: {
       type: String,
       required: false,
+      default: "",
    },
    isAnchor: {
       required: false,
@@ -33,6 +34,7 @@ const buttonAction = () => {
 </script>
 
 <style lang="scss" scoped>
+@use "assets/scss/_vars" as *;
 .btn-line {
    font-weight: 700;
    font-size: 12px;

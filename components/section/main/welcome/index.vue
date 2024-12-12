@@ -103,6 +103,8 @@ function toggleHiddenBlock() {
 </script>
 
 <style lang="scss">
+@use "sass:math";
+@use "~/assets/scss/_vars" as *;
 .hidden-block {
    display: grid;
    grid-template-columns: 100%;

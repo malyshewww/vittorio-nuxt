@@ -24,14 +24,14 @@ onServerPrefetch(async () => {
 </script>
 
 <style lang="scss">
+@use "assets/scss/vars";
+@use "assets/scss/fonts";
+@use "assets/scss/nullstyle";
+@use "assets/scss/keyframes";
+@use "assets/scss/common";
 .app-cart {
-   // background: black !important;
+   // background-color: white;
 }
-@import "~/assets/scss/nullstyle.scss";
-@import "~/assets/scss/keyframes.scss";
-@import "~/assets/scss/mixins.scss";
-@import "~/assets/scss/fonts.scss";
-@import "~/assets/scss/common.scss";
 // html.has-scroll-smooth {
 //    overflow: hidden;
 // }

@@ -26,6 +26,8 @@ const props = defineProps({
 </script>
 
 <style lang="scss">
+@use "assets/scss/_vars" as *;
+@use "assets/scss/_mixins" as m;
 .preview-card {
    @media (any-hover: hover) {
       &:hover {
@@ -73,7 +75,7 @@ const props = defineProps({
       width: 100%;
    }
    &__list {
-      @include reset-list;
+      @include m.reset-list;
       display: flex;
       flex-direction: column;
       gap: 5px;

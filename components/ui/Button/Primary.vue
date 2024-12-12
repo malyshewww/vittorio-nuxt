@@ -33,6 +33,7 @@ defineProps({
 </script>
 
 <style lang="scss" scoped>
+@use "assets/scss/_vars" as *;
 .btn {
    border-radius: 100px;
    padding: 10px 32px;

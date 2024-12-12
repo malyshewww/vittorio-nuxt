@@ -1,5 +1,5 @@
 <template lang="pug">
-	header.header(:class="{ active: menuStore.isOpen, 'header-white': isColor === 'white', 'header-dark': isColor === 'dark'}")
+	header.header(:class="{ active: menuStore.isOpen, 'hidden': !isVisible, 'header-white': isColor === 'white', 'header-dark': isColor === 'dark'}")
 		.container
 			.header__body
 				button(type="button" @click="openMenu").header__burger.burger
@@ -9,14 +9,15 @@
 						source(:srcset="`/images/${isColor === 'white' ? 'logo-white' : 'logo-dark'}.svg`" media="(min-width: 767.98px)")
 						source(:srcset="`/images/${isColor === 'white' ? 'logo-white' : 'logo-dark'}.svg`" media="(min-width: 300px)")
 						img(:src="`/images/${isColor === 'white' ? 'logo-white' : 'logo-dark'}.svg`")
-				button(type="button").header__cart.cart-header
+				button(type="button" @click="openCart").header__cart.cart-header
 					span.cart-header__text Корзина
 					span.cart-header__count (0)
 	AppHeaderMenu(:is-open-menu="menuStore.isOpen")
 </template>
 
 <script setup>
-import { useMenuStore } from "~/stores/menu.js";
+import { useMenuStore } from "~/stores/menu";
+import { useCartStore } from "~/stores/cart";
 
 defineProps({
    isColor: {
@@ -24,9 +25,15 @@ defineProps({
       required: false,
       default: "",
    },
+   isVisible: {
+      type: Boolean,
+      required: false,
+      default: false,
+   },
 });
 
 const menuStore = useMenuStore();
+const cartStore = useCartStore();
 
 const headerMenu = ref(null);
 
@@ -34,9 +41,13 @@ const openMenu = () => {
    menuStore.toggleMenu();
    bodyLock(menuStore.isOpen);
 };
+const openCart = () => {
+   cartStore.openCart();
+};
 </script>
 
 <style lang="scss" scoped>
+@use "~/assets/scss/_vars" as *;
 .header {
    position: fixed;
    left: 0;
@@ -56,6 +67,17 @@ const openMenu = () => {
       & .header__logo {
          opacity: 0;
          pointer-events: none;
+      }
+      & .burger__lines {
+         &::before {
+            top: calc(50% - 1px);
+            transform: rotate(-135deg);
+         }
+         &::after {
+            width: 16px;
+            bottom: calc(50% - 1px);
+            transform: rotate(-45deg);
+         }
       }
    }
    &__body {
@@ -135,6 +157,9 @@ const openMenu = () => {
    text-transform: uppercase;
    font-weight: 700;
    transition: background-color $time * 2 $ttm;
+   & span {
+      pointer-events: none;
+   }
    @media (any-hover: hover) {
       &:hover {
          & .cart-header__text {

@@ -10,9 +10,10 @@
 					.cart-item__price-old(v-if="item.oldPrice") {{item.oldPrice}}
 					.cart-item__price(v-if="item.price") {{item.price}}
 			.cart-item__counter.quantity-cart
-				.quantity-cart__button.btn-decrement
-				input(type="number" value="1").quantity-cart__count
-				.quantity-cart__button.btn-increment
+				button(type="button").quantity-cart__button.btn-decrement
+				.quantity-cart__count 1
+				input(type="hidden" value="1").quantity-cart__input
+				button(type="button").quantity-cart__button.btn-increment
 </template>
 
 <script setup>
@@ -25,6 +26,8 @@ defineProps({
 </script>
 
 <style lang="scss">
+@use "sass:math";
+@use "assets/scss/vars" as *;
 .app-cart {
    &__item {
    }
@@ -100,6 +103,7 @@ defineProps({
       display: flex;
       justify-content: center;
       align-items: center;
+      transition: background-color $time $ttm, border-color $time $ttm;
       &::before {
          content: "";
          display: block;
@@ -109,6 +113,7 @@ defineProps({
          mask-position: center;
          background-color: var(--bg-smoke);
          mask-size: 16px 16px;
+         transition: background-color $time $ttm;
       }
       &.btn-decrement {
          &::before {
@@ -123,6 +128,20 @@ defineProps({
       @media (any-hover: hover) {
          &:hover {
             cursor: pointer;
+         }
+      }
+      &:active {
+         background-color: var(--bg-smoke);
+         &::before {
+            background-color: var(--bg-milk);
+         }
+      }
+      &:disabled,
+      &.disabled {
+         pointer-events: none;
+         border-color: var(--system-disabled);
+         &::before {
+            background-color: var(--system-disabled);
          }
       }
    }

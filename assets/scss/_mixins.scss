@@ -1,4 +1,59 @@
 // Сброс стилей списков
+@use "sass:math";
+
+$xs: 479.98px;
+$sm: 576px;
+$md: 767.98px;
+$lg: 991.98px;
+$xl: 1024px;
+$xxl: 1200px;
+$xxxl: 1400px;
+
+$minWidth: 320;
+$maxWidth: 1920;
+$maxWidthContainer: 1340;
+
+@mixin bp-xxl {
+	@media (max-width: $xxXl) {
+		@content;
+	}
+}
+@mixin bp-xxl {
+	@media (max-width: $xxl) {
+		@content;
+	}
+}
+@mixin bp-xl {
+	@media (max-width: $xl) {
+		@content;
+	}
+}
+@mixin bp-lg {
+	@media (max-width: $lg) {
+		@content;
+	}
+}
+@mixin bp-md {
+	@media (max-width: $md) {
+		@content;
+	}
+}
+@mixin bp-sm {
+	@media (max-width: $sm) {
+		@content;
+	}
+}
+@mixin bp-xs {
+	@media (max-width: $xs) {
+		@content;
+	}
+}
+@mixin hover {
+	@media (any-hover:hover) {
+		@content;
+	}
+}
+
 @mixin reset-list {
 	padding: 0;
 	margin: 0;
@@ -112,17 +167,13 @@ $grid-columns: 12 !default;
 @mixin col($size: false, $columns: $grid-columns) {
 	@if $size {
 		flex: 0 0 auto;
-		width: percentage($size / $columns);
+		width: percentage(math.div($size, $columns));
 	}
 	@else {
 		flex: 1 1 0;
 		max-width: 100%;
 	}
 }
-
-$minWidth: 320;
-$maxWidth: 1920;
-$maxWidthContainer: 1340;
 
 // АДАПТИВНОЕ СВОЙСТВО
 @mixin adaptiv-value($property, $startSize, $minSize, $type) {

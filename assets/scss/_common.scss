@@ -1,12 +1,14 @@
+@use "assets/scss/_vars" as *;
+@use "mixins" as m;
+
 .container {
-	// max-width: 1710px;
 	margin: 0 auto;
 	padding: 0 50px;
 	width: 100%;
-	@media screen and (max-width: $xl) {
+	@include m.bp-xl {
 		padding: 0 30px;
 	}
-	@media screen and (max-width: $md) {
+	@include m.bp-md {
 		padding: 0 20px;
 	}
 }
