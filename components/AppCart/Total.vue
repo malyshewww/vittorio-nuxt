@@ -2,9 +2,9 @@
 	.app-cart__total.cart-total
 		ul.cart-total__list
 			li.cart-total__item
-				div.cart-total__caption 
+				div.cart-total__caption
 					span Стоимость товаров
-				div.cart-total__value 100 000 ₽
+				div.cart-total__value {{formatNumber(totalPrice)}}
 			li.cart-total__item
 				div.cart-total__caption 
 					span Скидка
@@ -13,6 +13,16 @@
 			.cart-result__caption Итого
 			.cart-result__value 99 000 ₽
 </template>
+
+<script setup>
+const props = defineProps({
+   totalPrice: {
+      type: Number,
+      required: true,
+      default: 0,
+   },
+});
+</script>
 
 <style lang="scss">
 @use "assets/scss/mixins" as m;

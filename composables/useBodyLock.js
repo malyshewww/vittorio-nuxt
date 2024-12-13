@@ -21,6 +21,7 @@ export function bodyLockRemove(delay = 1000) {
    const { bodyScrollBar } = useScrollbar();
    setTimeout(function () {
       bodyScrollBar.updatePluginOptions("lock", { lock: false });
+      bodyScrollBar.track.yAxis.show();
    }, delay);
    unlock = false;
    setTimeout(function () {

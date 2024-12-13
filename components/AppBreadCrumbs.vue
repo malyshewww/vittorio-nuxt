@@ -1,5 +1,5 @@
 <template lang="pug">
-	.breadcrumbs 
+	.breadcrumbs
 		.container
 			nav.breadcrumbs__body
 				ul.breadcrumbs__list

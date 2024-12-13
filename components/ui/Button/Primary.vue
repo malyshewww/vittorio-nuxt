@@ -1,6 +1,6 @@
 <template lang="pug">
 	nuxt-link(v-if="isLink" :to="path" :class="classNames").btn {{title}}
-	button(v-else :type="type" :class="classNames").btn {{title}}
+	button(v-else :type="type" :class="classNames" @click="buttonAction").btn {{title}}
 </template>
 
 <script setup>
@@ -30,6 +30,12 @@ defineProps({
       default: "",
    },
 });
+
+const emit = defineEmits(["buttonAction"]);
+
+const buttonAction = () => {
+   emit("buttonAction");
+};
 </script>
 
 <style lang="scss" scoped>

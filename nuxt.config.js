@@ -12,9 +12,6 @@ export default defineNuxtConfig({
          apiBase: process.env.NUXT_PUBLIC_API_BASE_URL,
       },
    },
-   // styleResources: {
-   //    scss: ["./assets/scss/_vars.scss", "./assets/scss/_mixins.scss"],
-   // },
    // content: {
    //    watch: {
    //       ws: {

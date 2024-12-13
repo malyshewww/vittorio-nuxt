@@ -4,7 +4,7 @@
 			.container
 				.product-card__wrapper
 					ProductMainCardSlider(:images="productData.info.field_images")
-					ProductMainCardInfo(:info="productData.info" :options="productData.options")
+					ProductMainCardInfo(:info="productData.info" :images="productData.info.field_images" :options="productData.options")
 				.product-card__content
 					.content
 						h3 История создания аромата

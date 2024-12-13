@@ -1,18 +1,18 @@
 <template lang="pug">
 	.app-cart__item.cart-item
 		.cart-item__image.ibg
-			img(:src="`/images/cart/${item.img}.jpg`")
+			img(:src="item.image")
 		.cart-item__body
 			.cart-item__info
 				.cart-item__title(v-if="item.title") {{item.title}}
-				.cart-item__volume(v-if="item.volume") {{item.volume}}
+				.cart-item__volume(v-if="item.purchased_entity.field_volume") {{item.purchased_entity.field_volume}} мл
 				.cart-item__prices
-					.cart-item__price-old(v-if="item.oldPrice") {{item.oldPrice}}
-					.cart-item__price(v-if="item.price") {{item.price}}
+					.cart-item__price-old(v-if="item.purchased_entity.list_price") {{formatNumber(item.purchased_entity.list_price.number)}}
+					.cart-item__price(v-if="item.unit_price") {{formatNumber(item.unit_price.number)}}
 			.cart-item__counter.quantity-cart
 				button(type="button").quantity-cart__button.btn-decrement
-				.quantity-cart__count 1
-				input(type="hidden" value="1").quantity-cart__input
+				.quantity-cart__count {{item.quantity}}
+				input(type="hidden" :value="item.quantity").quantity-cart__input
 				button(type="button").quantity-cart__button.btn-increment
 </template>
 

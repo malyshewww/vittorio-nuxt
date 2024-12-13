@@ -1,6 +1,6 @@
 <template lang="pug">
 	div
-		//- BreadCrumbs(:list="contacts.breadcrumb")
+		AppBreadCrumbs(:list="contacts.breadcrumb")
 		main.main.contacts
 			.container
 				PageTop(:title="contacts.title")

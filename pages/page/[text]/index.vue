@@ -1,6 +1,6 @@
 <template lang="pug">
 	div
-		BreadCrumbs(:list="breadcrumbs")
+		AppBreadCrumbs(:list="breadcrumbs")
 		main.main
 			.container
 				PageTop(title="Заголовок h1")

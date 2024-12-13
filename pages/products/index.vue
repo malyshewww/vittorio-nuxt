@@ -1,6 +1,6 @@
 <template lang="pug">
 	div
-		BreadCrumbs(:list="catalog.breadcrumb")
+		AppBreadCrumbs(:list="catalog.breadcrumb")
 		main.main.catalog
 			.container
 				PageTop(title="Коллекция ароматов")

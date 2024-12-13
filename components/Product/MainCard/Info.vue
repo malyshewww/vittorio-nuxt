@@ -24,16 +24,21 @@
 			.product-info__prices
 				.product-info__price {{(info.variations[0].price[0])}}
 				.product-info__price-old {{(info.variations[0].list_price[0])}}
-			UiButtonPrimary(title="Купить на сайте")
+			ProductMainCardForm(:options="formData" :images="images")
 			.product-info__stores(v-if="info.field_goldapple.length || info.field_leturu.length")
 				UiStores(:link-apple="info.field_goldapple[0].url || ''" :link-letu="info.field_leturu[0].url || ''")
 </template>
 
 <script setup>
-defineProps({
+const props = defineProps({
+   images: {
+      type: Array,
+      required: true,
+   },
    info: {
       type: Object,
       required: true,
+      default: {},
    },
    options: {
       type: Array,
@@ -41,6 +46,19 @@ defineProps({
       default: [],
    },
 });
+
+const formData = {
+   data: [
+      {
+         type: "product-variation--default",
+         id: props.info.variations[0].uuid,
+         meta: {
+            quantity: 1,
+            combine: true,
+         },
+      },
+   ],
+};
 
 const goBack = () => {
    const router = useRouter();

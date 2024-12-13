@@ -2,10 +2,24 @@
 	NuxtLayout
 		NuxtPage
 	AppCart
+	AppPopups
 </template>
 
 <script setup>
 import { useMainInfoStore } from "~/stores/maininfo.js";
+import { useCartStore } from "~/stores/cart";
+
+const cartStore = useCartStore();
+
+// Тест Модалки
+// import { usePopupStore } from "~/stores/popups";
+
+// const popupStore = usePopupStore();
+
+// const openPopupNotice = () => {
+//    popupStore.openPopup(popupStore.popupOrderSuccess);
+//    bodyLockAdd();
+// };
 
 const mainInfoStore = useMainInfoStore();
 
@@ -16,6 +30,8 @@ const { data: mainInfoData } = await useFetch(url);
 
 onServerPrefetch(async () => {
    try {
+      // const token = useToken();
+      // cartStore.setCartToken(token);
       await mainInfoStore.setData(mainInfoData.value);
    } catch (error) {
       console.log("Error", error);
@@ -29,6 +45,16 @@ onServerPrefetch(async () => {
 @use "assets/scss/nullstyle";
 @use "assets/scss/keyframes";
 @use "assets/scss/common";
+.popup-btn {
+   position: fixed;
+   top: 0;
+   left: 0;
+   z-index: 30;
+   width: 200px;
+   height: 100px;
+   background-color: black;
+   color: white;
+}
 .app-cart {
    // background-color: white;
 }
