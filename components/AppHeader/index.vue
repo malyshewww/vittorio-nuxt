@@ -1,5 +1,5 @@
 <template lang="pug">
-	header.header(:class="{ active: menuStore.isOpen, 'hidden': !isVisible, 'header-white': isColor === 'white', 'header-dark': isColor === 'dark'}")
+	header.header(:class="{ active: menuStore.isOpen, 'hidden': !appStore.isHeaderVisible, 'header-white': isColor === 'white', 'header-dark': isColor === 'dark'}")
 		.container
 			.header__body
 				button(type="button" @click="openMenu").header__burger.burger
@@ -12,12 +12,13 @@
 				button(type="button" @click="openCart").header__cart.cart-header
 					span.cart-header__text Корзина
 					span.cart-header__count (0)
-	AppHeaderMenu(:is-open-menu="menuStore.isOpen")
+	AppHeaderMenu
 </template>
 
 <script setup>
 import { useMenuStore } from "~/stores/menu";
 import { useCartStore } from "~/stores/cart";
+import { useAppStore } from "~/stores/app";
 
 defineProps({
    isColor: {
@@ -34,6 +35,7 @@ defineProps({
 
 const menuStore = useMenuStore();
 const cartStore = useCartStore();
+const appStore = useAppStore();
 
 const headerMenu = ref(null);
 
@@ -59,6 +61,10 @@ const openCart = () => {
    padding: 8px 0 8px;
    z-index: 21;
    transition: transform $time * 2 ease, background-color $time $ttm;
+   .page--home & {
+      background-color: transparent;
+      padding: 20px 0;
+   }
    &.hidden {
       transform: translateY(-120%);
    }
@@ -93,6 +99,9 @@ const openCart = () => {
       height: 64px;
       display: block;
       transition: opacity $time $ttm;
+      .page--home & {
+         display: none;
+      }
    }
    &__cart {
       color: currentColor;

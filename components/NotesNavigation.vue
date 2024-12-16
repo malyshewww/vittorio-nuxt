@@ -73,8 +73,12 @@ const observeNavigation = () => {
    const observer = new IntersectionObserver(handleIntersection, {
       threshold: 0,
    });
-   observer.observe(noteCards);
-   observer.observe(welcomeSection);
+   if (noteCards) {
+      observer.observe(noteCards);
+   }
+   if (welcomeSection) {
+      observer.observe(welcomeSection);
+   }
 };
 
 onMounted(() => {

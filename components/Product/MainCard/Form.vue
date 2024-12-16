@@ -4,6 +4,10 @@
 </template>
 
 <script setup>
+import { useCartStore } from "~/stores/cart";
+
+const cartStore = useCartStore();
+
 const props = defineProps({
    options: {
       type: Object,
@@ -41,15 +45,14 @@ const addToCart = async () => {
          }
       );
       if (response.ok) {
-         const cartResponse = await response.json();
-         const { attributes } = cartResponse.data[0];
+         const { data } = await response.json();
+         const { attributes } = data[0];
+         console.log(attributes);
          const { locked, quantity, title, total_price, unit_price } =
             attributes;
+         console.log(quantity);
          productInfo.volume = Number(quantity).toFixed(0);
          productInfo.title = title;
-         console.log(attributes);
-         console.log("total_price", total_price);
-         console.log("unit_price", unit_price);
       }
    } catch (e) {
       console.log("error", e);

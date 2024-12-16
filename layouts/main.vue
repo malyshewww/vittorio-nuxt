@@ -1,5 +1,6 @@
 <template lang="pug">
 	SectionMainHeroVideo
+	AppHeader
 	div(ref="scroller").scroller
 		.page
 			SectionMainHero
@@ -11,15 +12,21 @@
 </template>
 
 <script setup>
-const { $ScrollTrigger: ScrollTrigger } = useNuxtApp();
+import { useAppStore } from "~/stores/app";
+
+const appStore = useAppStore();
+
+const { $Scrollbar: Scrollbar, $ScrollTrigger: ScrollTrigger } = useNuxtApp();
 
 const scroller = ref(null);
 
+const route = useRoute();
+
 onMounted(() => {
+   const { bodyScrollBar } = useScrollbar();
    setTimeout(() => {
       ScrollTrigger.refresh();
    }, 1000);
-   const { bodyScrollBar } = useScrollbar();
    ScrollTrigger.scrollerProxy(scroller.value, {
       scrollTop(value) {
          if (arguments.length > 0) {
@@ -30,27 +37,19 @@ onMounted(() => {
    });
    bodyScrollBar.addListener(ScrollTrigger.update);
    ScrollTrigger.defaults({ scroller: scroller.value });
-   // gsap.from(".line", {
-   //    scrollTrigger: {
-   //       trigger: ".line-1",
-   //       scroller: scroller.value,
-   //       scrub: true,
-   //       start: "top bottom",
-   //       end: "top top",
-   //    },
-   //    scaleX: 0,
-   //    transformOrigin: "left center",
-   //    ease: "none",
-   // });
-   // const trigger = document.querySelector("button[data-href='#welcome']");
-   // const target = document.querySelector("#welcome");
-   // trigger?.addEventListener("click", () => {
-   //    scrollInstance.value.scrollTo(target);
-   // });
-   // new ResizeObserver(() => scrollInstance.value.update()).observe(
-   //    document.querySelector("[data-scroll-container]")
-   // );
+
+   let initialPosition = bodyScrollBar.offset.y;
+
+   bodyScrollBar.addListener(({ offset }) => {
+      if (route.name !== "index") {
+         let currentPosition = offset.y;
+         appStore.isHeaderVisible =
+            initialPosition <= currentPosition ? false : true;
+         initialPosition = currentPosition;
+      }
+   });
 });
+onUnmounted(() => {});
 </script>
 
 <style lang="scss" scoped>

@@ -10,14 +10,18 @@
 					.cart-item__price-old(v-if="item.purchased_entity.list_price") {{formatNumber(item.purchased_entity.list_price.number)}}
 					.cart-item__price(v-if="item.unit_price") {{formatNumber(item.unit_price.number)}}
 			.cart-item__counter.quantity-cart
-				button(type="button").quantity-cart__button.btn-decrement
+				button(type="button" @click="cartStore.changeQuantity(item, 'minus')" :disabled="item.quantity <= 1").quantity-cart__button.btn-decrement
 				.quantity-cart__count {{item.quantity}}
 				input(type="hidden" :value="item.quantity").quantity-cart__input
-				button(type="button").quantity-cart__button.btn-increment
+				button(type="button" @click="cartStore.changeQuantity(item, 'plus')").quantity-cart__button.btn-increment
 </template>
 
 <script setup>
-defineProps({
+import { useCartStore } from "~/stores/cart";
+
+const cartStore = useCartStore();
+
+const props = defineProps({
    item: {
       type: Object,
       required: true,
@@ -28,6 +32,7 @@ defineProps({
 <style lang="scss">
 @use "sass:math";
 @use "assets/scss/vars" as *;
+@use "assets/scss/mixins" as m;
 .app-cart {
    &__item {
    }
@@ -39,6 +44,11 @@ defineProps({
    align-items: start;
    border-bottom: 1px solid var(--bg-smoke);
    padding-bottom: 7px;
+   @include m.hover {
+      &:hover {
+         cursor: pointer;
+      }
+   }
    &__image {
       padding-bottom: math.div(120, 100) * 100%;
       overflow: hidden;

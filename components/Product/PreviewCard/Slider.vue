@@ -11,7 +11,7 @@
 </template>
 
 <script setup>
-defineProps({
+const props = defineProps({
    url: {
       type: String,
       required: true,
@@ -71,38 +71,38 @@ const initialState = () => {
    left: 0;
    top: 0;
    z-index: 5;
-   // @media screen and (max-width: $xl) {
-   //    position: static;
-   // }
-   // &__item {
-   //    flex-grow: 1;
-   //    @media screen and (max-width: $xl) {
-   //       flex-grow: 0;
-   //       flex-shrink: 0;
-   //       width: 100%;
-   //    }
-   //    @media screen and (min-width: $xl) {
-   //       &.active {
-   //          & .image-switch__picture {
-   //             opacity: 1;
-   //             z-index: 1;
-   //          }
-   //       }
-   //       &:first-child .image-switch__picture {
-   //          opacity: 1;
-   //          z-index: -1;
-   //       }
-   //       @media (any-hover: hover) {
-   //          &:hover {
-   //             cursor: pointer;
-   //             & .image-switch__picture {
-   //                opacity: 1;
-   //                z-index: -1;
-   //             }
-   //          }
-   //       }
-   //    }
-   // }
+   @include m.bp-xl {
+      position: static;
+   }
+   &__item {
+      flex-grow: 1;
+      @include m.bp-xl {
+         flex-grow: 0;
+         flex-shrink: 0;
+         width: 100%;
+      }
+      @media screen and (min-width: 1024px) {
+         &.active {
+            & .image-switch__picture {
+               opacity: 1;
+               z-index: 1;
+            }
+         }
+         &:first-child .image-switch__picture {
+            opacity: 1;
+            z-index: -1;
+         }
+         @include m.hover {
+            &:hover {
+               cursor: pointer;
+               & .image-switch__picture {
+                  opacity: 1;
+                  z-index: -1;
+               }
+            }
+         }
+      }
+   }
    &__picture {
       position: absolute;
       width: 100%;
@@ -125,7 +125,7 @@ const initialState = () => {
             height: 100%;
          }
       }
-      @media screen and (max-width: $xl) {
+      @include m.bp-xl {
          opacity: 1;
          position: static;
          transform: none;
@@ -163,7 +163,7 @@ const initialState = () => {
             cursor: pointer;
          }
       }
-      @media screen and (max-width: $xl) {
+      @include m.bp-xl {
          width: 20px;
          height: 2px;
          flex-shrink: 0;
@@ -174,7 +174,7 @@ const initialState = () => {
    position: static;
    justify-content: center;
    display: none;
-   @media screen and (max-width: $xl) {
+   @include m.bp-xl {
       display: flex;
    }
    & .swiper-pagination-bullet {

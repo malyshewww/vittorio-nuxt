@@ -7,6 +7,9 @@
 <script setup>
 definePageMeta({
    layout: "main",
+});
+
+useHead({
    bodyAttrs: {
       class: "page--home",
    },

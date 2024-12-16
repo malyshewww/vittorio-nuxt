@@ -1,5 +1,5 @@
 <template lang="pug">
-	.header__menu.menu-header(:class="{active: isOpenMenu}")
+	.header__menu.menu-header(:class="{active: menuStore.isOpen}")
 		.container
 			.menu-header__body
 				.menu-header__top
@@ -30,20 +30,14 @@
 import { useMainInfoStore } from "~/stores/maininfo";
 import { useMenuStore } from "~/stores/menu";
 
+const menuStore = useMenuStore();
+
 const mainInfoStore = useMainInfoStore();
 const { menuMain, menuProduct, links } = mainInfoStore;
 
 const setNumber = (num) => {
    return num < 10 ? " 0" + num : " " + num;
 };
-
-defineProps({
-   isOpenMenu: {
-      type: Boolean,
-      required: true,
-      default: false,
-   },
-});
 
 const newMenu = computed(() => {
    return menuMain.map((item) => {

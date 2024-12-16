@@ -1,8 +1,11 @@
 <template lang="pug">
 	.page-video
 		.page-video__wrap
-			.main-hero__image
-				img(:src="`/images/main/bg.jpg`" alt="hero bg")
+			video(loop muted playsinline autoplay)
+				source(src="/hero.mp4" type="video/mp4")
+				p.
+					Ваш браузер не поддерживает встроенные видео. Попробуйте скачать его по
+					| #[a(href="/welcome.mp4") этой ссылке]
 </template>
 
 <style lang="scss">
@@ -24,13 +27,16 @@
       width: 200%;
       height: 200vh;
       pointer-events: none;
-      background: transparent url("/images/noise.png") repeat 0 0;
+      background: transparent url("/images/noise.gif") repeat 0 0;
       background-repeat: repeat;
       background-blend-mode: soft-light;
-      animation: bg-animation 0.2s infinite;
+      // animation: bg-animation 0.2s infinite;
+      opacity: 0.1;
    }
-}
-.main-hero__image img {
-   width: 100%;
+   &__wrap {
+      & video {
+         width: 100%;
+      }
+   }
 }
 </style>

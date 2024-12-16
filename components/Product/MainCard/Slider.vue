@@ -7,7 +7,7 @@
 				.vertical-slider__wrapper.swiper-wrapper
 					.vertical-slider__item.swiper-slide(v-for="(image, index) in images" :key="index" @click="changeSlide(index)")
 						.vertical-slider__image.ibg(v-html="image.markup")
-							//- img(:src="`/images/notes/${image}.jpg`" :alt="image")
+							//- img(:src="image.raw" :alt="image.alt")
 		.main-slider.swiper(ref="mainSlider")
 			.main-slider__wrapper.swiper-wrapper
 				.main-slider__item.swiper-slide(v-for="(image, index) in images" :key="index")
@@ -26,7 +26,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "@fancyapps/ui/dist/fancybox/fancybox.css";
 
-defineProps({
+const props = defineProps({
    images: {
       type: Array,
       required: true,

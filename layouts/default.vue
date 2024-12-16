@@ -1,5 +1,5 @@
 <template lang="pug">
-	AppHeader(:is-visible="isHeaderVisible")
+	AppHeader
 	div(ref="scroller").scroller
 		.page
 			slot
@@ -7,10 +7,13 @@
 </template>
 
 <script setup>
-const { $ScrollTrigger: ScrollTrigger } = useNuxtApp();
+import { useAppStore } from "~/stores/app";
+
+const appStore = useAppStore();
+
+const { $Scrollbar: Scrollbar, $ScrollTrigger: ScrollTrigger } = useNuxtApp();
 
 const scroller = ref("");
-const isHeaderVisible = ref(true);
 
 onMounted(() => {
    const { bodyScrollBar } = useScrollbar();
@@ -31,7 +34,8 @@ onMounted(() => {
    // sticky, fixed elements
    bodyScrollBar.addListener(({ offset }) => {
       currentPosition = offset.y;
-      isHeaderVisible.value = initialPosition <= currentPosition ? false : true;
+      appStore.isHeaderVisible =
+         initialPosition <= currentPosition ? false : true;
       initialPosition = currentPosition;
    });
 });

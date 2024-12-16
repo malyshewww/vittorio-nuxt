@@ -145,6 +145,23 @@ function toggleHiddenBlock() {
       justify-content: center;
       clip-path: polygon(10% 100%, 88% 100%, 88% 100%, 10% 100%);
       min-height: 760px;
+      &::before {
+         content: "";
+         position: absolute;
+         top: -50%;
+         left: -50%;
+         right: -50%;
+         bottom: -50%;
+         width: 200%;
+         height: 200vh;
+         pointer-events: none;
+         background: transparent url("/images/noise.gif") repeat 0 0;
+         background-repeat: repeat;
+         background-blend-mode: soft-light;
+         // animation: bg-animation 0.2s infinite;
+         z-index: 5;
+         opacity: 0.1;
+      }
    }
    &__video {
       // position: absolute;
@@ -155,6 +172,7 @@ function toggleHiddenBlock() {
       width: 100%;
       overflow: hidden;
       padding-bottom: math.div(760, 1520) * 100%;
+      position: relative;
    }
    &__main {
       display: grid;
