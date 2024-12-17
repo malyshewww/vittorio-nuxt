@@ -24,7 +24,7 @@
 			.product-info__prices
 				.product-info__price {{(info.variations[0].price[0])}}
 				.product-info__price-old {{(info.variations[0].list_price[0])}}
-			ProductMainCardForm(:options="formData" :images="images")
+			ProductMainCardForm(:options="formData" :cart-data="smallCartData")
 			.product-info__stores(v-if="info.field_goldapple.length || info.field_leturu.length")
 				UiStores(:link-apple="info.field_goldapple[0].url || ''" :link-letu="info.field_leturu[0].url || ''")
 </template>
@@ -46,6 +46,11 @@ const props = defineProps({
       default: [],
    },
 });
+
+const smallCartData = {
+   image: props.images[0].markup,
+   volume: props.info.variations[0].field_volume[0],
+};
 
 const formData = {
    data: [
@@ -138,6 +143,7 @@ const goBack = () => {
       align-items: flex-start;
       font-size: 16px;
       line-height: 22px;
+      padding: 4px 0 5px;
    }
    &__label {
       font-weight: 700;

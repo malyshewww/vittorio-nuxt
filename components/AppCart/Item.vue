@@ -9,6 +9,7 @@
 				.cart-item__prices
 					.cart-item__price-old(v-if="item.purchased_entity.list_price") {{formatNumber(item.purchased_entity.list_price.number)}}
 					.cart-item__price(v-if="item.unit_price") {{formatNumber(item.unit_price.number)}}
+					button(@click="cartStore.deleteProduct(item)").cart-item__delete
 			.cart-item__counter.quantity-cart
 				button(type="button" @click="cartStore.changeQuantity(item, 'minus')" :disabled="item.quantity <= 1").quantity-cart__button.btn-decrement
 				.quantity-cart__count {{item.quantity}}
@@ -27,6 +28,15 @@ const props = defineProps({
       required: true,
    },
 });
+
+// watch(
+//    () => props.item.quantity,
+//    () => {
+//       console.log("change quant");
+// 		store.getCart
+//    },
+//    { deep: true }
+// );
 </script>
 
 <style lang="scss">
@@ -47,6 +57,11 @@ const props = defineProps({
    @include m.hover {
       &:hover {
          cursor: pointer;
+         & .cart-item__delete {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: all;
+         }
       }
    }
    &__image {
@@ -59,6 +74,8 @@ const props = defineProps({
       align-items: start;
       gap: 20px;
       height: 100%;
+      padding: 12px 0;
+      position: relative;
    }
    &__info {
       display: flex;
@@ -90,6 +107,35 @@ const props = defineProps({
    &__price {
       font-weight: 700;
       line-height: 22px;
+   }
+   &__delete {
+      width: 22px;
+      height: 22px;
+      position: absolute;
+      bottom: 12px;
+      right: 0;
+      display: grid;
+      place-items: center;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(20%);
+      transition: opacity $time $ttm 0s, transform $time $ttm 0s;
+      &::before {
+         content: "";
+         display: block;
+         width: 20px;
+         height: 20px;
+         mask-image: url("/images/icons/delete.svg");
+         mask-repeat: no-repeat;
+         mask-position: center;
+         background-color: var(--bg-smoke);
+         mask-size: 20px 20px;
+      }
+      @include m.hover {
+         &:hover {
+            opacity: 0.8;
+         }
+      }
    }
    &__counter {
    }

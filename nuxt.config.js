@@ -108,7 +108,6 @@ export default defineNuxtConfig({
          },
          preprocessorOptions: {
             scss: {
-               // additionalData: "",
                silenceDeprecations: ["legacy-js-api"],
             },
          },

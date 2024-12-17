@@ -30,7 +30,7 @@ defineProps({
    &__item {
       position: relative;
       & + & {
-         padding-left: 12px;
+         padding-left: 16px;
          &::before {
             content: "";
             display: block;

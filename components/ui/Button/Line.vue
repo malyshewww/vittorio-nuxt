@@ -44,6 +44,7 @@ const buttonAction = () => {
    display: flex;
    align-items: center;
    gap: 12px;
+   padding: 4px 0;
    &::before {
       content: "";
       display: block;

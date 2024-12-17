@@ -44,7 +44,7 @@ const props = defineProps({
       height: 100%;
    }
    &__main {
-      padding: 24px 0;
+      padding: 27px 0 24px;
       position: relative;
       font-size: 16px;
       line-height: 22px;
@@ -71,7 +71,7 @@ const props = defineProps({
       font-size: 36px;
       line-height: 44px;
       text-transform: uppercase;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
       width: 100%;
    }
    &__list {

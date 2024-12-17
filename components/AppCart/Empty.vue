@@ -14,11 +14,11 @@
    display: grid;
    grid-template-columns: 100%;
    justify-items: start;
-   gap: 32px;
+   gap: 34px;
    &__heading {
       display: grid;
       grid-template-columns: 100%;
-      gap: 16px;
+      gap: 18px;
    }
    // .empty-cart__title
    &__title {

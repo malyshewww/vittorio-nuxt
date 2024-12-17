@@ -7,7 +7,7 @@
 .app-cart {
    // .app-cart__promocode
    &__promocode {
-      margin-top: 32px;
+      margin-top: 34px;
    }
 }
 </style>

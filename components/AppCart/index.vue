@@ -7,7 +7,7 @@
 					.app-cart__products
 						.app-cart__caption.cart-caption Корзина
 						.app-cart__items
-							AppCartItem(v-for="(item, index) in cartStore.orderItems" :key="item.id" :item="item")
+							AppCartItem(v-for="(item, index) in cartStore.orderItems" :key="item.id" :item.sync="item")
 						AppCartPromocode
 					AppCartOrder
 					AppCartTotal(:total-price="cartStore.totalPrice")
@@ -26,6 +26,13 @@ const cartStore = useCartStore();
 const closeCart = () => {
    cartStore.closeCart();
 };
+
+watch(
+   () => cartStore.orderItems,
+   () => {
+      console.log("change order items");
+   }
+);
 
 // async function getCartItems() {
 //    try {
@@ -143,6 +150,9 @@ onMounted(() => {});
    margin-bottom: 40px;
    .app-cart__order & {
       margin-bottom: 24px;
+      font-size: 28px;
+      line-height: 36px;
+      text-transform: lowercase;
    }
 }
 .app-cart-button.btn {

@@ -4,9 +4,10 @@
 		main.main.contacts
 			.container
 				PageTop(:title="contacts.title")
-				.contacts__body
-					SectionContactsActions
-					SectionContactsForm
+				.contacts__wrapper
+					.contacts__body
+						SectionContactsActions
+						SectionContactsForm
 				.contacts__image.ibg
 					img(:src="`/images/contacts/preview.jpg`" alt="image")
 </template>
@@ -46,6 +47,17 @@ onMounted(() => {});
    }
 }
 .contacts {
+   &__wrapper {
+      position: relative;
+      &::before {
+         content: "";
+         position: absolute;
+         left: calc(50% - 1px);
+         width: 1px;
+         height: 100%;
+         background: var(--bg-smoke);
+      }
+   }
    &__body {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -55,14 +67,6 @@ onMounted(() => {});
       margin-right: 50px;
       position: relative;
       margin-bottom: 40px;
-      &::before {
-         content: "";
-         position: absolute;
-         left: calc(50% - 1px);
-         width: 1px;
-         height: 100%;
-         background: var(--bg-smoke);
-      }
    }
    &__image {
       padding-bottom: math.div(520, 1820) * 100%;

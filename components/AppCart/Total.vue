@@ -4,17 +4,21 @@
 			li.cart-total__item
 				div.cart-total__caption
 					span Стоимость товаров
-				div.cart-total__value {{formatNumber(totalPrice)}}
-			li.cart-total__item
+				div.cart-total__value {{formatNumber(cartStore.priceWithoutDiscount)}}
+			li.cart-total__item(v-if="cartStore.sale > 0")
 				div.cart-total__caption 
 					span Скидка
-				div.cart-total__value 1 000 ₽
+				div.cart-total__value {{formatNumber(cartStore.sale)}}
 		.cart-total__result.cart-result
 			.cart-result__caption Итого
-			.cart-result__value 99 000 ₽
+			.cart-result__value {{formatNumber(cartStore.totalPrice)}}
 </template>
 
 <script setup>
+import { useCartStore } from "~/stores/cart";
+
+const cartStore = useCartStore();
+
 const props = defineProps({
    totalPrice: {
       type: Number,

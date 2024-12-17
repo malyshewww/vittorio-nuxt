@@ -9,7 +9,7 @@
 								.subscribe-form__title.footer-title Подписаться на новости
 								.subscribe-form__sub-title Оформите подписку, чтобы быть в курсе наших новостей
 							FormInput(type="email" placeholder="Электронная почта" name="email" :is-valid="true")
-							.subscribe-form__text Оставляя свой электронный адрес, вы подтверждаете, что согласны #[a(href="/page/text") с политикой обработки персональных данных]
+							.subscribe-form__text Оставляя свой электронный адрес, вы подтверждаете, что согласны c #[a(href="/page/text") политикой обработки персональных данных]
 					.main-footer__middle
 						nuxt-link(to="/").main-footer__logo
 							img(:src="`/images/footer-logo.svg`" alt="логотип")
@@ -24,7 +24,7 @@
 									a(href="mailti:info@s-parfum.ru").footer-contacts__link info@s-parfum.ru
 							.footer-contacts__bottom
 								.footer-contacts__label Ароматы Vittorio можно приобрести в магазинах
-								UiStores(class-names="footer-stores" :isFooterStores="true")
+								UiStores(class-names="footer-stores" :isFooterStores="true" :link-letu="links.field_leturu" :link-apple="links.field_goldapple")
 				.footer__bottom.bottom-footer
 					.bottom-footer__item
 						.footer__copy © {{getYear}}. Vittorio 
@@ -37,6 +37,13 @@
 </template>
 
 <script setup>
+import { useMainInfoStore } from "~/stores/maininfo";
+
+const mainInfoStore = useMainInfoStore();
+
+const { links } = mainInfoStore;
+console.log(links);
+
 const getYear = computed(() => {
    return new Date().getFullYear();
 });
@@ -151,6 +158,11 @@ onMounted(() => {
    }
    &__sub-title {
       line-height: 22px;
+   }
+   &__text {
+      font-size: 14px;
+      line-height: 18px;
+      color: var(--text-gray);
    }
 }
 .footer-title {

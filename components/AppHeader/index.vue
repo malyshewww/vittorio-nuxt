@@ -58,7 +58,7 @@ const openCart = () => {
    color: var(--bg-white);
    background-color: var(--bg-milk);
    min-height: 80px;
-   padding: 8px 0 8px;
+   padding: 20px 0 20px;
    z-index: 21;
    transition: transform $time * 2 ease, background-color $time $ttm;
    .page--home & {
@@ -99,6 +99,10 @@ const openCart = () => {
       height: 64px;
       display: block;
       transition: opacity $time $ttm;
+      position: absolute;
+      top: 8px;
+      left: 50%;
+      transform: translateX(-50%);
       .page--home & {
          display: none;
       }

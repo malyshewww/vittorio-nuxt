@@ -18,11 +18,12 @@
 .contacts__form {
    display: flex;
    justify-content: flex-end;
+   margin-top: 5px;
 }
 .form {
    flex: 1 1 auto;
    display: grid;
-   gap: 40px;
+   gap: 28px;
    // max-width: 610px;
    max-width: 31.771vw;
    &__body {

@@ -49,13 +49,6 @@ const {
          "ноты сердца",
          "базовые ноты",
       ];
-      console.log(optionsTitle);
-      // const newOptions = optionsTitle.value.map((item, index) => {
-      //    return {
-      //       item: arrOptions.value[index],
-      //    };
-      // });
-      // console.log(newOptions);
       return {
          breadcrumb,
          info: data,
@@ -116,10 +109,13 @@ const {
    &__content {
       display: flex;
       justify-content: center;
-      margin-top: 100px;
+      margin-top: 104px;
    }
    & .content {
       max-width: 890px;
+      & h3 {
+         margin-bottom: 30px;
+      }
    }
 }
 </style>
