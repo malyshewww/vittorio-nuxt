@@ -1,7 +1,13 @@
 <template lang="pug">
-	form.app-cart__promocode
-		FormInput(type="text" name="promo" placeholder="Введите промокод"  :is-valid="true" :is-promocode="true")
+	form(@submit.prevent).app-cart__promocode
+		FormInput(type="text" name="promo" placeholder="Введите промокод" :is-valid="true" :is-promocode="true" :promocodeInput="promocodeInput")
 </template>
+
+<script setup>
+import { useCartStore } from "~/stores/cart";
+
+const cartStore = useCartStore();
+</script>
 
 <style lang="scss">
 .app-cart {

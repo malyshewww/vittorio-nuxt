@@ -4,14 +4,14 @@
 			li.cart-total__item
 				div.cart-total__caption
 					span Стоимость товаров
-				div.cart-total__value {{formatNumber(cartStore.priceWithoutDiscount)}}
-			li.cart-total__item(v-if="cartStore.sale > 0")
+				div.cart-total__value {{formatNumber(cartStore.orderTotal)}}
+			li.cart-total__item(v-if="cartStore.discount")
 				div.cart-total__caption 
 					span Скидка
-				div.cart-total__value {{formatNumber(cartStore.sale)}}
+				div.cart-total__value {{cartStore.discount}}
 		.cart-total__result.cart-result
 			.cart-result__caption Итого
-			.cart-result__value {{formatNumber(cartStore.totalPrice)}}
+			.cart-result__value {{formatNumber(cartStore.cartTotalPrice)}}
 </template>
 
 <script setup>

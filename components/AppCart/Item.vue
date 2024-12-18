@@ -11,10 +11,10 @@
 					.cart-item__price(v-if="item.unit_price") {{formatNumber(item.unit_price.number)}}
 					button(@click="cartStore.deleteProduct(item)").cart-item__delete
 			.cart-item__counter.quantity-cart
-				button(type="button" @click="cartStore.changeQuantity(item, 'minus')" :disabled="item.quantity <= 1").quantity-cart__button.btn-decrement
+				button(type="button" @click="decreaseCartSum(item, item.quantity, 'minus')" :disabled="item.quantity <= 1").quantity-cart__button.btn-decrement
 				.quantity-cart__count {{item.quantity}}
 				input(type="hidden" :value="item.quantity").quantity-cart__input
-				button(type="button" @click="cartStore.changeQuantity(item, 'plus')").quantity-cart__button.btn-increment
+				button(type="button" @click="increaseCartSum(item, item.quantity, 'plus')").quantity-cart__button.btn-increment
 </template>
 
 <script setup>
@@ -28,6 +28,30 @@ const props = defineProps({
       required: true,
    },
 });
+
+const itemQuantity = ref(props.item.quantity);
+
+watch(
+   () => props.item.quantity,
+   (value) => {
+      itemQuantity.value = value;
+      if (value === 1) {
+         // console.log('disabled value watch 1')
+         // isDisabledMinus.value = true;
+      } else {
+         // isDisabledMinus.value = false;
+      }
+   },
+   { deep: true }
+);
+
+const decreaseCartSum = () => {
+   cartStore.decreaseCartSum(props.item, props.item.quantity - 1);
+};
+
+const increaseCartSum = () => {
+   cartStore.increaseCartSum(props.item, props.item.quantity + 1);
+};
 
 // watch(
 //    () => props.item.quantity,

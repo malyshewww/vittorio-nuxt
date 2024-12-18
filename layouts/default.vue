@@ -1,6 +1,6 @@
 <template lang="pug">
 	AppHeader
-	div(ref="scroller")
+	div(ref="scroller").scroller
 		.page
 			slot
 		AppFooter
@@ -16,26 +16,26 @@ const { $Scrollbar: Scrollbar, $ScrollTrigger: ScrollTrigger } = useNuxtApp();
 const scroller = ref("");
 
 onMounted(() => {
-   // const { bodyScrollBar } = useScrollbar();
-   // ScrollTrigger.scrollerProxy(scroller.value, {
-   //    scrollTop(value) {
-   //       if (arguments.length > 0) {
-   //          bodyScrollBar.scrollTop = value;
-   //       }
-   //       return bodyScrollBar.scrollTop;
-   //    },
-   // });
-   // bodyScrollBar.addListener(ScrollTrigger.update);
-   // ScrollTrigger.defaults({ scroller: scroller.value });
-   // let initialPosition = bodyScrollBar.offset.y;
-   // let currentPosition = bodyScrollBar.offset.y;
-   // // sticky, fixed elements
-   // bodyScrollBar.addListener(({ offset }) => {
-   //    currentPosition = offset.y;
-   //    appStore.isHeaderVisible =
-   //       initialPosition <= currentPosition ? false : true;
-   //    initialPosition = currentPosition;
-   // });
+   const { bodyScrollBar } = useScrollbar();
+   ScrollTrigger.scrollerProxy(scroller.value, {
+      scrollTop(value) {
+         if (arguments.length > 0) {
+            bodyScrollBar.scrollTop = value;
+         }
+         return bodyScrollBar.scrollTop;
+      },
+   });
+   bodyScrollBar.addListener(ScrollTrigger.update);
+   ScrollTrigger.defaults({ scroller: scroller.value });
+   let initialPosition = bodyScrollBar.offset.y;
+   let currentPosition = bodyScrollBar.offset.y;
+   // sticky, fixed elements
+   bodyScrollBar.addListener(({ offset }) => {
+      currentPosition = offset.y;
+      appStore.isHeaderVisible =
+         initialPosition <= currentPosition ? false : true;
+      initialPosition = currentPosition;
+   });
 });
 </script>
 

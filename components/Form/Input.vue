@@ -1,11 +1,11 @@
 <template lang="pug">
 	.form-item(v-if="isPromocode")
-		.form-field(:class="{'promocode': isPromocode, 'active-arrow': isActiveArrow}")
-			input(:type="type" :name="name" :placeholder="placeholder" :disabled="isDisabled" v-model="text" @focus="focusInput" @blur="blurInput" @input="changeInput")
-			span.form-item__arrow(v-if="!isButtonCloseVisible")
+		.form-field(:class="{'promocode': isPromocode, 'active-arrow': isActiveArrow || promocodeValue}")
+			input(:type="type" :name="name" :placeholder="placeholder" :disabled="isDisabled" v-on:keyup.enter="checkPromocode" v-model.trim="promocodeInput" @focus="focusInput" @blur="blurInput" @input="changeInput")
+			span.form-item__arrow(v-if="!isButtonCloseVisible" @click="checkPromocode")
 			.form-item__actions(v-if="isButtonCloseVisible")
-				button(type="button" @click="resetInput").form-item__close
-		FormErrorMessage(v-if="!isValid" :text="errorMessage")
+				button(type="button" @click="deletePromocode").form-item__close
+		FormPromocodeMessage(v-if="cartStore.isPromocodeChecked" :is-valid="cartStore.isPromocodeValid" :text="cartStore.promocodeMessage")
 	.form-item(v-else)
 		.form-field(:class="{promocode: isPromocode}")
 			input(:type="type" :name="name" :placeholder="placeholder" :disabled="isDisabled")
@@ -13,6 +13,10 @@
 </template>
 
 <script setup>
+import { useCartStore } from "~/stores/cart";
+
+const cartStore = useCartStore();
+
 defineProps({
    type: {
       type: String,
@@ -46,14 +50,62 @@ defineProps({
       default: false,
    },
 });
-const text = ref("");
 
 const isActiveArrow = ref(false);
 const isButtonCloseVisible = ref(false);
 
+const promocodeInput = ref("");
+
+const promocodeValue = ref(cartStore.promocodeValue);
+
+const isPromocodeValid = ref(cartStore.isPromocodeValid);
+
+const promocodeMessage = ref(cartStore.promocodeMessage);
+
+watch(
+   () => isPromocodeValid.value,
+   (val) => {
+      if (val === false) {
+         promocodeMessage.value = "Промокод не найден";
+         console.log("not valid");
+      }
+      if (val === true) {
+         promocodeMessage.value = "Промокод применён";
+         console.log(" valid");
+      }
+   }
+);
+
+watch(
+   () => promocodeInput.value,
+   (newVal, oldVal) => {
+      if (!isPromocodeValid.value && newVal.length > oldVal.length) {
+         isButtonCloseVisible.value = false;
+      }
+      if (!isPromocodeValid.value && oldVal.length > newVal.length) {
+         isButtonCloseVisible.value = false;
+      }
+   }
+);
+
+const checkPromocode = () => {
+   cartStore.checkPromocode(promocodeInput.value);
+   isActiveArrow.value = false;
+   isButtonCloseVisible.value = true;
+};
+
+const deletePromocode = () => {
+   cartStore.deletePromocode();
+   isActiveArrow.value = false;
+   promocodeInput.value = "";
+   isButtonCloseVisible.value = false;
+   promocodeValue.value = false;
+};
+
 const changeInput = (e) => {
-   text.value = e.target.value;
-   isButtonCloseVisible.value = text.value.length > 0 ? true : false;
+   promocodeInput.value = e.target.value;
+   isActiveArrow.value = promocodeInput.value.length > 0 ? true : false;
+   promocodeValue.value = promocodeInput.value.length > 0 ? true : false;
 };
 const focusInput = (e) => {
    isActiveArrow.value = !isActiveArrow.value;
@@ -61,21 +113,21 @@ const focusInput = (e) => {
 const blurInput = (e) => {
    isActiveArrow.value = !isActiveArrow.value;
 };
-const resetInput = (e) => {
-   text.value = "";
-   isButtonCloseVisible.value = false;
-   // console.log(text.value);
-   // e.target.value = "";
-};
+
+if (promocodeValue.value) {
+   promocodeInput.value = promocodeValue.value;
+   promocodeMessage.value = "Промокод применён";
+}
 </script>
 
 <style lang="scss" scoped>
 @use "assets/scss/_vars" as *;
+@use "assets/scss/mixins" as m;
 .form-field {
-   display: flex;
    position: relative;
    &.active-arrow {
       & .form-item__arrow {
+         pointer-events: all;
          &::after {
             transform: scale(1);
          }
@@ -103,6 +155,11 @@ const resetInput = (e) => {
       display: grid;
       place-items: center;
       z-index: 5;
+      @include m.hover {
+         &:hover {
+            cursor: pointer;
+         }
+      }
    }
    &__close {
       width: 100%;
@@ -132,6 +189,7 @@ const resetInput = (e) => {
       border-radius: 50%;
       display: grid;
       place-items: center;
+      pointer-events: none;
       &::after {
          content: "";
          position: absolute;
@@ -154,6 +212,11 @@ const resetInput = (e) => {
          mask-position: center;
          background-color: var(--bg-smoke);
          transition: background-color $time * 2 $ttm;
+      }
+      @include m.hover {
+         &:hover {
+            cursor: pointer;
+         }
       }
    }
    & input {

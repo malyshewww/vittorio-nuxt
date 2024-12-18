@@ -3,8 +3,14 @@
 		.empty-cart__heading
 			.empty-cart__title Корзина пока пуста
 			.empty-cart__sub-title Наполните её ароматами Vittorio 
-		UiButtonPrimary(title="Перейти в каталог")
+		UiButtonPrimary(title="Перейти в каталог" @button-action="changeRoute")
 </template>
+
+<script setup>
+const changeRoute = () => {
+   navigateTo("/products");
+};
+</script>
 
 <style lang="scss">
 .app-cart-empty {
