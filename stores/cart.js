@@ -2,7 +2,7 @@ const token = useToken();
 
 export const useCartStore = defineStore("cart", () => {
    const URL = useRuntimeConfig().public.apiBase;
-   const isOpenCart = ref(true);
+   const isOpenCart = ref(false);
    const cart = ref([]);
    const cartToken = ref("");
    const orderItems = ref([]);
@@ -22,6 +22,60 @@ export const useCartStore = defineStore("cart", () => {
    const promocodeValue = ref("");
    const promocodeMessage = ref("");
    const couponCode = ref("");
+   const formData = reactive({
+      email: "",
+      name: "",
+      phone: "",
+      address: "",
+      mailing: 0,
+      agree: 0,
+   });
+   const model = reactive({
+      name: {
+         val: "",
+      },
+      phone: {
+         val: "",
+      },
+      email: {
+         val: "",
+      },
+      address: {
+         val: "",
+      },
+      mailing: {
+         val: 0,
+      },
+      agree: {
+         val: 0,
+      },
+   });
+   const formStatus = reactive({
+      name: {
+         isValid: true,
+         message: "ошибка",
+      },
+      phone: {
+         isValid: true,
+         errorMessmessageage: "ошибка",
+      },
+      email: {
+         isValid: true,
+         message: "ошибка",
+      },
+      address: {
+         isValid: true,
+         message: "ошибка",
+      },
+      agree: {
+         isValid: true,
+         message: "подтвердите, что вы ознакомились с документами",
+      },
+      mailing: {
+         isValid: true,
+         message: "подтвердите, что вы согласны",
+      },
+   });
    const openCart = () => {
       isOpenCart.value = true;
    };
@@ -287,6 +341,47 @@ export const useCartStore = defineStore("cart", () => {
       }
       isPromocodeChecked.value = false;
    }
+   async function submitFormOrder() {
+      const options = {
+         data: {
+            type: "order--default",
+            meta: {
+               name: formData.name,
+               phone: formData.phone,
+               email: formData.email,
+               address: formData.address,
+               mailing: formData.mailing,
+               agree: formData.agree,
+            },
+         },
+      };
+      try {
+         const response = await fetch(
+            `${URL}/jsonapi/checkout-parfum/${ORDER_ID.value}`,
+            {
+               headers: {
+                  Accept: "application/vnd.api+json",
+                  "Content-Type": "application/vnd.api+json",
+                  "Commerce-Cart-Token": token,
+               },
+               method: "POST",
+               body: JSON.stringify(options),
+            }
+         );
+         const result = await response.json();
+         if (response.ok) {
+            console.log(result, "ok");
+         } else {
+            throw new Error(
+               "error from pay Request ",
+               response.status,
+               response.statusText
+            );
+         }
+      } catch (error) {
+         console.log(error);
+      }
+   }
    return {
       cart,
       isOpenCart,
@@ -315,5 +410,9 @@ export const useCartStore = defineStore("cart", () => {
       discount,
       orderTotal,
       couponCode,
+      submitFormOrder,
+      formData,
+      model,
+      formStatus,
    };
 });

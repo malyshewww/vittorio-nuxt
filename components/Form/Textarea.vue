@@ -1,12 +1,17 @@
 <template lang="pug">
 	.form-item.hide-scroller
 		.form-field
-			textarea(:name="name" :placeholder="placeholder")
+			textarea(:name="name" :placeholder="placeholder" :value="modelValue" @input="emit('update:modelValue', $event.target.value)")
 		FormErrorMessage(v-if="!isValid" :text="errorMessage")
 </template>
 
 <script setup>
+const emit = defineEmits(["update:modelValue"]);
+
 defineProps({
+   modelValue: {
+      required: false,
+   },
    name: {
       type: String,
       required: true,

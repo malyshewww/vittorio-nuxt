@@ -3,13 +3,7 @@
 		.container
 			.footer__body 
 				.footer__main.main-footer(v-if="route.name !== 'contacts'")
-					.main-footer__subscribe
-						form.subscribe-form
-							.subscribe-form__heading
-								.subscribe-form__title.footer-title Подписаться на новости
-								.subscribe-form__sub-title Оформите подписку, чтобы быть в курсе наших новостей
-							FormInput(type="email" placeholder="Электронная почта" name="email" :is-valid="true")
-							.subscribe-form__text Оставляя свой электронный адрес, вы подтверждаете, что согласны c #[a(href="/page/text") политикой обработки персональных данных]
+					AppFooterSubscribeForm
 					.main-footer__middle
 						nuxt-link(to="/").main-footer__logo
 							img(:src="`/images/footer-logo.svg`" alt="логотип")
@@ -143,26 +137,6 @@ onMounted(() => {
       flex-grow: 1;
    }
    &__logo {
-   }
-}
-.subscribe-form {
-   display: flex;
-   flex-direction: column;
-   align-items: stretch;
-   gap: 12px;
-   &__heading {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      margin-bottom: 27px;
-   }
-   &__sub-title {
-      line-height: 22px;
-   }
-   &__text {
-      font-size: 14px;
-      line-height: 18px;
-      color: var(--text-gray);
    }
 }
 .footer-title {

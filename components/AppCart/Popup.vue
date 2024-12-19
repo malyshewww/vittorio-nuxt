@@ -16,15 +16,15 @@ const cartStore = useCartStore();
 const popup = ref("");
 
 onMounted(() => {
-   //    const header = document.querySelector(".header");
-   //    const headerHeight = header.getBoundingClientRect().height;
-   //    const { bodyScrollBar } = useScrollbar();
-   //    popup.value.style.top = `${
-   //       bodyScrollBar.offset.y + parseInt(headerHeight)
-   //    }px`;
-   //    bodyScrollBar.addListener(({ offset }) => {
-   //       popup.value.style.top = `${offset.y + parseInt(headerHeight)}px`;
-   //    });
+   const header = document.querySelector(".header");
+   const headerHeight = header.getBoundingClientRect().height;
+   const { bodyScrollBar } = useScrollbar();
+   popup.value.style.top = `${
+      bodyScrollBar.offset.y + parseInt(headerHeight)
+   }px`;
+   bodyScrollBar.addListener(({ offset }) => {
+      popup.value.style.top = `${offset.y + parseInt(headerHeight)}px`;
+   });
 });
 </script>
 

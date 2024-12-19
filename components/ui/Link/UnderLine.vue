@@ -28,7 +28,7 @@ const props = defineProps({
 </script>
 
 <style lang="scss">
-@use "~/assets/scss/_vars" as *;
+@use "~/assets/scss/vars" as *;
 .link-under {
    position: relative;
    transition: color $time * 2 $ttm;
@@ -49,6 +49,18 @@ const props = defineProps({
       @media (any-hover: hover) {
          &:hover {
             color: var(--bg-white);
+         }
+      }
+   }
+   &.link-border {
+      &::before {
+         content: none;
+      }
+      border-bottom: 1px solid var(--text-gray);
+      @media (any-hover: hover) {
+         &:hover {
+            color: var(--bg-smoke);
+            border-bottom: 1px solid var(--bg-smoke);
          }
       }
    }

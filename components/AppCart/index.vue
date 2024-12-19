@@ -1,8 +1,8 @@
 <template lang="pug">
 	.app-cart(:class="{active: cartStore.isOpenCart}" @click="closeCart")
-		.app-cart__wrapper
+		.app-cart__wrapper(@click.stop)
 			div(v-if="cartStore.orderItems.length > 0")
-				.app-cart__body(@click.stop)
+				.app-cart__body
 					UiButtonLine(text="Скрыть" @click="closeCart")
 					.app-cart__products
 						.app-cart__caption.cart-caption Корзина
@@ -11,7 +11,7 @@
 						AppCartPromocode
 					AppCartOrder
 					AppCartTotal(:total-price="cartStore.totalPrice")
-				UiButtonPrimary(title="Оформить заказ" class-names="app-cart-button")
+				UiButtonPrimary(title="Оформить заказ" class-names="app-cart-button" @button-action="submitFormOrder")
 			div(v-else)
 				.app-cart__body(@click.stop)
 					UiButtonLine(text="Скрыть" @click="closeCart")
@@ -26,6 +26,23 @@ const cartStore = useCartStore();
 const closeCart = () => {
    cartStore.closeCart();
 };
+
+const submitFormOrder = () => {
+   console.log("scroll");
+   cartStore.submitFormOrder();
+   // scrollToSection("cart-order");
+};
+
+function scrollToSection(sectionId) {
+   const section = document.getElementById(sectionId);
+   if (section) {
+      section.scrollIntoView({
+         behavior: "smooth",
+         block: "start",
+         inline: "nearest",
+      });
+   }
+}
 
 watch(
    () => cartStore.orderItems,
