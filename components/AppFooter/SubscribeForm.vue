@@ -25,6 +25,14 @@ const formData = reactive({
    webform_id: "news",
 });
 
+// Наблюдатели за изменения в полях ввода
+watch(
+   () => model.email.val,
+   (val) => {
+      formData.mail = val;
+   }
+);
+
 const runtimeConfig = useRuntimeConfig();
 
 const submitForm = async (e) => {
@@ -59,6 +67,7 @@ const submitForm = async (e) => {
       console.log(result);
       if (result.sid) {
          formStatus.email.isValid = true;
+         model.email.val = "";
       } else {
          if (result.error.email) {
             formStatus.email.message = result.error.phone;

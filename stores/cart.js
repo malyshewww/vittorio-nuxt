@@ -23,12 +23,12 @@ export const useCartStore = defineStore("cart", () => {
    const promocodeMessage = ref("");
    const couponCode = ref("");
    const formData = reactive({
-      email: "",
-      name: "",
-      phone: "",
-      address: "",
-      mailing: 0,
-      agree: 0,
+      email: "123",
+      name: "313",
+      phone: "3123",
+      address: "3131",
+      mailing: 1,
+      agree: 1,
    });
    const model = reactive({
       name: {
@@ -346,12 +346,12 @@ export const useCartStore = defineStore("cart", () => {
          data: {
             type: "order--default",
             meta: {
-               name: formData.name,
-               phone: formData.phone,
-               email: formData.email,
-               address: formData.address,
-               mailing: formData.mailing,
-               agree: formData.agree,
+               name: "formData.name",
+               phone: "formData.phone",
+               email: "formData.email",
+               address: "formData.address",
+               mailing: 1,
+               agree: 1,
             },
          },
       };
@@ -369,11 +369,12 @@ export const useCartStore = defineStore("cart", () => {
             }
          );
          const result = await response.json();
+         console.log("result", result);
          if (response.ok) {
             console.log(result, "ok");
          } else {
             throw new Error(
-               "error from pay Request ",
+               "error from Request",
                response.status,
                response.statusText
             );

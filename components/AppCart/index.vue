@@ -10,7 +10,7 @@
 							AppCartItem(v-for="(item, index) in cartStore.orderItems" :key="item.id" :item.sync="item")
 						AppCartPromocode
 					AppCartOrder
-					AppCartTotal(:total-price="cartStore.totalPrice")
+					AppCartTotal
 				UiButtonPrimary(title="Оформить заказ" class-names="app-cart-button" @button-action="submitFormOrder")
 			div(v-else)
 				.app-cart__body(@click.stop)
@@ -28,7 +28,7 @@ const closeCart = () => {
 };
 
 const submitFormOrder = () => {
-   console.log("scroll");
+   console.log(cartStore.formData);
    cartStore.submitFormOrder();
    // scrollToSection("cart-order");
 };

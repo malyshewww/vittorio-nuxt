@@ -16,16 +16,8 @@
 
 <script setup>
 import { useCartStore } from "~/stores/cart";
-
 const cartStore = useCartStore();
-
-const props = defineProps({
-   totalPrice: {
-      type: Number,
-      required: true,
-      default: 0,
-   },
-});
+const { orderTotal, cartTotalPrice } = cartStore;
 </script>
 
 <style lang="scss">

@@ -2,6 +2,7 @@
 	.contacts__form
 		form(@submit.prevent="submitForm($event)").form
 			h2.form__title Задать вопрос автору
+			| {{model.name.val}}
 			.form__body
 				.form__items
 					input(type="hidden" name="webform_id")
@@ -12,7 +13,6 @@
 				.form__bottom
 					FormAgreement
 					UiButtonPrimary(type="submit" :title="titleButtonSubmit" :disabled="isDisabledButtonSubmit")
-					| {{model.name.val}}
 </template>
 
 <script setup>
@@ -55,6 +55,32 @@ const titleButtonSubmit = ref("Отправить");
 
 const isDisabledButtonSubmit = ref(false);
 
+// Наблюдатели за изменения в полях ввода
+watch(
+   () => model.name.val,
+   (val) => {
+      formData.name = val;
+   }
+);
+watch(
+   () => model.phone.val,
+   (val) => {
+      formData.phone = val;
+   }
+);
+watch(
+   () => model.email.val,
+   (val) => {
+      formData.mail = val;
+   }
+);
+watch(
+   () => model.question.val,
+   (val) => {
+      formData.question = val;
+   }
+);
+
 const formData = reactive({
    name: model.name.val,
    mail: model.email.val,
@@ -64,6 +90,7 @@ const formData = reactive({
 });
 
 const submitForm = async (e) => {
+   console.log("data", formData);
    // fetch(`${runtimeConfig.public.apiBase}/session/token`)
    //    .then(function (response) {
    //       return response.text();
@@ -91,7 +118,6 @@ const submitForm = async (e) => {
    //          });
    //    });
    try {
-      const buttonSubmit = e.target.querySelector('button[type="submit"]');
       titleButtonSubmit.value = "идет отправка...";
       isDisabledButtonSubmit.value = true;
       const tokenResponse = await fetch(
@@ -120,7 +146,6 @@ const submitForm = async (e) => {
       //    throw new Error("Ошибка при отправке формы");
       // }
       const result = await formResponse.json();
-      console.log(result);
       if (result.sid) {
          titleButtonSubmit.value = "Отправить";
          isDisabledButtonSubmit.value = false;
@@ -128,6 +153,10 @@ const submitForm = async (e) => {
          formStatus.phone.isValid = true;
          formStatus.email.isValid = true;
          formStatus.question.isValid = true;
+         model.name.val = "";
+         model.phone.val = "";
+         model.email.val = "";
+         model.question.val = "";
       } else {
          if (result.error.name) {
             formStatus.name.message = result.error.name;
@@ -145,7 +174,6 @@ const submitForm = async (e) => {
             formStatus.question.message = result.error.question;
             formStatus.question.isValid = false;
          }
-         buttonSubmit.removeAttribute("disabled");
          titleButtonSubmit.value = "Отправить";
          isDisabledButtonSubmit.value = false;
       }
