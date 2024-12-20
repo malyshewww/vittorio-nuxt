@@ -1,13 +1,15 @@
 <template lang="pug">
-	SectionMainFragrances(:countries="front.countries")
-	SectionMainNotes(:products="front.products" :half="front.halfProducts")
-	SectionMainWelcome(:text="front.text")
+	SectionMainHero
+	.page-sections
+		SectionMainFragrances(:countries="front.countries")
+		SectionMainNotes(:products="front.products" :half="front.halfProducts")
+		SectionMainWelcome(:text="front.text")
 </template>
 
 <script setup>
-definePageMeta({
-   layout: "main",
-});
+// definePageMeta({
+//    layout: "main",
+// });
 
 useHead({
    bodyAttrs: {
@@ -67,4 +69,11 @@ const {
 onMounted(() => {});
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.page-sections {
+   background-color: var(--bg-milk);
+   position: relative;
+   z-index: 2;
+   overflow: hidden;
+}
+</style>

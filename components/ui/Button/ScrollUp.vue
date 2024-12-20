@@ -20,7 +20,9 @@ const observerButtonUp = () => {
    const observer = new IntersectionObserver(handleIntersection, {
       threshold: 0,
    });
-   observer.observe(heroSection);
+   if (heroSection) {
+      observer.observe(heroSection);
+   }
 };
 
 const scrollTop = () => {

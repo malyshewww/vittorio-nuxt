@@ -21,6 +21,9 @@ const changeRoute = () => {
    grid-template-columns: 100%;
    justify-items: start;
    gap: 34px;
+   @include bp-md {
+      gap: 20px;
+   }
    &__heading {
       display: grid;
       grid-template-columns: 100%;
@@ -34,6 +37,10 @@ const changeRoute = () => {
       line-height: 44px;
       text-transform: uppercase;
       color: var(--bg-smoke);
+      @include bp-md {
+         font-size: 22px;
+         line-height: 28px;
+      }
    }
    // .empty-cart__sub-title
    &__sub-title {

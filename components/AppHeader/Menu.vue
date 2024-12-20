@@ -51,7 +51,6 @@ const newMenu = computed(() => {
 
 <style lang="scss">
 @use "assets/scss/_vars" as *;
-@use "assets/scss/_mixins" as m;
 .menu-header {
    color: var(--bg-white);
    position: fixed;
@@ -62,6 +61,13 @@ const newMenu = computed(() => {
    opacity: 0;
    pointer-events: none;
    transition: opacity $time * 2 $ttm;
+   @include bp-xl {
+      overflow-y: auto;
+      overflow-x: hidden;
+      & .container {
+         height: 100%;
+      }
+   }
    &.active {
       pointer-events: all;
       opacity: 1;
@@ -70,11 +76,23 @@ const newMenu = computed(() => {
       max-width: 1520px;
       margin: 0 auto;
       padding: 16.327vh 0 10.204vh;
+      @include bp-xl {
+         padding: calc(var(--header-height) + 52px) 0 32px;
+         display: flex;
+         flex-direction: column;
+         height: 100%;
+         gap: 48px;
+      }
    }
    &__top {
       display: flex;
       justify-content: space-between;
       gap: 20px;
+      @include bp-xl {
+         flex-direction: column;
+         justify-content: flex-start;
+         gap: 48px;
+      }
    }
    &__bottom {
       display: flex;
@@ -82,6 +100,12 @@ const newMenu = computed(() => {
       justify-content: space-between;
       align-items: flex-end;
       margin-top: 6.327vh;
+      @include bp-xl {
+         flex-direction: column;
+         align-items: center;
+         margin-top: auto;
+         gap: 32px;
+      }
    }
    &__actions {
       flex: 0 1 620px;
@@ -89,6 +113,13 @@ const newMenu = computed(() => {
       grid-template-columns: 108px 1fr;
       align-items: start;
       gap: 32px;
+      @include bp-xl {
+         flex: 0;
+         grid-template-columns: 100%;
+         gap: 20px;
+         justify-items: center;
+         width: 100%;
+      }
    }
    &__logo {
       align-self: center;
@@ -101,6 +132,16 @@ const newMenu = computed(() => {
       align-items: center;
       gap: 20px;
       color: var(--text-gray);
+      font-size: 14px;
+      line-height: 18px;
+      @include bp-xl {
+         flex: 0;
+         gap: 12px;
+      }
+      @include bp-md {
+         font-size: 13px;
+         line-height: 17px;
+      }
    }
    &__politic {
    }
@@ -109,6 +150,10 @@ const newMenu = computed(() => {
    flex: 0 1 600px;
    overflow-y: auto;
    height: 32.653vh;
+   @include bp-xl {
+      flex: 0 1 auto;
+      height: auto;
+   }
    &::-webkit-scrollbar {
       background-color: transparent;
       width: 2px;
@@ -123,11 +168,14 @@ const newMenu = computed(() => {
       width: 2px;
    }
    &__list {
-      @include m.reset-list;
+      @include reset-list;
       display: flex;
       flex-direction: column;
       align-items: flex-start;
       gap: 32px;
+      @include bp-xl {
+         gap: 16px;
+      }
    }
    &__link {
       font-family: var(--second-family);
@@ -152,14 +200,24 @@ const newMenu = computed(() => {
          opacity: 0;
          z-index: -1;
          transition: transform $time * 2 $ttm, opacity $time $ttm;
+         @include bp-xl {
+            content: none;
+         }
       }
-      @media (any-hover: hover) {
+      @include hover {
          &:hover {
             &::after {
                transform: translateX(0);
                opacity: 1;
             }
          }
+      }
+      @include bp-xl {
+         display: block;
+      }
+      @include bp-md {
+         font-size: 24px;
+         line-height: 28px;
       }
    }
 }
@@ -168,6 +226,12 @@ const newMenu = computed(() => {
    padding-right: 78px;
    height: 60.816vh;
    overflow-y: auto;
+   @include bp-xl {
+      overflow-y: hidden;
+      height: auto;
+      flex: 0 1 auto;
+      padding: 0;
+   }
    &::-webkit-scrollbar {
       background-color: transparent;
       width: 2px;
@@ -182,10 +246,13 @@ const newMenu = computed(() => {
       width: 2px;
    }
    &__list {
-      @include m.reset-list;
+      @include reset-list;
       display: flex;
       flex-direction: column;
       gap: 12px;
+      @include bp-xl {
+         gap: 8px;
+      }
    }
    &__item {
       display: flex;
@@ -203,6 +270,10 @@ const newMenu = computed(() => {
          height: 1px;
          background-color: currentColor;
       }
+      @include bp-md {
+         gap: 8px;
+         padding-bottom: 8px;
+      }
    }
    &__num {
       font-weight: 700;
@@ -210,9 +281,14 @@ const newMenu = computed(() => {
       line-height: 16px;
       letter-spacing: 0.02em;
       text-transform: uppercase;
-      width: 10px;
+      width: 15px;
       flex-shrink: 0;
       color: var(--text-gray);
+      @include bp-md {
+         font-size: 10px;
+         line-height: 12px;
+         width: 13px;
+      }
    }
    &__link {
       font-family: var(--second-family);
@@ -220,6 +296,10 @@ const newMenu = computed(() => {
       font-size: 36px;
       line-height: 44px;
       text-transform: uppercase;
+      @include bp-md {
+         font-size: 22px;
+         line-height: 28px;
+      }
    }
 }
 .stores-header {
@@ -231,6 +311,16 @@ const newMenu = computed(() => {
    &__caption {
       font-size: 14px;
       line-height: 18px;
+   }
+   @include bp-xl {
+      padding: 0;
+      padding-top: 19px;
+      border-left: 0;
+      border-top: 1px solid var(--text-gray);
+      align-items: center;
+      width: 100%;
+      gap: 16px;
+      text-align: center;
    }
 }
 </style>

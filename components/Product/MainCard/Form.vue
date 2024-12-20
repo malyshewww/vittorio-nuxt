@@ -28,3 +28,13 @@ const addToCart = async () => {
 
 onMounted(() => {});
 </script>
+
+<style lang="scss" scoped>
+.product-info {
+   &__form {
+      @include bp-md {
+         width: 100%;
+      }
+   }
+}
+</style>

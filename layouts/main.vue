@@ -1,12 +1,10 @@
 <template lang="pug">
-	SectionMainHeroVideo
+	SectionMainHeroVideo(v-if="route.name === 'index'")
 	AppHeader
 	div(ref="scroller").scroller
 		.page
-			SectionMainHero
-			.page-sections
-				slot
-		AppFooter
+			slot
+		//- AppFooter
 	UiButtonScrollUp
 	NotesNavigation
 </template>
@@ -52,22 +50,16 @@ onMounted(() => {
 onUnmounted(() => {});
 </script>
 
-<style lang="scss" scoped>
-.page {
-   padding: 0px 0 0px;
-}
-.page-sections {
-   background-color: var(--bg-milk);
-   position: relative;
-   z-index: 2;
-   overflow: hidden;
-}
+<style lang="scss">
 .scroller {
    height: 100vh;
    overflow: hidden;
 }
 .scrollbar-track-x {
    display: none !important;
+}
+.scrollbar-track-y {
+   z-index: 30 !important;
 }
 .scrollbar-track {
    z-index: 30 !important;

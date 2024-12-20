@@ -7,10 +7,17 @@
 		.preview-slider__pagination.image-pagination(v-if="images.length > 1")
 			ul.image-pagination__list
 				li.image-pagination__item(v-for="(image, idx) in images" :key="idx" :class="{active: currentImage === idx}" @click="switchImages(idx)")
-		.swiper-pagination(v-if="images.length > 1" ref="imagePagination")
+		.swiper-pagination-wrap
+			.swiper-pagination(ref="imagePagination" v-if="images.length > 1" )
 </template>
 
 <script setup>
+import { throttle } from "lodash-es";
+import Swiper from "swiper";
+import { Pagination } from "swiper/modules";
+import "swiper/css";
+// import "swiper/css/pagination";
+
 const props = defineProps({
    url: {
       type: String,
@@ -30,6 +37,55 @@ const switchImages = (key) => {
 const initialState = () => {
    currentImage.value = 0;
 };
+
+const imageSlider = ref("");
+const imageSwiper = ref("");
+const imagePagination = ref("");
+
+onMounted(() => {
+   const initializeSwiper = () => {
+      imageSwiper.value = new Swiper(imageSlider.value, {
+         modules: [Pagination],
+         wrapperClass: "image-switch",
+         slideClass: "image-switch__item",
+         spaceBetween: 10,
+         slidesPerView: 1,
+         speed: 800,
+         centeredSlides: true,
+         observer: true,
+         observeSlideChildren: true,
+         pagination: {
+            el: imagePagination.value,
+            clickable: true,
+         },
+      });
+   };
+   const destroySwiper = () => {
+      if (imageSwiper.value) {
+         imageSwiper.value.destroy();
+         imageSwiper.value = null;
+      }
+   };
+   const checkScreenWidth = () => {
+      if (window.innerWidth < 1024) {
+         initializeSwiper();
+      } else {
+         destroySwiper();
+      }
+   };
+   checkScreenWidth();
+   const watchResize = throttle(function () {
+      checkScreenWidth();
+      // here you should mutate your `device_type` via a Vuex mutation/action
+      // and make your axios call by preferably fetching either a const/let variable
+      // or a global vuex state
+   }, 1000);
+   window.addEventListener("resize", watchResize);
+});
+
+onUnmounted(() => {
+   imageSwiper.value = null;
+});
 </script>
 
 <style lang="scss">
@@ -43,13 +99,16 @@ const initialState = () => {
       padding-bottom: math.div(512, 425) * 100%;
       display: block;
       overflow: hidden;
-      @media (any-hover: hover) {
+      @include hover {
          &:hover {
             & .image-pagination {
                opacity: 1;
                transform: translateY(0);
             }
          }
+      }
+      @include bp-md {
+         padding-bottom: math.div(420, 335) * 100%;
       }
    }
    &__images {
@@ -71,12 +130,12 @@ const initialState = () => {
    left: 0;
    top: 0;
    z-index: 5;
-   @include m.bp-xl {
+   @include bp-xl {
       position: static;
    }
    &__item {
       flex-grow: 1;
-      @include m.bp-xl {
+      @include bp-xl {
          flex-grow: 0;
          flex-shrink: 0;
          width: 100%;
@@ -92,7 +151,7 @@ const initialState = () => {
             opacity: 1;
             z-index: -1;
          }
-         @include m.hover {
+         @include hover {
             &:hover {
                cursor: pointer;
                & .image-switch__picture {
@@ -116,7 +175,6 @@ const initialState = () => {
       pointer-events: none;
       top: 0;
       transform: translateX(-50%);
-      //   z-index: var(--bg-midnight-100);
       & > * {
          width: 100%;
          height: 100%;
@@ -125,7 +183,7 @@ const initialState = () => {
             height: 100%;
          }
       }
-      @include m.bp-xl {
+      @include bp-xl {
          opacity: 1;
          position: static;
          transform: none;
@@ -142,8 +200,11 @@ const initialState = () => {
    opacity: 0;
    transform: translateY(100%);
    transition: opacity $time * 2 $ttm, transform $time * 2 $ttm;
+   @include bp-xl {
+      display: none;
+   }
    &__list {
-      @include m.reset-list;
+      @include reset-list;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -158,12 +219,12 @@ const initialState = () => {
       &.active {
          opacity: 1;
       }
-      @media (any-hover: hover) {
+      @include hover {
          &:hover {
             cursor: pointer;
          }
       }
-      @include m.bp-xl {
+      @include bp-xl {
          width: 20px;
          height: 2px;
          flex-shrink: 0;
@@ -171,29 +232,47 @@ const initialState = () => {
    }
 }
 .swiper-pagination {
-   position: static;
    justify-content: center;
-   display: none;
-   @include m.bp-xl {
+   bottom: 8px;
+   &-wrap {
+      display: none;
+      position: absolute;
+      bottom: 8px;
+      left: 0;
+      width: 100%;
+      padding: 0 8px;
+      @include bp-xl {
+         display: flex;
+      }
+   }
+   @include bp-xl {
       display: flex;
+      align-items: center;
+      gap: 3px;
    }
    & .swiper-pagination-bullet {
-      width: 20px;
+      width: auto;
+      flex-grow: 1;
       height: 2px;
       flex-shrink: 0;
       border-radius: 0;
-      //   background: var(--bg-white-dirt);
-      opacity: 1;
+      background: var(--bg-smoke);
+      opacity: 0.3;
       &-active {
-         background: var(--text-gray);
+         opacity: 1;
+         background: var(--bg-smoke);
       }
    }
-   & .swiper-horizontal > .swiper-pagination-bullets .swiper-pagination-bullet,
-   .swiper-pagination-horizontal.swiper-pagination-bullets
-      .swiper-pagination-bullet {
-      width: 20px;
+   &.swiper-pagination.swiper-pagination-clickable.swiper-pagination-bullets.swiper-pagination-horizontal {
+      width: 100%;
+      // width: calc(100% - 16px);
+   }
+   & .swiper-pagination-bullets .swiper-pagination-bullet {
+      width: auto;
+      flex-grow: 1;
       height: 2px;
       flex-shrink: 0;
+      margin: 0 !important;
    }
 }
 </style>

@@ -104,17 +104,39 @@ const {
          width: 100%;
          height: 1px;
          background: var(--bg-smoke);
+         @include bp-xl {
+            top: -55px;
+         }
+         @include bp-md {
+            top: -35px;
+         }
+      }
+      @media screen and (max-width: 1600px) {
+         padding-right: 0;
+      }
+      @include bp-xxl {
+         flex-direction: column;
+         align-items: flex-start;
       }
    }
    &__content {
       display: flex;
       justify-content: center;
       margin-top: 104px;
+      @include bp-xl {
+         margin-top: 80px;
+      }
+      @include bp-xl {
+         margin-top: 40px;
+      }
    }
    & .content {
       max-width: 890px;
       & h3 {
          margin-bottom: 30px;
+         @include bp-md {
+            margin-bottom: 20px;
+         }
       }
    }
 }

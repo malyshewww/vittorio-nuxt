@@ -61,6 +61,10 @@ defineExpose({
       font-weight: 400;
       line-height: 22px;
       margin-bottom: 16px;
+      @include bp-md {
+         font-size: 14px;
+         line-height: 18px;
+      }
    }
    & ul {
       list-style: none;

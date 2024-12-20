@@ -21,13 +21,19 @@ const { links } = mainInfoStore;
 </script>
 
 <style lang="scss" scoped>
-@use "~/assets/scss/_vars" as *;
+@use "assets/scss/vars" as *;
+@use "assets/scss/mixins" as m;
 .actions-contacts {
    display: grid;
    grid-template-columns: 100%;
    gap: 40px;
-   // max-width: 659px;
    max-width: 34.323vw;
+   @include m.bp-xxxl {
+      max-width: 100%;
+   }
+   @include m.bp-md {
+      gap: 20px;
+   }
    &__item {
       display: flex;
       flex-direction: column;
@@ -53,6 +59,10 @@ const { links } = mainInfoStore;
          &:hover {
             color: var(--text-gray);
          }
+      }
+      @include m.bp-xl {
+         font-size: 22px;
+         line-height: 28px;
       }
    }
 }

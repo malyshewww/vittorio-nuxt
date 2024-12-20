@@ -41,33 +41,34 @@ const {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 80px 40px;
-      // @media screen and (max-width: $xxxl) {
-      //    grid-template-columns: repeat(3, 1fr);
-      // }
-      // @media screen and (max-width: $xxl) {
-      //    grid-template-columns: repeat(2, 1fr);
-      //    gap: 40px;
-      // }
-      // @media screen and (max-width: $md) {
-      //    grid-template-columns: 100%;
-      //    gap: 20px;
-      // }
+      @include bp-xxxl {
+         grid-template-columns: repeat(3, 1fr);
+      }
+      @include bp-xxl {
+         grid-template-columns: repeat(2, 1fr);
+         gap: 40px;
+      }
+      @include bp-md {
+         grid-template-columns: 100%;
+         gap: 20px;
+      }
    }
    &__content {
       grid-column: span 2;
       max-width: 730px;
       font-size: 16px;
       line-height: 22px;
-      // @media screen and (max-width: $xxl) {
-      //    grid-column: span 1;
-      // }
-      // @media screen and (max-width: $xl) {
-      //    grid-column: span 2;
-      //    max-width: 100%;
-      // }
-      // @media screen and (max-width: $md) {
-      //    grid-column: 1 / -1;
-      // }
+      @include bp-xxxl {
+         grid-column: span 1;
+      }
+      @include bp-xxl {
+         grid-column: span 2;
+         max-width: 100%;
+      }
+      @include bp-md {
+         grid-column: 1 / -1;
+         margin-bottom: 20px;
+      }
    }
 }
 </style>

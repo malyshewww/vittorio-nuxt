@@ -66,7 +66,7 @@ const buttonAction = () => {
       min-height: 40px;
       padding: 10px 20px;
    }
-   @media (any-hover: hover) {
+   @include hover {
       &:hover {
          background-color: var(--bg-dark);
       }
@@ -81,6 +81,9 @@ const buttonAction = () => {
    &:disabled {
       background-color: var(--system-disabled);
       pointer-events: none;
+   }
+   @include bp-md {
+      width: 100%;
    }
 }
 </style>

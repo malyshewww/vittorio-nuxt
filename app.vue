@@ -1,11 +1,12 @@
 <template lang="pug">
-	NuxtLayout
+	NuxtLayout(:name="layout")
 		NuxtPage
 	AppCart
 	AppPopups
 </template>
 
 <script setup>
+import { throttle } from "lodash-es";
 import { useMainInfoStore } from "~/stores/maininfo.js";
 import { useCartStore } from "~/stores/cart";
 
@@ -37,6 +38,25 @@ onServerPrefetch(async () => {
       console.log("Error", error);
    }
 });
+
+//логика лейаута
+const device = useDevice();
+const layout = ref("");
+
+const replaceDevice = () => {
+   layout.value = window.innerWidth > 1024 ? "main" : "default";
+};
+
+onMounted(() => {
+   replaceDevice();
+   const watchResize = throttle(function () {
+      replaceDevice();
+      // here you should mutate your `device_type` via a Vuex mutation/action
+      // and make your axios call by preferably fetching either a const/let variable
+      // or a global vuex state
+   }, 1000);
+   window.addEventListener("resize", watchResize);
+});
 </script>
 
 <style lang="scss">
@@ -45,6 +65,33 @@ onServerPrefetch(async () => {
 @use "assets/scss/nullstyle";
 @use "assets/scss/keyframes";
 @use "assets/scss/common";
+@use "assets/scss/mixins" as m;
+
+.page {
+   padding: calc(var(--header-height) + 80px) 0 180px;
+   @include m.bp-xl {
+      padding: calc(var(--header-height) + 40px) 0 140px;
+   }
+   @include m.bp-md {
+      padding: calc(var(--header-height) + 28px) 0 100px;
+   }
+   .page--contacts & {
+      padding-bottom: 0;
+   }
+   .page--card & {
+      padding: calc(var(--header-height) + 100px) 0 162px;
+      @include m.bp-xl {
+         padding: calc(var(--header-height) + 60px) 0 140px;
+      }
+      @include m.bp-md {
+         padding: calc(var(--header-height) + 48px) 0 100px;
+      }
+   }
+   .page--home & {
+      padding: 0;
+   }
+}
+
 .popup-btn {
    position: fixed;
    top: 0;

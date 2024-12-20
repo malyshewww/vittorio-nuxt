@@ -132,12 +132,25 @@ onMounted(() => {});
       &::-webkit-scrollbar {
          display: none;
       }
+      @include bp-xxxl {
+         width: 50%;
+      }
+      @include bp-xl {
+         width: 100%;
+      }
    }
    &__body {
       display: grid;
       grid-template-columns: 100%;
       gap: 80px;
       padding: 30px 50px 60px;
+      @include bp-xl {
+         padding: 30px;
+         gap: 40px;
+      }
+      @include bp-md {
+         padding: 20px 15px;
+      }
    }
    &__bottom {
       display: flex;
@@ -170,6 +183,16 @@ onMounted(() => {});
       font-size: 28px;
       line-height: 36px;
       text-transform: lowercase;
+      @include bp-md {
+         font-size: 20px;
+         line-height: 24px;
+         margin-bottom: 20px;
+      }
+   }
+   @include bp-md {
+      font-size: 22px;
+      line-height: 28px;
+      margin-bottom: 20px;
    }
 }
 .app-cart-button.btn {

@@ -12,6 +12,7 @@
 				button(type="button" @click="openCart").header__cart.cart-header
 					span.cart-header__text Корзина
 					span.cart-header__count (0)
+					span.cart-header__icon
 	AppHeaderMenu
 </template>
 
@@ -49,7 +50,7 @@ const openCart = () => {
 </script>
 
 <style lang="scss" scoped>
-@use "~/assets/scss/_vars" as *;
+@use "assets/scss/vars" as *;
 .header {
    position: fixed;
    left: 0;
@@ -57,16 +58,21 @@ const openCart = () => {
    width: 100%;
    color: var(--bg-white);
    background-color: var(--bg-milk);
-   min-height: 80px;
-   padding: 20px 0 20px;
+   min-height: var(--header-height);
+   padding: 20px 0;
    z-index: 21;
    transition: transform $time * 2 ease, background-color $time $ttm;
+   @include bp-md {
+      padding: 14px 0;
+      & .container {
+         padding: 0 16px;
+      }
+   }
    .page--home & {
       background-color: transparent;
-      padding: 20px 0;
    }
    &.hidden {
-      transform: translateY(-120%);
+      transform: translateY(-120%) rotateX(90deg);
    }
    &.active {
       background-color: var(--bg-dark);
@@ -78,11 +84,18 @@ const openCart = () => {
          &::before {
             top: calc(50% - 1px);
             transform: rotate(-135deg);
+            @include bp-md {
+               top: calc(50% - 0.7px);
+            }
          }
          &::after {
             width: 16px;
             bottom: calc(50% - 1px);
             transform: rotate(-45deg);
+            @include bp-md {
+               width: 13px;
+               bottom: calc(50% - 0.7px);
+            }
          }
       }
    }
@@ -106,6 +119,11 @@ const openCart = () => {
       .page--home & {
          display: none;
       }
+      @include bp-md {
+         width: 82px;
+         height: 40px;
+         top: 12px;
+      }
    }
    &__cart {
       color: currentColor;
@@ -120,12 +138,21 @@ const openCart = () => {
    border-radius: 1000px;
    padding: 8px 20px;
    background: var(--bg-smoke);
+   @include bp-md {
+      padding: 8px;
+      width: 44px;
+      height: 36px;
+   }
    &__lines {
       width: 24px;
       height: 24px;
       display: grid;
       place-items: center;
       position: relative;
+      @include bp-md {
+         width: 20px;
+         height: 20px;
+      }
       &::before,
       &::after {
          content: "";
@@ -136,6 +163,10 @@ const openCart = () => {
          width: 16px;
          height: 2px;
          transition: all $time * 2 $ttm;
+         @include bp-md {
+            height: 1.3px;
+            width: 13px;
+         }
       }
       &::before {
          top: 7px;
@@ -143,6 +174,9 @@ const openCart = () => {
       &::after {
          width: 13px;
          bottom: 7px;
+         @include bp-md {
+            width: 10px;
+         }
       }
    }
    @media (any-hover: hover) {
@@ -180,12 +214,45 @@ const openCart = () => {
          }
       }
    }
+
+   @include bp-md {
+      padding: 8px 12px;
+      width: 44px;
+      min-height: 36px;
+      gap: 0;
+   }
+   &__icon {
+      display: none;
+      @include bp-md {
+         display: block;
+         width: 20px;
+         height: 20px;
+         margin: 0 auto;
+         &::before {
+            content: "";
+            display: block;
+            width: 20px;
+            height: 20px;
+            mask-image: url("/images/icons/cart.svg");
+            mask-repeat: no-repeat;
+            mask-position: center;
+            background-color: var(--bg-milk);
+            mask-size: 15px 15px;
+         }
+      }
+   }
    &__text {
       color: currentColor;
       transition: color $time * 2 $ttm;
+      @include bp-md {
+         display: none;
+      }
    }
    &__count {
       color: var(--text-gray);
+      @include bp-md {
+         display: none;
+      }
    }
 }
 </style>

@@ -25,8 +25,8 @@ const props = defineProps({
 </script>
 
 <style lang="scss" scoped>
-@use "assets/scss/_vars" as *;
-@use "assets/scss/_mixins" as m;
+@use "assets/scss/vars" as *;
+@use "assets/scss/mixins" as m;
 .social {
    &__list {
       @include m.reset-list;
@@ -88,6 +88,10 @@ const props = defineProps({
                fill: var(--text-gray);
             }
          }
+      }
+      @include m.bp-xl {
+         font-size: 22px;
+         line-height: 28px;
       }
    }
 }

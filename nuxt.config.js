@@ -6,7 +6,7 @@ import { fileURLToPath } from "url";
 
 export default defineNuxtConfig({
    devtools: { enabled: true },
-   modules: ["@pinia/nuxt"],
+   modules: ["@pinia/nuxt", "@nuxtjs/device"],
    runtimeConfig: {
       public: {
          apiBase: process.env.NUXT_PUBLIC_API_BASE_URL,
@@ -108,6 +108,7 @@ export default defineNuxtConfig({
          },
          preprocessorOptions: {
             scss: {
+               additionalData: '@use "assets/scss/mixins" as *;',
                silenceDeprecations: ["legacy-js-api"],
             },
          },

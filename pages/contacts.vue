@@ -41,6 +41,7 @@ onMounted(() => {});
 
 <style lang="scss" scoped>
 @use "sass:math";
+@use "assets/scss/mixins" as m;
 .page--contacts {
    & .top-page {
       margin-bottom: 0;
@@ -56,6 +57,9 @@ onMounted(() => {});
          width: 1px;
          height: 100%;
          background: var(--bg-smoke);
+         @include m.bp-md {
+            content: none;
+         }
       }
    }
    &__body {
@@ -67,9 +71,22 @@ onMounted(() => {});
       margin-right: 50px;
       position: relative;
       margin-bottom: 40px;
+      @include m.bp-xxxl {
+         margin-right: 0;
+         padding: 40px 0;
+      }
+      @include m.bp-md {
+         grid-template-columns: 100%;
+         gap: 40px;
+         margin-bottom: 0;
+      }
    }
    &__image {
       padding-bottom: math.div(520, 1820) * 100%;
+      min-height: 200px;
+      @include m.bp-md {
+         object-position: 40% 0;
+      }
    }
 }
 </style>

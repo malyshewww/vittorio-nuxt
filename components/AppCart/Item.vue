@@ -3,13 +3,12 @@
 		.cart-item__image.ibg
 			img(:src="item.image")
 		.cart-item__body
-			.cart-item__info
-				.cart-item__title(v-if="item.title") {{item.title}}
-				.cart-item__volume(v-if="item.purchased_entity.field_volume") {{item.purchased_entity.field_volume}} мл
-				.cart-item__prices
-					.cart-item__price-old(v-if="item.purchased_entity.list_price") {{formatNumber(item.purchased_entity.list_price.number)}}
-					.cart-item__price(v-if="item.unit_price") {{formatNumber(item.unit_price.number)}}
-					button(@click="cartStore.deleteProduct(item)").cart-item__delete
+			.cart-item__title(v-if="item.title") {{item.title}}
+			.cart-item__volume(v-if="item.purchased_entity.field_volume") {{item.purchased_entity.field_volume}} мл
+			.cart-item__prices
+				.cart-item__price-old(v-if="item.purchased_entity.list_price") {{formatNumber(item.purchased_entity.list_price.number)}}
+				.cart-item__price(v-if="item.unit_price") {{formatNumber(item.unit_price.number)}}
+				button(@click="cartStore.deleteProduct(item)").cart-item__delete
 			.cart-item__counter.quantity-cart
 				button(type="button" @click="decreaseCartSum(item, item.quantity, 'minus')" :disabled="item.quantity <= 1").quantity-cart__button.btn-decrement
 				.quantity-cart__count {{item.quantity}}
@@ -88,6 +87,10 @@ const increaseCartSum = () => {
          }
       }
    }
+   @include bp-md {
+      grid-template-columns: 70px 1fr;
+      gap: 10px;
+   }
    &__image {
       padding-bottom: math.div(120, 100) * 100%;
       overflow: hidden;
@@ -95,11 +98,23 @@ const increaseCartSum = () => {
    &__body {
       display: grid;
       grid-template-columns: 1fr auto;
-      align-items: start;
-      gap: 20px;
-      height: 100%;
+      align-items: center;
+      gap: 8px;
+      grid-template-areas:
+         "title quantity"
+         "volume quantity"
+         "prices quantity";
       padding: 12px 0;
       position: relative;
+      @include bp-md {
+         padding: 0;
+         gap: 8px 0;
+         grid-template-areas:
+            "title title"
+            "volume volume"
+            "quantity quantity"
+            "prices prices";
+      }
    }
    &__info {
       display: flex;
@@ -111,16 +126,23 @@ const increaseCartSum = () => {
       font-weight: 700;
       font-size: 18px;
       line-height: 26px;
+      grid-area: title;
    }
    &__volume {
       font-size: 14px;
       line-height: 18px;
+      grid-area: volume;
    }
    &__prices {
-      margin-top: auto;
+      margin-top: 14px;
       display: flex;
       align-items: center;
       gap: 4px;
+      flex-wrap: wrap;
+      grid-area: prices;
+      @include bp-md {
+         margin-top: 10px;
+      }
    }
    &__price-old {
       line-height: 22px;
@@ -160,6 +182,15 @@ const increaseCartSum = () => {
             opacity: 0.8;
          }
       }
+      @include bp-xl {
+         opacity: 1;
+         transform: none;
+         pointer-events: all;
+      }
+      @include bp-md {
+         position: static;
+         margin-left: auto;
+      }
    }
    &__counter {
    }
@@ -174,7 +205,9 @@ const increaseCartSum = () => {
 .quantity-cart {
    display: flex;
    align-items: center;
+   align-self: start;
    gap: 4px;
+   grid-area: quantity;
    &__button {
       width: 28px;
       height: 28px;

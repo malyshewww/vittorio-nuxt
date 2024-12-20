@@ -14,6 +14,9 @@ const cartStore = useCartStore();
    // .app-cart__promocode
    &__promocode {
       margin-top: 34px;
+      @include bp-md {
+         margin-top: 20px;
+      }
    }
 }
 </style>

@@ -128,7 +128,7 @@ const list = [
 
 <style lang="scss">
 @use "assets/scss/_vars" as *;
-@use "assets/scss/_mixins" as m;
+@use "assets/scss/mixins" as m;
 .notes-navigation {
    position: fixed;
    bottom: 0;
@@ -155,7 +155,7 @@ const list = [
    }
    &__nav {
       width: 81vw;
-      @media screen and (max-width: $xxl) {
+      @include m.bp-xxl {
          width: 75vw;
       }
    }

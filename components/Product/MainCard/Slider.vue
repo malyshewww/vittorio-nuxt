@@ -131,6 +131,14 @@ onMounted(() => {
       gap: 40px;
       //   max-width: 890px;
       width: 46.354vw;
+      @media screen and (max-width: 1600px) {
+         align-items: flex-start;
+         width: 55vw;
+      }
+      @include bp-xxl {
+         width: 100%;
+         align-items: center;
+      }
    }
 }
 .product-slider {
@@ -156,16 +164,28 @@ onMounted(() => {
             bottom: 0;
          }
       }
+      @include bp-xl {
+         display: none;
+      }
+   }
+   @include bp-xl {
+      display: block;
    }
 }
 .vertical-slider {
    height: calc(676px - 96px);
+   @include bp-xxxl {
+      height: calc(500px - 96px);
+   }
+   @include bp-xxl {
+      height: calc(676px - 96px);
+   }
    &__wrapper {
    }
    &__item {
       width: 150px;
       position: relative;
-      @media (any-hover: hover) {
+      @include hover {
          &:hover {
             cursor: pointer;
          }
@@ -197,6 +217,14 @@ onMounted(() => {
          pointer-events: none;
          z-index: 2;
       }
+      @include bp-xxxl {
+         height: 100%;
+         padding-bottom: math.div(100, 150) * 100%;
+      }
+      @include bp-xxl {
+         height: auto;
+         padding-bottom: math.div(180, 150) * 100%;
+      }
       & img {
          transform-origin: center;
          transition: transform $time * 2 $ttm;
@@ -205,7 +233,7 @@ onMounted(() => {
 }
 .main-slider {
    width: 100%;
-   @media (any-hover: hover) {
+   @include hover {
       &:hover {
          & .slider-button {
             &-prev {
@@ -217,10 +245,8 @@ onMounted(() => {
          }
       }
    }
-   &__wrapper {
-   }
    &__item {
-      @media (any-hover: hover) {
+      @include hover {
          &:hover {
             cursor: pointer;
          }
@@ -248,10 +274,19 @@ onMounted(() => {
       &-prev {
          left: 0;
          transform: translateX(-100%) rotate(180deg);
+         @include bp-xl {
+            transform: translateX(0%) rotate(180deg);
+         }
       }
       &-next {
          right: 0;
          transform: translateX(100%);
+         @include bp-xl {
+            transform: translateX(0%);
+         }
+      }
+      @include bp-xl {
+         width: 60px;
       }
    }
 }

@@ -78,7 +78,7 @@ const closePopup = () => {
       .popup-politic & {
          max-width: 1000px;
       }
-      @media screen and (max-width: $md) {
+      @include bp-md {
          padding: 30px 15px;
          border-radius: 16px;
       }
@@ -105,7 +105,7 @@ const closePopup = () => {
          mask-size: 18px 18px;
          transition: background-color 0.25s ease 0s;
       }
-      @media (any-hover: hover) {
+      @include hover {
          &:hover {
             cursor: pointer;
             &::before {

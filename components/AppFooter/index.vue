@@ -19,15 +19,7 @@
 							.footer-contacts__bottom
 								.footer-contacts__label Ароматы Vittorio можно приобрести в магазинах
 								UiStores(class-names="footer-stores" :isFooterStores="true" :link-letu="links.field_leturu" :link-apple="links.field_goldapple")
-				.footer__bottom.bottom-footer
-					.bottom-footer__item
-						.footer__copy © {{getYear}}. Vittorio 
-					.bottom-footer__item.bottom-footer__item--politic
-						UiLinkUnderLine(text="Политика конфиденциальности" path="/page/politic" :is-blank="true")
-					.bottom-footer__item.company-footer
-						.company-footer__caption Создание сайта:
-						a(href="https://webshop.ru/" target="_blank").company-footer__logo
-							img(:src="`/images/icons/webshop-logo.svg`" alt="логотип компании")
+				AppFooterBottom
 </template>
 
 <script setup>
@@ -38,9 +30,6 @@ const mainInfoStore = useMainInfoStore();
 const { links } = mainInfoStore;
 console.log(links);
 
-const getYear = computed(() => {
-   return new Date().getFullYear();
-});
 const route = useRoute();
 
 const footer = ref(null);
@@ -109,12 +98,6 @@ onMounted(() => {
       border-bottom: 0;
       pointer-events: none;
       transform: translateX(-100%);
-   }
-   &__body {
-   }
-   &__main {
-   }
-   &__copy {
    }
 }
 .main-footer {
@@ -190,36 +173,6 @@ onMounted(() => {
    }
    &__label {
       line-height: 22px;
-   }
-}
-.bottom-footer {
-   display: flex;
-   justify-content: space-between;
-   gap: 20px;
-   padding: 41px 0;
-   font-size: 14px;
-   line-height: 18px;
-   color: var(--text-gray);
-   &__item {
-      flex: 0 1 400px;
-      &--politic {
-         display: flex;
-         justify-content: center;
-         align-items: center;
-      }
-   }
-}
-.company-footer {
-   display: flex;
-   align-items: center;
-   justify-content: flex-end;
-   gap: 6px;
-   &__logo {
-      width: 70px;
-      height: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
    }
 }
 </style>

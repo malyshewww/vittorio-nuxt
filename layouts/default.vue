@@ -1,9 +1,9 @@
 <template lang="pug">
-	AppHeader
-	div(ref="scroller").scroller
+	div.wrapper
+		AppHeader
 		.page
 			slot
-		AppFooter
+		//- AppFooter
 </template>
 
 <script setup>
@@ -11,27 +11,11 @@ import { useAppStore } from "~/stores/app";
 
 const appStore = useAppStore();
 
-const { $Scrollbar: Scrollbar, $ScrollTrigger: ScrollTrigger } = useNuxtApp();
-
-const scroller = ref("");
-
 onMounted(() => {
-   const { bodyScrollBar } = useScrollbar();
-   ScrollTrigger.scrollerProxy(scroller.value, {
-      scrollTop(value) {
-         if (arguments.length > 0) {
-            bodyScrollBar.scrollTop = value;
-         }
-         return bodyScrollBar.scrollTop;
-      },
-   });
-   bodyScrollBar.addListener(ScrollTrigger.update);
-   ScrollTrigger.defaults({ scroller: scroller.value });
-   let initialPosition = bodyScrollBar.offset.y;
-   let currentPosition = bodyScrollBar.offset.y;
-   // sticky, fixed elements
-   bodyScrollBar.addListener(({ offset }) => {
-      currentPosition = offset.y;
+   let initialPosition = window.scrollY;
+   let currentPosition = window.scrollY;
+   window.addEventListener("scroll", (e) => {
+      currentPosition = window.scrollY;
       appStore.isHeaderVisible =
          initialPosition <= currentPosition ? false : true;
       initialPosition = currentPosition;
@@ -40,23 +24,21 @@ onMounted(() => {
 </script>
 
 <style lang="scss">
+.wrapper {
+   display: flex;
+   flex-direction: column;
+}
 .page {
-   padding: calc(var(--header-height) + 80px) 0 180px;
-   .page--contacts & {
-      padding-bottom: 0;
-   }
-   .page--card & {
-      padding: calc(var(--header-height) + 100px) 0 162px;
-   }
+   flex: 1 1 auto;
 }
-.scroller {
-   height: 100vh;
-   overflow: hidden;
-}
-.scrollbar-track-x {
-   display: none !important;
-}
-.scrollbar-track {
-   z-index: 30 !important;
-}
+// .scroller {
+//    height: 100vh;
+//    overflow: hidden;
+// }
+// .scrollbar-track-x {
+//    display: none !important;
+// }
+// .scrollbar-track {
+//    z-index: 30 !important;
+// }
 </style>

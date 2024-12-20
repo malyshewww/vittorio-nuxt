@@ -75,12 +75,18 @@ const goBack = () => {
 @use "assets/scss/_mixins" as m;
 .product-info {
    width: 32.813vw;
+   @include bp-xxl {
+      width: 100%;
+   }
 }
 .product-info {
    display: flex;
    flex-direction: column;
    align-items: flex-start;
    gap: 60px;
+   @include bp-md {
+      gap: 40px;
+   }
    &__header {
       display: flex;
       flex-direction: column;
@@ -93,12 +99,20 @@ const goBack = () => {
       font-size: 72px;
       line-height: 86px;
       text-transform: uppercase;
+      @include bp-md {
+         font-size: 36px;
+         line-height: 44px;
+      }
    }
    &__capacity {
       line-height: 22px;
       display: flex;
       align-items: center;
       gap: 4px;
+      @include bp-md {
+         font-size: 14px;
+         line-height: 18px;
+      }
    }
    &__capacity-value {
       font-weight: 700;
@@ -111,11 +125,16 @@ const goBack = () => {
       justify-content: space-between;
       flex-wrap: wrap;
       gap: 32px 20px;
+      @include bp-xl {
+         width: 100%;
+         gap: 20px;
+      }
    }
    &__prices {
       display: flex;
       align-items: center;
-      gap: 12px;
+      flex-wrap: wrap;
+      gap: 8px 12px;
       font-size: 20px;
       line-height: 24px;
       width: 100%;
@@ -126,6 +145,11 @@ const goBack = () => {
    &__price-old {
       text-decoration: line-through;
       color: var(--text-gray);
+   }
+   &__stores {
+      @include bp-md {
+         width: 100%;
+      }
    }
 }
 .product-characteristics {
@@ -144,6 +168,10 @@ const goBack = () => {
       font-size: 16px;
       line-height: 22px;
       padding: 4px 0 5px;
+      @include bp-md {
+         font-size: 14px;
+         line-height: 18px;
+      }
    }
    &__label {
       font-weight: 700;

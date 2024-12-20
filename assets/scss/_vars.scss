@@ -1,3 +1,4 @@
+@use 'mixins' as m;
 :root {
 	--font-family: "Mulish", sans-serif;
 	--second-family: "FoglihtenNo06", sans-serif;
@@ -66,3 +67,9 @@ $xxxl: 1400px;
 
 $time: 0.25s;
 $ttm: cubic-bezier(0.25, 0.74, 0.22, 0.99);
+
+@include m.bp-md {
+	:root {
+		--header-height: 64px;
+	}
+}

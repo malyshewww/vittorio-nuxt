@@ -11,8 +11,10 @@
    },
    "dependencies": {
       "@fancyapps/ui": "^5.0.36",
+      "@nuxtjs/device": "^3.2.4",
       "@pinia/nuxt": "^0.7.0",
       "gsap": "^3.12.5",
+      "lodash-es": "^4.17.21",
       "nuxt": "^3.13.1",
       "pinia": "^2.2.6",
       "smooth-scrollbar": "^8.8.4",

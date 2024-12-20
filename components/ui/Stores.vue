@@ -37,16 +37,28 @@ const props = defineProps({
 </script>
 
 <style lang="scss" scoped>
-@use "assets/scss/_vars" as *;
-@use "assets/scss/_mixins" as m;
+@use "assets/scss/vars" as *;
 .stores {
+   @include bp-sm {
+      width: 100%;
+   }
+   .menu-header__stores & {
+      @include bp-sm {
+         width: auto;
+      }
+   }
    &__list {
-      @include m.reset-list;
+      @include reset-list;
       display: flex;
       align-items: center;
+      flex-wrap: wrap;
       gap: 8px;
    }
    &__item {
+      @include bp-md {
+         flex-grow: 1;
+         min-width: fit-content;
+      }
    }
    &__link {
       min-height: 44px;

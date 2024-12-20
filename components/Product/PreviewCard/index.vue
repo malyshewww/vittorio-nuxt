@@ -27,7 +27,6 @@ const props = defineProps({
 
 <style lang="scss">
 @use "assets/scss/_vars" as *;
-@use "assets/scss/_mixins" as m;
 .preview-card {
    @media (any-hover: hover) {
       &:hover {
@@ -63,6 +62,15 @@ const props = defineProps({
          transform-origin: center;
          transform: scale(0);
          transition: transform $time * 3 $ttm;
+         @include bp-xl {
+            transform: scale(1);
+         }
+      }
+      @include bp-md {
+         padding: 20px 0;
+         gap: 8px;
+         font-size: 14px;
+         line-height: 18px;
       }
    }
    &__title {
@@ -73,9 +81,14 @@ const props = defineProps({
       text-transform: uppercase;
       margin-bottom: 6px;
       width: 100%;
+      @include bp-md {
+         margin-bottom: 4px;
+         font-size: 22px;
+         line-height: 28px;
+      }
    }
    &__list {
-      @include m.reset-list;
+      @include reset-list;
       display: flex;
       flex-direction: column;
       gap: 5px;

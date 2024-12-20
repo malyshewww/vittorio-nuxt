@@ -184,6 +184,7 @@ const submitForm = async (e) => {
 </script>
 
 <style lang="scss" scoped>
+@use "assets/scss/mixins" as m;
 .contacts__form {
    display: flex;
    justify-content: flex-end;
@@ -195,6 +196,12 @@ const submitForm = async (e) => {
    gap: 28px;
    // max-width: 610px;
    max-width: 31.771vw;
+   @include m.bp-xxxl {
+      max-width: 100%;
+   }
+   @include m.bp-md {
+      gap: 20px;
+   }
    &__body {
       display: grid;
       gap: 12px;
@@ -206,6 +213,10 @@ const submitForm = async (e) => {
       text-transform: uppercase;
       color: var(--bg-smoke);
       font-family: var(--second-family);
+      @include m.bp-xl {
+         font-size: 32px;
+         line-height: 36px;
+      }
    }
    &__items {
       display: grid;
@@ -216,6 +227,11 @@ const submitForm = async (e) => {
       display: grid;
       gap: 32px;
       justify-items: start;
+      & .btn {
+         @include m.bp-md {
+            width: 100%;
+         }
+      }
    }
 }
 </style>
