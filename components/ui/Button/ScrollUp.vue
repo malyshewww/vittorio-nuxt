@@ -28,18 +28,20 @@ const observerButtonUp = () => {
 const scrollTop = () => {
    const { bodyScrollBar } = useScrollbar();
    const page = document.querySelector(".page");
-   if (window.innerWidth >= 1024) {
-      bodyScrollBar.scrollIntoView(page);
-   } else {
-      window.scrollTo({
-         top: 0,
-         behavior: "smooth",
-      });
+   if (page) {
+      if (window.innerWidth >= 1024) {
+         bodyScrollBar.scrollIntoView(page);
+      } else {
+         window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+         });
+      }
    }
 };
 onMounted(() => {
-   observerButtonUp();
-   scrollTop();
+   // observerButtonUp();
+   // scrollTop();
 });
 </script>
 

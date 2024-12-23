@@ -22,7 +22,7 @@
 						.hidden-block
 							.hidden-block__wrap(ref="hiddenBlockWrap")
 								ContentBlock(ref="hiddenBlockContent" :content="text.body")
-							UiButtonLine(v-if="state.isVisible" text="Узнать больше" @button-action="toggleHiddenBlock")
+							UiButtonLine(v-if="state.isVisible" text="Узнать больше" @button-action="toggleHiddenBlock" class-names="show-more")
 					.welcome__images.welcome__images--right
 						.welcome__image.welcome__image-border-big
 							img(:src="`/images/sections/welcome/img-border-big.jpg`")
@@ -89,7 +89,7 @@ onMounted(() => {
    if (state.textHeight > hiddenBlockWrap.value.clientHeight) {
       state.isVisible = true;
    }
-   animation();
+   // animation();
 });
 
 function toggleHiddenBlock() {
@@ -104,11 +104,14 @@ function toggleHiddenBlock() {
 
 <style lang="scss">
 @use "sass:math";
-@use "~/assets/scss/_vars" as *;
+@use "assets/scss/vars" as *;
 .hidden-block {
    display: grid;
    grid-template-columns: 100%;
-   gap: 40px;
+   justify-items: start;
+   gap: 36px;
+   max-width: 680px;
+   justify-self: center;
    &__wrap {
       position: relative;
       max-height: 356px;
@@ -117,12 +120,12 @@ function toggleHiddenBlock() {
    }
 }
 .welcome {
-   padding: 160px 0 180px;
+   padding: 165px 0 180px;
    &__body {
       display: grid;
       grid-template-columns: 100%;
       justify-items: center;
-      gap: 100px;
+      gap: 120px;
    }
    &__heading {
       display: flex;
@@ -223,7 +226,7 @@ function toggleHiddenBlock() {
       display: grid;
       grid-template-columns: 100%;
       gap: 60px;
-      padding-bottom: 92px;
+      padding-bottom: 112px;
    }
    &__title-small {
       font-family: var(--second-family);

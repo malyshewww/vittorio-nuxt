@@ -15,12 +15,13 @@
    padding: 0 150px;
    &__content-inner {
       max-width: 62.96%;
-      margin-top: -68px;
+      margin-top: -72px;
       margin-left: auto;
    }
    &__content {
       display: flex;
       flex-direction: column;
+      align-items: flex-start;
       gap: 36px;
       font-weight: 400;
       font-size: 18px;
@@ -45,7 +46,7 @@
       background-repeat: no-repeat;
       background-position: center;
       position: absolute;
-      top: -72px;
+      top: -77px;
       transform: translateX(-50%);
    }
 }

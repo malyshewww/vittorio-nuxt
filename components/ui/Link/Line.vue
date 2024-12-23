@@ -39,6 +39,7 @@ defineProps({
    display: flex;
    align-items: center;
    gap: 16px;
+   padding: 4px 0;
    &.short-link {
       font-family: var(--font-family);
       gap: 12px;

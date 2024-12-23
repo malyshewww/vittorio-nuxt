@@ -64,6 +64,9 @@ onMounted(() => {
          content: none;
       }
    }
+   .page--home & {
+      padding-bottom: 40px;
+   }
    &.active {
       &::before {
          animation-play-state: running;

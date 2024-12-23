@@ -53,7 +53,7 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .main-hero {
-   height: 100vh;
+   height: 100dvh;
    padding: 20px 2.604vw 40px;
    font-family: var(--second-family);
    position: relative;
@@ -102,7 +102,7 @@ onMounted(() => {
       margin-bottom: 4.88vh;
       & svg {
          width: 23px;
-         height: 32px;
+         height: 40px;
          transform: translateY(10px);
          animation: bounce 1s infinite alternate;
          & path {

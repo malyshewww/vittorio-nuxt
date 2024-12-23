@@ -58,7 +58,7 @@ const props = defineProps({
 }
 .note-card {
    // position: absolute;
-   height: 980px;
+   height: 100dvh;
    position: relative;
    // width: 100%;
    // position: absolute;
@@ -76,7 +76,7 @@ const props = defineProps({
       display: flex;
       justify-content: center;
       margin: auto;
-      bottom: 100px;
+      bottom: 9.184vh;
       font-size: 7.917vw;
       line-height: 8.333vw;
       font-weight: 500;
@@ -139,7 +139,8 @@ const props = defineProps({
    grid-template-columns: 270px 1fr;
    align-items: start;
    gap: 50px;
-   padding: 120px 50px;
+   // padding: 120px 50px;
+   padding: 12.245vh 50px;
    background: radial-gradient(
       92.2% 92.2% at 30% 40%,
       #6a4464 0%,
@@ -227,7 +228,8 @@ const props = defineProps({
    display: grid;
    grid-template-columns: repeat(2, 1fr);
    align-items: start;
-   padding: 136px 50px 140px;
+   // padding: 140px 50px 140px;
+   padding: 14.286vh 50px;
    background-color: var(--bg-milk);
    &__content {
       display: flex;
@@ -257,6 +259,7 @@ const props = defineProps({
       display: flex;
       justify-content: center;
       margin-top: 89px;
+      margin-left: 50px;
    }
 }
 .product-note {
@@ -272,15 +275,18 @@ const props = defineProps({
       border-radius: 800px 800px 0 0;
       overflow: hidden;
       padding-bottom: math.div(560, 400) * 100%;
+      @media screen and (max-height: 850px) {
+         padding-bottom: 95%;
+      }
    }
    &__decor-title {
       position: absolute;
       width: 506px;
       height: 506px;
-      top: -64px;
+      top: -68px;
       left: -40px;
       pointer-events: none;
-      z-index: -1;
+      z-index: 1;
    }
    &__button {
       width: 160px;
@@ -327,7 +333,7 @@ const props = defineProps({
    &__option {
       font-weight: 700;
       line-height: 22px;
-      padding: 6px 0;
+      padding: 5px 0;
    }
 }
 .characteristics {
@@ -344,6 +350,7 @@ const props = defineProps({
       align-items: flex-start;
       font-size: 16px;
       line-height: 22px;
+      padding: 4px 0 5px;
    }
    &__label {
       font-weight: 700;

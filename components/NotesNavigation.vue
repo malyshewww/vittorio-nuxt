@@ -34,16 +34,19 @@ const initializeSwiper = () => {
 };
 
 const scrollToSection = (e) => {
-   const { bodyScrollBar } = useScrollbar();
-   const target = e.target;
-   if (!target) return;
-   const targetId = target.getAttribute("href");
-   const targetElement = document.querySelector(targetId);
-   if (targetElement) {
-      const targetPosition =
-         targetElement.getBoundingClientRect().top + bodyScrollBar.scrollTop;
-      bodyScrollBar.scrollTo(0, targetPosition, 800);
-   }
+   console.log("scroll");
+   // const { bodyScrollBar } = useScrollbar();
+   // const target = e.target;
+   // if (!target) return;
+   // const targetId = target.getAttribute("href");
+   // const targetElement = document.querySelector(targetId);
+   // if (targetElement) {
+   //    console.log(targetElement);
+   //    const targetPosition =
+   //       targetElement.getBoundingClientRect().top + bodyScrollBar.scrollTop;
+   //    console.log(targetPosition);
+   //    bodyScrollBar.scrollTo(0, targetPosition, 800);
+   // }
 };
 
 const observeNavigation = () => {

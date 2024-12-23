@@ -34,7 +34,7 @@ const buttonAction = () => {
 </script>
 
 <style lang="scss" scoped>
-@use "assets/scss/_vars" as *;
+@use "assets/scss/vars" as *;
 .btn-line {
    font-weight: 700;
    font-size: 12px;
@@ -58,6 +58,24 @@ const buttonAction = () => {
       &:hover {
          &::before {
             width: 50px;
+         }
+      }
+   }
+   &.show-more {
+      font-family: var(--second-family);
+      font-weight: 500;
+      font-size: 20px;
+      line-height: 24px;
+      letter-spacing: 0.04em;
+      gap: 16px;
+      &::before {
+         width: 50px;
+      }
+      @media (any-hover: hover) {
+         &:hover {
+            &::before {
+               width: 70px;
+            }
          }
       }
    }

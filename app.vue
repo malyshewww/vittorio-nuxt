@@ -69,10 +69,10 @@ onMounted(() => {
 
 .page {
    padding: calc(var(--header-height) + 80px) 0 180px;
-   @include m.bp-xl {
+   @include bp-xl {
       padding: calc(var(--header-height) + 40px) 0 140px;
    }
-   @include m.bp-md {
+   @include bp-md {
       padding: calc(var(--header-height) + 28px) 0 100px;
    }
    .page--contacts & {
@@ -80,10 +80,10 @@ onMounted(() => {
    }
    .page--card & {
       padding: calc(var(--header-height) + 100px) 0 162px;
-      @include m.bp-xl {
+      @include bp-xl {
          padding: calc(var(--header-height) + 60px) 0 140px;
       }
-      @include m.bp-md {
+      @include bp-md {
          padding: calc(var(--header-height) + 48px) 0 100px;
       }
    }
