@@ -6,7 +6,7 @@ import { fileURLToPath } from "url";
 
 export default defineNuxtConfig({
    devtools: { enabled: true },
-   modules: ["@pinia/nuxt", "@nuxtjs/device"],
+   modules: ["@pinia/nuxt", "@nuxtjs/device", "@nuxt/image"],
    runtimeConfig: {
       public: {
          apiBase: process.env.NUXT_PUBLIC_API_BASE_URL,
@@ -87,6 +87,16 @@ export default defineNuxtConfig({
    devServer: {
       host: "localhost",
       port: 3000,
+   },
+   image: {
+      format: ["webp", "png", "jpg"],
+   },
+   nitro: {
+      publicAssets: [
+         {
+            dir: "public",
+         },
+      ],
    },
    vite: {
       // server: {

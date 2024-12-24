@@ -2,15 +2,14 @@
 	.notes
 		.note-cards-first
 			NoteCard(:product="products[0]")
-		.note-cards
-			NoteCard(v-for="(item, index) in half" :key="item.uuid" :product="item")
+		#panels
+			.note-cards
+				NoteCard(v-for="(item, index) in half" :key="item.uuid" :product="item")
 </template>
 
 <script setup>
 import { useAppStore } from "~/stores/app";
 const appStore = useAppStore();
-
-console.log(appStore.scrollY);
 
 const scrollY = ref(appStore.scrollY);
 
@@ -111,8 +110,7 @@ onMounted(() => {
    //          targetElement.getBoundingClientRect().top + bodyScrollBar.offset.y;
    //       console.log(targetElement);
    //       const targetPosition =
-   //          targetElement.getBoundingClientRect().top + newScrollPos.value;
-   //       console.log(targetPosition);
+   //          targetElement.getBoundingClientRect().top + bodyScrollBar.scrollTop;
    //       bodyScrollBar.scrollTo(0, targetPosition, 700);
    //       scrollContainer.scrollTo({
    //          top: targetPosition,
@@ -120,54 +118,72 @@ onMounted(() => {
    //       });
    //    }
    // };
-   document
-      .querySelectorAll('.notes-navigation__nav a[href^="#"]')
-      .forEach((anchor) => {
-         anchor.addEventListener("click", function (e) {
-            e.preventDefault();
-            const target = this.getAttribute("href");
-            // scrollToSection(target);
-            // tl.seek(target, false);
-         });
-      });
-   // let panelsContainer = document.querySelector(".note-cards");
-   // let panels = document.querySelectorAll(".note-cards .note-card");
-   // let totalScroll;
    // document
-   //    .querySelectorAll(".notes-navigation__nav a")
-   //    .forEach((anchor, i) => {
+   //    .querySelectorAll('.notes-navigation__nav a[href^="#"]')
+   //    .forEach((anchor) => {
    //       anchor.addEventListener("click", function (e) {
    //          e.preventDefault();
-   //          let targetElem = document.querySelector(
-   //                e.target.getAttribute("href")
-   //             ),
-   //             y = targetElem;
-   //          if (
-   //             targetElem &&
-   //             panelsContainer.isSameNode(targetElem.parentElement)
-   //          ) {
-   //             console.log(
-   //                tl.scrollTrigger.start +
-   //                   targetElem.offsetTop +
-   //                   newScrollPos.value
-   //             );
-   //             totalScroll = tl.scrollTrigger.end - tl.scrollTrigger.start;
-   //             let totalMovement =
-   //                (panels.length - 1) * targetElem.offsetHeight;
-   //             y = Math.round(
-   //                tl.scrollTrigger.start +
-   //                   (targetElem.offsetTop / totalMovement) * totalScroll
-   //             );
-   //          }
-   //          gsap.to(window, {
-   //             scrollTo: {
-   //                y: y,
-   //                autoKill: false,
-   //             },
-   //             duration: 1,
-   //          });
+   //          const target = this.getAttribute("href");
+   //          console.log(target);
+   //          // scrollToSection(target);
    //       });
    //    });
+   /* Main navigation */
+   if (document.querySelector(".scroller")) {
+      bodyScrollBar.addListener(({ offset }) => {
+         window.dispatchEvent(
+            new CustomEvent("scroll", {
+               detail: { scrollTop: offset.y },
+            })
+         );
+      });
+   }
+   let panels = document.querySelectorAll(".note-cards .note-card");
+   let panelsContainer = document.querySelector(".note-cards");
+   document.querySelectorAll(".notes-navigation__nav a").forEach((anchor) => {
+      anchor.addEventListener("click", function (e) {
+         e.preventDefault();
+         let targetElem = document.querySelector(e.target.getAttribute("href")),
+            y = targetElem;
+         if (
+            targetElem &&
+            panelsContainer.isSameNode(targetElem.parentElement)
+         ) {
+            let totalScroll = tl.scrollTrigger.end - tl.scrollTrigger.start,
+               totalMovement = (panels.length - 1) * targetElem.offsetHeight;
+            y = Math.round(
+               tl.scrollTrigger.start +
+                  (targetElem.getBoundingClientRect().height / totalMovement) *
+                     totalScroll
+            );
+            // console.log(tl.scrollTrigger.start);
+            // console.log(totalMovement);
+            // console.log(totalScroll);
+         }
+         // console.log(targetElem.getBoundingClientRect().top);
+         // targetElem.scrollIntoView({
+         //    behavior: "smooth",
+         //    block: "start",
+         //    inline: "start",
+         // });
+         // targetElem.scrollTo({
+         //    top:
+         //       targetElem.getBoundingClientRect().top +
+         //       panelsContainer.getBoundingClientRect().top,
+         //    behavior: "smooth",
+         // });
+         // bodyScrollBar.scrollTo(0, y, 600);
+         // console.log(y);
+         console.log(y);
+         gsap.to(window, {
+            scrollTo: {
+               y: y,
+               autoKill: false,
+            },
+            duration: 1,
+         });
+      });
+   });
 });
 </script>
 

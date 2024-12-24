@@ -1,5 +1,5 @@
 <template lang="pug">
-	nuxt-link(v-if="isAnchor" type="button" :class="classNames" :href="path" :data-href="path").link-line {{text}}
+	nuxt-link(v-if="isAnchor" type="button" :class="classNames" :href="path" :data-href="path").link-line #[span {{text}}]
 	nuxt-link(v-else :to="path" :class="classNames").link-line {{text}}
 </template>
 
@@ -57,6 +57,14 @@ defineProps({
             }
          }
       }
+      @include bp-md {
+         font-size: 10px;
+         line-height: 12px;
+      }
+   }
+   @include bp-md {
+      font-size: 16px;
+      line-height: 20px;
    }
    &::before {
       content: "";
@@ -65,6 +73,8 @@ defineProps({
       height: 1px;
       background-color: currentColor;
       transition: width $time * 2 $ttm;
+      position: relative;
+      top: -2px;
    }
    @media (any-hover: hover) {
       &:hover {

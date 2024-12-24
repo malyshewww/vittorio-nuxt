@@ -13,10 +13,23 @@
    display: flex;
    flex-direction: column;
    padding: 0 150px;
+   @include bp-xxxl {
+      padding: 0 75px;
+   }
+   @include bp-xxl {
+      gap: 29px 0px;
+   }
+   @include bp-xl {
+      padding: 0;
+   }
    &__content-inner {
       max-width: 62.96%;
       margin-top: -72px;
       margin-left: auto;
+      @include bp-xxl {
+         margin: 0;
+         max-width: 100%;
+      }
    }
    &__content {
       display: flex;
@@ -27,6 +40,11 @@
       font-size: 18px;
       line-height: 26px;
       color: var(--bg-smoke);
+      @include bp-md {
+         gap: 24px;
+         font-size: 16px;
+         line-height: 22px;
+      }
    }
    &__title {
       font-weight: 500;
@@ -37,6 +55,15 @@
       position: relative;
       font-family: var(--second-family);
       max-width: 764px;
+      @include bp-xl {
+         max-width: 100%;
+         font-size: 44px;
+         line-height: 56px;
+      }
+      @include bp-md {
+         font-size: 36px;
+         line-height: 48px;
+      }
    }
    &__label {
       display: block;
@@ -48,6 +75,9 @@
       position: absolute;
       top: -77px;
       transform: translateX(-50%);
+      @include bp-xl {
+         display: none;
+      }
    }
 }
 </style>

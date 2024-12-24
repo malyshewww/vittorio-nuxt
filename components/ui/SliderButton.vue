@@ -50,12 +50,21 @@ defineProps({
          background-color: var(--system-disabled);
       }
    }
-   @media (any-hover: hover) {
+   @include hover {
       cursor: pointer;
       &:hover:not(.swiper-button-disabled) {
          &::before {
             background-color: var(--text-gray);
          }
+      }
+   }
+   @include bp-md {
+      width: 36px;
+      height: 36px;
+      &::before {
+         width: 30px;
+         height: 30px;
+         mask-size: 30px 30px;
       }
    }
 }

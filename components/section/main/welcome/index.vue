@@ -89,7 +89,7 @@ onMounted(() => {
    if (state.textHeight > hiddenBlockWrap.value.clientHeight) {
       state.isVisible = true;
    }
-   // animation();
+   animation();
 });
 
 function toggleHiddenBlock() {

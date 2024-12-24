@@ -3,7 +3,7 @@
 		AppHeader
 		.page
 			slot
-		//- AppFooter
+		AppFooter
 </template>
 
 <script setup>
@@ -27,6 +27,7 @@ onMounted(() => {
 .wrapper {
    display: flex;
    flex-direction: column;
+   overflow: clip;
 }
 .page {
    flex: 1 1 auto;

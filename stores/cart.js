@@ -24,10 +24,10 @@ export const useCartStore = defineStore("cart", () => {
    const couponCode = ref("");
    const formData = reactive({
       email: "123",
-      name: "313",
-      phone: "3123",
+      name: "",
+      phone: "",
       address: "3131",
-      mailing: 1,
+      mailing: 0,
       agree: 1,
    });
    const model = reactive({
@@ -346,10 +346,10 @@ export const useCartStore = defineStore("cart", () => {
          data: {
             type: "order--default",
             meta: {
-               name: "formData.name",
-               phone: "formData.phone",
+               name: "",
+               phone: "",
                email: "formData.email",
-               address: "formData.address",
+               address: "",
                mailing: 1,
                agree: 1,
             },

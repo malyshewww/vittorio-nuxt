@@ -1,11 +1,10 @@
 <template lang="pug">
 	.page-video
-		.page-video__wrap
-			video(loop muted playsinline autoplay)
-				source(src="/hero.mp4" type="video/mp4")
-				p.
-					Ваш браузер не поддерживает встроенные видео. Попробуйте скачать его по
-					| #[a(href="/welcome.mp4") этой ссылке]
+      video(loop muted playsinline autoplay)
+         source(src="/hero.mp4" type="video/mp4")
+         p.
+            Ваш браузер не поддерживает встроенные видео. Попробуйте скачать его по
+            | #[a(href="/welcome.mp4") этой ссылке]
 </template>
 
 <style lang="scss">
@@ -17,6 +16,7 @@
    width: 100%;
    z-index: -1;
    pointer-events: none;
+   overflow: hidden;
    &::before {
       content: "";
       position: fixed;
@@ -30,12 +30,29 @@
       background: transparent url("/images/noise.gif") repeat 0 0;
       background-repeat: repeat;
       background-blend-mode: soft-light;
-      // animation: bg-animation 0.2s infinite;
       opacity: 0.1;
    }
-   &__wrap {
-      & video {
+   @include bp-xl {
+      position: absolute;
+      overflow: hidden;
+      &::before {
+         position: absolute;
+         height: 100%;
+         inset: 0;
+         z-index: 2;
+         // content: none;
+      }
+   }
+   & video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      @include bp-xl {
+         height: 100%;
+         position: absolute;
+         inset: 0;
          width: 100%;
+         object-fit: cover;
       }
    }
 }

@@ -7,7 +7,7 @@ export const useScrollbar = () => {
    if (scroller) {
       bodyScrollBar = Scrollbar.init(scroller, {
          damping: 0.1,
-         delegateTo: scroller,
+         delegateTo: document.body,
          alwaysShowTracks: true,
          renderByPixels: true,
          continuousScrolling: true,

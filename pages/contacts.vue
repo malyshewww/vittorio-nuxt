@@ -9,7 +9,7 @@
 						SectionContactsActions
 						SectionContactsForm
 				.contacts__image.ibg
-					img(:src="`/images/contacts/preview.jpg`" alt="image")
+					NuxtPicture(:src="`/images/contacts/preview.jpg`" alt="image")
 </template>
 
 <script setup>

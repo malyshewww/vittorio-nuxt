@@ -131,6 +131,7 @@ const initSlider = () => {
          delay: 5000,
          disableOnInteraction: false,
       },
+      breakpoints: {},
       on: {
          slideChange: function (swiper) {
             const activeIndex = swiper.activeIndex;
@@ -140,6 +141,18 @@ const initSlider = () => {
             // console.log(currentKey);
             changeArea(currentSlideKey);
             changeMapArea(currentSlideKey);
+            // if (window.innerWidth <= 1400) {
+            //    const markers = document.querySelectorAll(".marker");
+            //    const locationWrapper = document.querySelector(
+            //       ".location-fragrances__map"
+            //    );
+            //    const markerLeft = markers[activeIndex].offsetLeft;
+            //    const markerTop = markers[activeIndex].offsetTop;
+            //    locationWrapper.style.left = `${
+            //       locationWrapper.scrollLeft - markerLeft
+            //    }px`;
+            // }
+            // locationWrapper.style.top = `${markerTop}px`;
          },
       },
    });
@@ -214,18 +227,41 @@ const slides = [
    max-width: 460px;
    position: relative;
    overflow: hidden;
-   &::before {
+   &::before,
+   &::after {
       content: "";
       position: absolute;
-      top: 0;
       left: 0;
       width: 100%;
       height: 1px;
+      pointer-events: none;
+   }
+   &::before {
+      top: 0;
       border: 1px solid var(--bg-smoke);
       border-left: 0;
       border-bottom: 0;
-      pointer-events: none;
       transform: translateX(-100%);
+   }
+   &::after {
+      bottom: 0;
+      transform: translateX(-100%);
+      border-bottom: 1px solid var(--bg-smoke);
+      display: none;
+   }
+   @include bp-xxl {
+      max-width: 100%;
+      padding: 25px 0;
+      width: 100%;
+      &::before {
+         border-right: 0;
+      }
+      &::after {
+         display: block;
+      }
+      & .swiper {
+         max-width: 500px;
+      }
    }
 }
 .fragrances-slide {
@@ -234,10 +270,19 @@ const slides = [
       flex-direction: column;
       gap: 32px;
       align-items: flex-start;
+      @include bp-md {
+         flex-direction: row;
+      }
    }
    &__image {
       align-self: stretch;
       padding-bottom: math.div(440, 360) * 100%;
+      @include bp-md {
+         height: 200px;
+         width: 157px;
+         flex-shrink: 0;
+         padding: 0;
+      }
    }
    &__content {
       display: flex;
@@ -252,9 +297,17 @@ const slides = [
       font-size: 36px;
       line-height: 44px;
       text-transform: uppercase;
+      @include bp-md {
+         font-size: 22px;
+         line-height: 28px;
+      }
    }
    &__country {
       line-height: 22px;
+      @include bp-md {
+         font-size: 14px;
+         line-height: 18px;
+      }
    }
    & .link-line {
       margin-top: 8px;
@@ -265,6 +318,12 @@ const slides = [
    align-items: center;
    gap: 20px;
    margin-top: 40px;
+   @include bp-xxl {
+      justify-content: center;
+   }
+   @include bp-md {
+      margin-top: 16px;
+   }
 }
 .slider-pagination {
    font-weight: 700;
@@ -277,6 +336,9 @@ const slides = [
    margin-right: auto;
    & .swiper-pagination-current {
       color: var(--bg-smoke);
+   }
+   @include bp-xxl {
+      display: none;
    }
 }
 </style>
