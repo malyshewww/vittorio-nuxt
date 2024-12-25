@@ -8,10 +8,17 @@ $lg: 991.98px;
 $xl: 1024px;
 $xxl: 1200px;
 $xxxl: 1400px;
+$big-xl: 1600px;
 
 $minWidth: 320;
 $maxWidth: 1920;
 $maxWidthContainer: 1340;
+
+@mixin bp-big-xl {
+	@media (max-width: $big-xl) {
+		@content;
+	}
+}
 
 @mixin bp-xxxl {
 	@media (max-width: $xxxl) {

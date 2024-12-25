@@ -50,7 +50,7 @@ defineProps({
       &::before {
          width: 30px;
       }
-      @media (any-hover: hover) {
+      @include hover {
          &:hover {
             &::before {
                width: 50px;
@@ -65,6 +65,7 @@ defineProps({
    @include bp-md {
       font-size: 16px;
       line-height: 20px;
+      padding: 6px 0;
    }
    &::before {
       content: "";
@@ -75,8 +76,11 @@ defineProps({
       transition: width $time * 2 $ttm;
       position: relative;
       top: -2px;
+      @include bp-md {
+         top: -1px;
+      }
    }
-   @media (any-hover: hover) {
+   @include hover {
       &:hover {
          &::before {
             width: 70px;

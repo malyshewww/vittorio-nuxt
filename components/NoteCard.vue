@@ -1,44 +1,48 @@
 <template lang="pug">
-   section.note-card.main-note(:class="`main-note--${product.key}`" :id="product.key")
-      h2.main-note__title(v-if="product.title")
-         span(v-html="product.title")
-      .main-note__preview.preview-note
-         .preview-note__image-wrap
-            .preview-note__image.ibg(v-if="product.field_image_on_gradient" v-html="product.field_image_on_gradient[0].markup")
-               //- img(:src="`/images/main/legend_fragment.jpg`" alt="fragment")
-            nuxt-link(:to="product.url").main-note__circle
-         .preview-note__description(v-if="product.field_title_on_gradient" v-html="product.field_title_on_gradient")
-      .main-note__image.ibg(v-if="product.field_bg_image" v-html="product.field_bg_image[0].markup")
-         //- img(:src="`/images/main/legend_scene.jpg`" alt="product")
-   section.note-card.info-note
-      .info-note__content
-         h2.info-note__title(v-if="product.title" v-html="product.title")
-         .info-note__text(v-if="product.field_description_aroma" v-html="product.field_description_aroma")
-         .info-note__characteristics.characteristics
-            ul.characteristics__list
-               li.characteristics__item(v-if="product.field_fragrance_group")
-                  span.characteristics__label группа аромата
-                  span.characteristics__value {{product.field_fragrance_group}}
-               li.characteristics__item(v-if="product.field_top_notes")
-                  span.characteristics__label верхние ноты
-                  span.characteristics__value {{product.field_top_notes}}
-               li.characteristics__item(v-if="product.field_heart_notes")
-                  span.characteristics__label ноты сердца
-                  span.characteristics__value {{product.field_heart_notes}}
-               li.characteristics__item(v-if="product.field_base_notes")
-                  span.characteristics__label базовые ноты
-                  span.characteristics__value {{product.field_base_notes}}
-      .info-note__product
-         .product-note
-            .product-note__image-wrap
-               .product-note__image.ibg(v-html="product.field_image_product_front[0].markup")
-                  //- img(:src="`/images/main/legend_product.jpg`" alt="product")
-               .product-note__decor-title(v-if="product.field_svg_title")
-                  img(:src="product.field_svg_title[0].markup" :alt="product.field_svg_title[0].alt")
-               button(type="button").product-note__button В корзину
-            .product-note__options(v-if="product.price || product.volume")
-               .product-note__option(v-if="product.volume") {{product.volume}}
-               .product-note__option(v-if="product.price") {{product.price}}
+	section.note-card.main-note(:class="`main-note--${product.key}`" :id="product.key")
+		h2.main-note__title(v-if="product.title")
+			span(v-html="product.title")
+		.main-note__preview.preview-note
+			.preview-note__title-mobile(v-if="product.title")
+				span(v-html="product.title")
+			.preview-note__image-wrap
+				.preview-note__image.ibg(v-if="product.field_image_on_gradient" v-html="product.field_image_on_gradient[0].markup")
+					//- img(:src="`/images/main/legend_fragment.jpg`" alt="fragment")
+				nuxt-link(:to="product.url").main-note__circle
+			.preview-note__description(v-if="product.field_title_on_gradient" v-html="product.field_title_on_gradient")
+			UiLinkLine(text="Узнать больше" :path="product.url" class-names="preview-note__link short-link")
+		.main-note__image.ibg(v-if="product.field_bg_image" v-html="product.field_bg_image[0].markup")
+			//- img(:src="`/images/main/legend_scene.jpg`" alt="product")
+	section.note-card.info-note
+		.info-note__content
+			h2.info-note__title(v-if="product.title" v-html="product.title")
+			.info-note__text(v-if="product.field_description_aroma" v-html="product.field_description_aroma")
+			.info-note__characteristics.characteristics(v-if="product.field_fragrance_group || product.field_top_notes || product.field_heart_notes || product.field_base_notes")
+				ul.characteristics__list
+					li.characteristics__item(v-if="product.field_fragrance_group")
+						span.characteristics__label группа аромата
+						span.characteristics__value {{product.field_fragrance_group}}
+					li.characteristics__item(v-if="product.field_top_notes")
+						span.characteristics__label верхние ноты
+						span.characteristics__value {{product.field_top_notes}}
+					li.characteristics__item(v-if="product.field_heart_notes")
+						span.characteristics__label ноты сердца
+						span.characteristics__value {{product.field_heart_notes}}
+					li.characteristics__item(v-if="product.field_base_notes")
+						span.characteristics__label базовые ноты
+						span.characteristics__value {{product.field_base_notes}}
+		.info-note__product
+			.product-note
+				.product-note__image-wrap
+					.product-note__image.ibg(v-html="product.field_image_product_front[0].markup")
+						//- img(:src="`/images/main/legend_product.jpg`" alt="product")
+					.product-note__decor-title(v-if="product.field_svg_title")
+						img(:src="product.field_svg_title[0].markup" :alt="product.field_svg_title[0].alt")
+					button(type="button").product-note__button В корзину
+				.product-note__options(v-if="product.price || product.volume")
+					.product-note__option(v-if="product.volume") {{product.volume}}
+					.product-note__option(v-if="product.price") {{product.price}}
+				UiButtonPrimary(title="В корзину" class-names="product-note__button-mobile")
 </template>
 
 <script setup>
@@ -52,24 +56,37 @@ const props = defineProps({
 
 <style lang="scss" scoped>
 @use "sass:math";
-@use "assets/scss/_vars" as *;
-@use "assets/scss/_mixins" as m;
+@use "assets/scss/vars" as *;
+@use "assets/scss/mixins" as m;
 .note-sections {
 }
 .note-card {
-   // position: absolute;
    height: 100dvh;
    position: relative;
-   // width: 100%;
-   // position: absolute;
-   // top: 0;
-   // left: 0;
+   @include bp-xl {
+      height: auto;
+   }
+}
+.note-cards .note-card {
+   position: absolute;
+   width: 100%;
+   height: 100%;
+   top: 0;
+   left: 0;
+   @include bp-xl {
+      position: relative;
+      height: auto;
+   }
 }
 .main-note {
    font-family: var(--second-family);
    color: var(--bg-white);
    display: grid;
    grid-template-columns: repeat(2, 1fr);
+   @include bp-xl {
+      grid-template-columns: 1fr;
+      align-items: start;
+   }
    &__title {
       position: absolute;
       width: 100%;
@@ -83,10 +100,27 @@ const props = defineProps({
       z-index: 5;
       text-transform: uppercase;
       text-rendering: optimizespeed;
+      @include bp-xl {
+         display: none;
+      }
    }
    &__image {
       width: 50vw;
       //   padding-bottom: math.div(980, 960) * 100%;
+      @include bp-xxxl {
+         width: 40vw;
+      }
+      @include bp-xl {
+         width: 100%;
+         padding-bottom: math.div(300, 375) * 100%;
+         & img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+         }
+      }
    }
    &__circle {
       position: absolute;
@@ -116,7 +150,7 @@ const props = defineProps({
          width: 40px;
          height: 40px;
       }
-      @media (any-hover: hover) {
+      @include hover {
          &:hover {
             cursor: pointer;
             &::before {
@@ -124,12 +158,12 @@ const props = defineProps({
             }
          }
       }
-   }
-}
-
-@keyframes spin {
-   to {
-      transform: rotate(1turn);
+      @media (min-width: 1024px) and (max-height: 650px) {
+         display: none;
+      }
+      @include bp-xl {
+         display: none;
+      }
    }
 }
 
@@ -140,12 +174,27 @@ const props = defineProps({
    align-items: start;
    gap: 50px;
    // padding: 120px 50px;
-   padding: 12.245vh 50px;
+   padding: 12.245vh 2.604vw;
    background: radial-gradient(
       92.2% 92.2% at 30% 40%,
       #6a4464 0%,
       #382d32 100%
    );
+   @media (min-width: 1024px) and (max-height: 800px) {
+      padding: 20px 2.604vw;
+   }
+   @include bp-xxxl {
+      width: 60vw;
+      gap: 20px;
+   }
+   @include bp-xl {
+      width: 100%;
+      grid-template-columns: 1fr;
+      gap: 20px;
+      align-items: start;
+      text-align: center;
+      padding: 32px 20px;
+   }
    .main-note--legend & {
       background: radial-gradient(
          92.2% 92.2% at 30% 40%,
@@ -209,12 +258,40 @@ const props = defineProps({
          #70445c 100%
       );
    }
+   &__title-mobile {
+      display: none;
+      font-family: var(--second-family);
+      font-weight: 500;
+      font-size: 44px;
+      line-height: 56px;
+      text-transform: uppercase;
+      text-rendering: optimizespeed;
+      @include bp-xl {
+         display: block;
+      }
+      @include bp-md {
+         font-size: 11.733vw;
+         line-height: 14.933vw;
+      }
+   }
    &__image-wrap {
       position: relative;
+      @include bp-xl {
+         width: 100%;
+         max-width: 28.36%;
+         display: flex;
+         justify-content: center;
+         align-self: stretch;
+         margin: 0 auto;
+      }
    }
    &__image {
       height: 100%;
       padding-bottom: math.div(320, 270) * 100%;
+      @include bp-xl {
+         width: 100%;
+         padding-bottom: math.div(112, 95) * 100%;
+      }
    }
    &__description {
       font-weight: 500;
@@ -222,6 +299,28 @@ const props = defineProps({
       line-height: 36px;
       padding: 20px 0;
       max-width: 450px;
+      @media (min-width: 1024px) and (max-height: 800px) {
+         font-size: 22px;
+         line-height: 28px;
+      }
+      @include bp-xl {
+         padding: 0;
+         max-width: 100%;
+      }
+      @include bp-md {
+         font-size: 20px;
+         line-height: 24px;
+      }
+   }
+   &__link {
+      display: none;
+      &.short-link {
+         color: var(--bg-white);
+         justify-self: center;
+      }
+      @include bp-xl {
+         display: flex;
+      }
    }
 }
 .info-note {
@@ -229,14 +328,31 @@ const props = defineProps({
    grid-template-columns: repeat(2, 1fr);
    align-items: start;
    // padding: 140px 50px 140px;
-   padding: 14.286vh 50px;
+   padding: 14.286vh 2.604vw;
    background-color: var(--bg-milk);
+   @media (min-width: 1024px) and (max-height: 800px) {
+      padding: 20px 2.604vw;
+   }
+   @include bp-xl {
+      padding: 40px 20px;
+      grid-template-columns: 1fr;
+      gap: 60px;
+   }
    &__content {
       display: flex;
       flex-direction: column;
       gap: 36px;
       height: 100%;
       padding: 0 140px 0 150px;
+      @include bp-big-xl {
+         padding: 0;
+      }
+      @include bp-xxxl {
+         gap: 16px;
+      }
+      @include bp-xl {
+         gap: 20px;
+      }
    }
    &__title {
       font-family: var(--second-family);
@@ -245,21 +361,43 @@ const props = defineProps({
       line-height: 86px;
       text-transform: uppercase;
       color: var(--bg-smoke);
+      @include bp-md {
+         font-size: 36px;
+         line-height: 40px;
+      }
    }
    &__text {
       font-family: var(--second-family);
       font-weight: 500;
       font-size: 28px;
       line-height: 36px;
+      @media (min-width: 1024px) and (max-height: 800px) {
+         font-size: 22px;
+         line-height: 28px;
+      }
+      @include bp-md {
+         font-size: 20px;
+         line-height: 24px;
+         text-transform: uppercase;
+      }
    }
    &__characteristics {
       margin-top: auto;
+      @include bp-xl {
+         margin-top: 20px;
+      }
    }
    &__product {
       display: flex;
       justify-content: center;
       margin-top: 89px;
       margin-left: 50px;
+      @include bp-xxxl {
+         margin-top: 50px;
+      }
+      @include bp-xl {
+         margin: 0;
+      }
    }
 }
 .product-note {
@@ -268,6 +406,12 @@ const props = defineProps({
    display: flex;
    flex-direction: column;
    gap: 16px;
+   @include bp-xxxl {
+      width: 335px;
+   }
+   @include bp-sm {
+      width: 100%;
+   }
    &__image-wrap {
       position: relative;
    }
@@ -275,8 +419,11 @@ const props = defineProps({
       border-radius: 800px 800px 0 0;
       overflow: hidden;
       padding-bottom: math.div(560, 400) * 100%;
-      @media screen and (max-height: 850px) {
+      @media (min-width: 1024px) and (max-height: 850px) {
          padding-bottom: 95%;
+      }
+      @include bp-xl {
+         padding-bottom: math.div(440, 335) * 100%;
       }
    }
    &__decor-title {
@@ -287,6 +434,15 @@ const props = defineProps({
       left: -40px;
       pointer-events: none;
       z-index: 1;
+      @include bp-xxxl {
+         width: 400px;
+         height: 400px;
+         top: -50px;
+         left: -9px;
+      }
+      @include bp-xl {
+         display: none;
+      }
    }
    &__button {
       width: 160px;
@@ -307,10 +463,23 @@ const props = defineProps({
       text-align: center;
       color: var(--bg-white);
       transition: background-color $time * 2 $ttm;
-      @media (any-hover: hover) {
+      @include hover {
          &:hover {
             background-color: var(--bg-dark);
          }
+      }
+      @include bp-xxxl {
+         left: -60px;
+      }
+      @include bp-md {
+         display: none;
+      }
+   }
+   &__button-mobile {
+      display: none;
+      @include bp-md {
+         display: flex;
+         margin-top: 4px;
       }
    }
    &__options {
@@ -334,6 +503,11 @@ const props = defineProps({
       font-weight: 700;
       line-height: 22px;
       padding: 5px 0;
+      @include bp-md {
+         font-size: 14px;
+         line-height: 18px;
+         padding: 6px 0;
+      }
    }
 }
 .characteristics {
@@ -351,9 +525,16 @@ const props = defineProps({
       font-size: 16px;
       line-height: 22px;
       padding: 4px 0 5px;
+      @include bp-md {
+         font-size: 14px;
+         line-height: 18px;
+      }
    }
    &__label {
       font-weight: 700;
+      @include bp-md {
+         width: 30%;
+      }
    }
    &__value {
       width: 60%;

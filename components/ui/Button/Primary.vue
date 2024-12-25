@@ -84,6 +84,8 @@ const buttonAction = () => {
    }
    @include bp-md {
       width: 100%;
+      padding: 10px 14px;
+      min-height: 40px;
    }
 }
 </style>

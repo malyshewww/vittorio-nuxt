@@ -19,6 +19,8 @@ const swiper = ref(null);
 
 const isVisible = ref(false);
 
+const { $ScrollTrigger: ScrollTrigger } = useNuxtApp();
+
 const initializeSwiper = () => {
    swiper.value = new Swiper(slider.value, {
       freeMode: true,
@@ -34,19 +36,84 @@ const initializeSwiper = () => {
 };
 
 const scrollToSection = (e) => {
-   console.log("scroll");
-   // const { bodyScrollBar } = useScrollbar();
-   // const target = e.target;
-   // if (!target) return;
-   // const targetId = target.getAttribute("href");
-   // const targetElement = document.querySelector(targetId);
-   // if (targetElement) {
-   //    console.log(targetElement);
-   //    const targetPosition =
-   //       targetElement.getBoundingClientRect().top + bodyScrollBar.scrollTop;
-   //    console.log(targetPosition);
-   //    bodyScrollBar.scrollTo(0, targetPosition, 800);
-   // }
+   const { bodyScrollBar } = useScrollbar();
+   const target = e.target;
+   if (!target) return;
+   const targetId = target.getAttribute("href");
+   const targetElement = document.querySelector(targetId);
+   // Господи, что за костыль. По возможности переписать
+   if (targetElement) {
+      const id = targetElement.getAttribute("id");
+      const panelsSection = document.querySelector("#panels");
+      const { innerHeight } = window;
+      let pos;
+      switch (id) {
+         case "legend":
+            pos = parseInt(
+               targetElement.getBoundingClientRect().top +
+                  bodyScrollBar.scrollTop
+            );
+            break;
+         case "santal":
+            pos = parseInt(
+               panelsSection.getBoundingClientRect().top +
+                  bodyScrollBar.scrollTop
+            );
+            break;
+         case "protagonist":
+            pos = parseInt(
+               panelsSection.getBoundingClientRect().top +
+                  bodyScrollBar.scrollTop +
+                  innerHeight * 2.15
+            );
+            break;
+         case "musk":
+            pos = parseInt(
+               panelsSection.getBoundingClientRect().top +
+                  bodyScrollBar.scrollTop +
+                  innerHeight * 4.3
+            );
+            break;
+         case "essay":
+            pos = parseInt(
+               panelsSection.getBoundingClientRect().top +
+                  bodyScrollBar.scrollTop +
+                  innerHeight * 6.4
+            );
+            break;
+         case "ethnos":
+            pos = parseInt(
+               panelsSection.getBoundingClientRect().top +
+                  bodyScrollBar.scrollTop +
+                  innerHeight * 8.55
+            );
+            break;
+         case "erato":
+            pos = parseInt(
+               panelsSection.getBoundingClientRect().top +
+                  bodyScrollBar.scrollTop +
+                  innerHeight * 10.7
+            );
+            break;
+         case "voice":
+            pos = parseInt(
+               panelsSection.getBoundingClientRect().top +
+                  bodyScrollBar.scrollTop +
+                  innerHeight * 12.8
+            );
+            break;
+         case "velvet":
+            pos = parseInt(
+               panelsSection.getBoundingClientRect().top +
+                  bodyScrollBar.scrollTop +
+                  innerHeight * 14.95
+            );
+            break;
+         default:
+            break;
+      }
+      bodyScrollBar.scrollTo(0, pos, 800);
+   }
 };
 
 const observeNavigation = () => {
