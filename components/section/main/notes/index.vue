@@ -43,33 +43,32 @@ onMounted(() => {
    // Gsap Code
    if (window.innerWidth > 1024) {
       const sections = document.querySelectorAll(".note-cards .note-card");
-      const swipePanels = document.querySelectorAll(".note-cards .note-card");
-      const sectionHeight = sections[0].clientHeight;
-      const tl = gsap.timeline({
-         defaults: {
-            ease: "none",
-            duration: 1,
-         },
-         scrollTrigger: {
-            trigger: ".note-cards",
-            start: "top top",
-            end: () => sectionHeight * sections.length - 1 + "px",
-            pinSpacing: true,
-            pin: true,
-            scrub: true,
-            onUpdate: (self) => {
-               const slides = document.querySelectorAll(
-                  ".note-cards .note-card"
-               );
-               const activeIndex = Math.round(
-                  self.progress * (slides.length - 1)
-               );
+      if (sections.length) {
+         const sectionHeight = sections[0].clientHeight;
+         const tl = gsap.timeline({
+            defaults: {
+               ease: "none",
+               duration: 1,
             },
-         },
-      });
-      document
-         .querySelectorAll(".note-cards .note-card")
-         .forEach((slide, index) => {
+            scrollTrigger: {
+               trigger: ".note-cards",
+               start: "top top",
+               end: () => sectionHeight * sections.length - 1 + "px",
+               pinSpacing: true,
+               pin: true,
+               scrub: true,
+               onUpdate: (self) => {
+                  const slides = document.querySelectorAll(
+                     ".note-cards .note-card"
+                  );
+                  const activeIndex = Math.round(
+                     self.progress * (slides.length - 1)
+                  );
+               },
+            },
+         });
+         const noteCards = document.querySelectorAll(".note-cards .note-card");
+         [...noteCards].forEach((slide, index) => {
             if (index !== 0) {
                tl.from(slide, {
                   yPercent: 100,
@@ -77,6 +76,27 @@ onMounted(() => {
                });
             }
          });
+      }
+      const noteCardLegend = document.querySelector(".main-note--legend");
+      if (noteCardLegend) {
+         gsap.fromTo(
+            noteCardLegend,
+            { opacity: 0 },
+            {
+               opacity: 1,
+               scrollTrigger: {
+                  // Секция, от которой начинается анимация
+                  trigger: ".fragrances",
+                  start: "bottom bottom",
+                  // Когда нижняя граница секции достигнет верхней границы окна
+                  end: "bottom top",
+                  scrub: 1,
+                  ease: "Power0.easeNone",
+                  toggleActions: "play none none reverse", // Включаем действия при прокрутке
+               },
+            }
+         );
+      }
    }
 });
 </script>

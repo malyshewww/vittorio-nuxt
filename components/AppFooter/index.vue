@@ -28,7 +28,6 @@ import { useMainInfoStore } from "~/stores/maininfo";
 const mainInfoStore = useMainInfoStore();
 
 const { links } = mainInfoStore;
-console.log(links);
 
 const route = useRoute();
 
@@ -36,7 +35,7 @@ const footer = ref(null);
 const className = ref("");
 
 onMounted(() => {
-   const toggleClassname = (isVisible) => {
+   const toggleClassName = (isVisible) => {
       if (isVisible) {
          className.value = "active";
       } else {
@@ -45,7 +44,7 @@ onMounted(() => {
    };
    const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
-         toggleClassname(entry.isIntersecting);
+         toggleClassName(entry.isIntersecting);
       });
    });
    observer.observe(footer.value);
@@ -53,11 +52,17 @@ onMounted(() => {
 </script>
 
 <style lang="scss">
-@use "assets/scss/_vars" as *;
-@use "assets/scss/_mixins" as m;
+@use "assets/scss/vars" as *;
 .footer {
    position: relative;
    background-color: var(--bg-milk);
+   @include bp-xl {
+      margin: 0 20px;
+      overflow: hidden;
+      & .container {
+         padding: 0;
+      }
+   }
    .page--contacts & {
       &::before,
       &::after {
@@ -66,6 +71,9 @@ onMounted(() => {
    }
    .page--home & {
       padding-bottom: 40px;
+      @include bp-xl {
+         padding-bottom: 0;
+      }
    }
    &.active {
       &::before {
@@ -87,6 +95,9 @@ onMounted(() => {
       background-color: var(--bg-smoke);
       pointer-events: none;
       transform: translateX(-100%);
+      @include bp-xl {
+         transform: translateX(-120%);
+      }
    }
    &::after {
       content: "";
@@ -109,8 +120,13 @@ onMounted(() => {
    grid-template-columns: 1fr auto 1fr;
    align-items: start;
    gap: 20px;
-   &__subscribe {
-      max-width: 480px;
+   @include bp-xl {
+      grid-template-columns: 1fr;
+      gap: 32px;
+      padding: 100px 0 40px;
+   }
+   @include bp-md {
+      padding: 72px 0 0;
    }
    &__middle {
       margin-top: 40px;
@@ -118,11 +134,19 @@ onMounted(() => {
       flex-direction: column;
       align-items: center;
       gap: 32px;
-   }
-   &__contacts {
-      flex-grow: 1;
+      @include bp-xl {
+         order: -1;
+         margin: 0;
+      }
+      @include bp-md {
+         gap: 24px;
+      }
    }
    &__logo {
+      @include bp-md {
+         width: 107px;
+         height: 52px;
+      }
    }
 }
 .footer-title {
@@ -130,12 +154,26 @@ onMounted(() => {
    font-weight: 500;
    font-size: 36px;
    line-height: 44px;
+   text-transform: uppercase;
+   @include bp-md {
+      font-size: 22px;
+      line-height: 28px;
+   }
 }
 .footer-contacts {
    height: 100%;
    display: flex;
    width: 480px;
    margin-left: auto;
+   flex-grow: 1;
+   @include bp-xxxl {
+      width: 350px;
+   }
+   @include bp-xl {
+      width: 100%;
+      margin-top: 16px;
+      height: auto;
+   }
    &__body {
       width: 100%;
       display: flex;
@@ -143,9 +181,17 @@ onMounted(() => {
       align-items: flex-end;
       gap: 24px;
       height: 100%;
+      @include bp-xl {
+         align-items: flex-start;
+      }
+      @include bp-md {
+         align-items: center;
+         text-align: center;
+         gap: 12px;
+      }
    }
    &__list {
-      @include m.reset-list;
+      @include reset-list;
       display: flex;
       align-items: center;
       gap: 12px;
@@ -160,10 +206,14 @@ onMounted(() => {
       font-weight: 700;
       line-height: 22px;
       transition: color $time * 2 $ttm;
-      @media (any-hover: hover) {
+      @include hover {
          &:hover {
             color: var(--text-gray);
          }
+      }
+      @include bp-md {
+         font-size: 14px;
+         line-height: 18px;
       }
    }
    &__bottom {
@@ -173,6 +223,19 @@ onMounted(() => {
       align-items: flex-end;
       gap: 20px;
       text-align: right;
+      @include bp-xl {
+         text-align: left;
+         align-items: flex-start;
+      }
+      @include bp-md {
+         margin-top: 8px;
+         align-items: center;
+         text-align: center;
+         gap: 16px;
+         & .stores {
+            width: auto;
+         }
+      }
    }
    &__label {
       line-height: 22px;

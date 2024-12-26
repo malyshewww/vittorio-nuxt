@@ -4,11 +4,16 @@
 			.header__body
 				button(type="button" @click="openMenu").header__burger.burger
 					span.burger__lines
-				nuxt-link(to="/").header__logo.logo
+				nuxt-link(to="/" v-if="$route.name === 'index'").header__logo.logo
 					picture
-						source(:srcset="`/images/${isColor === 'white' ? 'logo-white' : 'logo-dark'}.svg`" media="(min-width: 767.98px)")
-						source(:srcset="`/images/${isColor === 'white' ? 'logo-white' : 'logo-dark'}.svg`" media="(min-width: 300px)")
+						source(:srcset="`/images/${isColor == 'white' ? 'logo-white' : 'logo-dark'}.svg`" media="(min-width: 767.98px)")
+						source(:srcset="`/images/${isColor == 'white' ? 'logo-white' : 'logo-dark'}.svg`" media="(min-width: 300px)")
 						img(:src="`/images/${isColor === 'white' ? 'logo-white' : 'logo-dark'}.svg`")
+				nuxt-link(to="/" v-else).header__logo.logo
+					picture
+						source(:srcset="`/images/logo-dark.svg`" media="(min-width: 767.98px)")
+						source(:srcset="`/images/logo-dark.svg`" media="(min-width: 300px)")
+						img(:src="`/images/logo-dark.svg`")
 				button(type="button" @click="openCart").header__cart.cart-header
 					span.cart-header__text Корзина
 					span.cart-header__count (0)
@@ -22,17 +27,14 @@ import { useCartStore } from "~/stores/cart";
 import { useAppStore } from "~/stores/app";
 
 defineProps({
-   isColor: {
-      type: String,
-      required: false,
-      default: "",
-   },
    isVisible: {
       type: Boolean,
       required: false,
       default: false,
    },
 });
+
+const isColor = ref("white");
 
 const menuStore = useMenuStore();
 const cartStore = useCartStore();
@@ -46,7 +48,47 @@ const openMenu = () => {
 };
 const openCart = () => {
    cartStore.openCart();
+   if (menuStore.isOpen == false) {
+      bodyLockAdd();
+   }
 };
+
+const route = useRoute();
+
+watch(
+   () => route.path,
+   () => {
+      observeHeader();
+      appStore.isHeaderVisible = true;
+   }
+);
+
+// const device = useDevice();
+
+const observeHeader = () => {
+   if (window.innerWidth <= 1024) {
+      const mainHero = document.querySelector(".main-hero");
+      const callback = (entries) => {
+         entries.forEach((entry) => {
+            if (!entry.isIntersecting) {
+               isColor.value = "dark";
+            } else {
+               isColor.value = "white";
+            }
+         });
+      };
+      const observer = new IntersectionObserver(callback, {
+         threshold: 0,
+      });
+      if (mainHero) {
+         observer.observe(mainHero);
+      }
+   }
+};
+
+onMounted(() => {
+   observeHeader();
+});
 </script>
 
 <style lang="scss" scoped>
@@ -61,7 +103,7 @@ const openCart = () => {
    min-height: var(--header-height);
    padding: 20px 0;
    z-index: 21;
-   transition: transform $time * 2 ease, background-color $time $ttm;
+   transition: transform $time * 2 $ttm, background-color $time * 2 $ttm;
    @include bp-md {
       padding: 14px 0;
       & .container {
@@ -99,6 +141,12 @@ const openCart = () => {
          }
       }
    }
+   &.header-dark {
+      background-color: var(--bg-milk);
+      &.active {
+         background-color: var(--bg-dark);
+      }
+   }
    &__body {
       display: flex;
       justify-content: space-between;
@@ -118,6 +166,9 @@ const openCart = () => {
       transform: translateX(-50%);
       .page--home & {
          display: none;
+         @include bp-xl {
+            display: block;
+         }
       }
       @include bp-md {
          width: 82px;

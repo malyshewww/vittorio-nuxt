@@ -26,7 +26,6 @@ const {
    error,
 } = await useAsyncData("contacts", () => $fetch(url, {}), {
    transform: (res) => {
-      console.log(res);
       const { breadcrumb, data, metatag } = res;
       return {
          breadcrumb,

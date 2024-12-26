@@ -36,6 +36,9 @@ const props = defineProps({
       .footer-social & {
          gap: 28px;
          justify-content: center;
+         @include bp-md {
+            gap: 24px;
+         }
       }
    }
    &__item {
@@ -75,6 +78,10 @@ const props = defineProps({
          height: 32px;
          display: grid;
          place-items: center;
+         @include bp-md {
+            font-size: 14px;
+            line-height: 18px;
+         }
       }
       & svg {
          & path {

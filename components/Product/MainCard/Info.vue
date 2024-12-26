@@ -1,7 +1,7 @@
 <template lang="pug">
 	.product-card__info.product-info
 		.product-info__header
-			UiButtonLine(text="назад" @button-action="goBack")
+			UiButtonLine(v-if="$device.isDesktop" text="назад" @button-action="goBack")
 			h2.product-info__title(v-if="info.title" v-html="info.title")
 			.product-info__capacity 
 				| Объём
@@ -66,8 +66,7 @@ const formData = {
 };
 
 const goBack = () => {
-   const router = useRouter();
-   router.go(-1);
+   useRouter().router.go(-1);
 };
 </script>
 

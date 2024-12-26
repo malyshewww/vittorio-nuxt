@@ -1,12 +1,12 @@
 <template lang="pug">
-	.header__menu.menu-header(:class="{active: menuStore.isOpen}")
+	.header__menu.menu-header(:class="{active: menuStore.isOpen}" @click="closeMenu($event)")
 		.container
 			.menu-header__body
 				.menu-header__top
 					nav.menu.menu-main
 						ul.menu-main__list
-							li.menu-main__item(v-for="(item, index) in newMenu" :key="index")
-								nuxt-link(:to="{ path: item.url.href}").menu-main__link
+							li.menu-main__item(v-for="(item, index) in menuMain" :key="index")
+								nuxt-link(:to="item.url.href").menu-main__link
 									span(v-html="item.title")
 					nav.menu.menu-notes
 						ul.menu-notes__list
@@ -39,14 +39,71 @@ const setNumber = (num) => {
    return num < 10 ? " 0" + num : " " + num;
 };
 
-const newMenu = computed(() => {
-   return menuMain.map((item) => {
-      return {
-         ...item,
-         hash: item.url.href == "/about" ? "#about" : false,
-      };
-   });
-});
+// const newMenu = computed(() => {
+//    return menuMain.map((item) => {
+//       return {
+//          ...item,
+//          hash: item.url.href == "/about" ? "#about" : false,
+//       };
+//    });
+// });
+
+const route = useRoute();
+
+watch(
+   () => route.fullPath,
+   () => {
+      menuStore.closeMenu();
+      bodyLock(menuStore.isOpen);
+      if (!route.hash) {
+         window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+         });
+      }
+   }
+);
+
+const closeMenu = (e) => {
+   const target = e.target;
+   if (target.tagName == "A") {
+      menuStore.closeMenu();
+      bodyLock(menuStore.isOpen);
+      goToAnchor(target);
+   }
+};
+
+const router = useRouter();
+
+const goToAnchor = (link) => {
+   if (window.innerWidth > 1024) {
+      const { bodyScrollBar } = useScrollbar();
+      const href = link.getAttribute("href");
+      if (href.includes("#")) {
+         const id = href.replace("/#", "");
+         const targetElement = document.getElementById(id);
+         router.push({ path: "/", query: { anchor: id } });
+         if (targetElement) {
+            const targetElementPosition =
+               targetElement.getBoundingClientRect().top +
+               bodyScrollBar.scrollTop -
+               10;
+            setTimeout(() => {
+               bodyScrollBar.scrollTo(0, targetElementPosition, 500);
+            }, 1200);
+         }
+      }
+   }
+};
+
+// watch(
+//    route,
+//    (value) => {
+//       console.log(value);
+//       menuStore.isOpen = false;
+//    },
+//    { deep: true, immediate: true }
+// );
 </script>
 
 <style lang="scss">
@@ -65,7 +122,7 @@ const newMenu = computed(() => {
       overflow-y: auto;
       overflow-x: hidden;
       & .container {
-         height: 100%;
+         // height: 100%;
       }
    }
    &.active {
@@ -141,6 +198,8 @@ const newMenu = computed(() => {
       @include bp-md {
          font-size: 13px;
          line-height: 17px;
+         flex-wrap: wrap;
+         justify-content: center;
       }
    }
    &__politic {
@@ -186,6 +245,9 @@ const newMenu = computed(() => {
       display: flex;
       align-items: center;
       gap: 32px;
+      & span {
+         pointer-events: none;
+      }
       &::after {
          content: "";
          display: block;
@@ -296,6 +358,9 @@ const newMenu = computed(() => {
       font-size: 36px;
       line-height: 44px;
       text-transform: uppercase;
+      & span {
+         pointer-events: none;
+      }
       @include bp-md {
          font-size: 22px;
          line-height: 28px;

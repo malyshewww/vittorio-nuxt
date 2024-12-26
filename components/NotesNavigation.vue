@@ -10,14 +10,18 @@
 </template>
 
 <script setup>
+import { useAppStore } from "~/stores/app";
+
 import Swiper from "swiper";
 import "swiper/css";
 import "swiper/css/navigation";
 
+const appStore = useAppStore();
+
 const slider = ref("");
 const swiper = ref(null);
 
-const isVisible = ref(false);
+const isVisible = ref(appStore.isNavigationVisible);
 
 const { $ScrollTrigger: ScrollTrigger } = useNuxtApp();
 
@@ -116,38 +120,44 @@ const scrollToSection = (e) => {
    }
 };
 
+const route = useRoute();
+
+watch(
+   () => route.fullPath,
+   () => {
+      observeNavigation();
+   }
+);
+// Решить вопрос с observer при перехоже по якорю !!!
 const observeNavigation = () => {
    const noteCards = document.querySelector(".notes");
-   const welcomeSection = document.querySelector("#welcome");
-   const handleIntersection = (entries) => {
-      entries.forEach((entry) => {
-         // if (!entry.isIntersecting) {
-         //    isVisible.value = false; // Скрывать
-         // } else {
-         //    isVisible.value = true; // Показывать
-         // }
-         if (entry.target === welcomeSection) {
-            if (entry.boundingClientRect.top < window.innerHeight) {
-               isVisible.value = false;
-            }
+   const handleIntersection = ([entry]) => {
+      const targetInfo = entry.boundingClientRect;
+      const rootBoundsInfo = entry.rootBounds;
+      if (targetInfo.bottom < rootBoundsInfo.top || targetInfo.isIntersecting) {
+         isVisible.value = false;
+         appStore.isNavigationVisible = false;
+      } else {
+         isVisible.value = true;
+         appStore.isNavigationVisible = true;
+      }
+      if (entry.target === noteCards) {
+         if (entry.isIntersecting) {
+            isVisible.value = true;
+            appStore.isNavigationVisible = true;
+         } else {
+            isVisible.value = false;
+            appStore.isNavigationVisible = false;
          }
-         if (entry.target === noteCards) {
-            if (entry.isIntersecting) {
-               isVisible.value = true;
-            } else {
-               isVisible.value = false;
-            }
-         }
-      });
+      }
    };
+   const scroller = document.querySelector(".scroller");
    const observer = new IntersectionObserver(handleIntersection, {
+      root: scroller ? scroller : window,
       threshold: 0,
    });
    if (noteCards) {
       observer.observe(noteCards);
-   }
-   if (welcomeSection) {
-      observer.observe(welcomeSection);
    }
 };
 
@@ -197,8 +207,7 @@ const list = [
 </script>
 
 <style lang="scss">
-@use "assets/scss/_vars" as *;
-@use "assets/scss/mixins" as m;
+@use "assets/scss/vars" as *;
 .notes-navigation {
    position: fixed;
    bottom: 0;
@@ -220,12 +229,15 @@ const list = [
       transform: translateY(0);
       pointer-events: all;
    }
-   @media screen and (max-width: 1600px) {
+   @include bp-big-xl {
       padding: 6px 20px;
+   }
+   @include bp-xl {
+      // display: none;
    }
    &__nav {
       width: 81vw;
-      @include m.bp-xxl {
+      @include bp-xxl {
          width: 75vw;
       }
    }
@@ -233,7 +245,7 @@ const list = [
       //   margin-right: calc(332px - 16px);
    }
    &__list {
-      @include m.reset-list;
+      @include reset-list;
    }
    &__item {
       flex-shrink: 0;

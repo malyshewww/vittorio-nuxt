@@ -3,6 +3,7 @@
 		main.main.product-card
 			.container
 				.product-card__wrapper
+					UiButtonLine(v-if="$device.isMobile" text="назад" @button-action="goBack")
 					ProductMainCardSlider(:images="productData.info.field_images")
 					ProductMainCardInfo(:info="productData.info" :images="productData.info.field_images" :options="productData.options")
 				.product-card__content
@@ -17,6 +18,19 @@ useHead({
       class: "page--card",
    },
 });
+
+const route = useRoute();
+
+const goBack = () => {
+   useRouter().go(-1);
+   if (!route.hash) {
+      console.log("back");
+      window.scrollTo({
+         top: 0,
+         behavior: "smooth",
+      });
+   }
+};
 
 const { product } = useRoute().params;
 const runtimeConfig = useRuntimeConfig();
@@ -111,12 +125,15 @@ const {
             top: -35px;
          }
       }
-      @media screen and (max-width: 1600px) {
+      @include bp-big-xl {
          padding-right: 0;
       }
       @include bp-xxl {
          flex-direction: column;
          align-items: flex-start;
+      }
+      @include bp-md {
+         gap: 24px;
       }
    }
    &__content {

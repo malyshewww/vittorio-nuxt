@@ -18,7 +18,6 @@ const getYear = computed(() => {
 
 <style lang="scss" scoped>
 @use "assets/scss/_vars" as *;
-@use "assets/scss/_mixins" as m;
 .bottom-footer {
    display: flex;
    justify-content: space-between;
@@ -34,11 +33,11 @@ const getYear = computed(() => {
          justify-content: center;
          align-items: center;
       }
-      @include m.bp-md {
+      @include bp-md {
          flex: 1 1 auto;
       }
    }
-   @include m.bp-md {
+   @include bp-md {
       flex-direction: column;
       align-items: center;
       gap: 4px;

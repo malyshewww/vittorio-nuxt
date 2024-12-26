@@ -180,10 +180,10 @@ function toggleHiddenBlock() {
       padding: 100px 0 180px;
    }
    @include bp-xl {
-      padding: 50px 0 180px;
+      padding: 50px 0 140px;
    }
    @include bp-md {
-      padding: 20px 0 180px;
+      padding: 20px 0 100px;
    }
    &__body {
       display: grid;

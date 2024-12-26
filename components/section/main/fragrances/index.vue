@@ -3,7 +3,7 @@
 		.container
 			.fragrances__body
 				SectionMainFragrancesHeading
-				.fragrances__location.location-fragrances(ref="locationBlock" :class="className")
+				.fragrances__location.location-fragrances(ref="locationBlock" :class="className")#aroma_map
 					.location-fragrances__wrapper
 						SectionMainFragrancesSlider(:countries="countries" :isEnableAutoplay="state.isEnableAutoplay" :current-slide-index="state.currentSlideIndex" @change-area="changeArea")
 						.location-fragrances__map-wrap

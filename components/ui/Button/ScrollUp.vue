@@ -1,47 +1,108 @@
 <template lang="pug">
-	button(type="button" :class="{active: isButtonVisible}" @click="scrollTop").button-up
+	button(type="button" :class="[{'active': isButtonVisible}, {'mode': mode}]" @click="scrollTop").button-up
 </template>
 
 <script setup>
+import { useAppStore } from "~/stores/app";
+
+const appStore = useAppStore();
+
+const mode = ref(false);
+
+watch(
+   () => appStore.isNavigationVisible,
+   () => {
+      if (appStore.isNavigationVisible) {
+         mode.value = true;
+      } else {
+         mode.value = false;
+      }
+   }
+);
+
 const isButtonVisible = ref(false);
 
-const observerButtonUp = () => {
+const route = useRoute();
+
+watch(
+   () => route.path,
+   () => {
+      isButtonVisible.value = false;
+   }
+);
+
+function observerButtonUp() {
    // Функция для показа/скрытия кнопки
    const heroSection = document.querySelector(".main-hero");
    const handleIntersection = (entries) => {
       entries.forEach((entry) => {
          if (!entry.isIntersecting) {
-            isButtonVisible.value = true; // Показывать кнопку
+            isButtonVisible.value = true; // Скрывать кнопку
          } else {
-            isButtonVisible.value = false; // Скрывать кнопку
+            isButtonVisible.value = false; // Показывать кнопку
          }
       });
    };
    const observer = new IntersectionObserver(handleIntersection, {
       threshold: 0,
    });
-   if (heroSection) {
-      observer.observe(heroSection);
-   }
-};
-
-const scrollTop = () => {
-   const { bodyScrollBar } = useScrollbar();
-   const page = document.querySelector(".page");
-   if (page) {
-      if (window.innerWidth >= 1024) {
-         bodyScrollBar.scrollIntoView(page);
+   const handleIntersectionOther = (entries) => {
+      entries.forEach((entry) => {
+         if (!entry.isIntersecting) {
+            isButtonVisible.value = true; // Скрывать кнопку
+         } else {
+            isButtonVisible.value = false; // Показывать кнопку
+         }
+      });
+   };
+   const observerOther = new IntersectionObserver(handleIntersectionOther, {
+      threshold: 0,
+   });
+   const setNewButtonState = (y) => {
+      const header = document.querySelector(".header");
+      const headerHeight = header.getBoundingClientRect().height;
+      if (y > headerHeight) {
+         isButtonVisible.value = true; // Показывать кнопку
       } else {
-         window.scrollTo({
-            top: 0,
-            behavior: "smooth",
+         isButtonVisible.value = false; // Показывать кнопку
+      }
+   };
+
+   if (heroSection && route.name === "index") {
+      observer.observe(heroSection);
+   } else {
+      if (window.innerWidth > 1024 && route.name !== "index") {
+         const { bodyScrollBar } = useScrollbar();
+         bodyScrollBar.addListener(({ offset }) => {
+            setNewButtonState(offset.y);
+         });
+      } else {
+         window.addEventListener("scroll", () => {
+            setNewButtonState(window.scrollY);
          });
       }
    }
+}
+
+const scrollTop = () => {
+   const { bodyScrollBar } = useScrollbar();
+   if (window.innerWidth > 1024) {
+      bodyScrollBar.scrollTo(0, 0, 500);
+   } else {
+      window.scrollTo({
+         top: 0,
+         behavior: "smooth",
+      });
+   }
 };
 onMounted(() => {
-   // observerButtonUp();
-   // scrollTop();
+   observerButtonUp();
+   scrollTop();
+});
+onBeforeUnmount(() => {
+   // window.removeEventListener("scroll", () => {
+   //    setNewButtonState(window.scrollY);
+   // });
 });
 </script>
 
@@ -61,11 +122,16 @@ onMounted(() => {
    transform: translateY(100%);
    opacity: 0;
    pointer-events: none;
-   transition: transform $time * 2 $ttm, opacity $time * 2 $ttm;
+   z-index: 10;
+   transition: transform $time * 2 $ttm, opacity $time * 2 $ttm,
+      bottom $time * 2 $ttm;
    &.active {
       transform: translateY(0);
       opacity: 1;
       pointer-events: all;
+   }
+   &.mode {
+      bottom: calc(var(--navigation-height) + 16px);
    }
    &::before {
       content: "";

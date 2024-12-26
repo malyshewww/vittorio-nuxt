@@ -3,7 +3,8 @@
 	AppHeader
 	div(ref="scroller").scroller
 		.page
-			slot
+			.page__body
+				slot
 		AppFooter
 	UiButtonScrollUp
 	NotesNavigation
@@ -16,6 +17,22 @@ const appStore = useAppStore();
 
 let { scrollY } = appStore;
 
+const nuxtApp = useNuxtApp();
+
+const route = useRoute();
+
+nuxtApp.hook("page:loading:end", () => {
+   if (window.innerWidth > 1024) {
+      const { bodyScrollBar } = useScrollbar();
+      if (route.query.anchor) {
+         const targetElem = document.getElementById(route.query.anchor);
+         const targetElemPosition =
+            targetElem.getBoundingClientRect().top + bodyScrollBar.scrollTop;
+         bodyScrollBar.scrollTo(0, targetElemPosition, 600);
+      }
+   }
+});
+
 const {
    $gsap: gsap,
    $Scrollbar: Scrollbar,
@@ -23,8 +40,6 @@ const {
 } = useNuxtApp();
 
 const scroller = ref(null);
-
-const route = useRoute();
 
 onMounted(() => {
    const { bodyScrollBar, scrollbar } = useScrollbar();
@@ -57,6 +72,18 @@ onMounted(() => {
          })
       );
    });
+
+   watch(
+      () => route.path,
+      () => {
+         if (!route.query.anchor)
+            setTimeout(() => {
+               bodyScrollBar.scrollTo(0, 0, 200);
+               // bodyScrollBar.scrollTop = 0;
+            }, 500);
+      }
+   );
+
    // // Функция, срабатывающая при прокрутке
    // const onScroll = (event) => {
    //    const scrollTop = event.detail.scrollTop;

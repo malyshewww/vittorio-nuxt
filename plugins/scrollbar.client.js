@@ -41,7 +41,7 @@ export default defineNuxtPlugin(() => {
             return;
          }
          // reset scrollTop
-         scrollbar.containerEl.scrollTop = 0;
+         // scrollbar.containerEl.scrollTop = 0;
          // scrollbar.scrollIntoView(document.querySelector(hash));
       };
       onInit() {

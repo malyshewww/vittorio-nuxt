@@ -24,7 +24,7 @@
 }
 @keyframes animLineFooterLeft {
 	0% {
-		transform: translateX(-100%);
+		transform: translateX(var(--footer-lineTransform));
 		height: 1px;
 	}
 	100% {
@@ -34,7 +34,7 @@
 }
 @keyframes animLineFooterRight {
 	0% {
-		transform: translateX(-100%);
+		transform: translateX(var(--footer-lineTransform));
 		height: 0px;
 		width: 0px;
 		border-width: 0;
@@ -48,7 +48,7 @@
 	100% {
 		transform: translateX(0);
 		width: 50%;
-		height: 80px;
+		height: var(--footer-lineHeight);
 		border-width: 1px;
 	}
 }

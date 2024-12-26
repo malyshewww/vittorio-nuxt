@@ -138,26 +138,21 @@ const initSlider = () => {
             const slides = swiper.slides;
             const currentSlideKey =
                slides[activeIndex].getAttribute("data-slide-key");
-            // console.log(currentKey);
             changeArea(currentSlideKey);
             changeMapArea(currentSlideKey);
-            // if (window.innerWidth <= 1400) {
-            //    const markers = document.querySelectorAll(".marker");
-            //    const locationWrapper = document.querySelector(
-            //       ".location-fragrances__map"
-            //    );
-            //    const markerLeft = markers[activeIndex].offsetLeft;
-            //    const markerTop = markers[activeIndex].offsetTop;
-            //    locationWrapper.style.left = `${
-            //       locationWrapper.scrollLeft - markerLeft
-            //    }px`;
-            // }
-            // locationWrapper.style.top = `${markerTop}px`;
          },
       },
    });
    toggleAutoplay(props.isEnableAutoplay, swiper.value);
+
+   const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+         toggleAutoplay(entry.isIntersecting, swiper.value); // Включаем/выключаем autoplay в зависимости от видимости
+      });
+   });
+   observer.observe(slider.value);
 };
+
 onMounted(() => {
    initSlider();
 });
@@ -273,13 +268,18 @@ const slides = [
       @include bp-md {
          flex-direction: row;
       }
+      @media screen and (max-width: 374px) {
+         gap: 12px;
+      }
    }
    &__image {
       align-self: stretch;
       padding-bottom: math.div(440, 360) * 100%;
       @include bp-md {
-         height: 200px;
-         width: 157px;
+         // height: 200px;
+         // width: 157px;
+         height: 53.333vw;
+         width: 41.867vw;
          flex-shrink: 0;
          padding: 0;
       }
@@ -300,6 +300,10 @@ const slides = [
       @include bp-md {
          font-size: 22px;
          line-height: 28px;
+      }
+      @media screen and (max-width: 374px) {
+         font-size: 20px;
+         line-height: 24px;
       }
    }
    &__country {

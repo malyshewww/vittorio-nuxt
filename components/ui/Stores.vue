@@ -69,6 +69,9 @@ const props = defineProps({
       border: 1px solid var(--bg-smoke);
       border-radius: 100px;
       transition: filter $time * 3 $ttm, border-color $time * 3 $ttm;
+      & img {
+         pointer-events: none;
+      }
       .footer-stores & {
          min-height: 32px;
          padding: 7px 15px;

@@ -20,11 +20,16 @@
 
 <script setup>
 import { useCartStore } from "~/stores/cart";
+import { useMenuStore } from "~/stores/menu";
 
 const cartStore = useCartStore();
+const menuStore = useMenuStore();
 
 const closeCart = () => {
    cartStore.closeCart();
+   if (!menuStore.isOpen) {
+      bodyLockRemove();
+   }
 };
 
 const submitFormOrder = () => {
@@ -50,40 +55,6 @@ watch(
       console.log("change order items");
    }
 );
-
-// async function getCartItems() {
-//    try {
-//       const cartResponse = await fetch(url, {
-//          headers: {
-//             Accept: "application/vnd.api+json",
-//             "Content-Type": "application/vnd.api+json",
-//             "Commerce-Cart-Token": token,
-//          },
-//       });
-//       const cart = await cartResponse.json();
-//       orderItems.value = cart.data[0].order_items;
-//       console.log(orderItems.value);
-//       if (orderItems.value.length) {
-//          orderItems.value = orderItems.value.map((item) => {
-//             return {
-//                ...item,
-//                // Преобразуем в число количество товара
-//                quantity: parseInt(item.quantity),
-//             };
-//          });
-//          // Вычисляем общую сумму заказа
-//          totalPrice.value = orderItems.value.reduce(function (
-//             currentSum,
-//             currentNumber
-//          ) {
-//             return currentSum + parseInt(currentNumber.total_price.number);
-//          },
-//          0);
-//       }
-//    } catch (error) {
-//       console.log("error", error);
-//    }
-// }
 
 const loadCart = () => {
    cartStore.getCartItems();
