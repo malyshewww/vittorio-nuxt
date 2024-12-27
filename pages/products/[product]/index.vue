@@ -44,7 +44,6 @@ const {
 } = await useAsyncData("productData", () => $fetch(url, {}), {
    transform: (res) => {
       const { breadcrumb, data } = res;
-      console.log(data);
       const arrOptions = computed(() => {
          const options = [];
          const top = data.field_top_notes;

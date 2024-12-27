@@ -66,7 +66,7 @@ const formData = {
 };
 
 const goBack = () => {
-   useRouter().router.go(-1);
+   useRouter().go(-1);
 };
 </script>
 

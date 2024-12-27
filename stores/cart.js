@@ -22,6 +22,8 @@ export const useCartStore = defineStore("cart", () => {
    const promocodeValue = ref("");
    const promocodeMessage = ref("");
    const couponCode = ref("");
+   const count = ref(0);
+   const totalCount = ref(0);
    const openCart = () => {
       isOpenCart.value = true;
    };
@@ -51,6 +53,7 @@ export const useCartStore = defineStore("cart", () => {
             productInfo.volume = cartData.volume;
             productInfo.title = title;
             isActiveCartPopup.value = true;
+            calcCartQuantity(1, "plus");
             setTimeout(() => {
                isActiveCartPopup.value = false;
             }, 2000);
@@ -73,24 +76,25 @@ export const useCartStore = defineStore("cart", () => {
             }
          );
          const { data } = await response.json();
-         console.log("Корзина", data);
-         if (response.ok) {
-            orderItems.value = data[0].order_items;
+         if (data[0]) {
+            console.log("Корзина", data);
             ORDER_ID.value = data[0].order_id;
+            orderItems.value = data[0].order_items;
+            if (orderItems.value.length) {
+               orderItems.value = orderItems.value.map((item) => {
+                  return {
+                     ...item,
+                     // Преобразуем в число количество товара
+                     quantity: parseInt(item.quantity),
+                  };
+               });
+               getCartTotal();
+               getTotalCount();
+               cartTotalPrice.value = data[0].total_price.number;
+               orderTotal.value = data[0].order_total.subtotal.number;
+            }
          }
-         if (orderItems.value.length) {
-            orderItems.value = orderItems.value.map((item) => {
-               return {
-                  ...item,
-                  // Преобразуем в число количество товара
-                  quantity: parseInt(item.quantity),
-               };
-            });
-            getCartTotal();
-            cartTotalPrice.value = data[0].total_price.number;
-            orderTotal.value = data[0].order_total.subtotal.number;
-         }
-         if (data[0].order_total.adjustments.length) {
+         if (data[0] && data[0].order_total.adjustments.length) {
             discount.value = data[0].order_total.adjustments[0].total.formatted;
             promocodeValue.value =
                data[0].order_total.adjustments[0].coupon_code;
@@ -110,6 +114,27 @@ export const useCartStore = defineStore("cart", () => {
             },
             0
          );
+      }
+   }
+   function getTotalCount() {
+      if (orderItems.value.length) {
+         // Вычисляем общую сумму заказа
+         totalCount.value = orderItems.value.reduce(
+            (currentSum, currentNumber) => {
+               return currentSum + parseInt(currentNumber.quantity);
+            },
+            0
+         );
+         console.log(totalCount.value);
+      }
+   }
+   function calcCartQuantity(num, action) {
+      if (action === "plus") {
+         count.value += num;
+         // totalCount.value++;
+      } else {
+         count.value -= num;
+         // totalCount.value--;
       }
    }
    function decreaseCartSum(product, quantity) {
@@ -145,6 +170,11 @@ export const useCartStore = defineStore("cart", () => {
          if (response.ok) {
             // Обновить корзину
             getCartItems();
+            if (type === "plus") {
+               calcCartQuantity(totalCount.value, "plus");
+            } else {
+               calcCartQuantity(totalCount.value, "minus");
+            }
          } else {
             throw new Error("error occured");
          }
@@ -202,6 +232,7 @@ export const useCartStore = defineStore("cart", () => {
          if (response.ok) {
             // Обновить корзину
             getCartItems();
+            calcCartQuantity(product.quanity, "minus");
          } else {
             throw new Error(`${response.status} ${response.statusText}`);
          }
@@ -315,5 +346,8 @@ export const useCartStore = defineStore("cart", () => {
       discount,
       orderTotal,
       couponCode,
+      totalCount,
+      getTotalCount,
+      count,
    };
 });

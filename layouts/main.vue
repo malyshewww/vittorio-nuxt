@@ -3,8 +3,7 @@
 	AppHeader
 	div(ref="scroller").scroller
 		.page
-			.page__body
-				slot
+			slot
 		AppFooter
 	UiButtonScrollUp
 	NotesNavigation
@@ -66,11 +65,11 @@ onMounted(() => {
          initialPosition = currentPosition;
       }
       // Делегируем событие прокрутки в окно
-      window.dispatchEvent(
-         new CustomEvent("scroll", {
-            detail: { scrollTop: offset.y },
-         })
-      );
+      // window.dispatchEvent(
+      //    new CustomEvent("scroll", {
+      //       detail: { scrollTop: offset.y },
+      //    })
+      // );
    });
 
    watch(
@@ -78,9 +77,10 @@ onMounted(() => {
       () => {
          if (!route.query.anchor)
             setTimeout(() => {
-               bodyScrollBar.scrollTo(0, 0, 200);
+               bodyScrollBar.scrollTop = 0;
+               // bodyScrollBar.scrollTo(0, 0, 200);
                // bodyScrollBar.scrollTop = 0;
-            }, 500);
+            }, 200);
       }
    );
 

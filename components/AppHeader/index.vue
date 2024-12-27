@@ -16,7 +16,7 @@
 						img(:src="`/images/logo-dark.svg`")
 				button(type="button" @click="openCart").header__cart.cart-header
 					span.cart-header__text Корзина
-					span.cart-header__count (0)
+					span.cart-header__count ({{cartStore.totalCount}})
 					span.cart-header__icon
 	AppHeaderMenu
 </template>
@@ -49,7 +49,9 @@ const openMenu = () => {
 const openCart = () => {
    cartStore.openCart();
    if (menuStore.isOpen == false) {
-      bodyLockAdd();
+      bodyLockAdd(cartStore.isOpenCart);
+   } else {
+      return;
    }
 };
 
@@ -88,6 +90,7 @@ const observeHeader = () => {
 
 onMounted(() => {
    observeHeader();
+   cartStore.getTotalCount();
 });
 </script>
 

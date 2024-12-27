@@ -22,10 +22,12 @@
 import { useCartStore } from "~/stores/cart";
 import { useMenuStore } from "~/stores/menu";
 import { useOrderStore } from "~/stores/cart-order";
+import { usePopupStore } from "~/stores/popups";
 
 const cartStore = useCartStore();
 const menuStore = useMenuStore();
 const orderStore = useOrderStore();
+const popupStore = usePopupStore();
 
 const closeCart = () => {
    cartStore.closeCart();
@@ -40,10 +42,37 @@ const model = orderStore.model;
 
 const formStatus = orderStore.formStatus;
 
+const initialFormStatus = () => {
+   formStatus.name.message = "";
+   formStatus.name.isValid = true;
+
+   formStatus.email.message = "";
+   formStatus.email.isValid = true;
+
+   formStatus.phone.message = "";
+   formStatus.phone.isValid = true;
+
+   formStatus.address.message = "";
+   formStatus.address.isValid = true;
+
+   formStatus.agree.message = "";
+   formStatus.agree.isValid = true;
+};
+
+const resetValues = () => {
+   model.name.val = "";
+   model.phone.val = "";
+   model.email.val = "";
+   model.address.val = "";
+   model.agree.val = false;
+   model.mailing.val = false;
+};
+
+const token = useToken();
+
 const runtimeConfig = useRuntimeConfig();
 
 async function submitFormOrder() {
-   console.log(model);
    const options = {
       data: {
          type: "order--default",
@@ -52,22 +81,12 @@ async function submitFormOrder() {
             phone: model.phone.val,
             email: model.email.val,
             address: model.address.val,
-            mailing: model.mailing.val,
-            agree: model.agree.val,
+            mailing: model.mailing.val ? 1 : 0,
+            agree: model.agree.val ? 1 : 0,
          },
       },
    };
    try {
-      const tokenResponse = await fetch(
-         `${runtimeConfig.public.apiBase}/session/token`,
-         {
-            method: "POST",
-         }
-      );
-      // if (!tokenResponse.ok) {
-      //    throw new Error("Ошибка при получении токена");
-      // }
-      const token = await tokenResponse.text();
       const response = await fetch(
          `${runtimeConfig.public.apiBase}/jsonapi/checkout-parfum/${cartStore.ORDER_ID}`,
          {
@@ -81,18 +100,43 @@ async function submitFormOrder() {
          }
       );
       const result = await response.json();
-      console.log("result", result);
       if (response.ok) {
-         console.log(result, "ok");
+         console.log("response ok");
+         cartStore.closeCart();
+         popupStore.openPopup(popupStore.popupOrderSuccess);
+         cartStore.orderItems = [];
+         cartStore.totalCount = 0;
+         initialFormStatus();
+         resetValues();
       } else {
-         throw new Error(
-            "error from Request",
-            response.status,
-            response.statusText
-         );
+         initialFormStatus();
+         if (result.errors) {
+            if (result.errors.name) {
+               formStatus.name.message = result.errors.name;
+               formStatus.name.isValid = false;
+            }
+            if (result.errors.email) {
+               formStatus.email.message = result.errors.email;
+               formStatus.email.isValid = false;
+            }
+            if (result.errors.phone) {
+               formStatus.phone.message = result.errors.phone;
+               formStatus.phone.isValid = false;
+            }
+            if (result.errors.address) {
+               formStatus.address.message = result.errors.address;
+               formStatus.address.isValid = false;
+            }
+            if (result.errors.agree) {
+               formStatus.agree.message = result.errors.agree;
+               formStatus.agree.isValid = false;
+            }
+         }
       }
    } catch (error) {
+      console.log("error");
       console.log(error);
+   } finally {
    }
 }
 
@@ -116,8 +160,9 @@ watch(
 watch(
    () => cartStore.isOpenCart,
    () => {
-      cartStore.isOpenCart && loadCart();
-      cartStore.isOpenCart && console.log("open cart");
+      if (cartStore.isOpenCart) {
+         loadCart();
+      }
    }
 );
 const loadCart = () => {

@@ -47,7 +47,12 @@ const replaceDevice = () => {
    layout.value = window.innerWidth > 1024 ? "main" : "default";
 };
 
+const loadCart = () => {
+   cartStore.getCartItems();
+};
+
 onMounted(() => {
+   loadCart();
    replaceDevice();
    const watchResize = throttle(function () {
       replaceDevice();
