@@ -1,39 +1,51 @@
 <template lang="pug">
 	.main-footer__subscribe
-		form(@submit.prevent="submitForm($event)").subscribe-form
+		form(ref="form" @submit.prevent="submitForm($event)").subscribe-form
 			.subscribe-form__heading
 				.subscribe-form__title.footer-title Подписаться на новости
 				.subscribe-form__sub-title Оформите подписку, чтобы быть в курсе наших новостей
-			FormInput(type="email" placeholder="Электронная почта" name="email" :modelValue="model.email.val" :is-valid="formStatus.email.isValid" :error-message="formStatus.email.message" @update:modelValue="$event => (model.email.val = $event)")
+			FormInput(type="email" placeholder="Электронная почта" name="email" :modelValue="formData.mail" :is-valid="formStatus.email.isValid" :error-message="formStatus.email.message" @update:modelValue="$event => (formData.mail = $event)")
 			.subscribe-form__text 
 				| Оставляя свой электронный адрес, вы подтверждаете, что согласны c 
 				UiLinkUnderLine(path="/page/politic" :is-blank="true" text="политикой обработки персональных данных" class-names="link-border")
 </template>
 
 <script setup>
-const model = reactive({
-   email: {
-      val: "",
-   },
-});
+import { usePopupStore } from "~/stores/popups";
+
+const popupStore = usePopupStore();
+
 const formStatus = reactive({
    email: {
       isValid: true,
       message: "",
    },
 });
+
 const formData = reactive({
-   mail: model.email.val,
+   mail: "",
    webform_id: "news",
 });
 
+const form = ref("");
+
 // Наблюдатели за изменения в полях ввода
 watch(
-   () => model.email.val,
+   () => formData.mail,
    (val) => {
       formData.mail = val;
    }
 );
+
+function validateEmail(value) {
+   if (
+      value.length > 0 &&
+      !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value.toLowerCase())
+   ) {
+      formStatus.email.isValid = false;
+      formStatus.email.message = "Некорректный email";
+   }
+}
 
 const runtimeConfig = useRuntimeConfig();
 
@@ -66,10 +78,15 @@ const submitForm = async (e) => {
       //    throw new Error("Ошибка при отправке формы");
       // }
       const result = await formResponse.json();
-      console.log(result);
       if (result.sid) {
          formStatus.email.isValid = true;
-         model.email.val = "";
+         formStatus.email.message = "";
+         formData.mail = "";
+         form.value.reset();
+         popupStore.openPopup(popupStore.popupSubscribe);
+         setTimeout(() => {
+            popupStore.closePopup(popupStore.popupSubscribe);
+         }, 3000);
       } else {
          if (result.error.email) {
             formStatus.email.message = result.error.phone;

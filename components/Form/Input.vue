@@ -7,9 +7,9 @@
 				button(type="button" @click="deletePromocode").form-item__close
 		FormPromocodeMessage(v-if="cartStore.isPromocodeChecked" :is-valid="cartStore.isPromocodeValid" :text="cartStore.promocodeMessage")
 	.form-item(v-else)
-		.form-field
-			input(v-if="name === 'phone'" :type="type" :name="name" :value="modelValue" v-maska="'+7 (###) ### ## ##'" :placeholder="placeholder" :disabled="isDisabled" @input="emit('update:modelValue', $event.target.value)")
-			input(v-else :type="type" :name="name" :value="modelValue" :placeholder="placeholder" :disabled="isDisabled" @input="emit('update:modelValue', $event.target.value)")
+		.form-field(:class="{error: !isValid}")
+			input(v-if="name === 'phone'" :type="type" :name="name" v-maska="'+7 (###) ### ## ##'" :placeholder="placeholder" :disabled="isDisabled" @input="emit('update:modelValue', $event.target.value)")
+			input(v-else :type="type" :name="name" :placeholder="placeholder" :disabled="isDisabled" @input="emit('update:modelValue', $event.target.value)")
 		span(v-if="isExampleText").form-item__example
 			slot(name="example")
 		FormErrorMessage(v-if="!isValid" :text="errorMessage")
@@ -155,6 +155,12 @@ if (promocodeValue.value) {
    &.promocode {
       & input {
          padding-right: 40px;
+      }
+   }
+   &.error {
+      & input,
+      & textarea {
+         border-color: var(--system-error);
       }
    }
 }

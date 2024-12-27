@@ -1,7 +1,7 @@
 <template lang="pug">
 	.app-cart__order#cart-order
 		.app-cart__caption.cart-caption Оформление заказа
-		form.app-cart__form.form
+		form(@submit.prevent="submitFormOrder").app-cart__form.form
 			.form__items
 				FormInput(type="text" name="name" placeholder="ФИО*" :modelValue="model.name.val" @update:modelValue="$event => (model.name.val = $event)" :is-valid="formStatus.name.isValid" :error-message="formStatus.name.message")
 				FormInput(type="tel" name="phone" placeholder="Телефон" :modelValue="model.phone.val" @update:modelValue="$event => (model.phone.val = $event)"  :is-valid="formStatus.phone.isValid" :error-message="formStatus.phone.message")
@@ -20,14 +20,14 @@
 </template>
 
 <script setup>
-import { useCartStore } from "~/stores/cart";
+import { useOrderStore } from "~/stores/cart-order";
 
-const cartStore = useCartStore();
+const orderStore = useOrderStore();
 
-const { formData } = cartStore;
+const { formData } = orderStore;
 
-const model = cartStore.model;
-const formStatus = cartStore.formStatus;
+const model = orderStore.model;
+const formStatus = orderStore.formStatus;
 </script>
 
 <style lang="scss">

@@ -38,20 +38,49 @@
 						//- img(:src="`/images/main/legend_product.jpg`" alt="product")
 					.product-note__decor-title(v-if="product.field_svg_title")
 						img(:src="product.field_svg_title[0].markup" :alt="product.field_svg_title[0].alt")
-					button(type="button").product-note__button В корзину
+					button(type="button" @click="addToCart").product-note__button В корзину
 				.product-note__options(v-if="product.price || product.volume")
 					.product-note__option(v-if="product.volume") {{product.volume}}
 					.product-note__option(v-if="product.price") {{product.price}}
-				UiButtonPrimary(title="В корзину" class-names="product-note__button-mobile")
+				UiButtonPrimary(title="В корзину" class-names="product-note__button-mobile" @button-action="addToCart")
+		AppCartPopup
 </template>
 
 <script setup>
+import { useCartStore } from "~/stores/cart";
+
+const cartStore = useCartStore();
+
 const props = defineProps({
    product: {
       type: Object,
       required: true,
    },
 });
+const formData = {
+   data: [
+      {
+         type: "product-variation--default",
+         id: props.product.uuid,
+         meta: {
+            quantity: 1,
+            combine: true,
+         },
+      },
+   ],
+};
+
+const cartData = {
+   image: props.product.field_image_product_front[0].markup,
+   volume: props.product.volume,
+};
+
+console.log(cartData, formData);
+
+const addToCart = async () => {
+   console.log("add to cart");
+   await cartStore.addToCart(formData, cartData);
+};
 </script>
 
 <style lang="scss" scoped>

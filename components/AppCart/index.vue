@@ -21,9 +21,11 @@
 <script setup>
 import { useCartStore } from "~/stores/cart";
 import { useMenuStore } from "~/stores/menu";
+import { useOrderStore } from "~/stores/cart-order";
 
 const cartStore = useCartStore();
 const menuStore = useMenuStore();
+const orderStore = useOrderStore();
 
 const closeCart = () => {
    cartStore.closeCart();
@@ -32,11 +34,67 @@ const closeCart = () => {
    }
 };
 
-const submitFormOrder = () => {
-   console.log(cartStore.formData);
-   cartStore.submitFormOrder();
-   // scrollToSection("cart-order");
-};
+const { formData } = orderStore;
+
+const model = orderStore.model;
+
+const formStatus = orderStore.formStatus;
+
+const runtimeConfig = useRuntimeConfig();
+
+async function submitFormOrder() {
+   console.log(model);
+   const options = {
+      data: {
+         type: "order--default",
+         meta: {
+            name: model.name.val,
+            phone: model.phone.val,
+            email: model.email.val,
+            address: model.address.val,
+            mailing: model.mailing.val,
+            agree: model.agree.val,
+         },
+      },
+   };
+   try {
+      const tokenResponse = await fetch(
+         `${runtimeConfig.public.apiBase}/session/token`,
+         {
+            method: "POST",
+         }
+      );
+      // if (!tokenResponse.ok) {
+      //    throw new Error("Ошибка при получении токена");
+      // }
+      const token = await tokenResponse.text();
+      const response = await fetch(
+         `${runtimeConfig.public.apiBase}/jsonapi/checkout-parfum/${cartStore.ORDER_ID}`,
+         {
+            headers: {
+               Accept: "application/vnd.api+json",
+               "Content-Type": "application/vnd.api+json",
+               "Commerce-Cart-Token": token,
+            },
+            method: "POST",
+            body: JSON.stringify(options),
+         }
+      );
+      const result = await response.json();
+      console.log("result", result);
+      if (response.ok) {
+         console.log(result, "ok");
+      } else {
+         throw new Error(
+            "error from Request",
+            response.status,
+            response.statusText
+         );
+      }
+   } catch (error) {
+      console.log(error);
+   }
+}
 
 function scrollToSection(sectionId) {
    const section = document.getElementById(sectionId);
@@ -55,11 +113,6 @@ watch(
       console.log("change order items");
    }
 );
-
-const loadCart = () => {
-   cartStore.getCartItems();
-};
-
 watch(
    () => cartStore.isOpenCart,
    () => {
@@ -67,6 +120,10 @@ watch(
       cartStore.isOpenCart && console.log("open cart");
    }
 );
+const loadCart = () => {
+   cartStore.getCartItems();
+};
+
 onMounted(() => {});
 </script>
 

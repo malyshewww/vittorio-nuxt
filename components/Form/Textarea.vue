@@ -1,6 +1,6 @@
 <template lang="pug">
 	.form-item.hide-scroller
-		.form-field
+		.form-field(:class="{error: !isValid}")
 			textarea(:name="name" :placeholder="placeholder" :value="modelValue" @input="emit('update:modelValue', $event.target.value)")
 		FormErrorMessage(v-if="!isValid" :text="errorMessage")
 </template>
@@ -46,9 +46,14 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-@use "~/assets/scss/_vars" as *;
+@use "assets/scss/vars" as *;
 .form-field {
    display: flex;
+   &.error {
+      & textarea {
+         border-color: var(--system-error);
+      }
+   }
 }
 .form-item {
    & textarea {

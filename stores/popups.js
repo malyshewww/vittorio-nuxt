@@ -2,6 +2,9 @@ export const usePopupStore = defineStore("popup", () => {
    const popupNotice = reactive({
       isOpen: false,
    });
+   const popupNoticeError = reactive({
+      isOpen: false,
+   });
    const popupOrderSuccess = reactive({
       isOpen: false,
    });
@@ -11,7 +14,7 @@ export const usePopupStore = defineStore("popup", () => {
    const popupSubscribe = reactive({
       isOpen: false,
    });
-   const openPopup = (popup) => {
+   const openPopup = (popup, success) => {
       popup.isOpen = true;
    };
    const closePopup = (popup) => {
@@ -19,6 +22,7 @@ export const usePopupStore = defineStore("popup", () => {
    };
    return {
       popupNotice,
+      popupNoticeError,
       popupOrderSuccess,
       popupPolitic,
       popupSubscribe,

@@ -1,12 +1,11 @@
 <template lang="pug">
 	.contacts__form
-		form(@submit.prevent="submitForm($event)").form
+		form(ref="form" @submit.prevent="submitForm($event)").form
 			h2.form__title Задать вопрос автору
-			| {{model.name.val}}
 			.form__body
 				.form__items
 					input(type="hidden" name="webform_id")
-					FormInput(type="text" name="name" placeholder="Имя" :modelValue="model.name.val" @update:modelValue="$event => (model.name.val = $event)" :is-valid="formStatus.name.isValid" :error-message="formStatus.name.message")
+					FormInput(type="text" name="name" placeholder="Имя" :modelValue="model.name.val" @update:modelValue="$event => (model.name.val = $event)" :is-valid.sync="formStatus.name.isValid" :error-message.sync="formStatus.name.message")
 					FormInput(type="tel" name="phone" placeholder="Телефон" :modelValue="model.phone.val" @update:modelValue="$event => (model.phone.val = $event)" :is-valid="formStatus.phone.isValid" :error-message="formStatus.phone.message")
 					FormInput(type="email" name="mail" placeholder="E-mail" :modelValue="model.email.val" @update:modelValue="$event => (model.email.val = $event)" :is-valid="formStatus.email.isValid" :error-message="formStatus.email.message")
 					FormTextarea(name="question" placeholder="Ваш вопрос" :modelValue="model.question.val" @update:modelValue="$event => (model.question.val = $event)" :is-valid="formStatus.question.isValid" :error-message="formStatus.question.message")
@@ -16,6 +15,10 @@
 </template>
 
 <script setup>
+import { usePopupStore } from "~/stores/popups";
+
+const popupStore = usePopupStore();
+
 const model = reactive({
    name: {
       val: "",
@@ -30,6 +33,7 @@ const model = reactive({
       val: "",
    },
 });
+
 const formStatus = reactive({
    name: {
       isValid: true,
@@ -48,12 +52,6 @@ const formStatus = reactive({
       message: "",
    },
 });
-
-const runtimeConfig = useRuntimeConfig();
-
-const titleButtonSubmit = ref("Отправить");
-
-const isDisabledButtonSubmit = ref(false);
 
 // Наблюдатели за изменения в полях ввода
 watch(
@@ -81,6 +79,8 @@ watch(
    }
 );
 
+const form = ref("");
+
 const formData = reactive({
    name: model.name.val,
    mail: model.email.val,
@@ -89,34 +89,61 @@ const formData = reactive({
    webform_id: "author_question",
 });
 
+const initialStatusForm = () => {
+   formStatus.name.isValid = true;
+   formStatus.name.message = "";
+
+   formStatus.phone.isValid = true;
+   formStatus.phone.message = "";
+
+   formStatus.email.isValid = true;
+   formStatus.email.message = "";
+
+   formStatus.question.isValid = true;
+   formStatus.question.message = "";
+};
+
+const resetValues = () => {
+   model.name.val = "";
+   model.phone.val = "";
+   model.email.val = "";
+   model.question.val = "";
+};
+
+function validatePhone(value) {
+   if (value.length < 18 && value.length >= 0) {
+      formStatus.phone.isValid = false;
+      formStatus.phone.message = "Поле Телефон обязательно для заполнения";
+   }
+}
+function validateName(value) {
+   if (value.length === 0) {
+      formStatus.name.isValid = false;
+      formStatus.name.message = `Поле Имя обязательно для заполнения`;
+   }
+}
+function validateQuestion(value) {
+   if (value.length === 0) {
+      formStatus.question.isValid = false;
+      formStatus.question.message = `Поле Ваш вопрос обязательно для заполнения`;
+   }
+}
+function validateEmail(value) {
+   if (
+      value.length > 0 &&
+      !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value.toLowerCase())
+   ) {
+      formStatus.email.isValid = false;
+      formStatus.email.message = "Некорректный email";
+   }
+}
+
+const titleButtonSubmit = ref("Отправить");
+const isDisabledButtonSubmit = ref(false);
+
+const runtimeConfig = useRuntimeConfig();
+
 const submitForm = async (e) => {
-   console.log("data", formData);
-   // fetch(`${runtimeConfig.public.apiBase}/session/token`)
-   //    .then(function (response) {
-   //       return response.text();
-   //    })
-   //    .then(function (token) {
-   //       fetch(
-   //          `${runtimeConfig.public.apiBase}/webform_rest/submit?_format_json`,
-   //          {
-   //             method: "POST",
-   //             headers: {
-   //                Accept: "application/json, text/plain, */*",
-   //                "Content-Type": "application/json",
-   //                "X-CSRF-Token": token,
-   //             },
-   //             body: JSON.stringify(formData),
-   //          }
-   //       )
-   //          .then((res) => res.json())
-   //          .then(function (res) {
-   //             if (res.sid) {
-   //                console.log(res, "ok");
-   //             } else {
-   //                console.log(res, "ne ok");
-   //             }
-   //          });
-   //    });
    try {
       titleButtonSubmit.value = "идет отправка...";
       isDisabledButtonSubmit.value = true;
@@ -149,15 +176,15 @@ const submitForm = async (e) => {
       if (result.sid) {
          titleButtonSubmit.value = "Отправить";
          isDisabledButtonSubmit.value = false;
-         formStatus.name.isValid = true;
-         formStatus.phone.isValid = true;
-         formStatus.email.isValid = true;
-         formStatus.question.isValid = true;
-         model.name.val = "";
-         model.phone.val = "";
-         model.email.val = "";
-         model.question.val = "";
+         initialStatusForm();
+         resetValues();
+         form.value.reset();
+         popupStore.openPopup(popupStore.popupNotice);
+         setTimeout(() => {
+            popupStore.closePopup(popupStore.popupNotice);
+         }, 3000);
       } else {
+         initialStatusForm();
          if (result.error.name) {
             formStatus.name.message = result.error.name;
             formStatus.name.isValid = false;
@@ -178,13 +205,15 @@ const submitForm = async (e) => {
          isDisabledButtonSubmit.value = false;
       }
    } catch (error) {
-      console.log(error);
+      throw new Error("Ошибка при отправке формы");
+   } finally {
+      titleButtonSubmit.value = "Отправить";
+      isDisabledButtonSubmit.value = false;
    }
 };
 </script>
 
 <style lang="scss" scoped>
-@use "assets/scss/mixins" as m;
 .contacts__form {
    display: flex;
    justify-content: flex-end;
@@ -196,10 +225,10 @@ const submitForm = async (e) => {
    gap: 28px;
    // max-width: 610px;
    max-width: 31.771vw;
-   @include m.bp-xxxl {
+   @include bp-xxxl {
       max-width: 100%;
    }
-   @include m.bp-md {
+   @include bp-md {
       gap: 20px;
    }
    &__body {
@@ -213,7 +242,7 @@ const submitForm = async (e) => {
       text-transform: uppercase;
       color: var(--bg-smoke);
       font-family: var(--second-family);
-      @include m.bp-xl {
+      @include bp-xl {
          font-size: 32px;
          line-height: 36px;
       }
@@ -228,7 +257,7 @@ const submitForm = async (e) => {
       gap: 32px;
       justify-items: start;
       & .btn {
-         @include m.bp-md {
+         @include bp-md {
             width: 100%;
          }
       }
