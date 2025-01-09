@@ -65,7 +65,6 @@ const increaseCartSum = () => {
 <style lang="scss">
 @use "sass:math";
 @use "assets/scss/vars" as *;
-@use "assets/scss/mixins" as m;
 .app-cart {
    &__item {
    }
@@ -77,7 +76,7 @@ const increaseCartSum = () => {
    align-items: start;
    border-bottom: 1px solid var(--bg-smoke);
    padding-bottom: 7px;
-   @include m.hover {
+   @include hover {
       &:hover {
          cursor: pointer;
          & .cart-item__delete {
@@ -177,7 +176,7 @@ const increaseCartSum = () => {
          background-color: var(--bg-smoke);
          mask-size: 20px 20px;
       }
-      @include m.hover {
+      @include hover {
          &:hover {
             opacity: 0.8;
          }

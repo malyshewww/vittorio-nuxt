@@ -22,16 +22,15 @@ const { links } = mainInfoStore;
 
 <style lang="scss" scoped>
 @use "assets/scss/vars" as *;
-@use "assets/scss/mixins" as m;
 .actions-contacts {
    display: grid;
    grid-template-columns: 100%;
    gap: 40px;
    max-width: 34.323vw;
-   @include m.bp-xxxl {
+   @include bp-xxxl {
       max-width: 100%;
    }
-   @include m.bp-md {
+   @include bp-md {
       gap: 20px;
    }
    &__item {
@@ -60,7 +59,7 @@ const { links } = mainInfoStore;
             color: var(--text-gray);
          }
       }
-      @include m.bp-xl {
+      @include bp-xl {
          font-size: 22px;
          line-height: 28px;
       }

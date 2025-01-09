@@ -137,8 +137,7 @@ if (promocodeValue.value) {
 </script>
 
 <style lang="scss" scoped>
-@use "assets/scss/_vars" as *;
-@use "assets/scss/mixins" as m;
+@use "assets/scss/vars" as *;
 .form-field {
    position: relative;
    &.active-arrow {
@@ -177,7 +176,7 @@ if (promocodeValue.value) {
       display: grid;
       place-items: center;
       z-index: 5;
-      @include m.hover {
+      @include hover {
          &:hover {
             cursor: pointer;
          }
@@ -235,7 +234,7 @@ if (promocodeValue.value) {
          background-color: var(--bg-smoke);
          transition: background-color $time * 2 $ttm;
       }
-      @include m.hover {
+      @include hover {
          &:hover {
             cursor: pointer;
          }

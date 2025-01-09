@@ -1,6 +1,7 @@
 <template lang="pug">
-	.app-cart(:class="{active: cartStore.isOpenCart}" @click="closeCart")
+	.app-cart(ref="appCart" :class="{active: cartStore.isOpenCart}" @click="closeCart")
 		.app-cart__wrapper(@click.stop)
+			AppCartLoader
 			div(v-if="cartStore.orderItems.length > 0")
 				.app-cart__body
 					UiButtonLine(text="Скрыть" @click="closeCart")
@@ -11,7 +12,7 @@
 						AppCartPromocode
 					AppCartOrder
 					AppCartTotal
-				UiButtonPrimary(title="Оформить заказ" class-names="app-cart-button" @button-action="submitFormOrder")
+				UiButtonPrimary(title="Оформить заказ" class-names="app-cart-button" @button-action="formSend")
 			div(v-else)
 				.app-cart__body(@click.stop)
 					UiButtonLine(text="Скрыть" @click="closeCart")
@@ -37,9 +38,7 @@ const closeCart = () => {
 };
 
 const { formData } = orderStore;
-
 const model = orderStore.model;
-
 const formStatus = orderStore.formStatus;
 
 const initialFormStatus = () => {
@@ -72,21 +71,27 @@ const token = useToken();
 
 const runtimeConfig = useRuntimeConfig();
 
-async function submitFormOrder() {
-   const options = {
-      data: {
-         type: "order--default",
-         meta: {
-            name: model.name.val,
-            phone: model.phone.val,
-            email: model.email.val,
-            address: model.address.val,
-            mailing: model.mailing.val ? 1 : 0,
-            agree: model.agree.val ? 1 : 0,
+const appCart = ref("");
+
+const errors = ref(0);
+
+async function formSend() {
+   const { error } = formValidate();
+   console.log(error);
+   if (error === 0) {
+      const options = {
+         data: {
+            type: "order--default",
+            meta: {
+               name: model.name.val,
+               phone: model.phone.val,
+               email: model.email.val,
+               address: model.address.val,
+               mailing: model.mailing.val ? 1 : 0,
+               agree: model.agree.val ? 1 : 0,
+            },
          },
-      },
-   };
-   try {
+      };
       const response = await fetch(
          `${runtimeConfig.public.apiBase}/jsonapi/checkout-parfum/${cartStore.ORDER_ID}`,
          {
@@ -99,45 +104,64 @@ async function submitFormOrder() {
             body: JSON.stringify(options),
          }
       );
-      const result = await response.json();
       if (response.ok) {
-         console.log("response ok");
+         let result = await response.json();
          cartStore.closeCart();
          popupStore.openPopup(popupStore.popupOrderSuccess);
          cartStore.orderItems = [];
          cartStore.totalCount = 0;
          initialFormStatus();
          resetValues();
+         console.log("result", result);
       } else {
-         initialFormStatus();
-         if (result.errors) {
-            if (result.errors.name) {
-               formStatus.name.message = result.errors.name;
-               formStatus.name.isValid = false;
-            }
-            if (result.errors.email) {
-               formStatus.email.message = result.errors.email;
-               formStatus.email.isValid = false;
-            }
-            if (result.errors.phone) {
-               formStatus.phone.message = result.errors.phone;
-               formStatus.phone.isValid = false;
-            }
-            if (result.errors.address) {
-               formStatus.address.message = result.errors.address;
-               formStatus.address.isValid = false;
-            }
-            if (result.errors.agree) {
-               formStatus.agree.message = result.errors.agree;
-               formStatus.agree.isValid = false;
-            }
-         }
+         popupStore.openPopup(popupStore.popupNoticeError);
+         setTimeout(() => {
+            popupStore.closePopup(popupStore.popupNoticeError);
+         }, 3000);
       }
-   } catch (error) {
-      console.log("error");
-      console.log(error);
-   } finally {
+   } else {
+      popupStore.openPopup(popupStore.popupNoticeError);
+      setTimeout(() => {
+         popupStore.closePopup(popupStore.popupNoticeError);
+      }, 3000);
+      // alert("Заполните обязаьтельные поля");
    }
+}
+
+function formValidate() {
+   errors.value = 0;
+   initialFormStatus();
+   if (model.name.val.length === 0) {
+      formStatus.name.isValid = false;
+      formStatus.name.message = "Поле Имя обязательно для заполнения";
+      errors.value++;
+   }
+   if (model.address.val.length === 0) {
+      formStatus.address.isValid = false;
+      formStatus.address.message = "Поле Адрес обязательно для заполенния";
+      errors.value++;
+   }
+   if (
+      model.email.val.length === 0 ||
+      !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(model.email.val)
+   ) {
+      formStatus.email.isValid = false;
+      formStatus.email.message = "Некорректный email";
+      errors.value++;
+   }
+   if (model.agree.val === 0 || model.agree.val === false) {
+      formStatus.agree.isValid = false;
+      formStatus.agree.message = "Поле обязательно для заполнения";
+      errors.value++;
+   }
+   if (model.phone.val.length === 0 || model.phone.val.length < 18) {
+      formStatus.phone.isValid = false;
+      formStatus.phone.message = "Неверно введен телефон";
+      errors.value++;
+   }
+   return {
+      error: errors.value,
+   };
 }
 
 function scrollToSection(sectionId) {

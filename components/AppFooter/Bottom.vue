@@ -3,7 +3,7 @@
 		.bottom-footer__item
 			.footer__copy © {{getYear}}. Vittorio 
 		.bottom-footer__item.bottom-footer__item--politic
-			UiLinkUnderLine(text="Политика конфиденциальности" path="/page/politic" :is-blank="true")
+			UiLinkUnderLine(text="Политика конфиденциальности" path="/page/policy" :is-blank="true")
 		.bottom-footer__item.company-footer
 			.company-footer__caption Создание сайта:
 			a(href="https://webshop.ru/" target="_blank").company-footer__logo

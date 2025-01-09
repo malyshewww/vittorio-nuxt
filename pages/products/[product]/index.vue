@@ -3,13 +3,13 @@
 		main.main.product-card
 			.container
 				.product-card__wrapper
-					UiButtonLine(v-if="$device.isMobile" text="назад" @button-action="goBack")
+					UiButtonLine(v-if="$device.isMobile" class-names="btn-line-mobile" text="назад" @button-action="goBack")
 					ProductMainCardSlider(:images="productData.info.field_images")
 					ProductMainCardInfo(:info="productData.info" :images="productData.info.field_images" :options="productData.options")
 				.product-card__content
 					.content
 						h3 История создания аромата
-						div(v-html="productData.info.body[0]")
+						ContentBlock(:content="productData.info.body[0]")
 </template>
 
 <script setup>
@@ -43,7 +43,7 @@ const {
    error,
 } = await useAsyncData("productData", () => $fetch(url, {}), {
    transform: (res) => {
-      const { breadcrumb, data } = res;
+      const { breadcrumb, data, metatag } = res;
       const arrOptions = computed(() => {
          const options = [];
          const top = data.field_top_notes;
@@ -62,13 +62,16 @@ const {
          "ноты сердца",
          "базовые ноты",
       ];
+      const metadata = useMetatags(metatag.html_head);
       return {
          breadcrumb,
          info: data,
          options: arrOptions,
+         metadata,
       };
    },
 });
+useHead(productData.value.metadata);
 
 // const productData = {
 //    images: ["legend", "legend", "protagonist", "musk-melody"],
@@ -154,6 +157,12 @@ const {
             margin-bottom: 20px;
          }
       }
+   }
+}
+.btn-line-mobile {
+   display: none;
+   @include bp-xl {
+      display: flex;
    }
 }
 </style>

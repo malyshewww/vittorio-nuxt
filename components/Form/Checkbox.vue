@@ -50,7 +50,6 @@ const props = defineProps({
 </script>
 
 <style lang="scss">
-@use "assets/scss/mixins" as m;
 @use "assets/scss/vars" as *;
 .real-checkbox {
    clip: rect(0 0 0 0);
@@ -101,7 +100,7 @@ const props = defineProps({
       padding: 4px 0;
       font-size: 14px;
       line-height: 18px;
-      @include m.hover {
+      @include hover {
          &:hover {
             cursor: pointer;
          }

@@ -1,6 +1,6 @@
 <template lang="pug">
 	form(@submit.prevent="addToCart").product-info__form
-		UiButtonPrimary(title="Купить на сайте" type="submit")
+		UiButtonPrimary(title="Купить на сайте" type="submit" :class-names="cartStore.isActiveCartPopup ? 'disabled' : ''")
 	AppCartPopup
 </template>
 

@@ -37,34 +37,34 @@ function observerButtonUp() {
    const handleIntersection = (entries) => {
       entries.forEach((entry) => {
          if (!entry.isIntersecting) {
-            isButtonVisible.value = true; // Скрывать кнопку
+            isButtonVisible.value = true;
          } else {
-            isButtonVisible.value = false; // Показывать кнопку
+            isButtonVisible.value = false;
          }
       });
    };
    const observer = new IntersectionObserver(handleIntersection, {
       threshold: 0,
    });
-   const handleIntersectionOther = (entries) => {
-      entries.forEach((entry) => {
-         if (!entry.isIntersecting) {
-            isButtonVisible.value = true; // Скрывать кнопку
-         } else {
-            isButtonVisible.value = false; // Показывать кнопку
-         }
-      });
-   };
-   const observerOther = new IntersectionObserver(handleIntersectionOther, {
-      threshold: 0,
-   });
+   // const handleIntersectionOther = (entries) => {
+   //    entries.forEach((entry) => {
+   //       if (!entry.isIntersecting) {
+   //          isButtonVisible.value = true;
+   //       } else {
+   //          isButtonVisible.value = false;
+   //       }
+   //    });
+   // };
+   // const observerOther = new IntersectionObserver(handleIntersectionOther, {
+   //    threshold: 0,
+   // });
    const setNewButtonState = (y) => {
       const header = document.querySelector(".header");
       const headerHeight = header.getBoundingClientRect().height;
       if (y > headerHeight) {
-         isButtonVisible.value = true; // Показывать кнопку
+         isButtonVisible.value = true;
       } else {
-         isButtonVisible.value = false; // Показывать кнопку
+         isButtonVisible.value = false;
       }
    };
 

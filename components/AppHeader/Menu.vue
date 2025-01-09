@@ -22,8 +22,8 @@
 							.stores-header__caption Ароматы Vittorio можно приобрести в магазинах:
 							UiStores(class-names="header-stores" :isFooterStores="true" :link-apple="links.field_goldapple" :link-letu="links.field_leturu")
 					.menu-header__inner
-						.menu-header__copy © 2024. Vittorio
-						UiLinkUnderLine(text="Политика конфиденциальности" path="/page/politic" :is-blank="true" class-names="link-white")
+						.menu-header__copy © {{getFullYear}}. Vittorio
+						UiLinkUnderLine(text="Политика конфиденциальности" path="/page/policy" :is-blank="true" class-names="link-white")
 </template>
 
 <script setup>
@@ -38,6 +38,10 @@ const { menuMain, menuProduct, links } = mainInfoStore;
 const setNumber = (num) => {
    return num < 10 ? " 0" + num : " " + num;
 };
+
+const getFullYear = computed(() => {
+   return new Date().getFullYear();
+});
 
 // const newMenu = computed(() => {
 //    return menuMain.map((item) => {
@@ -107,7 +111,7 @@ const goToAnchor = (link) => {
 </script>
 
 <style lang="scss">
-@use "assets/scss/_vars" as *;
+@use "assets/scss/vars" as *;
 .menu-header {
    color: var(--bg-white);
    position: fixed;

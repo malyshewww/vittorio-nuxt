@@ -1,5 +1,5 @@
 <template lang="pug">
-	nuxt-link(v-if="isAnchor" type="button" :class="classNames" :href="path" :data-href="path").link-line #[span {{text}}]
+	nuxt-link(v-if="isAnchor" :class="classNames" :href="path" :data-href="path" @click="linkAction").link-line #[span {{text}}]
 	nuxt-link(v-else :to="path" :class="classNames").link-line {{text}}
 </template>
 
@@ -24,6 +24,10 @@ defineProps({
       default: () => false,
    },
 });
+const emit = defineEmits(["linkAction"]);
+const linkAction = () => {
+   emit("linkAction");
+};
 </script>
 
 <style lang="scss" scoped>

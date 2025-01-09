@@ -24,15 +24,17 @@ const {
    error,
 } = await useAsyncData("catalog", () => $fetch(url, {}), {
    transform: (res) => {
-      const { data, breadcrumb, links, meta, metatag, text } = res;
+      const { data, breadcrumb, metatag, text } = res;
+      const metadata = useMetatags(metatag.html_head);
       return {
          breadcrumb,
          products: data,
          text,
-         metatag,
+         metadata,
       };
    },
 });
+useHead(catalog.value.metadata);
 </script>
 
 <style lang="scss" scoped>

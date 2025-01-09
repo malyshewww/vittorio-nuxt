@@ -8,8 +8,10 @@
 
 <script setup>
 import { usePopupStore } from "~/stores/popups";
+import { useCartStore } from "~/stores/cart";
 
 const popupStore = usePopupStore();
+const cartStore = useCartStore();
 
 const closePopupNotice = () => {
    popupStore.closePopup(popupStore.popupNotice);
@@ -17,7 +19,9 @@ const closePopupNotice = () => {
 };
 const closePopupNoticeError = () => {
    popupStore.closePopup(popupStore.popupNoticeError);
-   bodyLockRemove();
+   if (!cartStore.isOpenCart) {
+      bodyLockRemove();
+   }
 };
 const closePopupPolitic = () => {
    popupStore.closePopup(popupStore.popupPolitic);

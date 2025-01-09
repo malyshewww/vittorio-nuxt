@@ -71,7 +71,6 @@ const goBack = () => {
 </script>
 
 <style lang="scss" scoped>
-@use "assets/scss/_mixins" as m;
 .product-info {
    width: 32.813vw;
    @include bp-xxl {
@@ -153,7 +152,7 @@ const goBack = () => {
 }
 .product-characteristics {
    &__list {
-      @include m.reset-list;
+      @include reset-list;
       display: flex;
       flex-direction: column;
       gap: 16px;

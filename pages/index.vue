@@ -26,7 +26,8 @@ const {
    error,
 } = await useAsyncData("front", () => $fetch(url, {}), {
    transform: (res) => {
-      const { data, links, meta, metatag } = res;
+      const { data, metatag } = res;
+
       const countries = computed(() => {
          return data.country_front.map((item) => {
             const arrTitle = item.title.split(" ");
@@ -57,14 +58,18 @@ const {
             })
             .filter((el, idx) => idx !== 0);
       });
+      const metadata = useMetatags(metatag.html_head);
       return {
          countries,
          products,
          halfProducts,
+         metadata,
          text: data.text_front[0],
       };
    },
 });
+
+useHead(front.value.metadata);
 
 onMounted(() => {});
 </script>

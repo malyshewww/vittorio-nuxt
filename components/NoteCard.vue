@@ -38,11 +38,11 @@
 						//- img(:src="`/images/main/legend_product.jpg`" alt="product")
 					.product-note__decor-title(v-if="product.field_svg_title")
 						img(:src="product.field_svg_title[0].markup" :alt="product.field_svg_title[0].alt")
-					button(type="button" @click="addToCart").product-note__button В корзину
+					button(type="button" @click="addToCart" :class="cartStore.isActiveCartPopup ? 'disabled' : ''").product-note__button В корзину
 				.product-note__options(v-if="product.price || product.volume")
 					.product-note__option(v-if="product.volume") {{product.volume}}
 					.product-note__option(v-if="product.price") {{product.price}}
-				UiButtonPrimary(title="В корзину" class-names="product-note__button-mobile" @button-action="addToCart")
+				UiButtonPrimary(title="В корзину" :class-names="'product-note__button-mobile'" @button-action="addToCart")
 		AppCartPopup
 </template>
 
@@ -50,6 +50,13 @@
 import { useCartStore } from "~/stores/cart";
 
 const cartStore = useCartStore();
+
+const classNamesObj = computed(() => {
+   return {
+      "product-note__button-mobile": true,
+      disabled: cartStore.isActiveCartPopup === true,
+   };
+});
 
 const props = defineProps({
    product: {
@@ -85,8 +92,7 @@ const addToCart = async () => {
 
 <style lang="scss" scoped>
 @use "sass:math";
-@use "assets/scss/vars" as *;
-@use "assets/scss/mixins" as m;
+@use "assets/scss/_vars" as *;
 .note-sections {
 }
 .note-card {
@@ -477,7 +483,7 @@ const addToCart = async () => {
       width: 160px;
       height: 160px;
       border-radius: 50%;
-      background-color: var(--bg-smoke);
+      background: var(--bg-smoke);
       display: grid;
       place-items: center;
       position: absolute;
@@ -492,6 +498,11 @@ const addToCart = async () => {
       text-align: center;
       color: var(--bg-white);
       transition: background-color $time * 2 $ttm;
+      &.disabled,
+      &:disabled {
+         background-color: var(--system-disabled);
+         pointer-events: none;
+      }
       @include hover {
          &:hover {
             background-color: var(--bg-dark);
@@ -541,7 +552,7 @@ const addToCart = async () => {
 }
 .characteristics {
    &__list {
-      @include m.reset-list;
+      @include reset-list;
       display: flex;
       flex-direction: column;
       gap: 16px;

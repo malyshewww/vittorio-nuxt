@@ -13,7 +13,6 @@ defineProps({
 </script>
 
 <style lang="scss" scoped>
-@use "assets/scss/mixins" as m;
 .top-page {
    margin-bottom: 80px;
    padding-bottom: 40px;
@@ -28,7 +27,7 @@ defineProps({
       background-color: var(--bg-smoke);
       height: 1px;
    }
-   @include m.bp-md {
+   @include bp-md {
       padding-bottom: 12px;
       margin-bottom: 40px;
    }
@@ -39,9 +38,12 @@ defineProps({
       text-transform: uppercase;
       color: var(--bg-smoke);
       font-family: var(--second-family);
-      @include m.bp-xl {
+      @include bp-xl {
          font-size: 36px;
          line-height: 44px;
+      }
+      @include bp-md {
+         hyphens: auto;
       }
    }
 }

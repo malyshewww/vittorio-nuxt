@@ -24,6 +24,7 @@ export const useCartStore = defineStore("cart", () => {
    const couponCode = ref("");
    const count = ref(0);
    const totalCount = ref(0);
+   const isLoading = ref(true);
    const openCart = () => {
       isOpenCart.value = true;
    };
@@ -53,7 +54,7 @@ export const useCartStore = defineStore("cart", () => {
             productInfo.volume = cartData.volume;
             productInfo.title = title;
             isActiveCartPopup.value = true;
-            calcCartQuantity(1, "plus");
+            getCartItems();
             setTimeout(() => {
                isActiveCartPopup.value = false;
             }, 2000);
@@ -64,6 +65,7 @@ export const useCartStore = defineStore("cart", () => {
       }
    }
    async function getCartItems() {
+      isLoading.value = true;
       try {
          const response = await fetch(
             `${URL}/jsonapi/carts?include=order_items,coupons&jsonapi_include=1`,
@@ -101,8 +103,12 @@ export const useCartStore = defineStore("cart", () => {
             // promocodeMessage.value = "Промокод применён";
             // isPromocodeValid.value = true;
          }
+         isLoading.value = false;
       } catch (error) {
          console.log("error", error);
+         isLoading.value = false;
+      } finally {
+         isLoading.value = false;
       }
    }
    function getCartTotal() {
@@ -125,7 +131,7 @@ export const useCartStore = defineStore("cart", () => {
             },
             0
          );
-         console.log(totalCount.value);
+         console.log("totala count", totalCount.value);
       }
    }
    function calcCartQuantity(num, action) {
@@ -136,6 +142,7 @@ export const useCartStore = defineStore("cart", () => {
          count.value -= num;
          // totalCount.value--;
       }
+      totalCount.value = count;
    }
    function decreaseCartSum(product, quantity) {
       changeQuantity(product, quantity, "minus");
@@ -349,5 +356,6 @@ export const useCartStore = defineStore("cart", () => {
       totalCount,
       getTotalCount,
       count,
+      isLoading,
    };
 });

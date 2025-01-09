@@ -17,12 +17,11 @@ defineProps({
 </script>
 
 <style lang="scss" scoped>
-@use "assets/scss/_vars" as *;
-@use "assets/scss/_mixins" as m;
+@use "assets/scss/vars" as *;
 .breadcrumbs {
    margin-bottom: 20px;
    &__list {
-      @include m.reset-list;
+      @include reset-list;
       display: flex;
       align-items: center;
       gap: 12px;
@@ -49,11 +48,12 @@ defineProps({
       font-size: 14px;
       line-height: 18px;
       transition: color $time * 2 $ttm;
-      @media (any-hover: hover) {
+      @include hover {
          &:hover {
             color: var(--text-gray);
          }
       }
+
       &.disabled {
          user-select: none;
          pointer-events: none;

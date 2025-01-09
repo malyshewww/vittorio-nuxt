@@ -1,13 +1,41 @@
 <template lang="pug">
-	.fragrances__header.header-fragrances
+	.fragrances__header.header-fragrances(ref="fragrances")
 		h2.header-fragrances__title 
 			span.header-fragrances__label
 			span.header-fragrances__text Мир ароматов #[br] Vittorio
 		.header-fragrances__content-inner
 			.header-fragrances__content
 				p Витторио — парфюмер-путешественник, чьи шаги прочерчивают карту мира в поисках самых неповторимых ароматов. Из далёких уголков планеты он приносит с собой не только запахи, но и истории, культуры, и вдохновение. Парфюмерный бренд Vittorio — мост между мирами, соединяющий экзотику и роскошь, ставящий в центр внимания уникальность и качество. Для тех, кто ищет нечто большее, чем просто аромат — для тех, кто жаждет погружения в мир чувств и приключений. Добро пожаловать в мир ароматов, добро пожаловать в мир Vittorio.
-				UiLinkLine(text="Узнать больше" :isAnchor="true" path="#welcome")
+				UiLinkLine(text="Узнать больше" :isAnchor="true" path="/#welcome" @link-action="goToAnchor")
 </template>
+
+<script setup>
+const fragrances = ref("");
+const router = useRouter();
+
+const goToAnchor = () => {
+   if (window.innerWidth > 1024) {
+      const { bodyScrollBar } = useScrollbar();
+      const link = fragrances.value.querySelector(".link-line");
+      const href = link.getAttribute("href");
+      if (href.includes("#")) {
+         const id = href.replace("/#", "");
+         const targetElement = document.getElementById(id);
+         router.push({ path: "/", query: { anchor: id } });
+         if (targetElement) {
+            const targetElementPosition =
+               targetElement.getBoundingClientRect().top +
+               bodyScrollBar.scrollTop -
+               10;
+            setTimeout(() => {
+               bodyScrollBar.scrollTo(0, targetElementPosition, 500);
+            }, 1200);
+         }
+      }
+   }
+};
+</script>
+
 <style lang="scss">
 .header-fragrances {
    display: flex;

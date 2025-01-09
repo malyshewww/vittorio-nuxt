@@ -7,7 +7,7 @@
 			FormInput(type="email" placeholder="Электронная почта" name="email" :modelValue="formData.mail" :is-valid="formStatus.email.isValid" :error-message="formStatus.email.message" @update:modelValue="$event => (formData.mail = $event)")
 			.subscribe-form__text 
 				| Оставляя свой электронный адрес, вы подтверждаете, что согласны c 
-				UiLinkUnderLine(path="/page/politic" :is-blank="true" text="политикой обработки персональных данных" class-names="link-border")
+				UiLinkUnderLine(path="/page/policy" :is-blank="true" text="политикой обработки персональных данных" class-names="link-border")
 </template>
 
 <script setup>

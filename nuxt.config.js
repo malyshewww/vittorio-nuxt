@@ -6,7 +6,16 @@ import { fileURLToPath } from "url";
 
 export default defineNuxtConfig({
    devtools: { enabled: true },
-   modules: ["@pinia/nuxt", "@nuxtjs/device", "@nuxt/image"],
+   modules: ["@pinia/nuxt", "@nuxtjs/device", "@nuxt/image", "@vue-email/nuxt"],
+   components: [
+      // импорт компонентов, основываясь только на их имени, а не на пути (pathPrefix: false)
+      {
+         path: "~/components",
+         pathPrefix: true,
+      },
+      // Импорт компонентов из других директорий, помимо components
+      { path: "~/emails", pathPrefix: true },
+   ],
    runtimeConfig: {
       public: {
          apiBase: process.env.NUXT_PUBLIC_API_BASE_URL,
@@ -21,6 +30,7 @@ export default defineNuxtConfig({
    //       },
    //    },
    // },
+   css: ["vue-toast-notification/dist/theme-default.css"],
    ssr: true,
    app: {
       head: {

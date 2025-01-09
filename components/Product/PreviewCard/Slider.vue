@@ -90,8 +90,7 @@ onUnmounted(() => {
 
 <style lang="scss">
 @use "sass:math";
-@use "assets/scss/_vars" as *;
-@use "assets/scss/_mixins" as m;
+@use "assets/scss/vars" as *;
 .preview-card {
    &__slider {
       width: 100%;

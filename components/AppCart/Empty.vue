@@ -7,8 +7,17 @@
 </template>
 
 <script setup>
+import { useCartStore } from "~/stores/cart";
+import { useMenuStore } from "~/stores/menu";
+const cartStore = useCartStore();
+const menuStore = useMenuStore();
+
 const changeRoute = () => {
    navigateTo("/products");
+   cartStore.closeCart();
+   if (!menuStore.isOpen) {
+      bodyLockRemove();
+   }
 };
 </script>
 

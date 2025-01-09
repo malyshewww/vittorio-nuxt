@@ -16,7 +16,7 @@
 						img(:src="`/images/logo-dark.svg`")
 				button(type="button" @click="openCart").header__cart.cart-header
 					span.cart-header__text Корзина
-					span.cart-header__count ({{cartStore.totalCount}})
+					span.cart-header__count ({{cartStore.totalCount > 0 ? cartStore.totalCount : 0}})
 					span.cart-header__icon
 	AppHeaderMenu
 </template>
@@ -90,7 +90,7 @@ const observeHeader = () => {
 
 onMounted(() => {
    observeHeader();
-   cartStore.getTotalCount();
+   // cartStore.getTotalCount();
 });
 </script>
 
@@ -261,19 +261,22 @@ onMounted(() => {
    & span {
       pointer-events: none;
    }
-   @media (any-hover: hover) {
+   @include hover {
       &:hover {
          & .cart-header__text {
             color: rgba(#fff, 0.6);
          }
       }
    }
-
    @include bp-md {
-      padding: 8px 12px;
-      width: 44px;
+      padding: 8px 15px;
+      width: auto;
       min-height: 36px;
       gap: 0;
+      font-size: 10px;
+      line-height: 12px;
+      align-items: flex-start;
+      flex-direction: row-reverse;
    }
    &__icon {
       display: none;
@@ -305,7 +308,7 @@ onMounted(() => {
    &__count {
       color: var(--text-gray);
       @include bp-md {
-         display: none;
+         // display: none;
       }
    }
 }

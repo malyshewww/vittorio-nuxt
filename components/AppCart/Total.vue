@@ -21,7 +21,6 @@ const { orderTotal, cartTotalPrice } = cartStore;
 </script>
 
 <style lang="scss">
-@use "assets/scss/mixins" as m;
 .app-cart {
    // .app-cart__total
    &__total {
@@ -33,7 +32,7 @@ const { orderTotal, cartTotalPrice } = cartStore;
 .cart-total {
    // .cart-total__list
    &__list {
-      @include m.reset-list;
+      @include reset-list;
       display: flex;
       flex-direction: column;
       gap: 8px;

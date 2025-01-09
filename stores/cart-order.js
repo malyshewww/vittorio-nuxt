@@ -46,11 +46,11 @@ export const useOrderStore = defineStore("order", () => {
       },
       agree: {
          isValid: true,
-         message: "подтвердите, что вы ознакомились с документами",
+         message: "",
       },
       mailing: {
          isValid: true,
-         message: "подтвердите, что вы согласны",
+         message: "",
       },
    });
    return {

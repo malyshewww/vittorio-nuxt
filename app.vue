@@ -1,4 +1,6 @@
 <template lang="pug">
+	NuxtLoadingIndicator(color="#70445C")
+	AppLoader
 	NuxtLayout(:name="layout")
 		NuxtPage
 	AppCart
@@ -9,8 +11,10 @@
 import { throttle } from "lodash-es";
 import { useMainInfoStore } from "~/stores/maininfo.js";
 import { useCartStore } from "~/stores/cart";
+import { useAppStore } from "~/stores/app";
 
 const cartStore = useCartStore();
+const appStore = useAppStore();
 
 // Тест Модалки
 // import { usePopupStore } from "~/stores/popups";
@@ -31,8 +35,6 @@ const { data: mainInfoData } = await useFetch(url);
 
 onServerPrefetch(async () => {
    try {
-      // const token = useToken();
-      // cartStore.setCartToken(token);
       await mainInfoStore.setData(mainInfoData.value);
    } catch (error) {
       console.log("Error", error);
@@ -50,6 +52,15 @@ const replaceDevice = () => {
 const loadCart = () => {
    cartStore.getCartItems();
 };
+
+const route = useRoute();
+
+watch(
+   () => route.fullPath,
+   () => {
+      appStore.isHeaderVisible = true;
+   }
+);
 
 onMounted(() => {
    loadCart();
@@ -70,7 +81,6 @@ onMounted(() => {
 @use "assets/scss/nullstyle";
 @use "assets/scss/keyframes";
 @use "assets/scss/common";
-@use "assets/scss/mixins" as m;
 
 .page {
    padding: calc(var(--header-height) + 80px) 0 180px;

@@ -24,6 +24,12 @@ defineExpose({
    display: grid;
    gap: 80px;
 }
+.content-table {
+   margin: 80px 0 0;
+   @include bp-md {
+      margin: 40px 0 0;
+   }
+}
 .content {
    max-width: 1355px;
    & h1,
@@ -94,9 +100,16 @@ defineExpose({
    }
    & table {
       border-collapse: collapse;
+      margin-bottom: 80px;
+      @include bp-md {
+         margin-bottom: 0;
+      }
       & tr {
          display: grid;
          grid-template-columns: repeat(3, 1fr);
+         @include bp-md {
+            grid-template-columns: repeat(3, 300px);
+         }
       }
       & td,
       & th {
@@ -139,5 +152,25 @@ defineExpose({
    & span {
       line-height: 22px;
    }
+}
+.table-wrap {
+   @include bp-md {
+      overflow-x: auto;
+      overflow-y: hidden;
+      margin: 0 -20px;
+      &::-webkit-scrollbar {
+         display: none;
+         height: 0;
+         width: 0;
+      }
+   }
+}
+.align-left {
+   margin: 0px 40px 16px 0px;
+   float: left;
+}
+.align-right {
+   margin: 0 0 36px 40px;
+   float: right;
 }
 </style>
