@@ -15,7 +15,7 @@ const mainInfoStore = useMainInfoStore();
 
 const { links } = mainInfoStore;
 
-const props = defineProps({
+defineProps({
    classNames: {
       type: String,
       required: false,

@@ -3,7 +3,7 @@
 </template>
 
 <style lang="scss" scoped>
-@use "~/assets/scss/_vars" as *;
+@use "assets/scss/vars" as *;
 .form {
    &__agreement {
       font-size: 14px;
@@ -13,7 +13,7 @@
          color: currentColor;
          border-bottom: 1px solid currentColor;
          transition: color $time * 2 $ttm;
-         @media (any-hover: hover) {
+         @include hover {
             &:hover {
                color: var(--bg-smoke);
             }

@@ -51,15 +51,6 @@ const decreaseCartSum = () => {
 const increaseCartSum = () => {
    cartStore.increaseCartSum(props.item, props.item.quantity + 1);
 };
-
-// watch(
-//    () => props.item.quantity,
-//    () => {
-//       console.log("change quant");
-// 		store.getCart
-//    },
-//    { deep: true }
-// );
 </script>
 
 <style lang="scss">

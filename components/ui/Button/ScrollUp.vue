@@ -25,7 +25,7 @@ const isButtonVisible = ref(false);
 const route = useRoute();
 
 watch(
-   () => route.path,
+   () => route.fullPath,
    () => {
       isButtonVisible.value = false;
    }
@@ -33,19 +33,19 @@ watch(
 
 function observerButtonUp() {
    // Функция для показа/скрытия кнопки
-   const heroSection = document.querySelector(".main-hero");
-   const handleIntersection = (entries) => {
-      entries.forEach((entry) => {
-         if (!entry.isIntersecting) {
-            isButtonVisible.value = true;
-         } else {
-            isButtonVisible.value = false;
-         }
-      });
-   };
-   const observer = new IntersectionObserver(handleIntersection, {
-      threshold: 0,
-   });
+   // const heroSection = document.querySelector(".main-hero");
+   // const handleIntersection = (entries) => {
+   //    entries.forEach((entry) => {
+   //       if (!entry.isIntersecting) {
+   //          isButtonVisible.value = true;
+   //       } else {
+   //          isButtonVisible.value = false;
+   //       }
+   //    });
+   // };
+   // const observer = new IntersectionObserver(handleIntersection, {
+   //    threshold: 0,
+   // });
    // const handleIntersectionOther = (entries) => {
    //    entries.forEach((entry) => {
    //       if (!entry.isIntersecting) {
@@ -61,26 +61,21 @@ function observerButtonUp() {
    const setNewButtonState = (y) => {
       const header = document.querySelector(".header");
       const headerHeight = header.getBoundingClientRect().height;
-      if (y > headerHeight) {
+      if (y > headerHeight && y > 0) {
          isButtonVisible.value = true;
       } else {
          isButtonVisible.value = false;
       }
    };
-
-   if (heroSection && route.name === "index") {
-      observer.observe(heroSection);
+   if (window.innerWidth > 1024 && route.name !== "index") {
+      const { bodyScrollBar } = useScrollbar();
+      bodyScrollBar.addListener(({ offset }) => {
+         setNewButtonState(offset.y);
+      });
    } else {
-      if (window.innerWidth > 1024 && route.name !== "index") {
-         const { bodyScrollBar } = useScrollbar();
-         bodyScrollBar.addListener(({ offset }) => {
-            setNewButtonState(offset.y);
-         });
-      } else {
-         window.addEventListener("scroll", () => {
-            setNewButtonState(window.scrollY);
-         });
-      }
+      window.addEventListener("scroll", () => {
+         setNewButtonState(window.scrollY);
+      });
    }
 }
 
@@ -99,15 +94,11 @@ onMounted(() => {
    observerButtonUp();
    scrollTop();
 });
-onBeforeUnmount(() => {
-   // window.removeEventListener("scroll", () => {
-   //    setNewButtonState(window.scrollY);
-   // });
-});
+onBeforeUnmount(() => {});
 </script>
 
 <style lang="scss" scoped>
-@use "~/assets/scss/_vars" as *;
+@use "assets/scss/vars" as *;
 .button-up {
    border-radius: 100px;
    width: 36px;

@@ -1,4 +1,4 @@
-import Scrollbar, { ScrollbarPlugin } from "smooth-scrollbar";
+import Scrollbar from "smooth-scrollbar";
 
 export const useScrollbar = () => {
    let bodyScrollBar;

@@ -101,15 +101,21 @@ defineExpose({
    & table {
       border-collapse: collapse;
       margin-bottom: 80px;
+      margin-top: 80px;
+      width: 100%;
       @include bp-md {
+         margin-bottom: 0;
+         margin-top: 0;
+      }
+      & p {
          margin-bottom: 0;
       }
       & tr {
          display: grid;
          grid-template-columns: repeat(3, 1fr);
-         @include bp-md {
-            grid-template-columns: repeat(3, 300px);
-         }
+         // @include bp-md {
+         //    grid-template-columns: repeat(3, 300px);
+         // }
       }
       & td,
       & th {
@@ -168,9 +174,19 @@ defineExpose({
 .align-left {
    margin: 0px 40px 16px 0px;
    float: left;
+   @include bp-md {
+      float: none;
+      margin: 20px 0;
+      width: 100%;
+   }
 }
 .align-right {
    margin: 0 0 36px 40px;
    float: right;
+   @include bp-md {
+      float: none;
+      margin: 20px 0;
+      width: 100%;
+   }
 }
 </style>

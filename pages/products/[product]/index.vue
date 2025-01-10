@@ -37,41 +37,43 @@ const runtimeConfig = useRuntimeConfig();
 
 const url = `${runtimeConfig.public.apiBase}/products/${product}?_format=json`;
 
-const {
-   data: productData,
-   status,
-   error,
-} = await useAsyncData("productData", () => $fetch(url, {}), {
-   transform: (res) => {
-      const { breadcrumb, data, metatag } = res;
-      const arrOptions = computed(() => {
-         const options = [];
-         const top = data.field_top_notes;
-         const base = data.field_base_notes || "";
-         const heart = data.field_heart_notes;
-         const fragrance = data.field_fragrance_group;
-         fragrance && options.push(fragrance);
-         top && options.push(top);
-         heart && options.push(heart);
-         base && options.push(base);
-         return options;
-      });
-      const optionsTitle = [
-         "группа аромата",
-         "верхние ноты",
-         "ноты сердца",
-         "базовые ноты",
-      ];
-      const metadata = useMetatags(metatag.html_head);
-      return {
-         breadcrumb,
-         info: data,
-         options: arrOptions,
-         metadata,
-      };
-   },
+const { data: productData } = await useAsyncData(
+   "productData",
+   () => $fetch(url, {}),
+   {
+      transform: (res) => {
+         const { breadcrumb, data, metatag } = res;
+         const arrOptions = computed(() => {
+            const options = [];
+            const top = data.field_top_notes;
+            const base = data.field_base_notes || "";
+            const heart = data.field_heart_notes;
+            const fragrance = data.field_fragrance_group;
+            fragrance && options.push(fragrance);
+            top && options.push(top);
+            heart && options.push(heart);
+            base && options.push(base);
+            return options;
+         });
+         // const optionsTitle = [
+         //    "группа аромата",
+         //    "верхние ноты",
+         //    "ноты сердца",
+         //    "базовые ноты",
+         // ];
+         const metadata = useMetatags(metatag.html_head);
+         return {
+            breadcrumb,
+            info: data,
+            options: arrOptions,
+            metadata,
+         };
+      },
+   }
+);
+useHead({
+   ...productData.value.metadata,
 });
-useHead(productData.value.metadata);
 
 // const productData = {
 //    images: ["legend", "legend", "protagonist", "musk-melody"],

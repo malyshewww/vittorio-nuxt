@@ -1,5 +1,5 @@
 const useToken = () => {
-   if (process.client) {
+   if (import.meta.client) {
       if (!localStorage.getItem("cartToken")) {
          localStorage.setItem(
             "cartToken",

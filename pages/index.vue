@@ -7,10 +7,6 @@
 </template>
 
 <script setup>
-// definePageMeta({
-//    layout: "main",
-// });
-
 useHead({
    bodyAttrs: {
       class: "page--home",
@@ -20,11 +16,7 @@ useHead({
 const runtimeConfig = useRuntimeConfig();
 const url = `${runtimeConfig.public.apiBase}/wsapi/packs/front?_format=json`;
 
-const {
-   data: front,
-   status,
-   error,
-} = await useAsyncData("front", () => $fetch(url, {}), {
+const { data: front } = await useAsyncData("front", () => $fetch(url, {}), {
    transform: (res) => {
       const { data, metatag } = res;
 

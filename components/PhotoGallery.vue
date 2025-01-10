@@ -40,7 +40,6 @@ const initializeSlider = () => {
          .querySelector(".slider-button-next");
       gallerySwiper.value = new Swiper(gallerySlider.value, {
          modules: [Navigation],
-         slidesPerView: 4,
          speed: 800,
          navigation: {
             nextEl: buttonNext,
@@ -107,6 +106,9 @@ onMounted(() => {
    }
    @include bp-md {
       padding-top: 70px;
+      & .slider-controls {
+         margin: 0;
+      }
    }
 }
 .heading {
@@ -116,6 +118,9 @@ onMounted(() => {
    gap: 20px;
    flex-wrap: wrap;
    margin-bottom: 60px;
+   @include bp-md {
+      margin-bottom: 30px;
+   }
    &__title {
       font-size: 44px;
       line-height: 56px;

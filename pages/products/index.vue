@@ -18,11 +18,7 @@ useHead({
 const runtimeConfig = useRuntimeConfig();
 const url = `${runtimeConfig.public.apiBase}/products?_format=json`;
 
-const {
-   data: catalog,
-   status,
-   error,
-} = await useAsyncData("catalog", () => $fetch(url, {}), {
+const { data: catalog } = await useAsyncData("catalog", () => $fetch(url, {}), {
    transform: (res) => {
       const { data, breadcrumb, metatag, text } = res;
       const metadata = useMetatags(metatag.html_head);

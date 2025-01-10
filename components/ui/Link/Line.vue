@@ -17,6 +17,7 @@ defineProps({
    classNames: {
       type: String,
       required: false,
+      default: "",
    },
    isAnchor: {
       required: false,

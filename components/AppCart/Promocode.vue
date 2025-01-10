@@ -1,6 +1,6 @@
 <template lang="pug">
 	form(@submit.prevent).app-cart__promocode
-		FormInput(type="text" name="promo" placeholder="Введите промокод" :is-valid="true" :is-promocode="true" :promocodeInput="promocodeInput")
+		FormInput(type="text" name="promo" placeholder="Введите промокод" :is-valid="true" :is-promocode="true")
 </template>
 
 <script setup>

@@ -25,7 +25,6 @@ import { useOrderStore } from "~/stores/cart-order";
 const orderStore = useOrderStore();
 
 const { formData } = orderStore;
-
 const model = orderStore.model;
 const formStatus = orderStore.formStatus;
 </script>

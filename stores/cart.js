@@ -173,8 +173,8 @@ export const useCartStore = defineStore("cart", () => {
                body: JSON.stringify(opts),
             }
          );
-         const result = await response.json();
          if (response.ok) {
+            // const result = await response.json();
             // Обновить корзину
             getCartItems();
             if (type === "plus") {
@@ -282,6 +282,7 @@ export const useCartStore = defineStore("cart", () => {
             throw new Error(`${response.status}, ${response.statusText}`);
          }
       } catch (error) {
+         console.log(error);
          isPromocodeValid.value = false;
          promocodeValue.value = "";
          promocodeMessage.value = "Промокод не найден";

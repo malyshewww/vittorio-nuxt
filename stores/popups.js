@@ -14,7 +14,7 @@ export const usePopupStore = defineStore("popup", () => {
    const popupSubscribe = reactive({
       isOpen: false,
    });
-   const openPopup = (popup, success) => {
+   const openPopup = (popup) => {
       popup.isOpen = true;
    };
    const closePopup = (popup) => {

@@ -36,7 +36,6 @@ export default defineNuxtPlugin(() => {
          this.jumpToHash(hash);
       };
       jumpToHash = (hash) => {
-         const { scrollbar } = this;
          if (!hash) {
             return;
          }

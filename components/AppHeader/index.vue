@@ -2,7 +2,7 @@
 	header.header(:class="{ active: menuStore.isOpen, 'hidden': !appStore.isHeaderVisible, 'header-white': isColor === 'white', 'header-dark': isColor === 'dark'}")
 		.container
 			.header__body
-				button(type="button" @click="openMenu").header__burger.burger
+				button(type="button" @click="openMenu" :class="{disabled: appStore.isDisabledBurger}").header__burger.burger
 					span.burger__lines
 				nuxt-link(to="/" v-if="$route.name === 'index'").header__logo.logo
 					picture
@@ -43,6 +43,10 @@ const appStore = useAppStore();
 const headerMenu = ref(null);
 
 const openMenu = () => {
+   appStore.isDisabledBurger = !appStore.isDisabledBurger;
+   setTimeout(() => {
+      appStore.isDisabledBurger = !appStore.isDisabledBurger;
+   }, 1500);
    menuStore.toggleMenu();
    bodyLock(menuStore.isOpen);
 };
@@ -192,6 +196,9 @@ onMounted(() => {
    border-radius: 1000px;
    padding: 8px 20px;
    background: var(--bg-smoke);
+   &.disabled {
+      pointer-events: none;
+   }
    @include bp-md {
       padding: 8px;
       width: 44px;

@@ -15,9 +15,9 @@
 				.welcome__main
 					.welcome__images.welcome__images--left
 						.welcome__image.welcome__image-big
-							NuxtPicture(:src="`/images/sections/welcome/img-big.jpg`" alt="img-big")
+							NuxtPicture(:src="`images/sections/welcome/img-big.jpg`" alt="img-big")
 						.welcome__image.welcome__image-border-small
-							NuxtPicture(:src="`/images/sections/welcome/img-border-small.jpg`" alt="img-border")
+							NuxtPicture(:src="`images/sections/welcome/img-border-small.jpg`" alt="img-border")
 					.welcome__description
 						h3.welcome__title-small(v-if="text.info") {{text.info}}
 						.hidden-block
@@ -26,7 +26,7 @@
 							UiButtonLine(v-if="state.isVisible" text="Узнать больше" @button-action="toggleHiddenBlock" class-names="show-more")
 					.welcome__images.welcome__images--right
 						.welcome__image.welcome__image-border-big
-							NuxtPicture(:src="`/images/sections/welcome/img-border-big.jpg`" alt="img-border-big")
+							NuxtPicture(:src="`images/sections/welcome/img-border-big.jpg`" alt="img-border-big")
 </template>
 
 <script setup>
@@ -344,7 +344,6 @@ function toggleHiddenBlock() {
    &__image-big {
       width: 240px;
       height: 300px;
-      background-color: green;
       bottom: 164px;
       left: 0;
       @include bp-xl {

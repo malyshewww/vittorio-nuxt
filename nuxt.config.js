@@ -2,19 +2,16 @@
 import { defineNuxtConfig } from "nuxt/config";
 import autoprefixer from "autoprefixer";
 import postCssSortMediaQueries from "postcss-sort-media-queries";
-import { fileURLToPath } from "url";
 
 export default defineNuxtConfig({
    devtools: { enabled: true },
-   modules: ["@pinia/nuxt", "@nuxtjs/device", "@nuxt/image", "@vue-email/nuxt"],
+   modules: ["@nuxt/eslint", "@pinia/nuxt", "@nuxtjs/device", "@nuxt/image"],
    components: [
       // импорт компонентов, основываясь только на их имени, а не на пути (pathPrefix: false)
       {
          path: "~/components",
          pathPrefix: true,
       },
-      // Импорт компонентов из других директорий, помимо components
-      { path: "~/emails", pathPrefix: true },
    ],
    runtimeConfig: {
       public: {
@@ -30,7 +27,6 @@ export default defineNuxtConfig({
    //       },
    //    },
    // },
-   css: ["vue-toast-notification/dist/theme-default.css"],
    ssr: true,
    app: {
       head: {

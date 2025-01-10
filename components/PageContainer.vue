@@ -1,6 +1,6 @@
 <template lang="pug">
 	div(v-if="props.status === 'pending' || props.status === 'fetching'")
-		.loader loading...
+		.loader
 	div(v-else-if="props.status === 'success'")
 		slot
 	div(v-else)
@@ -11,7 +11,13 @@
 const props = defineProps(["status", "error"]);
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .loader {
+   position: fixed;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   background-color: red;
 }
 </style>

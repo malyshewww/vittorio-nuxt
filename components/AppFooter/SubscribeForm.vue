@@ -1,10 +1,10 @@
 <template lang="pug">
 	.main-footer__subscribe
-		form(ref="form" @submit.prevent="submitForm($event)").subscribe-form
+		form(ref="form" @submit.prevent="formSend($event)").subscribe-form
 			.subscribe-form__heading
 				.subscribe-form__title.footer-title Подписаться на новости
 				.subscribe-form__sub-title Оформите подписку, чтобы быть в курсе наших новостей
-			FormInput(type="email" placeholder="Электронная почта" name="email" :modelValue="formData.mail" :is-valid="formStatus.email.isValid" :error-message="formStatus.email.message" @update:modelValue="$event => (formData.mail = $event)")
+			FormInput(type="email" placeholder="Электронная почта" name="email" :modelValue="model.email.val" :is-valid="formStatus.email.isValid" :error-message="formStatus.email.message" @update:modelValue="$event => (formData.mail = $event)")
 			.subscribe-form__text 
 				| Оставляя свой электронный адрес, вы подтверждаете, что согласны c 
 				UiLinkUnderLine(path="/page/policy" :is-blank="true" text="политикой обработки персональных данных" class-names="link-border")
@@ -22,36 +22,44 @@ const formStatus = reactive({
    },
 });
 
+const model = reactive({
+   email: {
+      val: "",
+   },
+});
+
+const errors = ref(0);
+
 const formData = reactive({
-   mail: "",
+   mail: model.email.val,
    webform_id: "news",
 });
 
 const form = ref("");
 
+const initialFormStatus = () => {
+   formStatus.email.isValid = true;
+   formStatus.email.message = "";
+};
+
+const resetValues = () => {
+   model.email.val = "";
+};
+
 // Наблюдатели за изменения в полях ввода
 watch(
-   () => formData.mail,
+   () => model.email.val,
    (val) => {
       formData.mail = val;
    }
 );
 
-function validateEmail(value) {
-   if (
-      value.length > 0 &&
-      !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value.toLowerCase())
-   ) {
-      formStatus.email.isValid = false;
-      formStatus.email.message = "Некорректный email";
-   }
-}
-
 const runtimeConfig = useRuntimeConfig();
 
-const submitForm = async (e) => {
-   console.log(e);
-   try {
+async function formSend() {
+   const { error } = formValidate();
+   console.log(error);
+   if (error === 0) {
       const tokenResponse = await fetch(
          `${runtimeConfig.public.apiBase}/session/token`,
          {
@@ -74,29 +82,49 @@ const submitForm = async (e) => {
             body: JSON.stringify(formData),
          }
       );
-      // if (!formResponse.ok) {
-      //    throw new Error("Ошибка при отправке формы");
-      // }
-      const result = await formResponse.json();
-      if (result.sid) {
-         formStatus.email.isValid = true;
-         formStatus.email.message = "";
-         formData.mail = "";
-         form.value.reset();
-         popupStore.openPopup(popupStore.popupSubscribe);
-         setTimeout(() => {
-            popupStore.closePopup(popupStore.popupSubscribe);
-         }, 3000);
+      if (formResponse.ok) {
+         const result = await formResponse.json();
+         formSuccess();
       } else {
-         if (result.error.email) {
-            formStatus.email.message = result.error.phone;
-            formStatus.email.isValid = false;
-         }
+         formError();
       }
-   } catch (error) {
-      console.log(error);
+   } else {
+      formError();
    }
-};
+}
+
+function formError() {
+   popupStore.openPopup(popupStore.popupNoticeError);
+   setTimeout(() => {
+      popupStore.closePopup(popupStore.popupNoticeError);
+   }, 3000);
+}
+
+function formSuccess() {
+   form.value.reset();
+   initialFormStatus();
+   resetValues();
+   popupStore.openPopup(popupStore.popupSubscribe);
+   setTimeout(() => {
+      popupStore.closePopup(popupStore.popupSubscribe);
+   }, 3000);
+}
+
+function formValidate() {
+   errors.value = 0;
+   initialFormStatus();
+   if (
+      model.email.val.length > 0 &&
+      !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(model.email.val)
+   ) {
+      formStatus.email.isValid = false;
+      formStatus.email.message = "Некорректный email";
+      errors.value++;
+   }
+   return {
+      error: errors.value,
+   };
+}
 </script>
 
 <style lang="scss">

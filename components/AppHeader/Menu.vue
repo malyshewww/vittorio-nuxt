@@ -29,8 +29,10 @@
 <script setup>
 import { useMainInfoStore } from "~/stores/maininfo";
 import { useMenuStore } from "~/stores/menu";
+import { useAppStore } from "~/stores/app";
 
 const menuStore = useMenuStore();
+const appStore = useAppStore();
 
 const mainInfoStore = useMainInfoStore();
 const { menuMain, menuProduct, links } = mainInfoStore;
@@ -74,6 +76,12 @@ const closeMenu = (e) => {
       menuStore.closeMenu();
       bodyLock(menuStore.isOpen);
       goToAnchor(target);
+      if (!appStore.isDisabledBurger) {
+         appStore.isDisabledBurger = true;
+         setTimeout(() => {
+            appStore.isDisabledBurger = false;
+         }, 1500);
+      }
    }
 };
 
@@ -99,15 +107,6 @@ const goToAnchor = (link) => {
       }
    }
 };
-
-// watch(
-//    route,
-//    (value) => {
-//       console.log(value);
-//       menuStore.isOpen = false;
-//    },
-//    { deep: true, immediate: true }
-// );
 </script>
 
 <style lang="scss">

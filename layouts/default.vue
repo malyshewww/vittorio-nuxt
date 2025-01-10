@@ -29,7 +29,7 @@ nuxtApp.hook("page:loading:end", () => {
 onMounted(() => {
    let initialPosition = window.scrollY;
    let currentPosition = window.scrollY;
-   window.addEventListener("scroll", (e) => {
+   window.addEventListener("scroll", () => {
       if (route.name !== "index") {
          currentPosition = window.scrollY;
          appStore.isHeaderVisible =

@@ -14,8 +14,6 @@ import { useAppStore } from "~/stores/app";
 
 const appStore = useAppStore();
 
-let { scrollY } = appStore;
-
 const nuxtApp = useNuxtApp();
 
 const route = useRoute();
@@ -32,16 +30,12 @@ nuxtApp.hook("page:loading:end", () => {
    }
 });
 
-const {
-   $gsap: gsap,
-   $Scrollbar: Scrollbar,
-   $ScrollTrigger: ScrollTrigger,
-} = useNuxtApp();
+const { $ScrollTrigger: ScrollTrigger } = useNuxtApp();
 
 const scroller = ref(null);
 
 onMounted(() => {
-   const { bodyScrollBar, scrollbar } = useScrollbar();
+   const { bodyScrollBar } = useScrollbar();
    setTimeout(() => {
       ScrollTrigger.refresh();
    }, 1000);

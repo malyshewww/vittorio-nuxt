@@ -25,6 +25,14 @@ defineProps({
       display: flex;
       align-items: center;
       gap: 12px;
+      overflow-x: auto;
+      flex-wrap: nowrap;
+      white-space: nowrap;
+      &::-webkit-scrollbar {
+         display: none;
+         width: 0;
+         height: 0;
+      }
    }
    &__item {
       position: relative;

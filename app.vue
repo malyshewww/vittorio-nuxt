@@ -1,6 +1,6 @@
 <template lang="pug">
 	NuxtLoadingIndicator(color="#70445C")
-	AppLoader
+	AppLoader(v-if="isLoad")
 	NuxtLayout(:name="layout")
 		NuxtPage
 	AppCart
@@ -26,6 +26,18 @@ const appStore = useAppStore();
 //    bodyLockAdd();
 // };
 
+const nuxtApp = useNuxtApp();
+
+const isLoad = ref(true);
+
+nuxtApp.hook("page:loading:start", () => {
+   isLoad.value = true;
+});
+
+nuxtApp.hook("page:loading:end", () => {
+   isLoad.value = false;
+});
+
 const mainInfoStore = useMainInfoStore();
 
 const runtimeConfig = useRuntimeConfig();
@@ -41,12 +53,12 @@ onServerPrefetch(async () => {
    }
 });
 
-//логика лейаута
-const device = useDevice();
 const layout = ref("");
 
 const replaceDevice = () => {
    layout.value = window.innerWidth > 1024 ? "main" : "default";
+   appStore.isMobile = window.innerWidth > 1024 ? false : true;
+   console.log("ismobile", appStore.isMobile);
 };
 
 const loadCart = () => {
@@ -67,9 +79,6 @@ onMounted(() => {
    replaceDevice();
    const watchResize = throttle(function () {
       replaceDevice();
-      // here you should mutate your `device_type` via a Vuex mutation/action
-      // and make your axios call by preferably fetching either a const/let variable
-      // or a global vuex state
    }, 1000);
    window.addEventListener("resize", watchResize);
 });
