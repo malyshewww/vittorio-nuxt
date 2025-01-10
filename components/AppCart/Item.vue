@@ -1,9 +1,9 @@
 <template lang="pug">
 	.app-cart__item.cart-item
-		.cart-item__image.ibg
+		nuxt-link(:to="item.url" target="_blank").cart-item__image.ibg
 			img(:src="item.image")
 		.cart-item__body
-			.cart-item__title(v-if="item.title") {{item.title}}
+			nuxt-link(:to="item.url" target="_blank").cart-item__title(v-if="item.title") {{item.title}}
 			.cart-item__volume(v-if="item.purchased_entity.field_volume") {{item.purchased_entity.field_volume}} мл
 			.cart-item__prices
 				.cart-item__price-old(v-if="item.purchased_entity.list_price") {{formatNumber(item.purchased_entity.list_price.number)}}
