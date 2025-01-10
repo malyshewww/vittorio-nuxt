@@ -285,6 +285,8 @@ function toggleHiddenBlock() {
          mask-position: center;
          background-color: var(--bg-milk);
          mask-size: 32px 32px;
+         position: relative;
+         left: 3px;
       }
       &.hidden {
          opacity: 0;

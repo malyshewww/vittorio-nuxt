@@ -12,6 +12,7 @@
 							//- .map-mobile
 							//- 	img(:src="`/images/sections/fragrances/map-mobile.png`" alt="map")
 							.location-fragrances__map-container
+								span.location-fragrances__arrow(:class="{hidden: isMoveArrow}")
 								.location-fragrances__map
 									//- NuxtPicture(:src="`/images/sections/fragrances/map.png`" alt="map")
 									img(:src="`/images/sections/fragrances/map.png`" alt="map")
@@ -49,6 +50,7 @@ const locationBlock = ref(null);
 const className = ref("");
 
 const isAdaptive = ref(false);
+const isMoveArrow = ref(false);
 
 const replaceDevice = () => {
    isAdaptive.value = window.innerWidth <= 1400 ? true : false;
@@ -114,12 +116,14 @@ onMounted(() => {
 
                image.style.left = newLeft + "px";
                image.style.top = newTop + "px";
+               isMoveArrow.value = true;
             }
          }
 
          function endDrag() {
             isDragging = false; // Останавливаем перетаскивание
             image.style.transition = "top 0.3s ease 0s, left 0.3s ease 0s";
+            isMoveArrow.value = false;
          }
 
          image.addEventListener("mousedown", startDrag);
@@ -237,6 +241,40 @@ onMounted(() => {
       @include bp-md {
          width: 742px;
          left: calc(50% - 371px);
+      }
+   }
+   &__arrow {
+      position: absolute;
+      z-index: 2;
+      margin: auto;
+      inset: 0;
+      border-radius: 1000px;
+      padding: 8px 16px;
+      width: 60px;
+      height: 44px;
+      backdrop-filter: blur(4px);
+      background: rgba(60, 58, 55, 0.6);
+      animation: bounceLocation 1600ms infinite
+         cubic-bezier(0.445, 0.05, 0.55, 0.95);
+      transition: opacity $time cubic-bezier(0.445, 0.05, 0.55, 0.95);
+      pointer-events: none;
+      display: none;
+      &.hidden {
+         opacity: 0;
+         animation-play-state: paused;
+      }
+      &::before {
+         content: "";
+         display: block;
+         width: 28px;
+         height: 28px;
+         mask-image: url("../images/icons/arrow-double-white.svg");
+         mask-repeat: no-repeat;
+         mask-position: center;
+         background-color: var(--bg-white);
+      }
+      @include bp-xxxl {
+         display: flex;
       }
    }
    &.active {
