@@ -246,20 +246,20 @@
 </template>
 
 <script setup>
-const props = defineProps({
-   activeArea: {
-      //   type: String,
-      required: true,
-   },
-   countries: {
-      type: Object,
-      required: true,
-   },
+defineProps({
+  activeArea: {
+    type: String,
+    required: true,
+  },
+  countries: {
+    type: Object,
+    required: true,
+  },
 });
 
 const emit = defineEmits(["stopAutoplay", "startAutoplay"]);
 
-const activeArea = ref(props.activeArea);
+// const activeArea = ref(props.activeArea);
 
 // watch(
 //    () => props.activeArea,
@@ -271,64 +271,67 @@ const activeArea = ref(props.activeArea);
 // );
 const map = ref("");
 
-const stopAutoplay = (index, key) => {
-   emit("stopAutoplay", false, index);
+const stopAutoplay = (index) => {
+  emit("stopAutoplay", false, index);
 };
 
+// eslint-disable-next-line
 const startAutoplay = () => {
-   emit("startAutoplay", true);
+  emit("startAutoplay", true);
 };
 
+// eslint-disable-next-line
 const selectMarker = (key, index) => {
-   if (window.innerWidth <= 1200) {
-      hoverMarker(key, index);
-   }
+  if (window.innerWidth <= 1200) {
+    hoverMarker(key, index);
+  }
 };
 
 const hoverMarker = (key, index) => {
-   stopAutoplay(index);
-   const removeActivePaths = () => {
-      const paths = map.value.querySelectorAll("path.active");
-      paths.forEach((path) => path.classList.remove("active"));
-   };
-   const paths = map.value.querySelectorAll("path");
-   [...paths].forEach((path) => {
-      const currentArea = path.dataset.area;
-      const currentAreaDouble = path.dataset.areaDouble; // Единая зона для ароматов Voice of the sea и Musk Melody
-      const legendPlace = path.dataset.place;
-      const fillArea = path.dataset.fill;
-      switch (key) {
-         case "legend":
-            if (key == legendPlace) {
-               path.style.fill = "#382d32";
-            }
-            break;
-         case "voice":
-            if (key == currentAreaDouble) {
-               path.style.fill = "#2e4568";
-            }
-            break;
-         case currentArea:
-            path.style.fill = `${fillArea}`;
-            break;
-         default:
-            path.style.fill = "none";
-            break;
-      }
-      //   if (key == "legend") {
-      //      if (key == legendPlace) {
-      // 			path.style.fill = "#382d32";
-      //      }
-      //   } else if (key == "voice") {
-      //      if (key == currentAreaDouble) {
-      //         path.style.fill = "#2e4568";
-      //      }
-      //   } else if (key == currentArea) {
-      //      path.style.fill = `${fillArea}`;
-      //   } else {
-      //      path.style.fill = "none";
-      //   }
-   });
+  stopAutoplay(index);
+  // eslint-disable-next-line
+  const removeActivePaths = () => {
+    const paths = map.value.querySelectorAll("path.active");
+    paths.forEach((path) => path.classList.remove("active"));
+  };
+  const paths = map.value.querySelectorAll("path");
+  [...paths].forEach((path) => {
+    const currentArea = path.dataset.area;
+    const currentAreaDouble = path.dataset.areaDouble; // Единая зона для ароматов Voice of the sea и Musk Melody
+    const legendPlace = path.dataset.place;
+    const fillArea = path.dataset.fill;
+    switch (key) {
+      case "legend":
+        if (key == legendPlace) {
+          path.style.fill = "#382d32";
+        }
+        break;
+      case "voice":
+        if (key == currentAreaDouble) {
+          path.style.fill = "#2e4568";
+        }
+        break;
+      case currentArea:
+        path.style.fill = `${fillArea}`;
+        break;
+      default:
+        path.style.fill = "transparent";
+        break;
+    }
+    //   if (key == "legend") {
+    //      if (key == legendPlace) {
+    // 			path.style.fill = "#382d32";
+    //      }
+    //   } else if (key == "voice") {
+    //      if (key == currentAreaDouble) {
+    //         path.style.fill = "#2e4568";
+    //      }
+    //   } else if (key == currentArea) {
+    //      path.style.fill = `${fillArea}`;
+    //   } else {
+    //      path.style.fill = "none";
+    //   }
+  });
 };
 onMounted(() => {});
 </script>
@@ -336,188 +339,188 @@ onMounted(() => {});
 <style lang="scss">
 @use "assets/scss/vars" as *;
 .fragrances {
-   &__svg {
-      position: absolute;
-      inset: 0;
+  &__svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    & svg {
       width: 100%;
       height: 100%;
-      & svg {
-         width: 100%;
-         height: 100%;
-      }
-      & path {
-         transition: fill $time * 5 $ttm;
-      }
-   }
-   &__markers {
-      position: absolute;
-      inset: 0;
+    }
+    & path {
+      transition: fill $time * 5 $ttm;
+    }
+  }
+  &__markers {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    & svg {
       width: 100%;
       height: 100%;
-      & svg {
-         width: 100%;
-         height: 100%;
-      }
-   }
+    }
+  }
 }
 .marker {
-   position: absolute;
-   width: 40px;
-   height: 40px;
-   border-radius: 50%;
-   box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.08);
-   background-image: url("/images/icons/marker-logo.svg");
-   background-repeat: no-repeat;
-   background-position: center center;
-   &::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      border: 4px solid var(--bg-milk);
-      border-radius: 50%;
-   }
-   @include hover {
-      &:hover {
-         cursor: pointer;
-         z-index: 5;
-         & .marker__tooltip {
-            opacity: 1;
-         }
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.08);
+  background-image: url("/images/icons/marker-logo.svg");
+  background-repeat: no-repeat;
+  background-position: center center;
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 4px solid var(--bg-milk);
+    border-radius: 50%;
+  }
+  @include hover {
+    &:hover {
+      cursor: pointer;
+      z-index: 5;
+      & .marker__tooltip {
+        opacity: 1;
       }
-   }
-   &__tooltip {
-      position: absolute;
-      height: 40px;
-      min-width: fit-content;
-      padding: 5px 16px;
-      font-weight: 700;
-      font-size: 14px;
-      line-height: 18px;
-      color: var(--bg-smoke);
-      background-color: #fff;
-      top: 0;
-      right: 0;
-      transform: translateX(100%);
-      box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.08);
-      background: var(--bg-milk);
-      border-radius: 100px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      transition: opacity $time * 2 $ttm;
-      pointer-events: none;
-      user-select: none;
-      .marker-legend & {
-         width: 142px;
-      }
-      .marker-santal & {
-         width: 145px;
-      }
-      .marker-protagonist & {
-         width: 111px;
-      }
-      .marker-musk & {
-         width: 120px;
-      }
-      .marker-essay & {
-         width: 71px;
-      }
-      .marker-ethnos & {
-         width: 95px;
-      }
-      .marker-erato & {
-         width: 68px;
-      }
-      .marker-voice & {
-         width: 138px;
-      }
-      .marker-velvet & {
-         width: 118px;
-      }
-   }
-   &-legend {
-      background-color: var(--product-legend);
-      top: 20.4%;
-      left: 68.4%;
-      @include bp-md {
-         top: 16%;
-         left: 67%;
-      }
-   }
-   &-santal {
-      top: 44.7%;
-      left: 68.2%;
-      background-color: var(--product-santal-leather);
-      @include bp-md {
-         top: 40.2%;
-         left: 66.9%;
-      }
-   }
-   &-protagonist {
-      top: 38.8%;
-      left: 43.4%;
-      background-color: var(--product-protagonist);
-      @include bp-md {
-         top: 34.8%;
-         left: 42%;
-      }
-   }
-   &-musk {
-      top: 32.2%;
-      left: 48.4%;
-      background-color: var(--product-musk-melody);
-      @include bp-md {
-         top: 28.2%;
-         left: 46.5%;
-      }
-   }
-   &-essay {
-      top: 24.1%;
-      left: 56.5%;
-      background-color: var(--product-essay);
-      @include bp-md {
-         top: 20.1%;
-         left: 55.1%;
-      }
-   }
-   &-ethnos {
-      top: 60.8%;
-      left: 32.4%;
-      background-color: var(--product-ethnos-v);
-      @include bp-md {
-         top: 56.8%;
-         left: 31%;
-      }
-   }
-   &-erato {
-      top: 33.9%;
-      left: 52.6%;
-      background-color: var(--product-erato);
-      @include bp-md {
-         top: 30%;
-         left: 51.6%;
-      }
-   }
-   &-voice {
-      top: 36.9%;
-      left: 51.12%;
-      background-color: var(--product-voice-of-the-sea);
-      @include bp-md {
-         top: 31.9%;
-         left: 50%;
-      }
-   }
-   &-velvet {
-      top: 39%;
-      left: 76.3%;
-      background-color: var(--product-velvet-peony);
-      @include bp-md {
-         top: 35%;
-         left: 76%;
-      }
-   }
+    }
+  }
+  &__tooltip {
+    position: absolute;
+    height: 40px;
+    min-width: fit-content;
+    padding: 5px 16px;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 18px;
+    color: var(--bg-smoke);
+    background-color: #fff;
+    top: 0;
+    right: 0;
+    transform: translateX(100%);
+    box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.08);
+    background: var(--bg-milk);
+    border-radius: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity $time * 2 $ttm;
+    pointer-events: none;
+    user-select: none;
+    .marker-legend & {
+      width: 142px;
+    }
+    .marker-santal & {
+      width: 145px;
+    }
+    .marker-protagonist & {
+      width: 111px;
+    }
+    .marker-musk & {
+      width: 120px;
+    }
+    .marker-essay & {
+      width: 71px;
+    }
+    .marker-ethnos & {
+      width: 95px;
+    }
+    .marker-erato & {
+      width: 68px;
+    }
+    .marker-voice & {
+      width: 138px;
+    }
+    .marker-velvet & {
+      width: 118px;
+    }
+  }
+  &-legend {
+    background-color: var(--product-legend);
+    top: 20.4%;
+    left: 68.4%;
+    @include bp-md {
+      top: 16%;
+      left: 67%;
+    }
+  }
+  &-santal {
+    top: 44.7%;
+    left: 68.2%;
+    background-color: var(--product-santal-leather);
+    @include bp-md {
+      top: 40.2%;
+      left: 66.9%;
+    }
+  }
+  &-protagonist {
+    top: 38.8%;
+    left: 43.4%;
+    background-color: var(--product-protagonist);
+    @include bp-md {
+      top: 34.8%;
+      left: 42%;
+    }
+  }
+  &-musk {
+    top: 32.2%;
+    left: 48.4%;
+    background-color: var(--product-musk-melody);
+    @include bp-md {
+      top: 28.2%;
+      left: 46.5%;
+    }
+  }
+  &-essay {
+    top: 24.1%;
+    left: 56.5%;
+    background-color: var(--product-essay);
+    @include bp-md {
+      top: 20.1%;
+      left: 55.1%;
+    }
+  }
+  &-ethnos {
+    top: 60.8%;
+    left: 32.4%;
+    background-color: var(--product-ethnos-v);
+    @include bp-md {
+      top: 56.8%;
+      left: 31%;
+    }
+  }
+  &-erato {
+    top: 33.9%;
+    left: 52.6%;
+    background-color: var(--product-erato);
+    @include bp-md {
+      top: 30%;
+      left: 51.6%;
+    }
+  }
+  &-voice {
+    top: 36.9%;
+    left: 51.12%;
+    background-color: var(--product-voice-of-the-sea);
+    @include bp-md {
+      top: 31.9%;
+      left: 50%;
+    }
+  }
+  &-velvet {
+    top: 39%;
+    left: 76.3%;
+    background-color: var(--product-velvet-peony);
+    @include bp-md {
+      top: 35%;
+      left: 76%;
+    }
+  }
 }
 </style>

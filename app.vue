@@ -16,16 +16,6 @@ import { useAppStore } from "~/stores/app";
 const cartStore = useCartStore();
 const appStore = useAppStore();
 
-// Тест Модалки
-// import { usePopupStore } from "~/stores/popups";
-
-// const popupStore = usePopupStore();
-
-// const openPopupNotice = () => {
-//    popupStore.openPopup(popupStore.popupOrderSuccess);
-//    bodyLockAdd();
-// };
-
 const nuxtApp = useNuxtApp();
 
 const isLoad = ref(true);
@@ -58,7 +48,6 @@ const layout = ref("");
 const replaceDevice = () => {
   layout.value = window.innerWidth > 1024 ? "main" : "default";
   appStore.isMobile = window.innerWidth > 1024 ? false : true;
-  console.log("ismobile", appStore.isMobile);
 };
 
 const loadCart = () => {

@@ -27,64 +27,59 @@ const { text } = useRoute().params;
 const url = `${runtimeConfig.public.apiBase}/page/${text}?_format=json`;
 
 const { data: pageText } = await useAsyncData("front", () => $fetch(url, {}), {
-   transform: (res) => {
-      const { breadcrumb, data, metatag } = res;
-      const metadata = useMetatags(metatag.html_head);
-      return {
-         breadcrumb,
-         title: data.title,
-         content: data.body[0],
-         gallery: data.field_images,
-         metadata,
-      };
-   },
+  transform: (res) => {
+    const { breadcrumb, data, metatag } = res;
+    const metadata = useMetatags(metatag.html_head);
+    return {
+      breadcrumb,
+      title: data.title,
+      content: data.body[0],
+      gallery: data.field_images,
+      metadata,
+    };
+  },
 });
 useHead({
-   ...pageText.value.metadata,
-   bodyAttrs: {
-      class: "page--text",
-   },
+  ...pageText.value.metadata,
+  bodyAttrs: {
+    class: "page--text",
+  },
 });
 
-// async function sendEmail() {
-//    const template = await useFetch("http://localhost:3000/api/send-email", {
-//       method: "POST",
-//    });
-//    console.log(template);
-// }
+// eslint-disable-next-line
 const contentTable = {
-   header: [
-      "Наименование товара",
-      "Стоимость товара без скидки",
-      "Стоимость товара с максимальной скидкой",
-   ],
-   rows: [
-      {
-         name: "Парфюмерная вода “Legend № 11.01”",
-         price: "8 200 руб.",
-         salePrice: "8 100 руб.",
-      },
-      {
-         name: "Парфюмерная вода “Santal & Leather”",
-         price: "9 300 руб.",
-         salePrice: "9 250 руб.",
-      },
-      {
-         name: "Парфюмерная вода “Legend № 11.01” Парфюмерная вода “Legend № 11.01”",
-         price: "8 200 руб.",
-         salePrice: "8 100 руб.",
-      },
-      {
-         name: "Парфюмерная вода “Santal & Leather”",
-         price: "9 300 руб.",
-         salePrice: "9 250 руб.",
-      },
-   ],
+  header: [
+    "Наименование товара",
+    "Стоимость товара без скидки",
+    "Стоимость товара с максимальной скидкой",
+  ],
+  rows: [
+    {
+      name: "Парфюмерная вода “Legend № 11.01”",
+      price: "8 200 руб.",
+      salePrice: "8 100 руб.",
+    },
+    {
+      name: "Парфюмерная вода “Santal & Leather”",
+      price: "9 300 руб.",
+      salePrice: "9 250 руб.",
+    },
+    {
+      name: "Парфюмерная вода “Legend № 11.01” Парфюмерная вода “Legend № 11.01”",
+      price: "8 200 руб.",
+      salePrice: "8 100 руб.",
+    },
+    {
+      name: "Парфюмерная вода “Santal & Leather”",
+      price: "9 300 руб.",
+      salePrice: "9 250 руб.",
+    },
+  ],
 };
 </script>
 
 <style lang="scss" scoped>
 .page--text {
-   overflow: clip;
+  overflow: clip;
 }
 </style>

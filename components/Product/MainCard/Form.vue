@@ -1,7 +1,6 @@
 <template lang="pug">
 	form(@submit.prevent="addToCart").product-info__form
 		UiButtonPrimary(title="Купить на сайте" type="submit" :class-names="cartStore.isActiveCartPopup ? 'disabled' : ''")
-	AppCartPopup
 </template>
 
 <script setup>
@@ -10,20 +9,21 @@ import { useCartStore } from "~/stores/cart";
 const cartStore = useCartStore();
 
 const props = defineProps({
-   options: {
-      type: Object,
-      required: true,
-      default: {},
-   },
-   cartData: {
-      type: Object,
-      required: true,
-      default: {},
-   },
+  options: {
+    type: Object,
+    required: true,
+    default: () => {},
+  },
+  cartData: {
+    type: Object,
+    required: true,
+    default: () => {},
+  },
 });
 
+// eslint-disable-next-line
 const addToCart = async () => {
-   await cartStore.addToCart(props.options, props.cartData);
+  await cartStore.addToCart(props.options, props.cartData);
 };
 
 onMounted(() => {});
@@ -31,10 +31,10 @@ onMounted(() => {});
 
 <style lang="scss" scoped>
 .product-info {
-   &__form {
-      @include bp-md {
-         width: 100%;
-      }
-   }
+  &__form {
+    @include bp-md {
+      width: 100%;
+    }
+  }
 }
 </style>

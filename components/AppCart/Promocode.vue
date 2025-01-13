@@ -5,18 +5,18 @@
 
 <script setup>
 import { useCartStore } from "~/stores/cart";
-
+// eslint-disable-next-line
 const cartStore = useCartStore();
 </script>
 
 <style lang="scss">
 .app-cart {
-   // .app-cart__promocode
-   &__promocode {
-      margin-top: 34px;
-      @include bp-md {
-         margin-top: 20px;
-      }
-   }
+  // .app-cart__promocode
+  &__promocode {
+    margin-top: 34px;
+    @include bp-md {
+      margin-top: 20px;
+    }
+  }
 }
 </style>

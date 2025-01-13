@@ -17,117 +17,117 @@
 </template>
 
 <script setup>
-const props = defineProps({
-   card: {
-      type: Object,
-      required: true,
-   },
+defineProps({
+  card: {
+    type: Object,
+    required: true,
+  },
 });
 </script>
 
 <style lang="scss">
-@use "assets/scss/_vars" as *;
+@use "assets/scss/vars" as *;
 .preview-card {
-   @media (any-hover: hover) {
-      &:hover {
-         & .preview-card__main {
-            &::before {
-               transform: scale(1);
-            }
-         }
+  @include hover {
+    &:hover {
+      & .preview-card__main {
+        &::before {
+          transform: scale(1);
+        }
       }
-   }
-   &__body {
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-   }
-   &__main {
-      padding: 27px 0 24px;
-      position: relative;
-      font-size: 16px;
-      line-height: 22px;
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 12px;
-      flex: 1 1 auto;
-      &::before {
-         content: "";
-         position: absolute;
-         display: block;
-         width: 100%;
-         border-bottom: 1px solid var(--bg-smoke);
-         bottom: 0;
-         transform-origin: center;
-         transform: scale(0);
-         transition: transform $time * 3 $ttm;
-         @include bp-xl {
-            transform: scale(1);
-         }
-      }
-      @include bp-md {
-         padding: 20px 0;
-         gap: 8px;
-         font-size: 14px;
-         line-height: 18px;
-      }
-   }
-   &__title {
-      font-family: var(--second-family);
-      font-weight: 500;
-      font-size: 36px;
-      line-height: 44px;
-      text-transform: uppercase;
-      margin-bottom: 6px;
+    }
+  }
+  &__body {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  &__main {
+    padding: 27px 0 24px;
+    position: relative;
+    font-size: 16px;
+    line-height: 22px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    flex: 1 1 auto;
+    &::before {
+      content: "";
+      position: absolute;
+      display: block;
       width: 100%;
-      @include bp-md {
-         margin-bottom: 4px;
-         font-size: 22px;
-         line-height: 28px;
+      border-bottom: 1px solid var(--bg-smoke);
+      bottom: 0;
+      transform-origin: center;
+      transform: scale(0);
+      transition: transform $time * 3 $ttm;
+      @include bp-xl {
+        transform: scale(1);
       }
-   }
-   &__list {
-      @include reset-list;
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-      width: 100%;
-   }
-   &__list-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      gap: 10px;
-   }
-   &__label {
-      font-weight: 700;
-   }
-   &__value {
-      text-align: right;
-   }
-   &__capacity {
-      font-weight: 700;
-   }
-   &__prices {
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 4px;
-   }
-   &__price-old {
-      text-decoration: line-through;
-      color: var(--text-gray);
-   }
-   &__price {
-      font-weight: 700;
-   }
-   &__bottom {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      gap: 20px;
-      margin-top: auto;
-   }
+    }
+    @include bp-md {
+      padding: 20px 0;
+      gap: 8px;
+      font-size: 14px;
+      line-height: 18px;
+    }
+  }
+  &__title {
+    font-family: var(--second-family);
+    font-weight: 500;
+    font-size: 36px;
+    line-height: 44px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    width: 100%;
+    @include bp-md {
+      margin-bottom: 4px;
+      font-size: 22px;
+      line-height: 28px;
+    }
+  }
+  &__list {
+    @include reset-list;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 100%;
+  }
+  &__list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 10px;
+  }
+  &__label {
+    font-weight: 700;
+  }
+  &__value {
+    text-align: right;
+  }
+  &__capacity {
+    font-weight: 700;
+  }
+  &__prices {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  &__price-old {
+    text-decoration: line-through;
+    color: var(--text-gray);
+  }
+  &__price {
+    font-weight: 700;
+  }
+  &__bottom {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin-top: auto;
+  }
 }
 </style>

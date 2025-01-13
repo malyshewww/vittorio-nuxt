@@ -31,152 +31,155 @@
 
 <script setup>
 const props = defineProps({
-   images: {
-      type: Array,
-      required: true,
-   },
-   info: {
-      type: Object,
-      required: true,
-      default: {},
-   },
-   options: {
-      type: Array,
-      required: true,
-      default: [],
-   },
+  images: {
+    type: Array,
+    required: true,
+  },
+  info: {
+    type: Object,
+    required: true,
+    default: () => {},
+  },
+  options: {
+    type: Array,
+    required: true,
+    default: () => [],
+  },
 });
 
+// eslint-disable-next-line
 const smallCartData = {
-   image: props.images[0].markup,
-   volume: props.info.variations[0].field_volume[0],
+  image: props.images[0].markup,
+  volume: props.info.variations[0].field_volume[0],
 };
 
+// eslint-disable-next-line
 const formData = {
-   data: [
-      {
-         type: "product-variation--default",
-         id: props.info.variations[0].uuid,
-         meta: {
-            quantity: 1,
-            combine: true,
-         },
+  data: [
+    {
+      type: "product-variation--default",
+      id: props.info.variations[0].uuid,
+      meta: {
+        quantity: 1,
+        combine: true,
       },
-   ],
+    },
+  ],
 };
 
+// eslint-disable-next-line
 const goBack = () => {
-   useRouter().go(-1);
+  useRouter().go(-1);
 };
 </script>
 
 <style lang="scss" scoped>
 .product-info {
-   width: 32.813vw;
-   @include bp-xxl {
-      width: 100%;
-   }
+  width: 32.813vw;
+  @include bp-xxl {
+    width: 100%;
+  }
 }
 .product-info {
-   display: flex;
-   flex-direction: column;
-   align-items: flex-start;
-   gap: 60px;
-   @include bp-md {
-      gap: 40px;
-   }
-   &__header {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 16px;
-   }
-   &__title {
-      font-family: var(--second-family);
-      font-weight: 500;
-      font-size: 72px;
-      line-height: 86px;
-      text-transform: uppercase;
-      @include bp-md {
-         font-size: 36px;
-         line-height: 44px;
-      }
-   }
-   &__capacity {
-      line-height: 22px;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      @include bp-md {
-         font-size: 14px;
-         line-height: 18px;
-      }
-   }
-   &__capacity-value {
-      font-weight: 700;
-   }
-   &__characteristics {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 60px;
+  @include bp-md {
+    gap: 40px;
+  }
+  &__header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  &__title {
+    font-family: var(--second-family);
+    font-weight: 500;
+    font-size: 72px;
+    line-height: 86px;
+    text-transform: uppercase;
+    @include bp-md {
+      font-size: 36px;
+      line-height: 44px;
+    }
+  }
+  &__capacity {
+    line-height: 22px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    @include bp-md {
+      font-size: 14px;
+      line-height: 18px;
+    }
+  }
+  &__capacity-value {
+    font-weight: 700;
+  }
+  &__characteristics {
+    width: 100%;
+  }
+  &__footer {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 32px 20px;
+    @include bp-xl {
       width: 100%;
-   }
-   &__footer {
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 32px 20px;
-      @include bp-xl {
-         width: 100%;
-         gap: 20px;
-      }
-   }
-   &__prices {
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 8px 12px;
-      font-size: 20px;
-      line-height: 24px;
+      gap: 20px;
+    }
+  }
+  &__prices {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px 12px;
+    font-size: 20px;
+    line-height: 24px;
+    width: 100%;
+  }
+  &__price {
+    font-weight: 700;
+  }
+  &__price-old {
+    text-decoration: line-through;
+    color: var(--text-gray);
+  }
+  &__stores {
+    @include bp-md {
       width: 100%;
-   }
-   &__price {
-      font-weight: 700;
-   }
-   &__price-old {
-      text-decoration: line-through;
-      color: var(--text-gray);
-   }
-   &__stores {
-      @include bp-md {
-         width: 100%;
-      }
-   }
+    }
+  }
 }
 .product-characteristics {
-   &__list {
-      @include reset-list;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-   }
-   &__item {
-      border-top: 1px solid var(--bg-smoke);
-      display: flex;
-      justify-content: space-between;
-      gap: 20px;
-      align-items: flex-start;
-      font-size: 16px;
-      line-height: 22px;
-      padding: 4px 0 5px;
-      @include bp-md {
-         font-size: 14px;
-         line-height: 18px;
-      }
-   }
-   &__label {
-      font-weight: 700;
-   }
-   &__value {
-      text-align: right;
-      width: 60%;
-   }
+  &__list {
+    @include reset-list;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  &__item {
+    border-top: 1px solid var(--bg-smoke);
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    align-items: flex-start;
+    font-size: 16px;
+    line-height: 22px;
+    padding: 4px 0 5px;
+    @include bp-md {
+      font-size: 14px;
+      line-height: 18px;
+    }
+  }
+  &__label {
+    font-weight: 700;
+  }
+  &__value {
+    text-align: right;
+    width: 60%;
+  }
 }
 </style>

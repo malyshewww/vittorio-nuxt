@@ -26,11 +26,11 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "@fancyapps/ui/dist/fancybox/fancybox.css";
 
-const props = defineProps({
-   images: {
-      type: Array,
-      required: true,
-   },
+defineProps({
+  images: {
+    type: Array,
+    required: true,
+  },
 });
 
 const thumbSlider = ref("");
@@ -42,81 +42,76 @@ const mainSwiper = ref(null);
 const direction = ref("vertical");
 
 const initSlider = (direction) => {
-   const buttonPrev = thumbSlider.value.parentNode.querySelector(
-      ".slider-button-prev"
-   );
-   const buttonNext = thumbSlider.value.parentNode.querySelector(
-      ".slider-button-next"
-   );
-   thumbSwiper.value = new Swiper(thumbSlider.value, {
-      modules: [Navigation],
-      spaceBetween: 10,
-      slidesPerView: 3,
-      speed: 900,
-      direction,
-      watchSlidesProgress: true,
-      observer: true,
-      navigation: {
-         nextEl: buttonNext,
-         prevEl: buttonPrev,
+  const buttonPrev = thumbSlider.value.parentNode.querySelector(
+    ".slider-button-prev"
+  );
+  const buttonNext = thumbSlider.value.parentNode.querySelector(
+    ".slider-button-next"
+  );
+  thumbSwiper.value = new Swiper(thumbSlider.value, {
+    modules: [Navigation],
+    spaceBetween: 10,
+    slidesPerView: 3,
+    speed: 900,
+    direction,
+    watchSlidesProgress: true,
+    observer: true,
+    navigation: {
+      nextEl: buttonNext,
+      prevEl: buttonPrev,
+    },
+    breakpoints: {
+      0: {
+        slidesPerView: 2,
       },
-      breakpoints: {
-         0: {
-            slidesPerView: 2,
-         },
-         768: {
-            slidesPerView: 3,
-         },
+      768: {
+        slidesPerView: 3,
       },
-      on: {
-         init: function (swiper) {
-            const slides = swiper.slides;
-            if (slides.length <= 3) {
-               buttonPrev.remove();
-               buttonNext.remove();
-            }
-         },
+    },
+    on: {
+      init: function (swiper) {
+        const slides = swiper.slides;
+        if (slides.length <= 3) {
+          buttonPrev.remove();
+          buttonNext.remove();
+        }
       },
-   });
-   const mainButtonPrev = mainSlider.value.querySelector(".slider-button-prev");
-   const mainButtonNext = mainSlider.value.querySelector(".slider-button-next");
-   mainSwiper.value = new Swiper(mainSlider.value, {
-      modules: [Navigation, Thumbs],
-      spaceBetween: 10,
-      slidesPerView: 1,
-      speed: 900,
-      thumbs: {
-         swiper: thumbSwiper.value,
+    },
+  });
+  const mainButtonPrev = mainSlider.value.querySelector(".slider-button-prev");
+  const mainButtonNext = mainSlider.value.querySelector(".slider-button-next");
+  mainSwiper.value = new Swiper(mainSlider.value, {
+    modules: [Navigation, Thumbs],
+    spaceBetween: 10,
+    slidesPerView: 1,
+    speed: 900,
+    thumbs: {
+      swiper: thumbSwiper.value,
+    },
+    navigation: {
+      nextEl: mainButtonNext,
+      prevEl: mainButtonPrev,
+    },
+    on: {
+      init: function (swiper) {
+        const slides = swiper.slides;
+        if (slides.length <= 1) {
+          mainButtonPrev.remove();
+          mainButtonNext.remove();
+        }
       },
-      navigation: {
-         nextEl: mainButtonNext,
-         prevEl: mainButtonPrev,
-      },
-      on: {
-         init: function (swiper) {
-            const slides = swiper.slides;
-            if (slides.length <= 1) {
-               mainButtonPrev.remove();
-               mainButtonNext.remove();
-            }
-         },
-      },
-   });
+    },
+  });
 };
 
+// eslint-disable-next-line
 const changeSlide = (index) => {
-   console.log(index);
-   mainSwiper.value.slideTo(index);
+  mainSwiper.value.slideTo(index);
 };
 
 onMounted(() => {
-   initSlider(direction.value);
-   Fancybox.bind(`[data-fancybox="gallery"]`, { Hash: false });
-   //    $('.vertical-slider__item').first().addClass('swiper-slide-thumb-active')
-   //     $('.vertical-slider__item').on('click', function () {
-   //         $(this).addClass('swiper-slide-thumb-active').siblings().removeClass('swiper-slide-thumb-active')
-   //         bigSlider.slideTo($(this).index())
-   //     })
+  initSlider(direction.value);
+  Fancybox.bind(`[data-fancybox="gallery"]`, { Hash: false });
 });
 </script>
 
@@ -124,170 +119,170 @@ onMounted(() => {
 @use "sass:math";
 @use "~/assets/scss/_vars" as *;
 .product-card {
-   &__slider {
-      display: flex;
-      justify-content: space-between;
+  &__slider {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 40px;
+    //   max-width: 890px;
+    width: 46.354vw;
+    @media screen and (max-width: 1600px) {
+      align-items: flex-start;
+      width: 55vw;
+    }
+    @include bp-xxl {
+      width: 100%;
       align-items: center;
-      gap: 40px;
-      //   max-width: 890px;
-      width: 46.354vw;
-      @media screen and (max-width: 1600px) {
-         align-items: flex-start;
-         width: 55vw;
-      }
-      @include bp-xxl {
-         width: 100%;
-         align-items: center;
-      }
-   }
+    }
+  }
 }
 .product-slider {
-   &__vertical {
-      padding: 48px 0;
-      position: relative;
-      & .slider-button {
-         position: absolute;
-         width: 100%;
-         display: flex;
-         justify-content: center;
-         height: 28px;
-         &::before {
-            width: 24px;
-            height: 24px;
-            mask-size: 24px 24px;
-            transform: rotate(90deg);
-         }
-         &-prev {
-            top: 0;
-         }
-         &-next {
-            bottom: 0;
-         }
-      }
-      @include bp-xl {
-         display: none;
-      }
-   }
-   @include bp-xl {
-      display: block;
-   }
-}
-.vertical-slider {
-   height: calc(676px - 96px);
-   @include bp-xxxl {
-      height: calc(500px - 96px);
-   }
-   @include bp-xxl {
-      height: calc(676px - 96px);
-   }
-   &__wrapper {
-   }
-   &__item {
-      width: 150px;
-      position: relative;
-      @include hover {
-         &:hover {
-            cursor: pointer;
-         }
-      }
-      &.swiper-slide-thumb-active {
-         & .vertical-slider__image {
-            &::before {
-               opacity: 1;
-            }
-            & img {
-               transform: scale(0.9);
-            }
-         }
-      }
-      // height: 180px;
-   }
-   &__image {
-      padding-bottom: math.div(180, 150) * 100%;
-      overflow: hidden;
-      &::before {
-         content: "";
-         border: 1px solid var(--bg-smoke);
-         position: absolute;
-         inset: 0;
-         width: 100%;
-         height: 100%;
-         opacity: 0;
-         transition: opacity $time * 2 $ttm;
-         pointer-events: none;
-         z-index: 2;
-      }
-      @include bp-xxxl {
-         height: 100%;
-         padding-bottom: math.div(100, 150) * 100%;
-      }
-      @include bp-xxl {
-         height: auto;
-         padding-bottom: math.div(180, 150) * 100%;
-      }
-      & img {
-         transform-origin: center;
-         transition: transform $time * 2 $ttm;
-      }
-   }
-}
-.main-slider {
-   width: 100%;
-   @include hover {
-      &:hover {
-         & .slider-button {
-            &-prev {
-               transform: translateX(0) rotate(180deg);
-            }
-            &-next {
-               transform: translateX(0);
-            }
-         }
-      }
-   }
-   &__item {
-      @include hover {
-         &:hover {
-            cursor: pointer;
-         }
-      }
-   }
-   &__image {
-      padding-bottom: math.div(840, 700) * 100%;
-      overflow: hidden;
-      display: block;
-   }
-   & .slider-button {
+  &__vertical {
+    padding: 48px 0;
+    position: relative;
+    & .slider-button {
       position: absolute;
-      top: 0;
-      z-index: 5;
-      width: 80px;
+      width: 100%;
       display: flex;
       justify-content: center;
-      height: 100%;
-      transition: transform $time * 2 $ttm;
+      height: 28px;
       &::before {
-         width: 34px;
-         height: 34px;
-         mask-size: 34px 34px;
+        width: 24px;
+        height: 24px;
+        mask-size: 24px 24px;
+        transform: rotate(90deg);
       }
       &-prev {
-         left: 0;
-         transform: translateX(-100%) rotate(180deg);
-         @include bp-xl {
-            transform: translateX(0%) rotate(180deg);
-         }
+        top: 0;
       }
       &-next {
-         right: 0;
-         transform: translateX(100%);
-         @include bp-xl {
-            transform: translateX(0%);
-         }
+        bottom: 0;
       }
+    }
+    @include bp-xl {
+      display: none;
+    }
+  }
+  @include bp-xl {
+    display: block;
+  }
+}
+.vertical-slider {
+  height: calc(676px - 96px);
+  @include bp-xxxl {
+    height: calc(500px - 96px);
+  }
+  @include bp-xxl {
+    height: calc(676px - 96px);
+  }
+  &__wrapper {
+  }
+  &__item {
+    width: 150px;
+    position: relative;
+    @include hover {
+      &:hover {
+        cursor: pointer;
+      }
+    }
+    &.swiper-slide-thumb-active {
+      & .vertical-slider__image {
+        &::before {
+          opacity: 1;
+        }
+        & img {
+          transform: scale(0.9);
+        }
+      }
+    }
+    // height: 180px;
+  }
+  &__image {
+    padding-bottom: math.div(180, 150) * 100%;
+    overflow: hidden;
+    &::before {
+      content: "";
+      border: 1px solid var(--bg-smoke);
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity $time * 2 $ttm;
+      pointer-events: none;
+      z-index: 2;
+    }
+    @include bp-xxxl {
+      height: 100%;
+      padding-bottom: math.div(100, 150) * 100%;
+    }
+    @include bp-xxl {
+      height: auto;
+      padding-bottom: math.div(180, 150) * 100%;
+    }
+    & img {
+      transform-origin: center;
+      transition: transform $time * 2 $ttm;
+    }
+  }
+}
+.main-slider {
+  width: 100%;
+  @include hover {
+    &:hover {
+      & .slider-button {
+        &-prev {
+          transform: translateX(0) rotate(180deg);
+        }
+        &-next {
+          transform: translateX(0);
+        }
+      }
+    }
+  }
+  &__item {
+    @include hover {
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+  &__image {
+    padding-bottom: math.div(840, 700) * 100%;
+    overflow: hidden;
+    display: block;
+  }
+  & .slider-button {
+    position: absolute;
+    top: 0;
+    z-index: 5;
+    width: 80px;
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    transition: transform $time * 2 $ttm;
+    &::before {
+      width: 34px;
+      height: 34px;
+      mask-size: 34px 34px;
+    }
+    &-prev {
+      left: 0;
+      transform: translateX(-100%) rotate(180deg);
       @include bp-xl {
-         width: 60px;
+        transform: translateX(0%) rotate(180deg);
       }
-   }
+    }
+    &-next {
+      right: 0;
+      transform: translateX(100%);
+      @include bp-xl {
+        transform: translateX(0%);
+      }
+    }
+    @include bp-xl {
+      width: 60px;
+    }
+  }
 }
 </style>

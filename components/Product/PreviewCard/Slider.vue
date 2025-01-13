@@ -12,30 +12,33 @@
 </template>
 
 <script setup>
-import { throttle } from "lodash-es";
 import Swiper from "swiper";
 import { Pagination } from "swiper/modules";
 import "swiper/css";
 // import "swiper/css/pagination";
 
-const props = defineProps({
-   url: {
-      type: String,
-      required: true,
-   },
-   images: {
-      type: Object,
-      required: true,
-      default: () => {},
-   },
+defineProps({
+  url: {
+    type: String,
+    required: true,
+  },
+  images: {
+    type: Object,
+    required: true,
+    default: () => {},
+  },
 });
 
 const currentImage = ref(0);
+
+// eslint-disable-next-line
 const switchImages = (key) => {
-   currentImage.value = key;
+  currentImage.value = key;
 };
+
+// eslint-disable-next-line
 const initialState = () => {
-   currentImage.value = 0;
+  currentImage.value = 0;
 };
 
 const imageSlider = ref("");
@@ -43,48 +46,42 @@ const imageSwiper = ref("");
 const imagePagination = ref("");
 
 onMounted(() => {
-   const initializeSwiper = () => {
-      imageSwiper.value = new Swiper(imageSlider.value, {
-         modules: [Pagination],
-         wrapperClass: "image-switch",
-         slideClass: "image-switch__item",
-         spaceBetween: 10,
-         slidesPerView: 1,
-         speed: 800,
-         centeredSlides: true,
-         observer: true,
-         observeSlideChildren: true,
-         pagination: {
-            el: imagePagination.value,
-            clickable: true,
-         },
-      });
-   };
-   const destroySwiper = () => {
-      if (imageSwiper.value) {
-         imageSwiper.value.destroy();
-         imageSwiper.value = null;
-      }
-   };
-   const checkScreenWidth = () => {
-      if (window.innerWidth < 1024) {
-         initializeSwiper();
-      } else {
-         destroySwiper();
-      }
-   };
-   checkScreenWidth();
-   const watchResize = throttle(function () {
-      checkScreenWidth();
-      // here you should mutate your `device_type` via a Vuex mutation/action
-      // and make your axios call by preferably fetching either a const/let variable
-      // or a global vuex state
-   }, 1000);
-   window.addEventListener("resize", watchResize);
+  const initializeSwiper = () => {
+    imageSwiper.value = new Swiper(imageSlider.value, {
+      modules: [Pagination],
+      wrapperClass: "image-switch",
+      slideClass: "image-switch__item",
+      spaceBetween: 10,
+      slidesPerView: 1,
+      speed: 800,
+      centeredSlides: true,
+      observer: true,
+      observeSlideChildren: true,
+      pagination: {
+        el: imagePagination.value,
+        clickable: true,
+      },
+    });
+  };
+  const destroySwiper = () => {
+    if (imageSwiper.value) {
+      imageSwiper.value.destroy();
+      imageSwiper.value = null;
+    }
+  };
+  const checkScreenWidth = () => {
+    if (window.innerWidth < 1024) {
+      initializeSwiper();
+    } else {
+      destroySwiper();
+    }
+  };
+  checkScreenWidth();
+  window.addEventListener("resize", checkScreenWidth);
 });
 
 onUnmounted(() => {
-   imageSwiper.value = null;
+  imageSwiper.value = null;
 });
 </script>
 
@@ -92,186 +89,186 @@ onUnmounted(() => {
 @use "sass:math";
 @use "assets/scss/vars" as *;
 .preview-card {
-   &__slider {
-      width: 100%;
-      position: relative;
-      padding-bottom: math.div(512, 425) * 100%;
-      display: block;
-      overflow: hidden;
-      @include hover {
-         &:hover {
-            & .image-pagination {
-               opacity: 1;
-               transform: translateY(0);
-            }
-         }
+  &__slider {
+    width: 100%;
+    position: relative;
+    padding-bottom: math.div(512, 425) * 100%;
+    display: block;
+    overflow: hidden;
+    @include hover {
+      &:hover {
+        & .image-pagination {
+          opacity: 1;
+          transform: translateY(0);
+        }
       }
-      @include bp-md {
-         padding-bottom: math.div(420, 335) * 100%;
-      }
-   }
-   &__images {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      display: block;
-      overflow: hidden;
-      //   position: relative;
-      //   height: 232px;
-   }
+    }
+    @include bp-md {
+      padding-bottom: math.div(420, 335) * 100%;
+    }
+  }
+  &__images {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    overflow: hidden;
+    //   position: relative;
+    //   height: 232px;
+  }
 }
 .image-switch {
-   position: absolute;
-   display: flex;
-   height: 100%;
-   width: 100%;
-   left: 0;
-   top: 0;
-   z-index: 5;
-   @include bp-xl {
-      position: static;
-   }
-   &__item {
-      flex-grow: 1;
-      @include bp-xl {
-         flex-grow: 0;
-         flex-shrink: 0;
-         width: 100%;
-      }
-      @media screen and (min-width: 1024px) {
-         &.active {
-            & .image-switch__picture {
-               opacity: 1;
-               z-index: 1;
-            }
-         }
-         &:first-child .image-switch__picture {
-            opacity: 1;
-            z-index: -1;
-         }
-         @include hover {
-            &:hover {
-               cursor: pointer;
-               & .image-switch__picture {
-                  opacity: 1;
-                  z-index: -1;
-               }
-            }
-         }
-      }
-   }
-   &__picture {
-      position: absolute;
+  position: absolute;
+  display: flex;
+  height: 100%;
+  width: 100%;
+  left: 0;
+  top: 0;
+  z-index: 5;
+  @include bp-xl {
+    position: static;
+  }
+  &__item {
+    flex-grow: 1;
+    @include bp-xl {
+      flex-grow: 0;
+      flex-shrink: 0;
       width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      background-color: var(--bg-milk);
-      justify-content: center;
-      left: 50%;
-      opacity: 0;
-      pointer-events: none;
-      top: 0;
-      transform: translateX(-50%);
-      & > * {
-         width: 100%;
-         height: 100%;
-         & > * {
-            width: 100%;
-            height: 100%;
-         }
-      }
-      @include bp-xl {
-         opacity: 1;
-         position: static;
-         transform: none;
-         pointer-events: all;
-      }
-   }
-}
-.image-pagination {
-   width: 100%;
-   position: absolute;
-   bottom: 0;
-   padding: 8px;
-   z-index: 5;
-   opacity: 0;
-   transform: translateY(100%);
-   transition: opacity $time * 2 $ttm, transform $time * 2 $ttm;
-   @include bp-xl {
-      display: none;
-   }
-   &__list {
-      @include reset-list;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 3px;
-   }
-   &__item {
-      background-color: var(--bg-smoke);
-      opacity: 0.3;
-      flex-grow: 1;
-      height: 2px;
-      transition: opacity $time * 2 $ttm;
+    }
+    @media screen and (min-width: 1024px) {
       &.active {
-         opacity: 1;
+        & .image-switch__picture {
+          opacity: 1;
+          z-index: 1;
+        }
+      }
+      &:first-child .image-switch__picture {
+        opacity: 1;
+        z-index: -1;
       }
       @include hover {
-         &:hover {
-            cursor: pointer;
-         }
+        &:hover {
+          cursor: pointer;
+          & .image-switch__picture {
+            opacity: 1;
+            z-index: -1;
+          }
+        }
       }
-      @include bp-xl {
-         width: 20px;
-         height: 2px;
-         flex-shrink: 0;
+    }
+  }
+  &__picture {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    background-color: var(--bg-milk);
+    justify-content: center;
+    left: 50%;
+    opacity: 0;
+    pointer-events: none;
+    top: 0;
+    transform: translateX(-50%);
+    & > * {
+      width: 100%;
+      height: 100%;
+      & > * {
+        width: 100%;
+        height: 100%;
       }
-   }
+    }
+    @include bp-xl {
+      opacity: 1;
+      position: static;
+      transform: none;
+      pointer-events: all;
+    }
+  }
+}
+.image-pagination {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  padding: 8px;
+  z-index: 5;
+  opacity: 0;
+  transform: translateY(100%);
+  transition: opacity $time * 2 $ttm, transform $time * 2 $ttm;
+  @include bp-xl {
+    display: none;
+  }
+  &__list {
+    @include reset-list;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+  }
+  &__item {
+    background-color: var(--bg-smoke);
+    opacity: 0.3;
+    flex-grow: 1;
+    height: 2px;
+    transition: opacity $time * 2 $ttm;
+    &.active {
+      opacity: 1;
+    }
+    @include hover {
+      &:hover {
+        cursor: pointer;
+      }
+    }
+    @include bp-xl {
+      width: 20px;
+      height: 2px;
+      flex-shrink: 0;
+    }
+  }
 }
 .swiper-pagination {
-   justify-content: center;
-   bottom: 8px;
-   &-wrap {
-      display: none;
-      position: absolute;
-      bottom: 8px;
-      left: 0;
-      width: 100%;
-      padding: 0 8px;
-      @include bp-xl {
-         display: flex;
-      }
-   }
-   @include bp-xl {
+  justify-content: center;
+  bottom: 8px;
+  &-wrap {
+    display: none;
+    position: absolute;
+    bottom: 8px;
+    left: 0;
+    width: 100%;
+    padding: 0 8px;
+    @include bp-xl {
       display: flex;
-      align-items: center;
-      gap: 3px;
-   }
-   & .swiper-pagination-bullet {
-      width: auto;
-      flex-grow: 1;
-      height: 2px;
-      flex-shrink: 0;
-      border-radius: 0;
+    }
+  }
+  @include bp-xl {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+  }
+  & .swiper-pagination-bullet {
+    width: auto;
+    flex-grow: 1;
+    height: 2px;
+    flex-shrink: 0;
+    border-radius: 0;
+    background: var(--bg-smoke);
+    opacity: 0.3;
+    &-active {
+      opacity: 1;
       background: var(--bg-smoke);
-      opacity: 0.3;
-      &-active {
-         opacity: 1;
-         background: var(--bg-smoke);
-      }
-   }
-   &.swiper-pagination.swiper-pagination-clickable.swiper-pagination-bullets.swiper-pagination-horizontal {
-      width: 100%;
-      // width: calc(100% - 16px);
-   }
-   & .swiper-pagination-bullets .swiper-pagination-bullet {
-      width: auto;
-      flex-grow: 1;
-      height: 2px;
-      flex-shrink: 0;
-      margin: 0 !important;
-   }
+    }
+  }
+  &.swiper-pagination.swiper-pagination-clickable.swiper-pagination-bullets.swiper-pagination-horizontal {
+    width: 100%;
+    // width: calc(100% - 16px);
+  }
+  & .swiper-pagination-bullets .swiper-pagination-bullet {
+    width: auto;
+    flex-grow: 1;
+    height: 2px;
+    flex-shrink: 0;
+    margin: 0 !important;
+  }
 }
 </style>

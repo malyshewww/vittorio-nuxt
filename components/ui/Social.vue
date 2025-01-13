@@ -13,92 +13,93 @@
 import { useMainInfoStore } from "~/stores/maininfo.js";
 const mainInfoStore = useMainInfoStore();
 
+// eslint-disable-next-line
 const { links } = mainInfoStore;
 
 defineProps({
-   classNames: {
-      type: String,
-      required: false,
-      default: "",
-   },
+  classNames: {
+    type: String,
+    required: false,
+    default: "",
+  },
 });
 </script>
 
 <style lang="scss" scoped>
 @use "assets/scss/vars" as *;
 .social {
-   &__list {
-      @include reset-list;
+  &__list {
+    @include reset-list;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    .footer-social & {
+      gap: 28px;
+      justify-content: center;
+      @include bp-md {
+        gap: 24px;
+      }
+    }
+  }
+  &__item {
+    flex-shrink: 0;
+    & + & {
       display: flex;
       align-items: center;
       gap: 16px;
-      .footer-social & {
-         gap: 28px;
-         justify-content: center;
-         @include bp-md {
-            gap: 24px;
-         }
+      &::before {
+        content: "";
+        flex-shrink: 0;
+        display: block;
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background-color: var(--bg-smoke);
       }
-   }
-   &__item {
-      flex-shrink: 0;
-      & + & {
-         display: flex;
-         align-items: center;
-         gap: 16px;
-         &::before {
-            content: "";
-            flex-shrink: 0;
-            display: block;
-            width: 4px;
-            height: 4px;
-            border-radius: 50%;
-            background-color: var(--bg-smoke);
-         }
+    }
+    .footer-social & + & {
+      &::before {
+        content: none;
       }
-      .footer-social & + & {
-         &::before {
-            content: none;
-         }
+    }
+  }
+  &__link {
+    font-family: var(--second-family);
+    font-weight: 500;
+    font-size: 36px;
+    line-height: 44px;
+    transition: color $time * 2 $ttm;
+    .footer-social & {
+      font-family: var(--font-family);
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 22px;
+      width: 32px;
+      height: 32px;
+      display: grid;
+      place-items: center;
+      @include bp-md {
+        font-size: 14px;
+        line-height: 18px;
       }
-   }
-   &__link {
-      font-family: var(--second-family);
-      font-weight: 500;
-      font-size: 36px;
-      line-height: 44px;
-      transition: color $time * 2 $ttm;
-      .footer-social & {
-         font-family: var(--font-family);
-         font-weight: 700;
-         font-size: 16px;
-         line-height: 22px;
-         width: 32px;
-         height: 32px;
-         display: grid;
-         place-items: center;
-         @include bp-md {
-            font-size: 14px;
-            line-height: 18px;
-         }
+    }
+    & svg {
+      & path {
+        transition: fill $time * 2 $ttm;
       }
-      & svg {
-         & path {
-            transition: fill $time * 2 $ttm;
-         }
+    }
+    @include hover {
+      &:hover {
+        color: var(--text-gray);
+        & svg path {
+          fill: var(--text-gray);
+        }
       }
-      @media (any-hover: hover) {
-         &:hover {
-            color: var(--text-gray);
-            & svg path {
-               fill: var(--text-gray);
-            }
-         }
-      }
-      @include bp-xl {
-         font-size: 22px;
-         line-height: 28px;
-      }
-   }
+    }
+    @include bp-xl {
+      font-size: 22px;
+      line-height: 28px;
+    }
+  }
 }
 </style>

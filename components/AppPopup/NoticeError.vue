@@ -9,19 +9,22 @@
 
 <script setup>
 const props = defineProps({
-   isOpen: {
-      type: Boolean,
-      required: true,
-   },
-   popupKey: {
-      required: true,
-   },
+  isOpen: {
+    type: Boolean,
+    required: true,
+  },
+  popupKey: {
+    type: Object,
+    required: true,
+    default: () => {},
+  },
 });
 
 const emit = defineEmits(["closePopup"]);
+
 // eslint-disable-next-line
 const closePopup = () => {
-   emit("closePopup", props.popupKey);
+  emit("closePopup", props.popupKey);
 };
 </script>
 

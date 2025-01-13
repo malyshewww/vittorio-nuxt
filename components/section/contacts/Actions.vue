@@ -17,52 +17,54 @@
 <script setup>
 import { useMainInfoStore } from "~/stores/maininfo.js";
 const mainInfoStore = useMainInfoStore();
+
+// eslint-disable-next-line
 const { links } = mainInfoStore;
 </script>
 
 <style lang="scss" scoped>
 @use "assets/scss/vars" as *;
 .actions-contacts {
-   display: grid;
-   grid-template-columns: 100%;
-   gap: 40px;
-   max-width: 34.323vw;
-   @include bp-xxxl {
-      max-width: 100%;
-   }
-   @include bp-md {
+  display: grid;
+  grid-template-columns: 100%;
+  gap: 40px;
+  max-width: 34.323vw;
+  @include bp-xxxl {
+    max-width: 100%;
+  }
+  @include bp-md {
+    gap: 20px;
+  }
+  &__item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    &:last-child {
       gap: 20px;
-   }
-   &__item {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 12px;
-      &:last-child {
-         gap: 20px;
+    }
+  }
+  &__caption {
+    line-height: 22px;
+    color: var(--bg-smoke);
+  }
+  &__link {
+    font-family: var(--second-family);
+    font-weight: 500;
+    font-size: 36px;
+    line-height: 44px;
+    text-transform: uppercase;
+    color: var(--bg-smoke);
+    transition: color $time * 2 $ttm;
+    @include hover {
+      &:hover {
+        color: var(--text-gray);
       }
-   }
-   &__caption {
-      line-height: 22px;
-      color: var(--bg-smoke);
-   }
-   &__link {
-      font-family: var(--second-family);
-      font-weight: 500;
-      font-size: 36px;
-      line-height: 44px;
-      text-transform: uppercase;
-      color: var(--bg-smoke);
-      transition: color $time * 2 $ttm;
-      @media (any-hover: hover) {
-         &:hover {
-            color: var(--text-gray);
-         }
-      }
-      @include bp-xl {
-         font-size: 22px;
-         line-height: 28px;
-      }
-   }
+    }
+    @include bp-xl {
+      font-size: 22px;
+      line-height: 28px;
+    }
+  }
 }
 </style>

@@ -26,323 +26,266 @@ import { Navigation, Pagination, Autoplay } from "swiper/modules";
 const emit = defineEmits(["changeArea"]);
 
 const props = defineProps({
-   isEnableAutoplay: {
-      type: Boolean,
-      required: true,
-   },
-   currentSlideIndex: {
-      type: Number,
-      required: true,
-   },
-   countries: {
-      type: Object,
-      required: true,
-   },
+  isEnableAutoplay: {
+    type: Boolean,
+    required: true,
+  },
+  currentSlideIndex: {
+    type: Number,
+    required: true,
+  },
+  countries: {
+    type: Object,
+    required: true,
+  },
 });
 
 const slider = ref("");
 const swiper = ref(null);
 
 watch(
-   () => props.isEnableAutoplay,
-   (newValue, oldValue) => {
-      toggleAutoplay(props.isEnableAutoplay, swiper.value);
-   }
+  () => props.isEnableAutoplay,
+  () => {
+    toggleAutoplay(props.isEnableAutoplay, swiper.value);
+  }
 );
 
 watch(
-   () => props.currentSlideIndex,
-   (newValue, oldValue) => {
-      if (newValue > oldValue) {
-         changeSlide(swiper.value, newValue);
-      }
-      if (oldValue > newValue) {
-         changeSlide(swiper.value, newValue);
-      }
-   }
+  () => props.currentSlideIndex,
+  (newValue, oldValue) => {
+    if (newValue > oldValue) {
+      changeSlide(swiper.value, newValue);
+    }
+    if (oldValue > newValue) {
+      changeSlide(swiper.value, newValue);
+    }
+  }
 );
 
 const changeArea = (key) => {
-   emit("changeArea", key);
+  emit("changeArea", key);
 };
 
 const changeMapArea = (key) => {
-   const paths = document.querySelectorAll(".fragrances__svg path");
-   if (paths.length) {
-      paths.forEach((path) => {
-         const currentArea = path.dataset.area;
-         const currentAreaDouble = path.dataset.areaDouble; // Единая зона для ароматов Voice of the sea и Musk Melody
-         const legendPlace = path.dataset.place;
-         const fillArea = path.dataset.fill;
-         if (key == "legend") {
-            if (key == legendPlace) {
-               path.style.fill = "#382d32";
-            }
-         } else if (key == "voice") {
-            if (key == currentAreaDouble) {
-               path.style.fill = "#2e4568";
-            }
-         } else if (key == currentArea) {
-            path.style.fill = `${fillArea}`;
-         } else {
-            path.style.fill = "transparent";
-         }
-      });
-   }
+  const paths = document.querySelectorAll(".fragrances__svg path");
+  if (paths.length) {
+    paths.forEach((path) => {
+      const currentArea = path.dataset.area;
+      const currentAreaDouble = path.dataset.areaDouble; // Единая зона для ароматов Voice of the sea и Musk Melody
+      const legendPlace = path.dataset.place;
+      const fillArea = path.dataset.fill;
+      if (key == "legend") {
+        if (key == legendPlace) {
+          path.style.fill = "#382d32";
+        }
+      } else if (key == "voice") {
+        if (key == currentAreaDouble) {
+          path.style.fill = "#2e4568";
+        }
+      } else if (key == currentArea) {
+        path.style.fill = `${fillArea}`;
+      } else {
+        path.style.fill = "transparent";
+      }
+    });
+  }
 };
 
 function toggleAutoplay(isEnabled, swiper) {
-   if (isEnabled) {
-      swiper.autoplay.start();
-   } else {
-      swiper.autoplay.stop();
-   }
+  if (isEnabled) {
+    swiper.autoplay.start();
+  } else {
+    swiper.autoplay.stop();
+  }
 }
 
 function changeSlide(swiper, index) {
-   if (swiper) {
-      swiper.slideTo(index);
-   }
+  if (swiper) {
+    swiper.slideTo(index);
+  }
 }
 
 const initSlider = () => {
-   const buttonPrev = slider.value.parentNode.querySelector(
-      ".slider-button-prev"
-   );
-   const buttonNext = slider.value.parentNode.querySelector(
-      ".slider-button-next"
-   );
-   const pagination =
-      slider.value.parentNode.querySelector(".slider-pagination");
-   swiper.value = new Swiper(slider.value, {
-      modules: [Navigation, Pagination, Autoplay],
-      autoHeight: true,
-      speed: 1000,
-      spaceBetween: 10,
-      navigation: {
-         nextEl: buttonNext,
-         prevEl: buttonPrev,
+  const buttonPrev = slider.value.parentNode.querySelector(
+    ".slider-button-prev"
+  );
+  const buttonNext = slider.value.parentNode.querySelector(
+    ".slider-button-next"
+  );
+  const pagination =
+    slider.value.parentNode.querySelector(".slider-pagination");
+  swiper.value = new Swiper(slider.value, {
+    modules: [Navigation, Pagination, Autoplay],
+    autoHeight: true,
+    speed: 1000,
+    spaceBetween: 10,
+    navigation: {
+      nextEl: buttonNext,
+      prevEl: buttonPrev,
+    },
+    pagination: {
+      el: pagination,
+      type: "fraction",
+    },
+    autoplay: {
+      delay: 5000,
+      disableOnInteraction: false,
+    },
+    breakpoints: {},
+    on: {
+      slideChange: function (swiper) {
+        const activeIndex = swiper.activeIndex;
+        const slides = swiper.slides;
+        const currentSlideKey =
+          slides[activeIndex].getAttribute("data-slide-key");
+        changeArea(currentSlideKey);
+        changeMapArea(currentSlideKey);
       },
-      pagination: {
-         el: pagination,
-         type: "fraction",
-      },
-      autoplay: {
-         delay: 5000,
-         disableOnInteraction: false,
-      },
-      breakpoints: {},
-      on: {
-         slideChange: function (swiper) {
-            const activeIndex = swiper.activeIndex;
-            const slides = swiper.slides;
-            const currentSlideKey =
-               slides[activeIndex].getAttribute("data-slide-key");
-            changeArea(currentSlideKey);
-            changeMapArea(currentSlideKey);
-         },
-      },
-   });
-   toggleAutoplay(props.isEnableAutoplay, swiper.value);
+    },
+  });
+  toggleAutoplay(props.isEnableAutoplay, swiper.value);
 
-   const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-         toggleAutoplay(entry.isIntersecting, swiper.value); // Включаем/выключаем autoplay в зависимости от видимости
-      });
-   });
-   observer.observe(slider.value);
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      toggleAutoplay(entry.isIntersecting, swiper.value); // Включаем/выключаем autoplay в зависимости от видимости
+    });
+  });
+  observer.observe(slider.value);
 };
 
 onMounted(() => {
-   initSlider();
+  initSlider();
 });
-
-const slides = [
-   {
-      img: "legend",
-      title: "Legend № 11.01",
-      descr: "Италия, Марокко, Япония, Россия, Турция, Бразилия, Франция, Индия, Китай",
-      key: "legend",
-   },
-   {
-      img: "santal&leather",
-      title: "Santal & Leather",
-      descr: "Индия (джунгли)",
-      key: "santal",
-   },
-   {
-      img: "protagonist",
-      title: "Protagonist",
-      descr: "Марокко (Марракеш)",
-      key: "protagonist",
-   },
-   {
-      img: "musk-melody",
-      title: "Musk melody",
-      descr: "Италия (Венеция)",
-      key: "musk",
-   },
-   {
-      img: "essay",
-      title: "Essay",
-      descr: "Россия (Москва)",
-      key: "essay",
-   },
-   {
-      img: "ethnos-v",
-      title: "Ethnos V.",
-      descr: "Бразилия (район реки Амазонки, джунгли)",
-      key: "ethnos",
-   },
-   {
-      img: "erato",
-      title: "Erato",
-      descr: "Греция",
-      key: "erato",
-   },
-   {
-      img: "voice-of-the-sea",
-      title: "Voice of the sea",
-      descr: "Италия (Палермо)",
-      key: "voice",
-   },
-   {
-      img: "velvet-peony",
-      title: "Velvet Peony",
-      descr: "Китай (Лоян)",
-      key: "velvet",
-   },
-];
 </script>
 
 <style lang="scss">
 @use "sass:math";
 .fragrances-slider {
-   padding: 50px;
-   max-width: 460px;
-   position: relative;
-   overflow: hidden;
-   &::before,
-   &::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      width: 100%;
-      height: 1px;
-      pointer-events: none;
-   }
-   &::before {
-      top: 0;
-      border: 1px solid var(--bg-smoke);
-      border-left: 0;
-      border-bottom: 0;
-      transform: translateX(-100%);
-   }
-   &::after {
-      bottom: 0;
-      transform: translateX(-100%);
-      border-bottom: 1px solid var(--bg-smoke);
-      display: none;
-   }
-   @include bp-xxl {
-      max-width: 100%;
-      padding: 25px 0;
-      width: 100%;
-      &::before {
-         border-right: 0;
-      }
-      &::after {
-         display: block;
-      }
-      & .swiper {
-         max-width: 500px;
-      }
-   }
+  padding: 50px;
+  max-width: 460px;
+  position: relative;
+  overflow: hidden;
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    pointer-events: none;
+  }
+  &::before {
+    top: 0;
+    border: 1px solid var(--bg-smoke);
+    border-left: 0;
+    border-bottom: 0;
+    transform: translateX(-100%);
+  }
+  &::after {
+    bottom: 0;
+    transform: translateX(-100%);
+    border-bottom: 1px solid var(--bg-smoke);
+    display: none;
+  }
+  @include bp-xxl {
+    max-width: 100%;
+    padding: 25px 0;
+    width: 100%;
+    &::before {
+      border-right: 0;
+    }
+    &::after {
+      display: block;
+    }
+    & .swiper {
+      max-width: 500px;
+    }
+  }
 }
 .fragrances-slide {
-   &__body {
-      display: flex;
-      flex-direction: column;
-      gap: 32px;
-      align-items: flex-start;
-      @include bp-md {
-         flex-direction: row;
-      }
-      @media screen and (max-width: 374px) {
-         gap: 12px;
-      }
-   }
-   &__image {
-      align-self: stretch;
-      padding-bottom: math.div(440, 360) * 100%;
-      @include bp-md {
-         // height: 200px;
-         // width: 157px;
-         height: 53.333vw;
-         width: 41.867vw;
-         flex-shrink: 0;
-         padding: 0;
-      }
-   }
-   &__content {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
+  &__body {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    align-items: flex-start;
+    @include bp-md {
+      flex-direction: row;
+    }
+    @media screen and (max-width: 374px) {
       gap: 12px;
-      color: var(--bg-smoke);
-   }
-   &__title {
-      font-family: var(--second-family);
-      font-weight: 500;
-      font-size: 36px;
-      line-height: 44px;
-      text-transform: uppercase;
-      @include bp-md {
-         font-size: 22px;
-         line-height: 28px;
-      }
-      @media screen and (max-width: 374px) {
-         font-size: 20px;
-         line-height: 24px;
-      }
-   }
-   &__country {
-      line-height: 22px;
-      @include bp-md {
-         font-size: 14px;
-         line-height: 18px;
-      }
-   }
-   & .link-line {
-      margin-top: 8px;
-   }
+    }
+  }
+  &__image {
+    align-self: stretch;
+    padding-bottom: math.div(440, 360) * 100%;
+    @include bp-md {
+      // height: 200px;
+      // width: 157px;
+      height: 53.333vw;
+      width: 41.867vw;
+      flex-shrink: 0;
+      padding: 0;
+    }
+  }
+  &__content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    color: var(--bg-smoke);
+  }
+  &__title {
+    font-family: var(--second-family);
+    font-weight: 500;
+    font-size: 36px;
+    line-height: 44px;
+    text-transform: uppercase;
+    @include bp-md {
+      font-size: 22px;
+      line-height: 28px;
+    }
+    @media screen and (max-width: 374px) {
+      font-size: 20px;
+      line-height: 24px;
+    }
+  }
+  &__country {
+    line-height: 22px;
+    @include bp-md {
+      font-size: 14px;
+      line-height: 18px;
+    }
+  }
+  & .link-line {
+    margin-top: 8px;
+  }
 }
 .slider-controls {
-   display: flex;
-   align-items: center;
-   gap: 20px;
-   margin-top: 40px;
-   @include bp-xxl {
-      justify-content: center;
-   }
-   @include bp-md {
-      margin-top: 16px;
-   }
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-top: 40px;
+  @include bp-xxl {
+    justify-content: center;
+  }
+  @include bp-md {
+    margin-top: 16px;
+  }
 }
 .slider-pagination {
-   font-weight: 700;
-   font-size: 16px;
-   line-height: 22px;
-   color: var(--system-disabled);
-   display: flex;
-   align-items: center;
-   gap: 4px;
-   margin-right: auto;
-   & .swiper-pagination-current {
-      color: var(--bg-smoke);
-   }
-   @include bp-xxl {
-      display: none;
-   }
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 22px;
+  color: var(--system-disabled);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-right: auto;
+  & .swiper-pagination-current {
+    color: var(--bg-smoke);
+  }
+  @include bp-xxl {
+    display: none;
+  }
 }
 </style>

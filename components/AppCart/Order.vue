@@ -24,25 +24,28 @@ import { useOrderStore } from "~/stores/cart-order";
 
 const orderStore = useOrderStore();
 
+// eslint-disable-next-line
 const { formData } = orderStore;
+// eslint-disable-next-line
 const model = orderStore.model;
+// eslint-disable-next-line
 const formStatus = orderStore.formStatus;
 </script>
 
 <style lang="scss">
 .form {
-   // .form__items
-   &__items {
-      display: grid;
-      grid-template-columns: 100%;
-      gap: 16px;
-   }
-   // .form__checkboxes
-   &__checkboxes {
-      margin-top: 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-   }
+  // .form__items
+  &__items {
+    display: grid;
+    grid-template-columns: 100%;
+    gap: 16px;
+  }
+  // .form__checkboxes
+  &__checkboxes {
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
 }
 </style>
