@@ -187,6 +187,13 @@ onMounted(() => {
     color: currentColor;
   }
 }
+
+body:not(.page--home) .header {
+  @include bp-xl {
+    position: sticky;
+  }
+}
+
 .burger {
   width: 64px;
   height: 40px;

@@ -79,7 +79,6 @@ onMounted(() => {
     }
   );
 });
-onUnmounted(() => {});
 </script>
 
 <style lang="scss">

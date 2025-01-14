@@ -46,7 +46,7 @@ const imageSwiper = ref("");
 const imagePagination = ref("");
 
 onMounted(() => {
-  const initializeSwiper = () => {
+  function initializeSwiper() {
     imageSwiper.value = new Swiper(imageSlider.value, {
       modules: [Pagination],
       wrapperClass: "image-switch",
@@ -62,26 +62,22 @@ onMounted(() => {
         clickable: true,
       },
     });
-  };
-  const destroySwiper = () => {
+  }
+  function destroySwiper() {
     if (imageSwiper.value) {
       imageSwiper.value.destroy();
       imageSwiper.value = null;
     }
-  };
-  const checkScreenWidth = () => {
+  }
+  function checkScreenWidth() {
     if (window.innerWidth < 1024) {
       initializeSwiper();
-    } else {
+    } else if (window.innerWidth > 1024) {
       destroySwiper();
     }
-  };
+  }
   checkScreenWidth();
   window.addEventListener("resize", checkScreenWidth);
-});
-
-onUnmounted(() => {
-  imageSwiper.value = null;
 });
 </script>
 

@@ -22,15 +22,15 @@ import { vMaska } from "maska/vue";
 
 const cartStore = useCartStore();
 
-// defineOptions({ inheritAttrs: false });
+defineOptions({ inheritAttrs: false });
 
-defineEmits(["update:modelValue"]);
+const emit = defineEmits(["update:modelValue"]);
 
 defineProps({
   modelValue: {
     type: String,
     required: false,
-    default: "",
+    default: () => "",
   },
   type: {
     type: String,

@@ -112,8 +112,8 @@ defineExpose({
       margin-bottom: 0;
     }
     & tr {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      // display: grid;
+      // grid-template-columns: repeat(3, 1fr);
       // @include bp-md {
       //    grid-template-columns: repeat(3, 300px);
       // }

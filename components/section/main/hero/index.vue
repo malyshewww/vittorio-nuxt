@@ -60,7 +60,7 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .main-hero {
-  height: 100vh;
+  height: 100dvh;
   padding: 20px 2.604vw 40px;
   font-family: var(--second-family);
   position: relative;

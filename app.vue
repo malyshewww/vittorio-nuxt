@@ -1,6 +1,6 @@
 <template lang="pug">
-	NuxtLoadingIndicator(color="#70445C")
-	AppLoader(v-if="isLoad")
+	//- NuxtLoadingIndicator(color="#70445C")
+	AppLoader(v-show="isLoad")
 	NuxtLayout(:name="layout")
 		NuxtPage
 	AppCart
@@ -20,13 +20,28 @@ const nuxtApp = useNuxtApp();
 
 const isLoad = ref(true);
 
+nuxtApp.hook("page:start", () => {
+  // isLoad.value = true;
+  console.log("page start");
+});
+
+nuxtApp.hook("page:finish", () => {
+  // isLoad.value = false;
+  console.log("page finish");
+});
+
 nuxtApp.hook("page:loading:start", () => {
-  isLoad.value = true;
+  console.log("loading start");
 });
 
 nuxtApp.hook("page:loading:end", () => {
-  isLoad.value = false;
+  console.log("loading end");
 });
+
+addRouteMiddleware("global-loader", () => (isLoad.value = true), {
+  global: true,
+});
+nuxtApp.hook("page:finish", () => (isLoad.value = false));
 
 const mainInfoStore = useMainInfoStore();
 
@@ -83,10 +98,12 @@ onMounted(() => {
 .page {
   padding: calc(var(--header-height) + 80px) 0 180px;
   @include bp-xl {
-    padding: calc(var(--header-height) + 40px) 0 140px;
+    // padding: calc(var(--header-height) + 40px) 0 140px;
+    padding: 40px 0 140px;
   }
   @include bp-md {
-    padding: calc(var(--header-height) + 28px) 0 100px;
+    // padding: calc(var(--header-height) + 28px) 0 100px;
+    padding: 28px 0 100px;
   }
   .page--contacts & {
     padding-bottom: 0;
@@ -94,25 +111,16 @@ onMounted(() => {
   .page--card & {
     padding: calc(var(--header-height) + 100px) 0 162px;
     @include bp-xl {
-      padding: calc(var(--header-height) + 60px) 0 140px;
+      // padding: calc(var(--header-height) + 60px) 0 140px;
+      padding: 60px 0 140px;
     }
     @include bp-md {
-      padding: calc(var(--header-height) + 48px) 0 100px;
+      // padding: calc(var(--header-height) + 48px) 0 100px;
+      padding: 48px 0 100px;
     }
   }
   .page--home & {
     padding: 0;
   }
-}
-
-.popup-btn {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 30;
-  width: 200px;
-  height: 100px;
-  background-color: black;
-  color: white;
 }
 </style>
