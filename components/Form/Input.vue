@@ -6,7 +6,7 @@
 			.form-item__actions(v-if="isButtonCloseVisible")
 				button(type="button" @click="deletePromocode").form-item__close
 		FormPromocodeMessage(v-if="cartStore.isPromocodeChecked" :is-valid="cartStore.isPromocodeValid" :text="cartStore.promocodeMessage")
-	.form-item(v-if="isSubscribe")
+	.form-item(v-else-if="isSubscribe")
 		.form-field(:class="{error: !isValid}").subscribe
 			input(:type="type" :name="name" :placeholder="placeholder" :disabled="isDisabled" v-model="modelVal" @input="emit('update:modelValue', $event.target.value)")
 			span(@click="subscribe" :class="{'active-arrow': isActiveArrow}").form-item__arrow
