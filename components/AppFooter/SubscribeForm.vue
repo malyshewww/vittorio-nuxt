@@ -1,10 +1,10 @@
 <template lang="pug">
 	.main-footer__subscribe
-		form(ref="form" @submit.prevent="formSend($event)").subscribe-form
+		form(ref="form" @submit.prevent).subscribe-form
 			.subscribe-form__heading
 				.subscribe-form__title.footer-title Подписаться на новости
 				.subscribe-form__sub-title Оформите подписку, чтобы быть в курсе наших новостей
-			FormInput(type="email" placeholder="Электронная почта" name="email" :modelValue="model.email.val" :is-valid="formStatus.email.isValid" :error-message="formStatus.email.message" @update:modelValue="$event => (formData.mail = $event)")
+			FormInput(type="email" placeholder="Электронная почта" name="email" :is-subscribe="true" @subscribe="formSend" :modelValue="model.email.val" :is-valid="formStatus.email.isValid" :error-message="formStatus.email.message" @update:modelValue="$event => (model.email.val = $event)")
 			.subscribe-form__text 
 				| Оставляя свой электронный адрес, вы подтверждаете, что согласны c 
 				UiLinkUnderLine(path="/page/policy" :is-blank="true" text="политикой обработки персональных данных" class-names="link-border")
@@ -59,7 +59,8 @@ const runtimeConfig = useRuntimeConfig();
 // eslint-disable-next-line
 async function formSend() {
   const { error } = formValidate();
-  if (error === 0) {
+  console.log("data", formData);
+  try {
     const tokenResponse = await fetch(
       `${runtimeConfig.public.apiBase}/session/token`,
       {
@@ -84,14 +85,46 @@ async function formSend() {
     );
     if (formResponse.ok) {
       const result = await formResponse.json();
-      console.log(result);
-      formSuccess();
-    } else {
-      formError();
+      if (result.sid) {
+        formSuccess();
+      } else {
+        formError();
+      }
     }
-  } else {
-    formError();
-  }
+  } catch (err) {}
+  // if (error === 0) {
+  //   const tokenResponse = await fetch(
+  //     `${runtimeConfig.public.apiBase}/session/token`,
+  //     {
+  //       method: "POST",
+  //     }
+  //   );
+  //   if (!tokenResponse.ok) {
+  //     throw new Error("Ошибка при получении токена");
+  //   }
+  //   const token = await tokenResponse.text();
+  //   const formResponse = await fetch(
+  //     `${runtimeConfig.public.apiBase}/webform_rest/submit?_format_json`,
+  //     {
+  //       method: "POST",
+  //       headers: {
+  //         Accept: "application/json, text/plain, */*",
+  //         "Content-Type": "application/json",
+  //         "X-CSRF-Token": token,
+  //       },
+  //       body: JSON.stringify(formData),
+  //     }
+  //   );
+  //   if (formResponse.ok) {
+  //     const result = await formResponse.json();
+  //     console.log(result);
+  //     formSuccess();
+  //   } else {
+  //     formError();
+  //   }
+  // } else {
+  //   formError();
+  // }
 }
 
 function formError() {
@@ -116,11 +149,11 @@ function formValidate() {
   errors.value = 0;
   initialFormStatus();
   if (
-    model.email.val.length > 0 &&
+    model.email.val.length === 0 ||
     !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(model.email.val)
   ) {
     formStatus.email.isValid = false;
-    formStatus.email.message = "Некорректный email";
+    formStatus.email.message = "некорректный email";
     errors.value++;
   }
   return {

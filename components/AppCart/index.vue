@@ -134,12 +134,12 @@ function formValidate() {
   initialFormStatus();
   if (model.name.val.length === 0) {
     formStatus.name.isValid = false;
-    formStatus.name.message = "Поле Имя обязательно для заполнения";
+    formStatus.name.message = "поле Имя обязательно для заполнения";
     errors.value++;
   }
   if (model.address.val.length === 0) {
     formStatus.address.isValid = false;
-    formStatus.address.message = "Поле Адрес обязательно для заполенния";
+    formStatus.address.message = "поле Адрес обязательно для заполенния";
     errors.value++;
   }
   if (
@@ -147,17 +147,17 @@ function formValidate() {
     !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(model.email.val)
   ) {
     formStatus.email.isValid = false;
-    formStatus.email.message = "Некорректный email";
+    formStatus.email.message = "некорректный email";
     errors.value++;
   }
   if (model.agree.val === 0 || model.agree.val === false) {
     formStatus.agree.isValid = false;
-    formStatus.agree.message = "Поле обязательно для заполнения";
+    formStatus.agree.message = "поле обязательно для заполнения";
     errors.value++;
   }
   if (model.phone.val.length === 0 || model.phone.val.length < 18) {
     formStatus.phone.isValid = false;
-    formStatus.phone.message = "Неверно введен телефон";
+    formStatus.phone.message = "неверно введен телефон";
     errors.value++;
   }
   return {

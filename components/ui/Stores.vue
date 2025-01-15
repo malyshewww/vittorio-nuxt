@@ -81,18 +81,22 @@ defineProps({
       padding: 7px 15px;
       border: 1px solid var(--text-gray);
       filter: invert(1);
-      @include hover {
-        &:hover {
-          filter: invert(0);
-        }
-      }
+      // @include hover {
+      //   &:hover {
+      //     filter: invert(0);
+      //   }
+      // }
     }
-    @include hover {
-      &:hover {
-        filter: invert(1);
-        border-color: var(--text-gray);
-      }
+    @include bp-xl {
+      min-height: 40px;
+      padding: 10px 14px;
     }
+    // @include hover {
+    //   &:hover {
+    //     filter: invert(1);
+    //     border-color: var(--text-gray);
+    //   }
+    // }
   }
 }
 </style>

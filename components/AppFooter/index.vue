@@ -1,25 +1,27 @@
 <template lang="pug">
-	footer.footer(ref="footer" :class="className")
-		.container
-			.footer__body 
-				.footer__main.main-footer(v-if="route.name !== 'contacts'")
-					AppFooterSubscribeForm
-					.main-footer__middle
-						nuxt-link(to="/").main-footer__logo
-							img(:src="`/images/footer-logo.svg`" alt="логотип")
-						UiSocial(class-names="footer-social")
-					.main-footer__contacts.footer-contacts
-						.footer-contacts__body
-							.footer-contacts__title.footer-title Связаться с нами
-							ul.footer-contacts__list
-								li.footer-contacts__item
-									a(href="tel:88006009404").footer-contacts__link 8 800 600-94-04
-								li.footer-contacts__item
-									a(href="mailti:info@s-parfum.ru").footer-contacts__link info@s-parfum.ru
-							.footer-contacts__bottom
-								.footer-contacts__label Ароматы Vittorio можно приобрести в магазинах
-								UiStores(class-names="footer-stores" :isFooterStores="true" :link-letu="links.field_leturu" :link-apple="links.field_goldapple")
-				AppFooterBottom
+  .footer-wrap
+    span.footer-noise
+    footer.footer(ref="footer" :class="className")
+      .container
+        .footer__body 
+          .footer__main.main-footer(v-if="route.name !== 'contacts'")
+            AppFooterSubscribeForm
+            .main-footer__middle
+              nuxt-link(to="/").main-footer__logo
+                img(:src="`/images/footer-logo.svg`" alt="логотип")
+              UiSocial(class-names="footer-social")
+            .main-footer__contacts.footer-contacts
+              .footer-contacts__body
+                .footer-contacts__title.footer-title Связаться с нами
+                ul.footer-contacts__list
+                  li.footer-contacts__item
+                    a(href="tel:88006009404").footer-contacts__link 8 800 600-94-04
+                  li.footer-contacts__item
+                    a(href="mailti:info@s-parfum.ru").footer-contacts__link info@s-parfum.ru
+                .footer-contacts__bottom
+                  .footer-contacts__label Ароматы Vittorio можно приобрести в магазинах
+                  UiStores(class-names="footer-stores" :isFooterStores="true" :link-letu="links.field_leturu" :link-apple="links.field_goldapple")
+          AppFooterBottom
 </template>
 
 <script setup>
@@ -55,9 +57,24 @@ onMounted(() => {
 
 <style lang="scss">
 @use "assets/scss/vars" as *;
-.footer {
+.footer-wrap {
   position: relative;
   background-color: var(--bg-milk);
+  isolation: isolate;
+}
+.footer-noise {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent url("/images/main-noise.png") repeat-y 0 0;
+  background-repeat: repeat;
+  background-blend-mode: soft-light;
+  pointer-events: none;
+  z-index: -1;
+}
+.footer {
+  position: relative;
   @include bp-xl {
     margin: 0 20px;
     overflow: hidden;
@@ -80,10 +97,10 @@ onMounted(() => {
   &.active {
     &::before {
       animation-play-state: running;
-      animation: animLineFooterLeft 1s ease 1s forwards;
+      animation: animLineFooterLeft 1s ease 0s forwards;
     }
     &::after {
-      animation: animLineFooterRight 2.5s ease 1s forwards;
+      animation: animLineFooterRight 1s ease 0.8s forwards;
       animation-play-state: running;
     }
   }

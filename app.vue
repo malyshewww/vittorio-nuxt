@@ -13,7 +13,12 @@ import { useMainInfoStore } from "~/stores/maininfo.js";
 import { useCartStore } from "~/stores/cart";
 import { useAppStore } from "~/stores/app";
 
+const device = useDevice();
+
+const isSafari = ref(device.isSafari);
+
 const cartStore = useCartStore();
+
 const appStore = useAppStore();
 
 const nuxtApp = useNuxtApp();
@@ -78,6 +83,12 @@ watch(
   }
 );
 
+useHead({
+  bodyAttrs: {
+    class: `${isSafari.value ? "is-safari" : ""}`,
+  },
+});
+
 onMounted(() => {
   loadCart();
   replaceDevice();
@@ -121,6 +132,22 @@ onMounted(() => {
   }
   .page--home & {
     padding: 0;
+  }
+}
+body:not(.page--home) .page {
+  position: relative;
+  isolation: isolate;
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent url("/images/main-noise.png") repeat-y 0 0;
+    background-repeat: repeat;
+    background-blend-mode: soft-light;
+    pointer-events: none;
+    z-index: 0;
   }
 }
 </style>

@@ -5,7 +5,7 @@
 				SectionMainFragrancesHeading
 				.fragrances__location.location-fragrances(ref="locationBlock" :class="className")#aroma_map
 					.location-fragrances__wrapper
-						SectionMainFragrancesSlider(:countries="countries" :isEnableAutoplay="state.isEnableAutoplay" :current-slide-index="state.currentSlideIndex" @change-area="changeArea")
+						SectionMainFragrancesSlider(:countries="countries" :active-area="activeArea" :isEnableAutoplay="state.isEnableAutoplay" :current-slide-index="state.currentSlideIndex" @change-area="changeArea")
 						.location-fragrances__map-wrap
 							UiButtonPrimary(title="полная коллекция" :is-link="true" path="/products")
 							.location-fragrances__map-container
@@ -42,6 +42,12 @@ const stopAutoplay = (newStatus, index) => {
 const startAutoplay = (newStatus) => {
   state.isEnableAutoplay = newStatus;
 };
+
+// watch(
+//   () => activeArea.value,
+//   (val) => {
+//   }
+// );
 
 const locationBlock = ref(null);
 const className = ref("");
@@ -157,7 +163,8 @@ onMounted(() => {
     padding: 140px 0;
   }
   @include bp-xl {
-    padding: calc(var(--header-height) + 40px) 0 60px;
+    // padding: calc(var(--header-height) + 40px) 0 60px;
+    padding: 40px 0 60px;
   }
 }
 .location-fragrances {
@@ -277,13 +284,13 @@ onMounted(() => {
   }
   &.active {
     & .location-fragrances__map-wrap::before {
-      animation: animLineRight 1s ease 2.5s forwards;
+      animation: animLineRight 1s ease 1s forwards;
     }
     & .fragrances-slider::before {
-      animation: animLine 3s ease 1s forwards;
+      animation: animLine 2s ease 0s forwards;
     }
     & .fragrances-slider::after {
-      animation: animLine 3s ease 1s forwards;
+      animation: animLine 2s ease 0s forwards;
     }
   }
 }

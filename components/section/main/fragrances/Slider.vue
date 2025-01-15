@@ -20,8 +20,9 @@
 <script setup>
 import { ref, watch } from "vue";
 import Swiper from "swiper";
+import { Navigation, Pagination, Autoplay, EffectFade } from "swiper/modules";
 import "swiper/css";
-import { Navigation, Pagination, Autoplay } from "swiper/modules";
+import "swiper/css/effect-fade";
 
 const emit = defineEmits(["changeArea"]);
 
@@ -37,6 +38,10 @@ const props = defineProps({
   countries: {
     type: Object,
     required: true,
+  },
+  activeArea: {
+    type: String,
+    required: false,
   },
 });
 
@@ -105,6 +110,8 @@ function changeSlide(swiper, index) {
   }
 }
 
+const slides = ref(null);
+
 const initSlider = () => {
   const buttonPrev = slider.value.parentNode.querySelector(
     ".slider-button-prev"
@@ -115,10 +122,14 @@ const initSlider = () => {
   const pagination =
     slider.value.parentNode.querySelector(".slider-pagination");
   swiper.value = new Swiper(slider.value, {
-    modules: [Navigation, Pagination, Autoplay],
+    modules: [Navigation, Pagination, Autoplay, EffectFade],
     autoHeight: true,
     speed: 1000,
     spaceBetween: 10,
+    effect: "fade",
+    fadeEffect: {
+      crossFade: true,
+    },
     navigation: {
       nextEl: buttonNext,
       prevEl: buttonPrev,
@@ -133,12 +144,19 @@ const initSlider = () => {
     },
     breakpoints: {},
     on: {
+      init: function (swiper) {
+        slides.value = swiper.slides;
+      },
       slideChange: function (swiper) {
         const activeIndex = swiper.activeIndex;
         const slides = swiper.slides;
         const currentSlideKey =
           slides[activeIndex].getAttribute("data-slide-key");
         changeArea(currentSlideKey);
+        const markers = document.querySelectorAll(".marker");
+        if (markers.length) {
+          markers.forEach((marker) => marker.classList.remove("active"));
+        }
         changeMapArea(currentSlideKey);
       },
     },
@@ -151,6 +169,14 @@ const initSlider = () => {
     });
   });
   observer.observe(slider.value);
+  // const markers = document.querySelectorAll(".marker");
+  // markers.forEach((marker) => {
+  //   marker.addEventListener("mouseenter", () => {
+  //     console.log("enter");
+  //     const key = marker.dataset.markerKey;
+  //     const slide = slides.value[key];
+  //   });
+  // });
 };
 
 onMounted(() => {

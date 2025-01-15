@@ -117,12 +117,12 @@ const formValidate = () => {
   initialFormStatus();
   if (model.name.val.length === 0) {
     formStatus.name.isValid = false;
-    formStatus.name.message = `Поле Имя обязательно для заполнения`;
+    formStatus.name.message = `поле Имя обязательно для заполнения`;
     errors.value++;
   }
   if (model.phone.val.length === 0 || model.phone.val.length < 18) {
     formStatus.phone.isValid = false;
-    formStatus.phone.message = "Неверно введен телефон";
+    formStatus.phone.message = "неверно введен телефон";
     errors.value++;
   }
   if (
@@ -130,12 +130,12 @@ const formValidate = () => {
     !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(model.email.val)
   ) {
     formStatus.email.isValid = false;
-    formStatus.email.message = "Некорректный email";
+    formStatus.email.message = "некорректный email";
     errors.value++;
   }
   if (model.question.val.length === 0) {
     formStatus.question.isValid = false;
-    formStatus.question.message = `Поле Ваш вопрос обязательно для заполнения`;
+    formStatus.question.message = `поле Ваш вопрос обязательно для заполнения`;
     errors.value++;
   }
   return {

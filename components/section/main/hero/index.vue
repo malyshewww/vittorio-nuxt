@@ -8,7 +8,7 @@
 				.main-hero__contnet-left 
 					span(ref="titleLeftOne") Истории,
 					span(ref="titleLeftTwo") рассказанные
-				.main-hero__arrow
+				.main-hero__arrow(ref="arrow")
 				.main-hero__contnet-right 
 					span(ref="titleRight") Ароматами
 </template>
@@ -21,6 +21,7 @@ const appStore = useAppStore();
 const titleLeftOne = ref("");
 const titleLeftTwo = ref("");
 const titleRight = ref("");
+const arrow = ref("");
 
 const { $gsap: gsap } = useNuxtApp();
 
@@ -49,6 +50,12 @@ onMounted(() => {
             y: 0,
             x: 0,
             duration: 1,
+            onComplete: () => {
+              gsap.to(arrow.value, {
+                opacity: 1,
+                duration: 1,
+              });
+            },
           });
         },
       });
@@ -153,6 +160,7 @@ onMounted(() => {
     place-items: center;
     border: 1px solid rgba(248, 245, 241, 0.4);
     margin-bottom: 4.88vh;
+    opacity: 0;
     &::before {
       content: "";
       display: block;

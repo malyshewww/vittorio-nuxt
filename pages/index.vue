@@ -70,5 +70,18 @@ onMounted(() => {});
   position: relative;
   z-index: 2;
   overflow: hidden;
+  isolation: isolate;
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent url("/images/main-noise.png") repeat-y 0 0;
+    background-repeat: repeat;
+    background-blend-mode: soft-light;
+    pointer-events: none;
+    z-index: 0;
+  }
 }
 </style>

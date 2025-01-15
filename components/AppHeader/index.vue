@@ -110,7 +110,21 @@ onMounted(() => {
   min-height: var(--header-height);
   padding: 20px 0;
   z-index: 21;
+  isolation: isolate;
   transition: transform $time * 2 $ttm, background-color $time * 2 $ttm;
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent url("/images/main-noise.png") repeat-y 0 0;
+    background-repeat: repeat;
+    background-blend-mode: soft-light;
+    pointer-events: none;
+    z-index: -1;
+    transition: opacity $time * 2 $ttm;
+  }
   @include bp-md {
     padding: 14px 0;
     & .container {
@@ -119,12 +133,23 @@ onMounted(() => {
   }
   .page--home & {
     background-color: transparent;
+    &::before {
+      opacity: 0;
+    }
+    &.header-dark {
+      &::before {
+        opacity: 1;
+      }
+    }
   }
   &.hidden {
     transform: translateY(-120%) rotateX(90deg);
   }
   &.active {
     background-color: var(--bg-dark);
+    &::before {
+      opacity: 1;
+    }
     & .header__logo {
       opacity: 0;
       pointer-events: none;

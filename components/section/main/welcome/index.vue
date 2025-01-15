@@ -1,11 +1,11 @@
 <template lang="pug">
-	section.welcome#welcome
+	section.welcome#welcome(ref="welcomeSection")
 		.container
 			.welcome__body
 				.welcome__heading
 					h2.welcome__title Добро пожаловать в мир Vittorio
 				.welcome__video-wrap(ref="videoWrap")
-					.welcome__video.ibg
+					.welcome__video.ibg(ref="videoBlock")
 						video(ref="video" :loop="isVideoLoop" :muted="isVideoMuted" playsinline :autoplay="isVideoAutoplay" :controls="isVideoControls && !isVideoMuted" @ended="endVideo()" :poster="`/images/sections/welcome/poster.jpg`")
 							source(:src="`/welcome.mp4`" type="video/mp4")
 							p.
@@ -56,6 +56,8 @@ const hiddenBlockWrap = ref(null);
 
 const videoWrap = ref(null);
 const video = ref(null);
+const videoBlock = ref(null);
+const welcomeSection = ref(null);
 
 const animation = () => {
   if (!appStore.isMobile) {
@@ -63,12 +65,11 @@ const animation = () => {
       clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
       scrollTrigger: {
         trigger: videoWrap.value,
-        start: "bottom bottom+=52px",
-        end: "+=100%",
+        start: "bottom bottom",
+        end: () => `+=100%`,
         pin: true,
         pinSpacing: true,
         scrub: true,
-        pinSpacing: 0,
       },
     });
     const images = gsap.utils.toArray(".welcome__image");
@@ -77,14 +78,14 @@ const animation = () => {
         img,
         { y: 100, autoAlpha: 1 },
         {
-          yPercent: -200,
+          yPercent: -150,
           autoAlpha: 1,
           scrollTrigger: {
             trigger: img,
             start: "top bottom",
             end: "top top+=100",
             toggleActions: "play none none reverse",
-            scrub: index + 1 / 2,
+            scrub: true,
           },
         }
       );
@@ -224,8 +225,8 @@ function toggleHiddenBlock() {
     margin: 0 auto;
     display: flex;
     justify-content: center;
+    height: 100dvh;
     clip-path: polygon(10% 100%, 88% 100%, 88% 100%, 10% 100%);
-    min-height: 760px;
     &::before {
       content: "";
       position: absolute;
@@ -246,6 +247,7 @@ function toggleHiddenBlock() {
     @include bp-xl {
       clip-path: initial;
       min-height: auto;
+      height: auto;
       position: relative;
       overflow: hidden;
     }
@@ -255,7 +257,10 @@ function toggleHiddenBlock() {
     overflow: hidden;
     padding-bottom: math.div(760, 1520) * 100%;
     position: relative;
-    min-height: 200px;
+    // min-height: 200px;
+    height: 100%;
+    & video {
+    }
   }
   &__video-btn {
     border: 1px solid rgba(248, 245, 241, 0.4);

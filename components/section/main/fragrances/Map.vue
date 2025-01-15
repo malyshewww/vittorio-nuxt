@@ -240,13 +240,13 @@
 		//- defs
 			//- clippath#clip0_1015_4001
 			//- rect(width='1310', height='705', fill='white')
-	.marker(v-for="(item, index) in countries" :key="index" :class="`marker-${item.key}`" :data-marker-key="item.key" @click="selectMarker(item.key, index)" @mouseenter="hoverMarker(item.key, index)" @mouseleave="startAutoplay(index, item.key)") 
+	.marker(v-for="(item, index) in countries" :key="index" :class="`marker-${item.key}`" :data-active="activeArea == item.key" :data-marker-key="item.key" @click="selectMarker(item.key, index)" @mouseenter="hoverMarker(item.key, index)" @mouseleave="startAutoplay(index, item.key)") 
 		.marker__tooltip(v-if="item.title")
 			span(v-html="item.title") 
 </template>
 
 <script setup>
-defineProps({
+const props = defineProps({
   activeArea: {
     type: String,
     required: true,
@@ -259,16 +259,14 @@ defineProps({
 
 const emit = defineEmits(["stopAutoplay", "startAutoplay"]);
 
-// const activeArea = ref(props.activeArea);
+const activeArea = ref(props.activeArea);
 
-// watch(
-//    () => props.activeArea,
-//    (oldVal, newVal) => {
-//       console.log("oldVal", oldVal);
-//       console.log("newVal", newVal);
-//    },
-//    { deep: true }
-// );
+watch(
+  () => props.activeArea,
+  (newVal) => {
+    activeArea.value = newVal;
+  }
+);
 const map = ref("");
 
 const stopAutoplay = (index) => {
@@ -294,6 +292,17 @@ const hoverMarker = (key, index) => {
     const paths = map.value.querySelectorAll("path.active");
     paths.forEach((path) => path.classList.remove("active"));
   };
+  const markers = document.querySelectorAll(".marker");
+  const removeActiveMarkers = () => {
+    const markersArr = document.querySelectorAll(".marker.active");
+    markersArr.forEach((marker) => marker.classList.remove("active"));
+    markers.forEach((marker) => {
+      marker.setAttribute("data-active", false);
+    });
+  };
+  removeActiveMarkers();
+  markers[index].classList.add("active");
+  markers[index].setAttribute("data-active", true);
   const paths = map.value.querySelectorAll("path");
   [...paths].forEach((path) => {
     const currentArea = path.dataset.area;
@@ -384,6 +393,20 @@ onMounted(() => {});
   @include hover {
     &:hover {
       cursor: pointer;
+      z-index: 5;
+      & .marker__tooltip {
+        opacity: 1;
+      }
+    }
+  }
+  &[data-active="true"] {
+    z-index: 5;
+    & .marker__tooltip {
+      opacity: 1;
+    }
+  }
+  @include bp-xl {
+    &.active {
       z-index: 5;
       & .marker__tooltip {
         opacity: 1;

@@ -1,13 +1,20 @@
 <template lang="pug">
 	.form-item(v-if="isPromocode")
-		.form-field(:class="{'promocode': isPromocode, 'active-arrow': isActiveArrow || promocodeValue}")
+		.form-field(:class="{'promocode': isPromocode, 'active-arrow': isActiveArrow || promocodeValue, 'error': cartStore.isPromocodeChecked && !isPromocodeValid}")
 			input(:type="type" :name="name" :placeholder="placeholder" :disabled="isDisabled" v-on:keyup.enter="checkPromocode" v-model.trim="promocodeInput" @focus="focusInput" @blur="blurInput" @input="changeInput")
 			span.form-item__arrow(v-if="!isButtonCloseVisible" @click="checkPromocode")
 			.form-item__actions(v-if="isButtonCloseVisible")
 				button(type="button" @click="deletePromocode").form-item__close
 		FormPromocodeMessage(v-if="cartStore.isPromocodeChecked" :is-valid="cartStore.isPromocodeValid" :text="cartStore.promocodeMessage")
+	.form-item(v-if="isSubscribe")
+		.form-field(:class="{error: !isValid}").subscribe
+			input(:type="type" :name="name" :placeholder="placeholder" :disabled="isDisabled" v-model="modelVal" @input="emit('update:modelValue', $event.target.value)")
+			span(@click="subscribe" :class="{'active-arrow': isActiveArrow}").form-item__arrow
+			//- .form-item__actions(v-if="!isValid")
+			//- 	button(type="button" @click="clearInput").form-item__close
+		FormErrorMessage(v-if="!isValid" :text="errorMessage")
 	.form-item(v-else)
-		.form-field(:class="{error: !isValid}")
+		.form-field(:class="{error: !isValid, 'subscribe': isSubscribe}")
 			input(v-if="name === 'phone'" :type="type" :name="name" v-maska="'+7 (###) ### ## ##'" :placeholder="placeholder" :disabled="isDisabled" @input="emit('update:modelValue', $event.target.value)")
 			input(v-else :type="type" :name="name" :placeholder="placeholder" :disabled="isDisabled" @input="emit('update:modelValue', $event.target.value)")
 		span(v-if="isExampleText").form-item__example
@@ -24,9 +31,9 @@ const cartStore = useCartStore();
 
 defineOptions({ inheritAttrs: false });
 
-const emit = defineEmits(["update:modelValue"]);
+const emit = defineEmits(["update:modelValue", "subscribe"]);
 
-defineProps({
+const props = defineProps({
   modelValue: {
     type: String,
     required: false,
@@ -56,7 +63,7 @@ defineProps({
   errorMessage: {
     type: String,
     required: false,
-    default: "Поле обязательно для заполнения",
+    default: "поле обязательно для заполнения",
   },
   isPromocode: {
     type: Boolean,
@@ -68,9 +75,22 @@ defineProps({
     required: false,
     default: false,
   },
+  isSubscribe: {
+    type: Boolean,
+    required: false,
+    default: () => false,
+  },
+  changedInput: {
+    type: Boolean,
+    required: false,
+    default: () => false,
+  },
 });
 
+const modelVal = ref(props.modelValue);
+
 const isActiveArrow = ref(false);
+
 const isButtonCloseVisible = ref(false);
 
 const promocodeInput = ref("");
@@ -85,11 +105,11 @@ watch(
   () => isPromocodeValid.value,
   (val) => {
     if (val === false) {
-      promocodeMessage.value = "Промокод не найден";
+      promocodeMessage.value = "промокод не найден";
       // console.log("not valid");
     }
     if (val === true) {
-      promocodeMessage.value = "Промокод применён";
+      promocodeMessage.value = "промокод применён";
       // console.log("valid");
     }
   }
@@ -131,16 +151,56 @@ const changeInput = (e) => {
 };
 // eslint-disable-next-line
 const focusInput = () => {
-  isActiveArrow.value = !isActiveArrow.value;
+  isActiveArrow.value = promocodeInput.value.length > 0 ? true : false;
 };
 // eslint-disable-next-line
 const blurInput = () => {
   isActiveArrow.value = !isActiveArrow.value;
 };
 
+watch(
+  () => modelVal.value,
+  (val) => {
+    isActiveArrow.value = val.length > 0 ? true : false;
+  }
+);
+
+watch(
+  () => modelVal.value,
+  (newVal, oldVal) => {
+    console.log("new", newVal, oldVal);
+    if (newVal > oldVal) {
+      isActiveArrow.value = true;
+    }
+    // else {
+    //   isActiveArrow.value = false;
+    // }
+    // isActiveArrow.value = val.length > 0 ? true : false;
+  }
+);
+
+watch(
+  () => props.isValid,
+  (val) => {
+    if (val === true) {
+      modelVal.value = "";
+      isActiveArrow.value = false;
+    }
+  }
+);
+
+const subscribe = () => {
+  emit("subscribe");
+};
+
+const clearInput = () => {
+  modelVal.value = "";
+  isActiveArrow.value = false;
+};
+
 if (promocodeValue.value) {
   promocodeInput.value = promocodeValue.value;
-  promocodeMessage.value = "Промокод применён";
+  promocodeMessage.value = "промокод применён";
 }
 </script>
 
@@ -159,9 +219,18 @@ if (promocodeValue.value) {
       }
     }
   }
-  &.promocode {
+  &.promocode,
+  &.subscribe {
     & input {
-      padding-right: 40px;
+      padding-right: 50px;
+    }
+  }
+  &.subscribe {
+    & .form-item__actions {
+      background-color: transparent;
+    }
+    & .form-item__close {
+      background-color: transparent;
     }
   }
   &.error {
@@ -242,6 +311,15 @@ if (promocodeValue.value) {
       background-color: var(--bg-smoke);
       transition: background-color $time * 2 $ttm;
     }
+    &.active-arrow {
+      pointer-events: all;
+      &::after {
+        transform: scale(1);
+      }
+      &::before {
+        background-color: var(--bg-milk);
+      }
+    }
     @include hover {
       &:hover {
         cursor: pointer;
@@ -266,6 +344,7 @@ if (promocodeValue.value) {
     color: var(--bg-smoke);
     background-color: transparent;
     border-bottom: 1px solid var(--bg-smoke);
+    border-radius: 0;
     transition: border-color $time * 2 $ttm;
     &::placeholder {
       font-family: inherit;

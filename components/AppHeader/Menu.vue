@@ -111,6 +111,19 @@ const closeMenu = (e) => {
   opacity: 0;
   pointer-events: none;
   transition: opacity $time * 2 $ttm;
+  isolation: isolate;
+  &::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent url("/images/menu-noise.png") repeat-y 0 0;
+    background-repeat: repeat;
+    background-blend-mode: soft-light;
+    pointer-events: none;
+    z-index: 0;
+  }
   @include bp-xl {
     overflow-y: auto;
     overflow-x: hidden;
@@ -201,7 +214,8 @@ const closeMenu = (e) => {
 .menu-main {
   flex: 0 1 600px;
   overflow-y: auto;
-  height: 32.653vh;
+  // height: 32.653vh;
+  height: 35.653vh;
   @include bp-xl {
     flex: 0 1 auto;
     height: auto;
@@ -244,6 +258,8 @@ const closeMenu = (e) => {
     &::after {
       content: "";
       display: block;
+      position: relative;
+      top: -4px;
       width: 40px;
       height: 40px;
       mask-image: url("/images/icons/arrow-right-white.svg");
@@ -254,6 +270,7 @@ const closeMenu = (e) => {
       transform: translateX(-50%);
       opacity: 0;
       z-index: -1;
+      pointer-events: none;
       transition: transform $time * 2 $ttm, opacity $time $ttm;
       @include bp-xl {
         content: none;
@@ -279,7 +296,8 @@ const closeMenu = (e) => {
 .menu-notes {
   flex: 0 1 620px;
   padding-right: 78px;
-  height: 60.816vh;
+  // height: 60.816vh;
+  height: 65.816vh;
   overflow-y: auto;
   @include bp-xl {
     overflow-y: hidden;

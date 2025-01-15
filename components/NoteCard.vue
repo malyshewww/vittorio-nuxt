@@ -328,6 +328,7 @@ const addToCart = async () => {
     line-height: 36px;
     padding: 20px 0;
     max-width: 450px;
+    text-wrap: balance;
     @media (min-width: 1024px) and (max-height: 800px) {
       font-size: 22px;
       line-height: 28px;
@@ -359,6 +360,19 @@ const addToCart = async () => {
   // padding: 140px 50px 140px;
   padding: 14.286vh 2.604vw;
   background-color: var(--bg-milk);
+  isolation: isolate;
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent url("/images/main-noise.png") repeat-y 0 0;
+    background-repeat: repeat;
+    background-blend-mode: soft-light;
+    pointer-events: none;
+    z-index: 0;
+  }
   @media (min-width: 1024px) and (max-height: 800px) {
     padding: 20px 2.604vw;
   }
@@ -400,6 +414,8 @@ const addToCart = async () => {
     font-weight: 500;
     font-size: 28px;
     line-height: 36px;
+    max-width: 610px;
+    text-wrap: balance;
     @media (min-width: 1024px) and (max-height: 800px) {
       font-size: 22px;
       line-height: 28px;
