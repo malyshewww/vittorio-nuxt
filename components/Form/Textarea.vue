@@ -8,7 +8,7 @@
 <script setup>
 defineOptions({ inheritAttrs: false });
 
-const emit = defineEmits(["update:modelValue"]);
+defineEmits(["update:modelValue"]);
 
 defineProps({
   modelValue: {

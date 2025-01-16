@@ -105,14 +105,14 @@ async function formSend() {
       }
     );
     if (response.ok) {
-      const result = await response.json();
+      // const result = await response.json();
       cartStore.closeCart();
       popupStore.openPopup(popupStore.popupOrderSuccess);
       cartStore.orderItems = [];
       cartStore.totalCount = 0;
       initialFormStatus();
       resetValues();
-      console.log("result", result);
+      // console.log("result", result);
     } else {
       popupStore.openPopup(popupStore.popupNoticeError);
       setTimeout(() => {

@@ -39,7 +39,7 @@ onMounted(() => {
   gsap.registerPlugin(ScrollTrigger);
   // Gsap Code
   if (window.innerWidth > 1024) {
-    const sections = document.querySelectorAll(".note-cards .note-card");
+    const sections = document.querySelectorAll(".note-cards .note-sections");
     if (sections.length) {
       const sectionHeight = sections[0].clientHeight;
       const tl = gsap.timeline({
@@ -49,7 +49,7 @@ onMounted(() => {
         },
         scrollTrigger: {
           trigger: ".note-cards",
-          start: "top top",
+          start: "bottom bottom",
           end: () => sectionHeight * sections.length - 1 + "px",
           pinSpacing: true,
           pin: true,
@@ -60,7 +60,7 @@ onMounted(() => {
           //  },
         },
       });
-      const noteCards = document.querySelectorAll(".note-cards .note-card");
+      const noteCards = document.querySelectorAll(".note-cards .note-sections");
       [...noteCards].forEach((slide, index) => {
         if (index !== 0) {
           tl.from(slide, {
@@ -101,18 +101,15 @@ onMounted(() => {
 }
 .note-cards {
   position: relative;
-  min-height: 100vh;
+  height: 200vh;
   overflow: hidden;
   @include bp-xl {
-    min-height: auto;
+    height: auto;
     overflow: visible;
   }
 }
-.note-sections {
-  position: relative;
-}
 @for $i from 1 through 100 {
-  .note-cards .note-card:nth-child(#{$i}) {
+  .note-cards .note-sections:nth-child(#{$i}) {
     z-index: #{$i};
   }
 }
@@ -120,6 +117,9 @@ onMounted(() => {
 .note-cards-first {
   position: relative;
   & .note-card {
+    position: relative;
+  }
+  & .note-sections {
     position: relative;
   }
 }

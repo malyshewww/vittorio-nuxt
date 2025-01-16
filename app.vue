@@ -1,6 +1,6 @@
 <template lang="pug">
-	//- NuxtLoadingIndicator(color="#70445C")
-	AppLoader(v-show="isLoad")
+	NuxtLoadingIndicator(color="#70445C")
+	//- AppLoader(v-if="isLoad")
 	NuxtLayout(:name="layout")
 		NuxtPage
 	AppCart
@@ -21,32 +21,26 @@ const cartStore = useCartStore();
 
 const appStore = useAppStore();
 
-const nuxtApp = useNuxtApp();
+// const nuxtApp = useNuxtApp();
 
-const isLoad = ref(true);
+// const isLoad = ref(true);
 
-nuxtApp.hook("page:start", () => {
-  // isLoad.value = true;
-  console.log("page start");
-});
-
-nuxtApp.hook("page:finish", () => {
-  // isLoad.value = false;
-  console.log("page finish");
-});
-
-nuxtApp.hook("page:loading:start", () => {
-  console.log("loading start");
-});
-
-nuxtApp.hook("page:loading:end", () => {
-  console.log("loading end");
-});
-
-addRouteMiddleware("global-loader", () => (isLoad.value = true), {
-  global: true,
-});
-nuxtApp.hook("page:finish", () => (isLoad.value = false));
+// nuxtApp.hook("page:start", () => {
+//   console.log("page start");
+// });
+// nuxtApp.hook("page:finish", () => {
+//   console.log("page finish");
+// });
+// nuxtApp.hook("page:loading:start", () => {
+//   console.log("loading start");
+// });
+// nuxtApp.hook("page:loading:end", () => {
+//   console.log("loading end");
+// });
+// addRouteMiddleware("global-loader", () => (isLoad.value = true), {
+//   global: true,
+// });
+// nuxtApp.hook("page:finish", () => (isLoad.value = false));
 
 const mainInfoStore = useMainInfoStore();
 

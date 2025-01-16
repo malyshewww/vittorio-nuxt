@@ -9,7 +9,7 @@
 	.form-item(v-else-if="isSubscribe")
 		.form-field(:class="{error: !isValid}").subscribe
 			input(:type="type" :name="name" :placeholder="placeholder" :disabled="isDisabled" v-model="modelVal" @input="emit('update:modelValue', $event.target.value)")
-			span(@click="subscribe" :class="{'active-arrow': isActiveArrow}").form-item__arrow
+			button(type="button" @click="subscribe" :class="{'active-arrow': isActiveArrow}").form-item__arrow
 			//- .form-item__actions(v-if="!isValid")
 			//- 	button(type="button" @click="clearInput").form-item__close
 		FormErrorMessage(v-if="!isValid" :text="errorMessage")
@@ -166,20 +166,6 @@ watch(
 );
 
 watch(
-  () => modelVal.value,
-  (newVal, oldVal) => {
-    console.log("new", newVal, oldVal);
-    if (newVal > oldVal) {
-      isActiveArrow.value = true;
-    }
-    // else {
-    //   isActiveArrow.value = false;
-    // }
-    // isActiveArrow.value = val.length > 0 ? true : false;
-  }
-);
-
-watch(
   () => props.isValid,
   (val) => {
     if (val === true) {
@@ -189,13 +175,9 @@ watch(
   }
 );
 
+// eslint-disable-next-line
 const subscribe = () => {
   emit("subscribe");
-};
-
-const clearInput = () => {
-  modelVal.value = "";
-  isActiveArrow.value = false;
 };
 
 if (promocodeValue.value) {

@@ -1,48 +1,49 @@
 <template lang="pug">
-	section.note-card.main-note(:class="`main-note--${product.key}`" :id="product.key")
-		h2.main-note__title(v-if="product.title")
-			span(v-html="product.title")
-		.main-note__preview.preview-note
-			.preview-note__title-mobile(v-if="product.title")
+	.note-sections
+		section.note-card.main-note(:class="`main-note--${product.key}`" :id="product.key")
+			h2.main-note__title(v-if="product.title")
 				span(v-html="product.title")
-			.preview-note__image-wrap
-				.preview-note__image.ibg(v-if="product.field_image_on_gradient" v-html="product.field_image_on_gradient[0].markup")
-					//- img(:src="`/images/main/legend_fragment.jpg`" alt="fragment")
-				nuxt-link(:to="product.url").main-note__circle
-			.preview-note__description(v-if="product.field_title_on_gradient" v-html="product.field_title_on_gradient")
-			UiLinkLine(text="Узнать больше" :path="product.url" class-names="preview-note__link short-link")
-		.main-note__image.ibg(v-if="product.field_bg_image" v-html="product.field_bg_image[0].markup")
-			//- img(:src="`/images/main/legend_scene.jpg`" alt="product")
-	section.note-card.info-note
-		.info-note__content
-			h2.info-note__title(v-if="product.title" v-html="product.title")
-			.info-note__text(v-if="product.field_description_aroma" v-html="product.field_description_aroma")
-			.info-note__characteristics.characteristics(v-if="product.field_fragrance_group || product.field_top_notes || product.field_heart_notes || product.field_base_notes")
-				ul.characteristics__list
-					li.characteristics__item(v-if="product.field_fragrance_group")
-						span.characteristics__label группа аромата
-						span.characteristics__value {{product.field_fragrance_group}}
-					li.characteristics__item(v-if="product.field_top_notes")
-						span.characteristics__label верхние ноты
-						span.characteristics__value {{product.field_top_notes}}
-					li.characteristics__item(v-if="product.field_heart_notes")
-						span.characteristics__label ноты сердца
-						span.characteristics__value {{product.field_heart_notes}}
-					li.characteristics__item(v-if="product.field_base_notes")
-						span.characteristics__label базовые ноты
-						span.characteristics__value {{product.field_base_notes}}
-		.info-note__product
-			.product-note
-				.product-note__image-wrap
-					.product-note__image.ibg(v-html="product.field_image_product_front[0].markup")
-						//- img(:src="`/images/main/legend_product.jpg`" alt="product")
-					.product-note__decor-title(v-if="product.field_svg_title")
-						img(:src="product.field_svg_title[0].markup" :alt="product.field_svg_title[0].alt")
-					button(type="button" @click="addToCart" :class="cartStore.isActiveCartPopup ? 'disabled' : ''").product-note__button В корзину
-				.product-note__options(v-if="product.price || product.volume")
-					.product-note__option(v-if="product.volume") {{product.volume}}
-					.product-note__option(v-if="product.price") {{product.price}}
-				UiButtonPrimary(title="В корзину" :class-names="'product-note__button-mobile'" @button-action="addToCart")
+			.main-note__preview.preview-note
+				.preview-note__title-mobile(v-if="product.title")
+					span(v-html="product.title")
+				.preview-note__image-wrap
+					.preview-note__image.ibg(v-if="product.field_image_on_gradient" v-html="product.field_image_on_gradient[0].markup")
+						//- img(:src="`/images/main/legend_fragment.jpg`" alt="fragment")
+					nuxt-link(:to="product.url").main-note__circle
+				.preview-note__description(v-if="product.field_title_on_gradient" v-html="product.field_title_on_gradient")
+				UiLinkLine(text="Узнать больше" :path="product.url" class-names="preview-note__link short-link")
+			.main-note__image.ibg(v-if="product.field_bg_image" v-html="product.field_bg_image[0].markup")
+				//- img(:src="`/images/main/legend_scene.jpg`" alt="product")
+		section.note-card.info-note
+			.info-note__content
+				h2.info-note__title(v-if="product.title" v-html="product.title")
+				.info-note__text(v-if="product.field_description_aroma" v-html="product.field_description_aroma")
+				.info-note__characteristics.characteristics(v-if="product.field_fragrance_group || product.field_top_notes || product.field_heart_notes || product.field_base_notes")
+					ul.characteristics__list
+						li.characteristics__item(v-if="product.field_fragrance_group")
+							span.characteristics__label группа аромата
+							span.characteristics__value {{product.field_fragrance_group}}
+						li.characteristics__item(v-if="product.field_top_notes")
+							span.characteristics__label верхние ноты
+							span.characteristics__value {{product.field_top_notes}}
+						li.characteristics__item(v-if="product.field_heart_notes")
+							span.characteristics__label ноты сердца
+							span.characteristics__value {{product.field_heart_notes}}
+						li.characteristics__item(v-if="product.field_base_notes")
+							span.characteristics__label базовые ноты
+							span.characteristics__value {{product.field_base_notes}}
+			.info-note__product
+				.product-note
+					.product-note__image-wrap
+						.product-note__image.ibg(v-html="product.field_image_product_front[0].markup")
+							//- img(:src="`/images/main/legend_product.jpg`" alt="product")
+						.product-note__decor-title(v-if="product.field_svg_title")
+							img(:src="product.field_svg_title[0].markup" :alt="product.field_svg_title[0].alt")
+						button(type="button" @click="addToCart" :class="cartStore.isActiveCartPopup ? 'disabled' : ''").product-note__button В корзину
+					.product-note__options(v-if="product.price || product.volume")
+						.product-note__option(v-if="product.volume") {{product.volume}}
+						.product-note__option(v-if="product.price") {{product.price}}
+					UiButtonPrimary(title="В корзину" :class-names="'product-note__button-mobile'" @button-action="addToCart")
 </template>
 
 <script setup>
@@ -90,22 +91,26 @@ const addToCart = async () => {
 
 <style lang="scss" scoped>
 @use "sass:math";
-@use "assets/scss/_vars" as *;
+@use "assets/scss/vars" as *;
+
 .note-sections {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  @include bp-xl {
+    position: static;
+  }
 }
 .note-card {
-  height: 100dvh;
   position: relative;
+  height: 100dvh;
   @include bp-xl {
     height: auto;
   }
 }
 .note-cards .note-card {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
   @include bp-xl {
     position: relative;
     height: auto;

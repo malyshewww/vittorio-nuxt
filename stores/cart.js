@@ -58,10 +58,10 @@ export const useCartStore = defineStore("cart", () => {
         setTimeout(() => {
           isActiveCartPopup.value = false;
         }, 2000);
-        console.log(productInfo);
+        // console.log(productInfo);
       }
     } catch (e) {
-      console.log("error", e);
+      throw new Error("error", e);
     }
   }
   async function getCartItems() {
@@ -79,7 +79,7 @@ export const useCartStore = defineStore("cart", () => {
       );
       const { data } = await response.json();
       if (data[0]) {
-        console.log("Корзина", data);
+        // console.log("Корзина", data);
         ORDER_ID.value = data[0].order_id;
         orderItems.value = data[0].order_items;
         if (orderItems.value.length) {
@@ -104,8 +104,8 @@ export const useCartStore = defineStore("cart", () => {
       }
       isLoading.value = false;
     } catch (error) {
-      console.log("error", error);
       isLoading.value = false;
+      throw new Error("error", error);
     } finally {
       isLoading.value = false;
     }
@@ -130,7 +130,7 @@ export const useCartStore = defineStore("cart", () => {
         },
         0
       );
-      console.log("totala count", totalCount.value);
+      // console.log("total count", totalCount.value);
     }
   }
   function calcCartQuantity(num, action) {
@@ -185,7 +185,7 @@ export const useCartStore = defineStore("cart", () => {
         throw new Error("error occured");
       }
     } catch (error) {
-      console.log(error);
+      throw new Error("error", error);
     }
   }
   // Увеличение либо уменьшение количества товара (не подходит, т.к. изменяются только локальные данные)
@@ -212,7 +212,6 @@ export const useCartStore = defineStore("cart", () => {
   //    }
   // }
   async function deleteProduct(product) {
-    console.log(product);
     try {
       const options = {
         data: [
@@ -233,17 +232,17 @@ export const useCartStore = defineStore("cart", () => {
           body: JSON.stringify(options),
         }
       );
-      const result = await response.json();
-      console.log(result);
+      // const result = await response.json();
+      // console.log(result);
       if (response.ok) {
         // Обновить корзину
         getCartItems();
         calcCartQuantity(product.quanity, "minus");
       } else {
-        throw new Error(`${response.status} ${response.statusText}`);
+        throw new Error("error");
       }
     } catch (error) {
-      console.log(`Error from delete item: ${error}`);
+      throw new Error("Error from delete item", error);
     }
   }
   async function checkPromocode(inputValue) {
@@ -268,23 +267,23 @@ export const useCartStore = defineStore("cart", () => {
           body: JSON.stringify(options),
         }
       );
-      const result = await response.json();
-      console.log(result);
+      // const result = await response.json();
+      // console.log(result);
       if (response.ok) {
         isPromocodeValid.value = true;
         promocodeMessage.value = "промокод применён";
         promocodeValue.value = inputValue;
-        console.log("value", promocodeValue.value);
+        // console.log("value", promocodeValue.value);
       } else {
         isPromocodeValid.value = false;
         promocodeMessage.value = "промокод не найден";
         throw new Error(`${response.status}, ${response.statusText}`);
       }
     } catch (error) {
-      console.log(error);
       isPromocodeValid.value = false;
       promocodeValue.value = "";
       promocodeMessage.value = "промокод не найден";
+      throw new Error("Error from delete item", error);
     } finally {
       getCartItems();
     }
@@ -319,7 +318,7 @@ export const useCartStore = defineStore("cart", () => {
         throw new Error(`${response.status} ${response.statusText}`);
       }
     } catch (error) {
-      console.log("Error from delete promocode", error);
+      throw new Error("Error from delete promocode", error);
     } finally {
       getCartItems();
     }

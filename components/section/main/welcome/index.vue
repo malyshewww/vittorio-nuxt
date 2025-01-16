@@ -1,5 +1,5 @@
 <template lang="pug">
-	section.welcome#welcome(ref="welcomeSection")
+	section.welcome#welcome
 		.container
 			.welcome__body
 				.welcome__heading
@@ -23,7 +23,7 @@
 						.hidden-block
 							.hidden-block__wrap(ref="hiddenBlockWrap")
 								ContentBlock(ref="hiddenBlockContent" :content="text.body")
-							UiButtonLine(v-if="state.isVisible" text="Узнать больше" @button-action="toggleHiddenBlock" class-names="show-more")
+							UiButtonLine(v-if="state.isVisible" :text="state.textBtn" @button-action="toggleHiddenBlock" class-names="show-more")
 					.welcome__images.welcome__images--right
 						.welcome__image.welcome__image-border-big
 							NuxtPicture(:src="`images/sections/welcome/img-border-big.jpg`" alt="img-border-big")
@@ -49,6 +49,7 @@ const state = reactive({
   isVisible: false,
   textHeight: 0,
   isCollapsed: true,
+  textBtn: "узнать больше",
 });
 
 const hiddenBlockContent = ref(null);
@@ -57,23 +58,25 @@ const hiddenBlockWrap = ref(null);
 const videoWrap = ref(null);
 const video = ref(null);
 const videoBlock = ref(null);
-const welcomeSection = ref(null);
 
 const animation = () => {
   if (!appStore.isMobile) {
-    gsap.to(videoWrap.value, {
+    gsap.to(videoBlock.value, {
       clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+      transformOrigin: "center center",
+      height: "760px",
       scrollTrigger: {
         trigger: videoWrap.value,
         start: "bottom bottom",
-        end: () => `+=100%`,
+        // end: () => `+=100%`,
+        end: "bottom+=100%",
         pin: true,
         pinSpacing: true,
-        scrub: true,
+        scrub: 1,
       },
     });
     const images = gsap.utils.toArray(".welcome__image");
-    images.forEach((img, index) => {
+    images.forEach((img) => {
       gsap.fromTo(
         img,
         { y: 100, autoAlpha: 1 },
@@ -136,6 +139,17 @@ onMounted(() => {
   window.addEventListener("resize", watchResize);
 });
 
+watch(
+  () => state.isCollapsed,
+  () => {
+    if (!state.isCollapsed) {
+      state.textBtn = "скрыть";
+    } else {
+      state.textBtn = "узнать больше";
+    }
+  }
+);
+
 // eslint-disable-next-line
 function toggleHiddenBlock() {
   state.isCollapsed = !state.isCollapsed;
@@ -195,6 +209,8 @@ function toggleHiddenBlock() {
     }
   }
   &__heading {
+    justify-self: stretch;
+    width: 100%;
     display: flex;
     justify-content: center;
   }
@@ -206,6 +222,7 @@ function toggleHiddenBlock() {
     text-transform: uppercase;
     text-align: center;
     max-width: 1000px;
+    margin: 0 auto;
     @include bp-xxl {
       font-size: 72px;
       line-height: 86px;
@@ -225,40 +242,49 @@ function toggleHiddenBlock() {
     margin: 0 auto;
     display: flex;
     justify-content: center;
-    height: 100dvh;
-    clip-path: polygon(10% 100%, 88% 100%, 88% 100%, 10% 100%);
-    &::before {
-      content: "";
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      right: -50%;
-      bottom: -50%;
-      width: 200%;
-      height: 200vh;
-      pointer-events: none;
-      background: transparent url("/images/noise.gif") repeat 0 0;
-      background-repeat: repeat;
-      background-blend-mode: soft-light;
-      // animation: bg-animation 0.2s infinite;
-      z-index: 5;
-      opacity: 0.1;
-    }
+    height: 760px;
+    position: relative;
+    overflow: hidden;
+    // padding-top: 120px;
     @include bp-xl {
       clip-path: initial;
       min-height: auto;
       height: auto;
       position: relative;
       overflow: hidden;
+      padding-top: 0;
     }
   }
   &__video {
-    width: 100%;
     overflow: hidden;
     padding-bottom: math.div(760, 1520) * 100%;
-    position: relative;
-    // min-height: 200px;
+    min-height: 200px;
+    position: absolute;
+    width: 100%;
     height: 100%;
+    padding: 0;
+    bottom: 0;
+    clip-path: polygon(10% 100%, 88% 100%, 88% 100%, 10% 100%);
+    &::before {
+      content: "";
+      position: absolute;
+      // top: -50%;
+      // left: -50%;
+      // right: -50%;
+      // bottom: -50%;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      background: transparent url("/images/noise.gif") repeat 0 0;
+      background-repeat: repeat;
+      // animation: bg-animation 0.2s infinite;
+      z-index: 5;
+      opacity: 0.1;
+    }
+    @include bp-xl {
+      position: relative;
+      clip-path: initial;
+    }
     & video {
     }
   }

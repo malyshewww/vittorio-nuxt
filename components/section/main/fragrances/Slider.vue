@@ -42,6 +42,7 @@ const props = defineProps({
   activeArea: {
     type: String,
     required: false,
+    default: "",
   },
 });
 

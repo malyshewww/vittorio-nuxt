@@ -184,7 +184,7 @@ onMounted(() => {
     padding-top: 50px;
     padding-left: 50px;
     min-height: 705px;
-    // width: 100%;
+    width: 100%;
     &::before {
       content: "";
       display: block;

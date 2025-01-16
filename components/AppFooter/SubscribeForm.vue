@@ -58,8 +58,8 @@ const runtimeConfig = useRuntimeConfig();
 
 // eslint-disable-next-line
 async function formSend() {
-  const { error } = formValidate();
-  console.log("data", formData);
+  // const { error } = formValidate();
+  // console.log("data", formData);
   try {
     const tokenResponse = await fetch(
       `${runtimeConfig.public.apiBase}/session/token`,
@@ -90,8 +90,12 @@ async function formSend() {
       } else {
         formError();
       }
+    } else {
+      formError();
     }
-  } catch (err) {}
+  } catch (err) {
+    throw new Error("error Subscribe form", err);
+  }
   // if (error === 0) {
   //   const tokenResponse = await fetch(
   //     `${runtimeConfig.public.apiBase}/session/token`,
@@ -145,6 +149,7 @@ function formSuccess() {
 }
 
 /* eslint-disable no-useless-escape */
+// eslint-disable-next-line
 function formValidate() {
   errors.value = 0;
   initialFormStatus();

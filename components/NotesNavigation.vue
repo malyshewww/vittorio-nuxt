@@ -65,49 +65,49 @@ const scrollToSection = (e) => {
         pos = parseInt(
           panelsSection.getBoundingClientRect().top +
             bodyScrollBar.scrollTop +
-            innerHeight * 2.15
+            innerHeight * 2.075
         );
         break;
       case "musk":
         pos = parseInt(
           panelsSection.getBoundingClientRect().top +
             bodyScrollBar.scrollTop +
-            innerHeight * 4.3
+            innerHeight * 4.22
         );
         break;
       case "essay":
         pos = parseInt(
           panelsSection.getBoundingClientRect().top +
             bodyScrollBar.scrollTop +
-            innerHeight * 6.4
+            innerHeight * 6.36
         );
         break;
       case "ethnos":
         pos = parseInt(
           panelsSection.getBoundingClientRect().top +
             bodyScrollBar.scrollTop +
-            innerHeight * 8.55
+            innerHeight * 8.5
         );
         break;
       case "erato":
         pos = parseInt(
           panelsSection.getBoundingClientRect().top +
             bodyScrollBar.scrollTop +
-            innerHeight * 10.7
+            innerHeight * 10.65
         );
         break;
       case "voice":
         pos = parseInt(
           panelsSection.getBoundingClientRect().top +
             bodyScrollBar.scrollTop +
-            innerHeight * 12.8
+            innerHeight * 12.79
         );
         break;
       case "velvet":
         pos = parseInt(
           panelsSection.getBoundingClientRect().top +
             bodyScrollBar.scrollTop +
-            innerHeight * 14.95
+            innerHeight * 14.93
         );
         break;
       default:
@@ -125,26 +125,17 @@ watch(
     observeNavigation();
   }
 );
-// Решить вопрос с observer при перехоже по якорю !!!
 const observeNavigation = () => {
   const noteCards = document.querySelector(".notes");
   const handleIntersection = ([entry]) => {
     const targetInfo = entry.boundingClientRect;
     const rootBoundsInfo = entry.rootBounds;
-    if (targetInfo.bottom < rootBoundsInfo.top || targetInfo.isIntersecting) {
-      isVisible.value = false;
-      appStore.isNavigationVisible = false;
-    } else {
+    const { isIntersecting } = entry;
+    if (isIntersecting) {
       isVisible.value = true;
-      appStore.isNavigationVisible = true;
-    }
-    if (entry.target === noteCards) {
-      if (entry.isIntersecting) {
-        isVisible.value = true;
-        appStore.isNavigationVisible = true;
-      } else {
+    } else {
+      if (targetInfo.top > rootBoundsInfo.bottom) {
         isVisible.value = false;
-        appStore.isNavigationVisible = false;
       }
     }
   };
@@ -208,7 +199,7 @@ const list = [
 @use "assets/scss/vars" as *;
 .notes-navigation {
   position: fixed;
-  bottom: 0;
+  bottom: 0px;
   width: 100%;
   height: 52px;
   border-bottom: 1px solid var(--bg-smoke);
@@ -282,5 +273,8 @@ const list = [
       right: 20px;
     }
   }
+}
+body:not(.page--home) .notes-navigation {
+  display: none;
 }
 </style>

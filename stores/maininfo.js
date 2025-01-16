@@ -11,7 +11,8 @@ export const useMainInfoStore = defineStore("maininfo", () => {
       menuMain.value = data.menu_main;
       menuProduct.value = data.menu_product;
     } catch (error) {
-      console.log("It's Error", error);
+      throw new Error("error", error);
+      // console.log("It's Error", error);
     }
   }
   return {

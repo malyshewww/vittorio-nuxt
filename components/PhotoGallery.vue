@@ -29,6 +29,7 @@ defineProps({
 
 const gallerySlider = ref(null);
 const gallerySwiper = ref(null);
+const spr = ref("");
 
 const initializeSlider = () => {
   if (gallerySlider.value) {
@@ -41,6 +42,7 @@ const initializeSlider = () => {
     gallerySwiper.value = new Swiper(gallerySlider.value, {
       modules: [Navigation],
       speed: 800,
+      slidesPerView: spr.value,
       navigation: {
         nextEl: buttonNext,
         prevEl: buttonPrev,
@@ -69,9 +71,16 @@ const initializeSlider = () => {
           const sliderControls =
             swiper.navigation.prevEl.parentNode ||
             swiper.navigation.nextEl.parentNode;
-          if (slides.length <= swiper.passedParams.slidesPerView) {
-            swiper.navigation.destroy();
-            sliderControls.remove();
+          const breakpoints = swiper.passedParams.breakpoints;
+          for (const param in breakpoints) {
+            const value = breakpoints[param];
+            if (
+              slides.length <= value.slidesPerView &&
+              param <= window.innerWidth
+            ) {
+              swiper.navigation.destroy();
+              sliderControls.remove();
+            }
           }
         },
       },
@@ -101,14 +110,14 @@ onMounted(() => {
 @use "assets/scss/vars" as *;
 .gallery {
   padding-top: 140px;
+  & .slider-controls {
+    margin: 0;
+  }
   @include bp-xl {
     padding-top: 100px;
   }
   @include bp-md {
     padding-top: 70px;
-    & .slider-controls {
-      margin: 0;
-    }
   }
 }
 .heading {

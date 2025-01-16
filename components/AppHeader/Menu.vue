@@ -215,7 +215,8 @@ const closeMenu = (e) => {
   flex: 0 1 600px;
   overflow-y: auto;
   // height: 32.653vh;
-  height: 35.653vh;
+  // height: 35.653vh;
+  height: 65.816vh;
   @include bp-xl {
     flex: 0 1 auto;
     height: auto;
