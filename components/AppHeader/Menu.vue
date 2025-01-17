@@ -52,12 +52,6 @@ watch(
   () => {
     menuStore.closeMenu();
     bodyLock(menuStore.isOpen);
-    if (!route.hash) {
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      });
-    }
   }
 );
 

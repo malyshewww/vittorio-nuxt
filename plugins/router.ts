@@ -5,7 +5,7 @@ export default defineNuxtPlugin(({ $router }) => {
     if (to.hash) {
       return {
         el: to.hash,
-        top: 0,
+        top: 64,
         behaviour: "smooth",
       };
     }

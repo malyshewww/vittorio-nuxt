@@ -17,51 +17,51 @@ const route = useRoute();
 
 const nuxtApp = useNuxtApp();
 
-nuxtApp.hook("page:loading:end", () => {
-   if (!route.hash) {
-      window.scrollTo({
-         top: 0,
-         behavior: "smooth",
-      });
-   }
+nuxtApp.hook("page:finish", () => {
+  if (!route.hash) {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }
 });
 
 onMounted(() => {
-   let initialPosition = window.scrollY;
-   let currentPosition = window.scrollY;
-   window.addEventListener("scroll", () => {
-      if (route.name !== "index") {
-         currentPosition = window.scrollY;
-         appStore.isHeaderVisible =
-            initialPosition <= currentPosition ? false : true;
-         initialPosition = currentPosition;
+  let initialPosition = window.scrollY;
+  let currentPosition = window.scrollY;
+  window.addEventListener("scroll", () => {
+    if (route.name !== "index") {
+      currentPosition = window.scrollY;
+      appStore.isHeaderVisible =
+        initialPosition <= currentPosition ? false : true;
+      initialPosition = currentPosition;
+    }
+  });
+  watch(
+    () => route.fullPath,
+    () => {
+      if (!route.hash) {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
       }
-   });
-   watch(
-      () => route.path,
-      () => {
-         if (!route.hash) {
-            window.scrollTo({
-               top: 0,
-               behavior: "smooth",
-            });
-         }
-      }
-   );
+    }
+  );
 });
 </script>
 
 <style lang="scss">
 .wrapper {
-   display: flex;
-   flex-direction: column;
-   overflow: clip;
+  display: flex;
+  flex-direction: column;
+  overflow: clip;
 }
 .page {
-   flex: 1 1 auto;
+  flex: 1 1 auto;
 }
 body.lock {
-   overflow: hidden;
+  overflow: hidden;
 }
 // .scroller {
 //    height: 100vh;

@@ -10,7 +10,6 @@
 					.content
 						h3 История создания аромата
 						ContentBlock(:content="productData.info.body[0]")
-		AppCartPopup
 </template>
 
 <script setup>

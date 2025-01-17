@@ -15,23 +15,6 @@ import { useCartStore } from "~/stores/cart";
 const cartStore = useCartStore();
 // eslint-disable-next-line
 const popup = ref("");
-
-onMounted(() => {
-  const header = document.querySelector(".header");
-  const appCartPopup = document.querySelector(".app-cart-popup");
-  if (header) {
-    const headerHeight = header.getBoundingClientRect().height;
-    if (window.innerWidth > 1024) {
-      const { bodyScrollBar } = useScrollbar();
-      appCartPopup.style.top = `${
-        bodyScrollBar.offset.y + parseInt(headerHeight)
-      }px`;
-      bodyScrollBar.addListener(({ offset }) => {
-        appCartPopup.style.top = `${offset.y + parseInt(headerHeight)}px`;
-      });
-    }
-  }
-});
 </script>
 
 <style lang="scss">

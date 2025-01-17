@@ -4,7 +4,6 @@
 		SectionMainFragrances(:countries="front.countries")
 		SectionMainNotes(:products="front.products" :half="front.halfProducts")
 		SectionMainWelcome(:text="front.text")
-	AppCartPopup
 </template>
 
 <script setup>

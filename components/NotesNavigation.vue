@@ -119,12 +119,21 @@ const scrollToSection = (e) => {
 
 const route = useRoute();
 
+const nuxtApp = useNuxtApp();
+
+nuxtApp.hook("page:finish", () => {
+  if (route.query.anchor) {
+    observeNavigation();
+  }
+});
+
 watch(
   () => route.fullPath,
   () => {
     observeNavigation();
   }
 );
+
 const observeNavigation = () => {
   const noteCards = document.querySelector(".notes");
   const handleIntersection = ([entry]) => {
@@ -152,6 +161,9 @@ const observeNavigation = () => {
 onMounted(() => {
   initializeSwiper();
   observeNavigation();
+  if (route.query.anchor) {
+    observeNavigation();
+  }
 });
 
 // eslint-disable-next-line

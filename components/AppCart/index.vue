@@ -34,7 +34,7 @@ const popupStore = usePopupStore();
 const closeCart = () => {
   cartStore.closeCart();
   if (!menuStore.isOpen) {
-    bodyLockRemove();
+    bodyLockRemove(0);
   }
 };
 // eslint-disable-next-line

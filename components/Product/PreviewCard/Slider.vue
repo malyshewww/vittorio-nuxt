@@ -15,7 +15,6 @@
 import Swiper from "swiper";
 import { Pagination } from "swiper/modules";
 import "swiper/css";
-// import "swiper/css/pagination";
 
 defineProps({
   url: {
@@ -55,8 +54,6 @@ onMounted(() => {
       slidesPerView: 1,
       speed: 800,
       centeredSlides: true,
-      observer: true,
-      observeSlideChildren: true,
       pagination: {
         el: imagePagination.value,
         clickable: true,

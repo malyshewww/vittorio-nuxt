@@ -1,10 +1,11 @@
 <template lang="pug">
 	NuxtLoadingIndicator(color="#70445C")
-	//- AppLoader(v-if="isLoad")
+	AppLoader(v-if="isLoad")
 	NuxtLayout(:name="layout")
 		NuxtPage
 	AppCart
 	AppPopups
+	AppCartPopup
 </template>
 
 <script setup>
@@ -23,7 +24,11 @@ const appStore = useAppStore();
 
 // const nuxtApp = useNuxtApp();
 
-// const isLoad = ref(true);
+const isLoad = ref(true);
+
+onNuxtReady(() => {
+  isLoad.value = false;
+});
 
 // nuxtApp.hook("page:start", () => {
 //   console.log("page start");
@@ -31,8 +36,9 @@ const appStore = useAppStore();
 // nuxtApp.hook("page:finish", () => {
 //   console.log("page finish");
 // });
+
 // nuxtApp.hook("page:loading:start", () => {
-//   console.log("loading start");
+//   isLoad.value = true;
 // });
 // nuxtApp.hook("page:loading:end", () => {
 //   console.log("loading end");

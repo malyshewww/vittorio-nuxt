@@ -79,6 +79,7 @@ function observerButtonUp() {
   }
 }
 
+// eslint-disable-next-line
 const scrollTop = () => {
   const { bodyScrollBar } = useScrollbar();
   if (window.innerWidth > 1024) {
@@ -92,7 +93,6 @@ const scrollTop = () => {
 };
 onMounted(() => {
   observerButtonUp();
-  scrollTop();
 });
 onBeforeUnmount(() => {});
 </script>
