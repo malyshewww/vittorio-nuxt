@@ -3,12 +3,14 @@
 		ul.stores__list
 			li.stores__item(v-if="linkApple")
 				a(:href="`${linkApple ? linkApple : '/'}`" target="_blank").stores__link
-					img(v-if="isFooterStores" :src="`/images/icons/stores/gold-apple-small.png`")
-					img(v-else :src="`/images/icons/stores/gold-apple.png`")
+					img(v-if="isFooterStores && !isMenu" :src="`/images/icons/stores/apple-small.svg`")
+					img(v-else-if="isFooterStores && isMenu" :src="`/images/icons/stores/apple-white.svg`")
+					img(v-else :src="`/images/icons/stores/apple.svg`")
 			li.stores__item(v-if="linkLetu")
 				a(:href="`${linkLetu ? linkLetu : '/'}`" target="_blank").stores__link
-					img(v-if="isFooterStores" :src="`/images/icons/stores/letual-small.png`")
-					img(v-else :src="`/images/icons/stores/letual.png`")
+					img(v-if="isFooterStores && !isMenu" :src="`/images/icons/stores/apple-small.svg`")
+					img(v-else-if="isFooterStores && isMenu" :src="`/images/icons/stores/letual-white.svg`")
+					img(v-else :src="`/images/icons/stores/letual.svg`")
 </template>
 
 <script setup>
@@ -19,6 +21,11 @@ defineProps({
     default: "",
   },
   isFooterStores: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
+  isMenu: {
     type: Boolean,
     required: false,
     default: false,
@@ -80,7 +87,7 @@ defineProps({
       min-height: 32px;
       padding: 7px 15px;
       border: 1px solid var(--text-gray);
-      filter: invert(1);
+      // filter: invert(1);
       // @include hover {
       //   &:hover {
       //     filter: invert(0);

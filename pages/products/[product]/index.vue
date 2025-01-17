@@ -122,8 +122,9 @@ useHead({
     @include bp-xl {
       margin-top: 80px;
     }
-    @include bp-xl {
+    @include bp-md {
       margin-top: 40px;
+      justify-content: flex-start;
     }
   }
   & .content {
@@ -132,6 +133,8 @@ useHead({
       margin-bottom: 30px;
       @include bp-md {
         margin-bottom: 20px;
+        font-size: 28px;
+        line-height: 36px;
       }
     }
   }

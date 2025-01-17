@@ -20,7 +20,7 @@
 							img(:src="`/images/logo-menu.svg`" alt="logo")
 						.menu-header__stores.stores-header(v-if="links.field_goldapple || links.field_leturu")
 							.stores-header__caption Ароматы Vittorio можно приобрести в магазинах:
-							UiStores(class-names="header-stores" :isFooterStores="true" :link-apple="links.field_goldapple" :link-letu="links.field_leturu")
+							UiStores(class-names="header-stores" :isFooterStores="true" :isMenu="true" :link-apple="links.field_goldapple" :link-letu="links.field_leturu")
 					.menu-header__inner
 						.menu-header__copy © {{getFullYear}}. Vittorio
 						UiLinkUnderLine(text="Политика конфиденциальности" path="/page/policy" :is-blank="true" class-names="link-white")
