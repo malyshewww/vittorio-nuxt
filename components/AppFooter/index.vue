@@ -17,7 +17,7 @@
                   li.footer-contacts__item
                     a(href="tel:88006009404").footer-contacts__link 8 800 600-94-04
                   li.footer-contacts__item
-                    a(href="mailti:info@s-parfum.ru").footer-contacts__link info@s-parfum.ru
+                    a(href="mailto:info@s-parfum.ru").footer-contacts__link info@s-parfum.ru
                 .footer-contacts__bottom
                   .footer-contacts__label Ароматы Vittorio можно приобрести в магазинах
                   UiStores(class-names="footer-stores" :isFooterStores="true" :link-letu="links.field_leturu" :link-apple="links.field_goldapple")

@@ -25,6 +25,7 @@ export const useCartStore = defineStore("cart", () => {
   const count = ref(0);
   const totalCount = ref(0);
   const isLoading = ref(true);
+  const timer = ref("");
   const openCart = () => {
     isOpenCart.value = true;
   };
@@ -55,10 +56,10 @@ export const useCartStore = defineStore("cart", () => {
         productInfo.title = title;
         isActiveCartPopup.value = true;
         getCartItems();
-        setTimeout(() => {
+        clearTimeout(timer.value);
+        timer.value = setTimeout(() => {
           isActiveCartPopup.value = false;
-        }, 2000);
-        // console.log(productInfo);
+        }, 3000);
       }
     } catch (e) {
       throw new Error("error", e);

@@ -1,10 +1,10 @@
 <template lang="pug">
 	.notes
-		.note-cards-first
-			NoteCard(:product="products[0]")
+		//- .note-cards-first
+		//- 	NoteCard(:product="products[0]")
 		#panels
 			.note-cards
-				NoteCard(v-for="(item, index) in half" :key="item.uuid" :product="item")
+				NoteCard(v-for="(item, index) in products" :key="item.uuid" :product="item")
 </template>
 
 <script setup>

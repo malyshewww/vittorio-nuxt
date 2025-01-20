@@ -1,32 +1,32 @@
 <template lang="pug">
-	section.welcome#welcome
-		.container
+	section.welcome
 			.welcome__body
-				.welcome__heading
-					h2.welcome__title Добро пожаловать в мир Vittorio
-				.welcome__video-wrap(ref="videoWrap")
-					.welcome__video.ibg(ref="videoBlock")
-						video(ref="video" :loop="isVideoLoop" :muted="isVideoMuted" playsinline :autoplay="isVideoAutoplay" :controls="isVideoControls && !isVideoMuted" @ended="endVideo()" :poster="`/images/sections/welcome/poster.jpg`")
-							source(:src="`/welcome.mp4`" type="video/mp4")
-							p.
-								Ваш браузер не поддерживает встроенные видео. Попробуйте скачать его по
-								| #[a(href="/welcome.mp4") этой ссылке]
-					button(type="button" @click="startVideo" :class="{hidden: isVideoPlay}").welcome__video-btn
-				.welcome__main
-					.welcome__images.welcome__images--left
-						.welcome__image.welcome__image-big
-							NuxtPicture(:src="`images/sections/welcome/img-big.jpg`" alt="img-big")
-						.welcome__image.welcome__image-border-small
-							NuxtPicture(:src="`images/sections/welcome/img-border-small.jpg`" alt="img-border")
-					.welcome__description
-						h3.welcome__title-small(v-if="text.info") {{text.info}}
-						.hidden-block
-							.hidden-block__wrap(ref="hiddenBlockWrap")
-								ContentBlock(ref="hiddenBlockContent" :content="text.body")
-							UiButtonLine(v-if="state.isVisible" :text="state.textBtn" @button-action="toggleHiddenBlock" class-names="show-more")
-					.welcome__images.welcome__images--right
-						.welcome__image.welcome__image-border-big
-							NuxtPicture(:src="`images/sections/welcome/img-border-big.jpg`" alt="img-border-big")
+				.welcome__anim(ref="videoWrap")#welcome
+					h2.welcome__title Добро пожаловать в&nbsp;мир&nbsp;Vittorio
+					.welcome__video-wrap(ref="videoBlock")
+						.welcome__video.ibg
+							video(ref="video" :loop="isVideoLoop" :muted="isVideoMuted" playsinline :autoplay="isVideoAutoplay" :controls="isVideoControls && !isVideoMuted" @ended="endVideo()" :poster="`/images/sections/welcome/poster.jpg`")
+								source(:src="`/welcome.mp4`" type="video/mp4")
+								p.
+									Ваш браузер не поддерживает встроенные видео. Попробуйте скачать его по
+									| #[a(href="/welcome.mp4") этой ссылке]
+						button(type="button" @click="startVideo" :class="{hidden: isVideoPlay}").welcome__video-btn
+				.container
+					.welcome__main
+						.welcome__images.welcome__images--left
+							.welcome__image.welcome__image-big
+								NuxtPicture(:src="`images/sections/welcome/img-big.jpg`" alt="img-big")
+							.welcome__image.welcome__image-border-small
+								NuxtPicture(:src="`images/sections/welcome/img-border-small.jpg`" alt="img-border")
+						.welcome__description
+							h3.welcome__title-small(v-if="text.info") {{text.info}}
+							.hidden-block
+								.hidden-block__wrap(ref="hiddenBlockWrap")
+									ContentBlock(ref="hiddenBlockContent" :content="text.body")
+								UiButtonLine(v-if="state.isVisible" :text="state.textBtn" @button-action="toggleHiddenBlock" class-names="show-more")
+						.welcome__images.welcome__images--right
+							.welcome__image.welcome__image-border-big
+								NuxtPicture(:src="`images/sections/welcome/img-border-big.jpg`" alt="img-border-big")
 </template>
 
 <script setup>
@@ -59,12 +59,13 @@ const videoWrap = ref(null);
 const video = ref(null);
 const videoBlock = ref(null);
 
+// console.log(gsap);
 const animation = () => {
   if (!appStore.isMobile) {
     gsap.to(videoBlock.value, {
       clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
       transformOrigin: "center center",
-      height: "760px",
+      "--percent": "0%",
       scrollTrigger: {
         trigger: videoWrap.value,
         start: "bottom bottom",
@@ -164,6 +165,7 @@ function toggleHiddenBlock() {
 <style lang="scss">
 @use "sass:math";
 @use "assets/scss/vars" as *;
+
 .hidden-block {
   display: grid;
   grid-template-columns: 100%;
@@ -196,6 +198,26 @@ function toggleHiddenBlock() {
   @include bp-md {
     padding: 20px 0 100px;
   }
+  &__anim {
+    height: 100vh;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    @include bp-xl {
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
+      gap: 60px;
+      height: auto;
+      padding: 0 30px;
+    }
+    @include bp-md {
+      padding: 0 20px;
+      gap: 28px;
+    }
+  }
   &__body {
     display: grid;
     grid-template-columns: 100%;
@@ -205,7 +227,7 @@ function toggleHiddenBlock() {
       gap: 60px;
     }
     @include bp-md {
-      gap: 28px;
+      gap: 40px;
     }
   }
   &__heading {
@@ -217,19 +239,31 @@ function toggleHiddenBlock() {
   &__title {
     font-family: var(--second-family);
     font-weight: 500;
-    font-size: 96px;
-    line-height: 124px;
+    font-size: 5.833vw;
+    line-height: 7.292vw;
     text-transform: uppercase;
     text-align: center;
-    max-width: 1000px;
+    max-width: 65%;
     margin: 0 auto;
-    @include bp-xxl {
-      font-size: 72px;
-      line-height: 86px;
-    }
+    background: linear-gradient(
+      to bottom,
+      var(--bg-smoke) var(--percent),
+      var(--bg-white) var(--percent)
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    mix-blend-mode: screen;
+    position: relative;
+    z-index: 10;
     @include bp-xl {
       font-size: 44px;
       line-height: 56px;
+      background: none;
+      color: var(--bg-smoke);
+      -webkit-background-clip: initial;
+      -webkit-text-fill-color: var(--bg-smoke);
+      mix-blend-mode: normal;
+      max-width: 100%;
     }
     @include bp-md {
       font-size: 36px;
@@ -237,15 +271,18 @@ function toggleHiddenBlock() {
     }
   }
   &__video-wrap {
-    max-width: 1520px;
     width: 100%;
     margin: 0 auto;
     display: flex;
     justify-content: center;
-    height: 760px;
-    position: relative;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     overflow: hidden;
-    // padding-top: 120px;
+    clip-path: polygon(10% 68%, 88% 68%, 88% 100%, 10% 100%);
     @include bp-xl {
       clip-path: initial;
       min-height: auto;
@@ -264,28 +301,21 @@ function toggleHiddenBlock() {
     height: 100%;
     padding: 0;
     bottom: 0;
-    clip-path: polygon(10% 100%, 88% 100%, 88% 100%, 10% 100%);
     &::before {
       content: "";
       position: absolute;
-      // top: -50%;
-      // left: -50%;
-      // right: -50%;
-      // bottom: -50%;
       width: 100%;
       height: 100%;
       pointer-events: none;
       background: transparent url("/images/noise.gif") repeat 0 0;
       background-repeat: repeat;
-      // animation: bg-animation 0.2s infinite;
       z-index: 5;
       opacity: 0.1;
     }
     @include bp-xl {
       position: relative;
       clip-path: initial;
-    }
-    & video {
+      padding-bottom: math.div(220, 335) * 100%;
     }
   }
   &__video-btn {

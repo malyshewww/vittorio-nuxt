@@ -44,7 +44,7 @@ const scrollToSection = (e) => {
   if (!target) return;
   const targetId = target.getAttribute("href");
   const targetElement = document.querySelector(targetId);
-  // Господи, что за костыль. По возможности переписать
+  // По возможности переписать костыль для десктопа
   if (targetElement) {
     const id = targetElement.getAttribute("id");
     const panelsSection = document.querySelector("#panels");
@@ -53,61 +53,63 @@ const scrollToSection = (e) => {
     switch (id) {
       case "legend":
         pos = parseInt(
-          targetElement.getBoundingClientRect().top + bodyScrollBar.scrollTop
+          panelsSection.getBoundingClientRect().top + bodyScrollBar.scrollTop
         );
         break;
       case "santal":
         pos = parseInt(
-          panelsSection.getBoundingClientRect().top + bodyScrollBar.scrollTop
+          panelsSection.getBoundingClientRect().top +
+            bodyScrollBar.scrollTop +
+            innerHeight * 2.06
         );
         break;
       case "protagonist":
         pos = parseInt(
           panelsSection.getBoundingClientRect().top +
             bodyScrollBar.scrollTop +
-            innerHeight * 2.075
+            innerHeight * 4.19
         );
         break;
       case "musk":
         pos = parseInt(
           panelsSection.getBoundingClientRect().top +
             bodyScrollBar.scrollTop +
-            innerHeight * 4.22
+            innerHeight * 6.31
         );
         break;
       case "essay":
         pos = parseInt(
           panelsSection.getBoundingClientRect().top +
             bodyScrollBar.scrollTop +
-            innerHeight * 6.36
+            innerHeight * 8.44
         );
         break;
       case "ethnos":
         pos = parseInt(
           panelsSection.getBoundingClientRect().top +
             bodyScrollBar.scrollTop +
-            innerHeight * 8.5
+            innerHeight * 10.57
         );
         break;
       case "erato":
         pos = parseInt(
           panelsSection.getBoundingClientRect().top +
             bodyScrollBar.scrollTop +
-            innerHeight * 10.65
+            innerHeight * 12.69
         );
         break;
       case "voice":
         pos = parseInt(
           panelsSection.getBoundingClientRect().top +
             bodyScrollBar.scrollTop +
-            innerHeight * 12.79
+            innerHeight * 14.82
         );
         break;
       case "velvet":
         pos = parseInt(
           panelsSection.getBoundingClientRect().top +
             bodyScrollBar.scrollTop +
-            innerHeight * 14.93
+            innerHeight * 16.94
         );
         break;
       default:

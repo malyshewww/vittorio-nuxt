@@ -43,21 +43,13 @@
 					.product-note__options(v-if="product.price || product.volume")
 						.product-note__option(v-if="product.volume") {{product.volume}}
 						.product-note__option(v-if="product.price") {{product.price}}
-					UiButtonPrimary(title="В корзину" :class-names="'product-note__button-mobile'" @button-action="addToCart")
+					UiButtonPrimary(title="В корзину" class-names="product-note__button-mobile" :is-disabled="cartStore.isActiveCartPopup" @button-action="addToCart")
 </template>
 
 <script setup>
 import { useCartStore } from "~/stores/cart";
 
 const cartStore = useCartStore();
-
-// eslint-disable-next-line
-const classNamesObj = computed(() => {
-  return {
-    "product-note__button-mobile": true,
-    disabled: cartStore.isActiveCartPopup === true,
-  };
-});
 
 const props = defineProps({
   product: {
