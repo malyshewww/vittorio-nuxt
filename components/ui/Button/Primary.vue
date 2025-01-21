@@ -1,6 +1,6 @@
 <template lang="pug">
 	nuxt-link(v-if="isLink" :to="path" :class="classNames").btn {{title}}
-	button(v-else :type="type" :class="classNames" :disabled="isDisabled" @click="buttonAction").btn {{title}}
+	button(v-else :type="type" :class="classNames" :disabled="isDisabled" @click="buttonAction").btn {{title}} 
 </template>
 
 <script setup>

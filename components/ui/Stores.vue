@@ -8,7 +8,7 @@
 					img(v-else :src="`/images/icons/stores/apple.svg`")
 			li.stores__item(v-if="linkLetu")
 				a(:href="`${linkLetu ? linkLetu : '/'}`" target="_blank").stores__link
-					img(v-if="isFooterStores && !isMenu" :src="`/images/icons/stores/apple-small.svg`")
+					img(v-if="isFooterStores && !isMenu" :src="`/images/icons/stores/letual-small.svg`")
 					img(v-else-if="isFooterStores && isMenu" :src="`/images/icons/stores/letual-white.svg`")
 					img(v-else :src="`/images/icons/stores/letual.svg`")
 </template>

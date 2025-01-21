@@ -39,7 +39,7 @@
 							//- img(:src="`/images/main/legend_product.jpg`" alt="product")
 						.product-note__decor-title(v-if="product.field_svg_title")
 							img(:src="product.field_svg_title[0].markup" :alt="product.field_svg_title[0].alt")
-						button(type="button" @click="addToCart" :class="cartStore.isActiveCartPopup ? 'disabled' : ''").product-note__button В корзину
+						button(type="button" @click="addToCart" :class="cartStore.isActiveCartPopup ? 'disabled' : ''").product-note__button #[span В корзину]
 					.product-note__options(v-if="product.price || product.volume")
 						.product-note__option(v-if="product.volume") {{product.volume}}
 						.product-note__option(v-if="product.price") {{product.price}}
@@ -500,7 +500,7 @@ const addToCart = async () => {
     font-weight: 500;
     font-size: 20px;
     line-height: 24px;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.04px;
     text-transform: uppercase;
     text-align: center;
     color: var(--bg-white);
@@ -509,6 +509,10 @@ const addToCart = async () => {
     &:disabled {
       background-color: var(--system-disabled);
       pointer-events: none;
+    }
+    & span {
+      position: relative;
+      top: 3px;
     }
     @include hover {
       &:hover {
