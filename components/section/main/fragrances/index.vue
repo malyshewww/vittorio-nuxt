@@ -222,7 +222,9 @@ onMounted(() => {
   }
   &__map-container {
     position: relative;
+    max-width: 1310px;
     @include bp-xxxl {
+      max-width: 100%;
       width: 100%;
       min-height: 705px;
     }
