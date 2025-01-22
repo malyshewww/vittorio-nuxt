@@ -99,6 +99,22 @@ defineExpose({
       background-position: center;
     }
   }
+  ol {
+    counter-reset: num;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  ol li {
+    display: flex;
+    gap: 10px;
+    counter-increment: num;
+    &::before {
+      content: counter(num) ")";
+      // min-width: 17px;
+    }
+  }
+
   & table {
     border-collapse: collapse;
     margin-bottom: 80px;

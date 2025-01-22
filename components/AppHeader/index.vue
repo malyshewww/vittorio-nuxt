@@ -14,7 +14,7 @@
 						source(:srcset="`/images/logo-dark.svg`" media="(min-width: 767.98px)")
 						source(:srcset="`/images/logo-dark.svg`" media="(min-width: 300px)")
 						img(:src="`/images/logo-dark.svg`")
-				button(type="button" @click="openCart").header__cart.cart-header
+				button(type="button" @click="openCart" :class="{disabled: appStore.isDisabledButtonCart}").header__cart.cart-header
 					span.cart-header__text Корзина
 					span.cart-header__count ({{cartStore.totalCount > 0 ? cartStore.totalCount : 0}})
 					span.cart-header__icon
@@ -47,7 +47,7 @@ const openMenu = () => {
     appStore.isDisabledBurger = !appStore.isDisabledBurger;
   }, 1500);
   menuStore.toggleMenu();
-  bodyLock(menuStore.isOpen);
+  bodyLock(menuStore.isOpen, 0);
 };
 // eslint-disable-next-line
 const openCart = () => {
@@ -65,7 +65,6 @@ watch(
   () => route.path,
   () => {
     observeHeader();
-    appStore.isHeaderVisible = true;
   }
 );
 
@@ -316,6 +315,9 @@ body:not(.page--home) .header {
     line-height: 12px;
     align-items: flex-start;
     flex-direction: row-reverse;
+  }
+  &.disabled {
+    pointer-events: none;
   }
   &__icon {
     display: none;

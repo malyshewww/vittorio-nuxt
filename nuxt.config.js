@@ -18,12 +18,6 @@ export default defineNuxtConfig({
       apiBase: process.env.NUXT_PUBLIC_API_BASE_URL,
     },
   },
-  // app: {
-  //   pageTransition: {
-  //     name: "fade",
-  //     mode: "out-in",
-  //   },
-  // },
   // content: {
   //    watch: {
   //       ws: {
@@ -35,6 +29,10 @@ export default defineNuxtConfig({
   // },
   ssr: true,
   app: {
+    // pageTransition: {
+    //   mode: "out-in",
+    //   name: "fade",
+    // },
     head: {
       htmlAttrs: {
         lang: "ru",
@@ -42,12 +40,6 @@ export default defineNuxtConfig({
       link: [
         { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
         { rel: "shortcut icon", href: "/favicon.ico" },
-        // {
-        //    rel: "apple-touch-icon",
-        //    type: "image/png",
-        //    sizes: "180x180",
-        //    href: "/apple-touch-icon.png",
-        // },
       ],
       meta: [
         { charset: "utf-8" },
@@ -61,7 +53,7 @@ export default defineNuxtConfig({
         },
         {
           name: "viewport",
-          content: "width=device-width, initial-scale=1, user-scalable=no",
+          content: "width=device-width, initial-scale=1",
         },
         {
           hid: "apple-mobile-web-app-title",

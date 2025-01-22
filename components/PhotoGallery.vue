@@ -29,7 +29,6 @@ defineProps({
 
 const gallerySlider = ref(null);
 const gallerySwiper = ref(null);
-const spr = ref("");
 
 const initializeSlider = () => {
   if (gallerySlider.value) {
@@ -42,7 +41,6 @@ const initializeSlider = () => {
     gallerySwiper.value = new Swiper(gallerySlider.value, {
       modules: [Navigation],
       speed: 800,
-      slidesPerView: spr.value,
       navigation: {
         nextEl: buttonNext,
         prevEl: buttonPrev,

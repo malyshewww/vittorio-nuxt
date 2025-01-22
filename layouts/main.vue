@@ -54,19 +54,19 @@ onMounted(() => {
   ScrollTrigger.defaults({ scroller: scroller.value });
   initialPosition.value = bodyScrollBar.offset.y;
   bodyScrollBar.addListener(({ offset }) => {
-    appStore.scrollY = offset.y;
     if (route.name !== "index") {
+      // appStore.scrollY = offset.y;
       currentPosition.value = offset.y;
       appStore.isHeaderVisible =
         initialPosition.value <= currentPosition.value ? false : true;
       initialPosition.value = currentPosition.value;
     }
     // Делегируем событие прокрутки в окно
-    // window.dispatchEvent(
-    //    new CustomEvent("scroll", {
-    //       detail: { scrollTop: offset.y },
-    //    })
-    // );
+    window.dispatchEvent(
+      new CustomEvent("scroll", {
+        detail: { scrollTop: offset.y },
+      })
+    );
   });
 
   watch(
@@ -75,6 +75,7 @@ onMounted(() => {
       if (!route.query.anchor)
         setTimeout(() => {
           bodyScrollBar.scrollTop = 0;
+          appStore.isHeaderVisible = true;
         }, 200);
     }
   );

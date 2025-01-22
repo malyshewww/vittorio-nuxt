@@ -7,7 +7,6 @@
 	AppPopups
 	AppCartPopup
 </template>
-
 <script setup>
 import { throttle } from "lodash-es";
 import { useMainInfoStore } from "~/stores/maininfo.js";
@@ -36,13 +35,13 @@ onNuxtReady(() => {
 // nuxtApp.hook("page:finish", () => {
 //   console.log("page finish");
 // });
-
 // nuxtApp.hook("page:loading:start", () => {
 //   isLoad.value = true;
 // });
 // nuxtApp.hook("page:loading:end", () => {
 //   console.log("loading end");
 // });
+
 // addRouteMiddleware("global-loader", () => (isLoad.value = true), {
 //   global: true,
 // });
@@ -76,12 +75,33 @@ const loadCart = () => {
 
 const route = useRoute();
 
+// const isAnchorOrQuery = ref(route.query.anchor || route.hash ? true : false);
+
 watch(
-  () => route.fullPath,
+  () => route.path,
   () => {
-    appStore.isHeaderVisible = true;
+    if (!appStore.isDisabledButtonCart) {
+      appStore.isDisabledButtonCart = true;
+      setTimeout(() => {
+        appStore.isDisabledButtonCart = false;
+      }, 1500);
+    }
   }
 );
+
+// watch(
+//   () => route.query.anchor,
+//   () => {
+//     isAnchorOrQuery.value = false;
+//   }
+// );
+
+// watch(
+//   () => route.hash,
+//   () => {
+//     isAnchorOrQuery.value = false;
+//   }
+// );
 
 useHead({
   bodyAttrs: {

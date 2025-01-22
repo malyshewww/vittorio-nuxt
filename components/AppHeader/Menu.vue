@@ -89,6 +89,12 @@ const closeMenu = (e) => {
         appStore.isDisabledBurger = false;
       }, 1500);
     }
+    if (!appStore.isDisabledButtonCart) {
+      appStore.isDisabledButtonCart = true;
+      setTimeout(() => {
+        appStore.isDisabledButtonCart = false;
+      }, 1500);
+    }
   }
 };
 </script>
@@ -215,6 +221,12 @@ const closeMenu = (e) => {
     flex: 0 1 auto;
     height: auto;
   }
+  @supports not selector(::-webkit-scrollbar) {
+    & {
+      scrollbar-color: var(--text-gray) var(--text-gray);
+      scrollbar-width: thin;
+    }
+  }
   &::-webkit-scrollbar {
     background-color: transparent;
     width: 2px;
@@ -299,6 +311,12 @@ const closeMenu = (e) => {
     height: auto;
     flex: 0 1 auto;
     padding: 0;
+  }
+  @supports not selector(::-webkit-scrollbar) {
+    & {
+      scrollbar-color: var(--text-gray) var(--text-gray);
+      scrollbar-width: thin;
+    }
   }
   &::-webkit-scrollbar {
     background-color: transparent;

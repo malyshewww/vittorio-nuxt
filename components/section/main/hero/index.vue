@@ -18,9 +18,9 @@ import { useAppStore } from "~/stores/app";
 
 const appStore = useAppStore();
 
-const titleLeftOne = ref("");
-const titleLeftTwo = ref("");
-const titleRight = ref("");
+const titleLeftOne = ref(null);
+const titleLeftTwo = ref(null);
+const titleRight = ref(null);
 const arrow = ref("");
 
 const { $gsap: gsap } = useNuxtApp();
@@ -28,37 +28,45 @@ const { $gsap: gsap } = useNuxtApp();
 onMounted(() => {
   function animation() {
     if (!appStore.isMobile) {
-      gsap.set(titleLeftOne.value, { opacity: 0, y: 40, x: 50 });
-      gsap.set(titleLeftTwo.value, { opacity: 0, y: 40, x: 50 });
-      gsap.set(titleRight.value, { opacity: 0, y: 40, x: 50 });
-      // Анимируем первый заголовок
-      gsap.to(titleLeftOne.value, {
-        opacity: 1,
-        y: 0,
-        x: 0,
-        duration: 1,
-        onComplete: () => {
-          // После завершения анимации первого заголовка анимируем второй
-          gsap.to(titleLeftTwo.value, {
-            opacity: 1,
-            y: 0,
-            x: 0,
-            duration: 1,
-          });
-          gsap.to(titleRight.value, {
+      if (titleLeftOne.value && titleLeftTwo.value && titleRight.value) {
+        gsap.set(titleLeftOne.value, { opacity: 0, y: 40, x: 50 });
+        gsap.set(titleLeftTwo.value, { opacity: 0, y: 40, x: 50 });
+        gsap.set(titleRight.value, { opacity: 0, y: 40, x: 50 });
+        // Анимируем первый заголовок
+        if (titleLeftOne.value) {
+          gsap.to(titleLeftOne.value, {
             opacity: 1,
             y: 0,
             x: 0,
             duration: 1,
             onComplete: () => {
-              gsap.to(arrow.value, {
-                opacity: 1,
-                duration: 1,
-              });
+              // После завершения анимации первого заголовка анимируем второй
+              if (titleLeftTwo.value) {
+                gsap.to(titleLeftTwo.value, {
+                  opacity: 1,
+                  y: 0,
+                  x: 0,
+                  duration: 1,
+                });
+              }
+              if (titleRight.value) {
+                gsap.to(titleRight.value, {
+                  opacity: 1,
+                  y: 0,
+                  x: 0,
+                  duration: 1,
+                  onComplete: () => {
+                    gsap.to(arrow.value, {
+                      opacity: 1,
+                      duration: 1,
+                    });
+                  },
+                });
+              }
             },
           });
-        },
-      });
+        }
+      }
     }
   }
   animation();

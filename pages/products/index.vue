@@ -11,6 +11,9 @@
 </template>
 
 <script setup>
+import { useAppStore } from "~/stores/app.js";
+const appStore = useAppStore();
+
 const runtimeConfig = useRuntimeConfig();
 const url = `${runtimeConfig.public.apiBase}/products?_format=json`;
 
@@ -27,6 +30,10 @@ const { data: catalog } = await useAsyncData("catalog", () => $fetch(url, {}), {
   },
 });
 useHead({ ...catalog.value.metadata, bodyAttrs: { class: `page--catalog` } });
+
+onMounted(() => {
+  appStore.isHeaderVisible = true;
+});
 </script>
 
 <style lang="scss" scoped>
