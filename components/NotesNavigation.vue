@@ -60,7 +60,7 @@ const scrollToSection = (e) => {
         pos = parseInt(
           panelsSection.getBoundingClientRect().top +
             bodyScrollBar.scrollTop +
-            innerHeight * 2.06
+            innerHeight * 2.07
         );
         break;
       case "protagonist":

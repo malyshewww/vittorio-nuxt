@@ -384,6 +384,12 @@ const addToCart = async () => {
     gap: 36px;
     height: 100%;
     padding: 0 140px 0 150px;
+    @media (min-width: 1024px) and (max-height: 750px) {
+      height: auto;
+    }
+    @media (min-width: 1024px) and (max-height: 850px) {
+      padding-bottom: 52px;
+    }
     @include bp-big-xl {
       padding: 0;
     }
@@ -434,6 +440,12 @@ const addToCart = async () => {
     justify-content: center;
     margin-top: 89px;
     margin-left: 50px;
+    @media (min-width: 1024px) and (max-height: 850px) {
+      margin-top: 30px;
+    }
+    @media (min-width: 1024px) and (min-height: 600px) and (max-height: 800px) {
+      margin-top: 50px;
+    }
     @include bp-xxxl {
       margin-top: 50px;
     }
@@ -461,8 +473,14 @@ const addToCart = async () => {
     border-radius: 800px 800px 0 0;
     overflow: hidden;
     padding-bottom: math.div(560, 400) * 100%;
-    @media (min-width: 1024px) and (max-height: 850px) {
-      padding-bottom: 95%;
+    @media (min-width: 1024px) and (min-height: 600px) and (max-height: 700px) {
+      padding-bottom: 100%;
+    }
+    @media (min-width: 1024px) and (min-height: 701px) and (max-height: 800px) {
+      padding-bottom: 120%;
+    }
+    @media (min-width: 1024px) and (max-height: 800px) {
+      padding-bottom: 130%;
     }
     @include bp-xl {
       padding-bottom: math.div(440, 335) * 100%;
