@@ -9,7 +9,7 @@
 </template>
 
 <script setup>
-defineEmits(["update:modelValue"]);
+const emit = defineEmits(["update:modelValue"]);
 
 defineProps({
   modelValue: {

@@ -67,6 +67,7 @@ onMounted(() => {
     }
   }
   function checkScreenWidth() {
+    // window.matchMedia("(max-width: 1024px)").matches
     if (window.innerWidth < 1024) {
       initializeSwiper();
     } else if (window.innerWidth > 1024) {
