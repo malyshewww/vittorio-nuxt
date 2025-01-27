@@ -4,7 +4,7 @@
 			.swiper-wrapper
 				.swiper-slide.fragrances-slide(v-for="(item, idx) in countries" :key="idx" :data-slide-key="item.key")
 					.fragrances-slide__body
-						.fragrances-slide__image.ibg(v-html="item.field_images[0].markup")
+						nuxt-link(:to="item.url" v-html="item.field_images[0].markup").fragrances-slide__image.ibg
 							//- picture
 							//- 	img(:src="`/images/notes/${item.img}.jpg`" :alt="item.title" loading="lazy")
 						.fragrances-slide__content

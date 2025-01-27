@@ -7,12 +7,12 @@
 				.preview-note__title-mobile(v-if="product.title")
 					span(v-html="product.title")
 				.preview-note__image-wrap
-					.preview-note__image.ibg(v-if="product.field_image_on_gradient" v-html="product.field_image_on_gradient[0].markup")
+					nuxt-link.preview-note__image.ibg(v-if="product.field_image_on_gradient" :to="product.url" v-html="product.field_image_on_gradient[0].markup")
 						//- img(:src="`/images/main/legend_fragment.jpg`" alt="fragment")
 					nuxt-link(:to="product.url").main-note__circle
 				.preview-note__description(v-if="product.field_title_on_gradient" v-html="product.field_title_on_gradient")
 				UiLinkLine(text="Узнать больше" :path="product.url" class-names="preview-note__link short-link")
-			.main-note__image.ibg(v-if="product.field_bg_image" v-html="product.field_bg_image[0].markup")
+			nuxt-link.main-note__image.ibg(v-if="product.field_bg_image" :to="product.url" v-html="product.field_bg_image[0].markup")
 				//- img(:src="`/images/main/legend_scene.jpg`" alt="product")
 		section.note-card.info-note
 			.info-note__content
@@ -136,6 +136,7 @@ const addToCart = async () => {
   }
   &__image {
     width: 50vw;
+    display: block;
     //   padding-bottom: math.div(980, 960) * 100%;
     @include bp-xxxl {
       width: 40vw;
@@ -313,6 +314,7 @@ const addToCart = async () => {
   }
   &__image {
     height: 100%;
+    display: block;
     padding-bottom: math.div(320, 270) * 100%;
     @include bp-xl {
       width: 100%;
