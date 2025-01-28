@@ -1,7 +1,5 @@
 <template lang="pug">
 	.notes
-		//- .note-cards-first
-		//- 	NoteCard(:product="products[0]")
 		#panels
 			.note-cards
 				NoteCard(v-for="(item, index) in products" :key="item.uuid" :product="item")
@@ -15,6 +13,7 @@ const appStore = useAppStore();
 const scrollY = ref(appStore.scrollY);
 
 const newScrollPos = ref(0);
+
 watch(
   () => appStore.scrollY,
   (val) => {

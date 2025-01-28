@@ -5,6 +5,7 @@ export const useAppStore = defineStore("app", () => {
   const isMobile = ref(false);
   const isDisabledBurger = ref(false);
   const isDisabledButtonCart = ref(false);
+  const currentHash = ref("");
   return {
     isHeaderVisible,
     scrollY,
@@ -12,5 +13,6 @@ export const useAppStore = defineStore("app", () => {
     isMobile,
     isDisabledBurger,
     isDisabledButtonCart,
+    currentHash,
   };
 });

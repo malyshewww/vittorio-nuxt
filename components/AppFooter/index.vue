@@ -35,8 +35,6 @@ const { links } = mainInfoStore;
 // eslint-disable-next-line
 const { field_e_mail, field_phone } = links;
 
-console.log(links);
-
 // eslint-disable-next-line
 const route = useRoute();
 

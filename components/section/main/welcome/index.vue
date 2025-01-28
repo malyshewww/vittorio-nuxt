@@ -310,7 +310,7 @@ function toggleHiddenBlock() {
       background: transparent url("/images/noise.gif") repeat 0 0;
       background-repeat: repeat;
       z-index: 5;
-      opacity: 0.1;
+      opacity: 0.06;
     }
     @include bp-xl {
       position: relative;

@@ -6,7 +6,6 @@
 					li.notes-navigation__item.swiper-slide(v-for="(item, index) in list" :key="index")
 						a(:href="item.path" @click.prevent="scrollToSection($event)").notes-navigation__link {{item.title}}
 		UiButtonPrimary(:is-link="true" title="Полная коллекция" path="/products" class-names="btn-small")
-
 </template>
 
 <script setup>
@@ -37,6 +36,8 @@ const initializeSwiper = () => {
   });
 };
 
+const router = useRouter();
+
 // eslint-disable-next-line
 const scrollToSection = (e) => {
   const { bodyScrollBar } = useScrollbar();
@@ -46,8 +47,8 @@ const scrollToSection = (e) => {
   const targetElement = document.querySelector(targetId);
   // По возможности переписать костыль для десктопа
   if (targetElement) {
-    const id = targetElement.getAttribute("id");
     const panelsSection = document.querySelector("#panels");
+    const id = targetElement.getAttribute("id");
     const { innerHeight } = window;
     let pos;
     switch (id) {

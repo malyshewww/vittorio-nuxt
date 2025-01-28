@@ -15,6 +15,8 @@ const appStore = useAppStore();
 
 const route = useRoute();
 
+const router = useRouter();
+
 const nuxtApp = useNuxtApp();
 
 nuxtApp.hook("page:finish", () => {
@@ -25,6 +27,29 @@ nuxtApp.hook("page:finish", () => {
     });
   }
 });
+
+watch(
+  () => route.hash,
+  (hash) => {
+    appStore.currentHash = hash;
+    console.log("new hash", hash);
+  }
+);
+
+const onScroll = () => {
+  const sections = document.querySelectorAll("#panels .note-sections");
+  sections.forEach((section) => {
+    const element = document.getElementById(section.id);
+    let scrollPosition = window.scrollY;
+    if (
+      element &&
+      element.getBoundingClientRect().top + window.scrollY <= scrollPosition
+    ) {
+      console.log(element);
+      router.push({ hash: `#${section.id}` });
+    }
+  });
+};
 
 onMounted(() => {
   let initialPosition = window.scrollY;
@@ -40,6 +65,7 @@ onMounted(() => {
   watch(
     () => route.fullPath,
     () => {
+      appStore.isHeaderVisible = true;
       if (!route.hash) {
         window.scrollTo({
           top: 0,
@@ -48,7 +74,29 @@ onMounted(() => {
       }
     }
   );
+  // scrollNav();
+  // if (route.hash) {
+  //   appStore.currentHash = route.hash;
+  //   const element = document.querySelector(appStore.currentHash);
+  //   if (element) {
+  //     element.scrollIntoView({ behavior: "smooth" });
+  //   }
+  // }
+  // window.addEventListener("scroll", onScroll);
+  // if (appStore.currentHash != "") {
+  //   appStore.currentHash = route.hash;
+  //   const target = document.querySelector(`${appStore.currentHash}`);
+  //   if (target) {
+  //     window.scrollTo({
+  //       top: target.getBoundingClientRect().top,
+  //       behavior: "smooth",
+  //     });
+  //   }
+  // }
 });
+// onUnmounted(() => {
+//   window.removeEventListener("scroll", onScroll);
+// });
 </script>
 
 <style lang="scss">

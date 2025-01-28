@@ -28,6 +28,7 @@
       "vue-router": "^4.4.5"
    },
    "devDependencies": {
+      "@vue/language-plugin-pug": "^2.2.0",
       "autoprefixer": "^10.4.20",
       "maska": "^3.0.4",
       "node-sass": "^9.0.0",

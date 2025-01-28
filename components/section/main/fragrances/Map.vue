@@ -240,7 +240,7 @@
 		//- defs
 			//- clippath#clip0_1015_4001
 			//- rect(width='1310', height='705', fill='white')
-	.marker(v-for="(item, index) in countries" :key="index" :class="`marker-${item.key}`" :data-active="activeArea == item.key" :data-marker-key="item.key" @click="selectMarker(item.key, index)" @mouseenter="hoverMarker(item.key, index)" @mouseleave="startAutoplay(index, item.key)") 
+	a.marker(v-for="(item, index) in countries" :key="index" :href="`#${item.key}`" :class="`marker-${item.key}`" :data-active="activeArea == item.key" :data-marker-key="item.key" @click.prevent="selectMarker($event, item.key, index)" @mouseenter="hoverMarker(item.key, index)" @mouseleave="startAutoplay(index, item.key)") 
 		.marker__tooltip(v-if="item.title")
 			span(v-html="item.title") 
 </template>
@@ -267,6 +267,99 @@ watch(
     activeArea.value = newVal;
   }
 );
+
+// eslint-disable-next-line
+const scrollToSection = (e) => {
+  const { bodyScrollBar } = useScrollbar();
+  const target = e.target;
+  if (!target) return;
+  const targetId = target.getAttribute("href");
+  const targetElement = document.querySelector(targetId);
+  if (targetElement) {
+    if (window.innerWidth > 1024) {
+      const panelsSection = document.querySelector("#panels");
+      const id = targetElement.getAttribute("id");
+      const { innerHeight } = window;
+      let pos;
+      switch (id) {
+        case "legend":
+          pos = parseInt(
+            panelsSection.getBoundingClientRect().top + bodyScrollBar.scrollTop
+          );
+          break;
+        case "santal":
+          pos = parseInt(
+            panelsSection.getBoundingClientRect().top +
+              bodyScrollBar.scrollTop +
+              innerHeight * 2.07
+          );
+          break;
+        case "protagonist":
+          pos = parseInt(
+            panelsSection.getBoundingClientRect().top +
+              bodyScrollBar.scrollTop +
+              innerHeight * 4.19
+          );
+          break;
+        case "musk":
+          pos = parseInt(
+            panelsSection.getBoundingClientRect().top +
+              bodyScrollBar.scrollTop +
+              innerHeight * 6.31
+          );
+          break;
+        case "essay":
+          pos = parseInt(
+            panelsSection.getBoundingClientRect().top +
+              bodyScrollBar.scrollTop +
+              innerHeight * 8.44
+          );
+          break;
+        case "ethnos":
+          pos = parseInt(
+            panelsSection.getBoundingClientRect().top +
+              bodyScrollBar.scrollTop +
+              innerHeight * 10.57
+          );
+          break;
+        case "erato":
+          pos = parseInt(
+            panelsSection.getBoundingClientRect().top +
+              bodyScrollBar.scrollTop +
+              innerHeight * 12.69
+          );
+          break;
+        case "voice":
+          pos = parseInt(
+            panelsSection.getBoundingClientRect().top +
+              bodyScrollBar.scrollTop +
+              innerHeight * 14.82
+          );
+          break;
+        case "velvet":
+          pos = parseInt(
+            panelsSection.getBoundingClientRect().top +
+              bodyScrollBar.scrollTop +
+              innerHeight * 16.94
+          );
+          break;
+        default:
+          break;
+      }
+      bodyScrollBar.scrollTo(0, pos, 800);
+    } else {
+      const header = document.querySelector(".header");
+      window.scrollTo({
+        top:
+          targetElement.getBoundingClientRect().top +
+          window.scrollY -
+          header.clientHeight,
+        behavior: "smooth",
+      });
+    }
+  }
+};
+
 const map = ref("");
 
 const stopAutoplay = (index) => {
@@ -279,7 +372,8 @@ const startAutoplay = () => {
 };
 
 // eslint-disable-next-line
-const selectMarker = (key, index) => {
+const selectMarker = (event, key, index) => {
+  scrollToSection(event);
   if (window.innerWidth <= 1200) {
     hoverMarker(key, index);
   }

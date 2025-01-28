@@ -1,6 +1,6 @@
 <template lang="pug">
-	.note-sections
-		section.note-card.main-note(:class="`main-note--${product.key}`" :id="product.key")
+	.note-sections(:id="product.key")
+		section.note-card.main-note(:class="`main-note--${product.key}`")
 			h2.main-note__title(v-if="product.title")
 				span(v-html="product.title")
 			.main-note__preview.preview-note
@@ -130,6 +130,7 @@ const addToCart = async () => {
     z-index: 5;
     text-transform: uppercase;
     text-rendering: optimizespeed;
+    pointer-events: none;
     @include bp-xl {
       display: none;
     }

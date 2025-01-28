@@ -89,20 +89,6 @@ watch(
   }
 );
 
-// watch(
-//   () => route.query.anchor,
-//   () => {
-//     isAnchorOrQuery.value = false;
-//   }
-// );
-
-// watch(
-//   () => route.hash,
-//   () => {
-//     isAnchorOrQuery.value = false;
-//   }
-// );
-
 useHead({
   bodyAttrs: {
     class: `${isSafari.value ? "is-safari" : ""}`,
