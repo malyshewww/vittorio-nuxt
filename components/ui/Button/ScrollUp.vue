@@ -1,5 +1,5 @@
 <template lang="pug">
-	button(type="button" :class="[{'active': isButtonVisible}, {'mode': mode}]" @click="scrollTop").button-up
+	button(type="button" :class="[{'active': appStore.isButtonUpVisible}, {'mode': appStore.isButtonUpMode}]" @click="scrollTop").button-up
 </template>
 
 <script setup>
@@ -7,77 +7,24 @@ import { useAppStore } from "~/stores/app";
 
 const appStore = useAppStore();
 
-const mode = ref(false);
-
-watch(
-  () => appStore.isNavigationVisible,
-  () => {
-    if (appStore.isNavigationVisible) {
-      mode.value = true;
-    } else {
-      mode.value = false;
-    }
-  }
-);
-
-const isButtonVisible = ref(false);
-
 const route = useRoute();
 
 watch(
   () => route.fullPath,
   () => {
-    isButtonVisible.value = false;
+    appStore.isButtonUpVisible = false;
   }
 );
 
-function observerButtonUp() {
-  // Функция для показа/скрытия кнопки
-  // const heroSection = document.querySelector(".main-hero");
-  // const handleIntersection = (entries) => {
-  //    entries.forEach((entry) => {
-  //       if (!entry.isIntersecting) {
-  //          isButtonVisible.value = true;
-  //       } else {
-  //          isButtonVisible.value = false;
-  //       }
-  //    });
-  // };
-  // const observer = new IntersectionObserver(handleIntersection, {
-  //    threshold: 0,
-  // });
-  // const handleIntersectionOther = (entries) => {
-  //    entries.forEach((entry) => {
-  //       if (!entry.isIntersecting) {
-  //          isButtonVisible.value = true;
-  //       } else {
-  //          isButtonVisible.value = false;
-  //       }
-  //    });
-  // };
-  // const observerOther = new IntersectionObserver(handleIntersectionOther, {
-  //    threshold: 0,
-  // });
-  const setNewButtonState = (y) => {
-    const header = document.querySelector(".header");
-    const headerHeight = header.getBoundingClientRect().height;
-    if (y > headerHeight && y > 0) {
-      isButtonVisible.value = true;
-    } else {
-      isButtonVisible.value = false;
-    }
-  };
-  if (window.innerWidth > 1024 && route.name !== "index") {
-    const { bodyScrollBar } = useScrollbar();
-    bodyScrollBar.addListener(({ offset }) => {
-      setNewButtonState(offset.y);
-    });
+const setNewButtonState = (y) => {
+  const header = document.querySelector(".header");
+  const headerHeight = header.getBoundingClientRect().height;
+  if (y > headerHeight && y > 0) {
+    appStore.isButtonUpVisible = true;
   } else {
-    window.addEventListener("scroll", () => {
-      setNewButtonState(window.scrollY);
-    });
+    appStore.isButtonUpVisible = false;
   }
-}
+};
 
 // eslint-disable-next-line
 const scrollTop = () => {
@@ -92,9 +39,17 @@ const scrollTop = () => {
   }
 };
 onMounted(() => {
-  observerButtonUp();
+  if (window.innerWidth > 1024) {
+    const { bodyScrollBar } = useScrollbar();
+    bodyScrollBar.addListener(({ offset }) => {
+      setNewButtonState(offset.y);
+    });
+  } else {
+    window.addEventListener("scroll", () => {
+      setNewButtonState(window.scrollY);
+    });
+  }
 });
-onBeforeUnmount(() => {});
 </script>
 
 <style lang="scss" scoped>

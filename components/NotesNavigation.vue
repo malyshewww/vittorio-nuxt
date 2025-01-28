@@ -137,6 +137,17 @@ watch(
   }
 );
 
+watch(
+  () => isVisible.value,
+  (visible) => {
+    if (visible) {
+      appStore.isButtonUpMode = true;
+    } else {
+      appStore.isButtonUpMode = false;
+    }
+  }
+);
+
 const observeNavigation = () => {
   const noteCards = document.querySelector(".notes");
   const handleIntersection = ([entry]) => {
