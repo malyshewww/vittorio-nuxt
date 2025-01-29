@@ -20,20 +20,27 @@ const route = useRoute();
 
 const router = useRouter();
 
+const { scrollbar } = useScrollbar();
+
+const isBack = ref(false);
+
 nuxtApp.hook("page:loading:end", () => {
   if (window.innerWidth > 1024) {
-    const { bodyScrollBar } = useScrollbar();
     const targetElem = document.getElementById(route.query.anchor);
+    const { bodyScrollBar } = useScrollbar();
     if (route.query.anchor) {
       const targetElemPosition =
         targetElem.getBoundingClientRect().top + bodyScrollBar.scrollTop;
       bodyScrollBar.scrollTo(0, targetElemPosition, 600);
     }
+    if (isBack.value === true) {
+      anchorSection(appStore.currentHash);
+      // bodyScrollBar.scrollTo(0, 5000, 0);
+    }
   }
 });
 
 function anchorSection(hash) {
-  console.log(hash);
   const { bodyScrollBar } = useScrollbar();
   const targetElement = document.querySelector(hash);
   if (targetElement) {
@@ -65,7 +72,7 @@ function anchorSection(hash) {
         pos = parseInt(
           panelsSection.getBoundingClientRect().top +
             bodyScrollBar.scrollTop +
-            innerHeight * 6.31
+            innerHeight * 6.32
         );
         break;
       case "essay":
@@ -106,7 +113,7 @@ function anchorSection(hash) {
       default:
         break;
     }
-    bodyScrollBar.scrollTo(0, pos, 800);
+    bodyScrollBar.scrollTo(0, pos, 200);
   }
 }
 
@@ -116,25 +123,6 @@ const scroller = ref(null);
 
 const initialPosition = ref(0);
 const currentPosition = ref(0);
-
-function scrollNav() {
-  const sections = document.querySelectorAll("#panels .note-sections");
-  sections.forEach((section) => {
-    const rect = section.getBoundingClientRect();
-    if (rect.top >= 0 && rect.top <= 150) {
-      router.replace({ path: "/", query: { anchor: section.id } });
-      // router.replace({ query: { anchor: `#${section.id}` } });
-      // window.location.hash = "#" + section.id;
-      // navLinks.forEach(link => {
-      // 	link.classList.remove('current');
-      // 	if (link.getAttribute('href').substring(1) === section.id) {
-      // 		link.classList.add('current');
-      // 	}
-      // });
-    }
-  });
-  // window.addEventListener("scroll", scrollNav);
-}
 
 onMounted(() => {
   const { bodyScrollBar } = useScrollbar();
@@ -159,6 +147,7 @@ onMounted(() => {
         initialPosition.value <= currentPosition.value ? false : true;
       initialPosition.value = currentPosition.value;
     }
+    appStore.scrollY = offset.y;
     // Делегируем событие прокрутки в окно
     // window.dispatchEvent(
     //   new CustomEvent("scroll", {
@@ -166,69 +155,35 @@ onMounted(() => {
     //   })
     // );
   });
-  // scrollNav();
-  // Получаем все секции
-  // sections.forEach((section, index) => {
-  //   section.setAttribute("data-index", index + 1);
-  //   section.setAttribute(
-  //     "data-top",
-  //     bodyScrollBar.scrollTop +
-  //       section.getBoundingClientRect().top +
-  //       section.clientHeight * index +
-  //       1
-  //   );
-  // });
-
-  // Функция обратного вызова при пересечении
-  // const callback = (entries) => {
-  //   entries.forEach((entry) => {
-  //     const targetInfo = entry.boundingClientRect;
-  //     const rootBoundsInfo = entry.rootBounds;
-  //   });
-  // };
-  // const observer = new IntersectionObserver(callback, {
-  //   rootMargin: "0px",
-  //   threshold: 0,
-  // });
-  // sections.forEach((section) => {
-  //   observer.observe(section);
-  // });
-  // if (route.hash) {
-  //   anchorSection(route.hash);
-  // }
 
   watch(
-    () => route.fullPath,
-    (newVal, oldVal) => {
-      if (!route.query.anchor && !oldVal.includes("products")) {
+    () => route.path,
+    (newPath, oldPath) => {
+      if (!route.query.anchor && !oldPath.includes("products")) {
         setTimeout(() => {
           bodyScrollBar.scrollTop = 0;
           appStore.isHeaderVisible = true;
         }, 200);
       }
+      if (oldPath.includes("products")) {
+        const lastPath = oldPath.split("/").pop();
+        const arrPath = lastPath.split("-");
+        if (arrPath.length) {
+          const str = arrPath[0].trim().toLowerCase();
+          isBack.value = true;
+          appStore.currentHash = `#${str}`;
+        }
+      } else {
+        isBack.value = false;
+      }
     }
   );
-
-  // watch(
-  //   () => route.path,
-  //   (newVal, oldVal) => {
-  //     if (oldVal.includes("products")) {
-  //       const last = oldVal.split("/").pop();
-  //       const arrTitle = last?.split("-");
-  //       if (arrTitle) {
-  //         const str = arrTitle[0].trim().toLowerCase();
-  //         appStore.currentHash = `${str}`;
-  //         console.log(str);
-  //         anchorSection(`${str}`);
-  //       }
-  //     }
-  //   }
-  // );
 });
 
 onUnmounted(() => {
-  console.log("unmounted");
-  // window.removeEventListener("scroll", scrollNav);
+  if (scrollbar) {
+    scrollbar.destroy();
+  }
 });
 </script>
 

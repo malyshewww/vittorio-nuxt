@@ -103,14 +103,6 @@ export default defineNuxtConfig({
     ],
   },
   vite: {
-    // server: {
-    //    port: 8002,
-    //    host: "dev.localhost",
-    //    strictPort: true,
-    //    hmr: {
-    //       port: 8002,
-    //    },
-    // },
     css: {
       postcss: {
         plugins: [
