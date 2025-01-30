@@ -7,12 +7,12 @@
 				.preview-note__title-mobile(v-if="product.title")
 					span(v-html="product.title")
 				.preview-note__image-wrap
-					nuxt-link.preview-note__image.ibg(v-if="product.field_image_on_gradient" :to="product.url" v-html="product.field_image_on_gradient[0].markup")
+					nuxt-link.preview-note__image.ibg(v-if="product.field_image_on_gradient" :to="product.url" v-html="product.field_image_on_gradient[0].markup" @mouseenter="mouseEnter" @mouseleave="mouseLeave")
 						//- img(:src="`/images/main/legend_fragment.jpg`" alt="fragment")
-					nuxt-link(:to="product.url").main-note__circle
+					nuxt-link(:to="product.url" @mouseenter="mouseEnter" @mouseleave="mouseLeave").main-note__circle
 				.preview-note__description(v-if="product.field_title_on_gradient" v-html="product.field_title_on_gradient")
 				UiLinkLine(text="Узнать больше" :path="product.url" class-names="preview-note__link short-link")
-			nuxt-link.main-note__image.ibg(v-if="product.field_bg_image" :to="product.url" v-html="product.field_bg_image[0].markup")
+			nuxt-link.main-note__image.ibg(v-if="product.field_bg_image" :to="product.url" v-html="product.field_bg_image[0].markup" @mouseenter="mouseEnter" @mouseleave="mouseLeave")
 				//- img(:src="`/images/main/legend_scene.jpg`" alt="product")
 		section.note-card.info-note
 			.info-note__content
@@ -48,8 +48,11 @@
 
 <script setup>
 import { useCartStore } from "~/stores/cart";
+import { useAppStore } from "~/stores/app";
 
 const cartStore = useCartStore();
+
+const appStore = useAppStore();
 
 const props = defineProps({
   product: {
@@ -73,6 +76,14 @@ const formData = {
 const cartData = {
   image: props.product.field_image_product_front[0].markup,
   volume: props.product.volume,
+};
+
+const mouseEnter = () => {
+  appStore.currentHash = `#${props.product.key}`;
+};
+
+const mouseLeave = () => {
+  appStore.currentHash = "";
 };
 
 // eslint-disable-next-line

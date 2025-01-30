@@ -12,7 +12,7 @@
 						ul.menu-notes__list
 							li.menu-notes__item(v-for="(item, index) in menuProduct" :key="index")
 								.menu-notes__num {{setNumber(index+1)}}
-								nuxt-link(:to="item.url").menu-notes__link
+								nuxt-link(:to="item.url" @mouseenter="mouseEnter(item.url)" @mouseleave="mouseLeave").menu-notes__link
 									span(v-html="item.title")
 				.menu-header__bottom
 					.menu-header__actions
@@ -54,6 +54,21 @@ watch(
     bodyLock(menuStore.isOpen);
   }
 );
+
+const mouseEnter = (url) => {
+  const lastPath = url.split("/").pop();
+  const arrPath = lastPath.split("-");
+  const str = arrPath[0].trim().toLowerCase();
+  appStore.currentHash = `#${str}`;
+  appStore.isBackWithAroma = false;
+  // console.log(appStore.currentHash);
+};
+
+const mouseLeave = () => {
+  appStore.currentHash = "";
+  appStore.isBackWithAroma = false;
+  // console.log("leave");
+};
 
 const goToAnchor = (link) => {
   if (window.innerWidth > 1024) {

@@ -75,8 +75,6 @@ const loadCart = () => {
 
 const route = useRoute();
 
-// const isAnchorOrQuery = ref(route.query.anchor || route.hash ? true : false);
-
 watch(
   () => route.path,
   () => {

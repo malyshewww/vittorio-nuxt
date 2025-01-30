@@ -42,6 +42,8 @@ const appStore = useAppStore();
 
 // eslint-disable-next-line
 const openMenu = () => {
+  appStore.currentHash = null;
+  appStore.isBackWithAroma = false;
   appStore.isDisabledBurger = !appStore.isDisabledBurger;
   setTimeout(() => {
     appStore.isDisabledBurger = !appStore.isDisabledBurger;

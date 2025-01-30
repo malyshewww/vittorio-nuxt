@@ -19,8 +19,6 @@ const router = useRouter();
 
 const nuxtApp = useNuxtApp();
 
-const isBack = ref(false);
-
 nuxtApp.hook("page:loading:end", () => {
   if (!route.hash) {
     window.scrollTo({
@@ -28,9 +26,9 @@ nuxtApp.hook("page:loading:end", () => {
       behavior: "smooth",
     });
   }
-  if (isBack.value === true) {
-    anchorSectionMobile(appStore.currentHash);
-  }
+  // if (isBack.value === true) {
+  //   anchorSectionMobile(appStore.currentHash);
+  // }
 });
 
 function anchorSectionMobile(hash) {
@@ -67,24 +65,23 @@ onMounted(() => {
     () => route.fullPath,
     (newPath, oldPath) => {
       appStore.isHeaderVisible = true;
-      console.log(route);
-      if (!route.hash && !oldPath.includes("products")) {
+      if (!route.hash) {
         window.scrollTo({
           top: 0,
           behavior: "smooth",
         });
       }
-      if (oldPath.includes("products")) {
-        const lastPath = oldPath.split("/").pop();
-        const arrPath = lastPath.split("-");
-        if (arrPath.length) {
-          const str = arrPath[0].trim().toLowerCase();
-          isBack.value = true;
-          appStore.currentHash = `#${str}`;
-        }
-      } else {
-        isBack.value = false;
-      }
+      // if (oldPath.includes("products")) {
+      //   const lastPath = oldPath.split("/").pop();
+      //   const arrPath = lastPath.split("-");
+      //   if (arrPath.length) {
+      //     const str = arrPath[0].trim().toLowerCase();
+      //     isBack.value = true;
+      //     appStore.currentHash = `#${str}`;
+      //   }
+      // } else {
+      //   isBack.value = false;
+      // }
     }
   );
   if (route.hash) {

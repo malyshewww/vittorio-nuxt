@@ -6,6 +6,7 @@ export const useAppStore = defineStore("app", () => {
   const isDisabledBurger = ref(false);
   const isDisabledButtonCart = ref(false);
   const currentHash = ref("");
+  const isBackWithAroma = ref(false);
   const isButtonUpVisible = ref(false);
   const isButtonUpMode = ref(false);
   return {
@@ -18,5 +19,6 @@ export const useAppStore = defineStore("app", () => {
     currentHash,
     isButtonUpVisible,
     isButtonUpMode,
+    isBackWithAroma,
   };
 });

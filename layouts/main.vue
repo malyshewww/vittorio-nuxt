@@ -22,8 +22,6 @@ const router = useRouter();
 
 const { scrollbar } = useScrollbar();
 
-const isBack = ref(false);
-
 nuxtApp.hook("page:loading:end", () => {
   if (window.innerWidth > 1024) {
     const targetElem = document.getElementById(route.query.anchor);
@@ -33,9 +31,8 @@ nuxtApp.hook("page:loading:end", () => {
         targetElem.getBoundingClientRect().top + bodyScrollBar.scrollTop;
       bodyScrollBar.scrollTo(0, targetElemPosition, 600);
     }
-    if (isBack.value === true) {
+    if (appStore.isBackWithAroma === true && appStore.currentHash !== "") {
       anchorSection(appStore.currentHash);
-      // bodyScrollBar.scrollTo(0, 5000, 0);
     }
   }
 });
@@ -159,23 +156,27 @@ onMounted(() => {
   watch(
     () => route.path,
     (newPath, oldPath) => {
-      if (!route.query.anchor && !oldPath.includes("products")) {
+      if (!route.query.anchor || oldPath.split("/").length > 1) {
         setTimeout(() => {
           bodyScrollBar.scrollTop = 0;
           appStore.isHeaderVisible = true;
         }, 200);
       }
-      if (oldPath.includes("products")) {
+      if (oldPath.includes("products") && appStore.currentHash) {
         const lastPath = oldPath.split("/").pop();
         const arrPath = lastPath.split("-");
+        appStore.isBackWithAroma = true;
         if (arrPath.length) {
-          const str = arrPath[0].trim().toLowerCase();
-          isBack.value = true;
-          appStore.currentHash = `#${str}`;
+          // const str = arrPath[0].trim().toLowerCase();
+          // appStore.currentHash = `#${str}`;
+        } else {
+          appStore.isBackWithAroma = false;
         }
       } else {
-        isBack.value = false;
+        appStore.isBackWithAroma = false;
       }
+      // console.log("appStore.isBackWithAroma", appStore.isBackWithAroma);
+      // console.log("appStore.currentHash", appStore.currentHash);
     }
   );
 });
