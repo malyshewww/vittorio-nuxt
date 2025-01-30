@@ -4,7 +4,7 @@
 			li.social__item(v-if="links.field_vk")
 				a(:href="links.field_vk" target="_blank").social__link Vk
 			li.social__item(v-if="links.field_ok")
-				a(:href="links.field_ok" target="_blank").social__link Ok
+				a(:href="links.field_ok" target="_blank").social__link Ig
 			li.social__item(v-if="links.field_telegram")
 				a(:href="links.field_telegram" target="_blank").social__link Tg
 </template>
