@@ -41,6 +41,7 @@ const initializeSlider = () => {
     gallerySwiper.value = new Swiper(gallerySlider.value, {
       modules: [Navigation],
       speed: 800,
+      watchOverflow: true,
       navigation: {
         nextEl: buttonNext,
         prevEl: buttonPrev,
@@ -64,23 +65,23 @@ const initializeSlider = () => {
         },
       },
       on: {
-        init: function (swiper) {
-          const slides = swiper.slides;
-          const sliderControls =
-            swiper.navigation.prevEl.parentNode ||
-            swiper.navigation.nextEl.parentNode;
-          const breakpoints = swiper.passedParams.breakpoints;
-          for (const param in breakpoints) {
-            const value = breakpoints[param];
-            if (
-              slides.length <= value.slidesPerView &&
-              param <= window.innerWidth
-            ) {
-              swiper.navigation.destroy();
-              sliderControls.remove();
-            }
-          }
-        },
+        // init: function (swiper) {
+        //   const slides = swiper.slides;
+        //   const sliderControls =
+        //     swiper.navigation.prevEl.parentNode ||
+        //     swiper.navigation.nextEl.parentNode;
+        //   const breakpoints = swiper.passedParams.breakpoints;
+        //   for (const param in breakpoints) {
+        //     const value = breakpoints[param];
+        //     if (
+        //       slides.length <= value.slidesPerView &&
+        //       param <= window.innerWidth
+        //     ) {
+        //       swiper.navigation.destroy();
+        //       sliderControls.remove();
+        //     }
+        //   }
+        // },
       },
     });
   }
@@ -88,18 +89,6 @@ const initializeSlider = () => {
 onMounted(() => {
   initializeSlider();
   Fancybox.bind(`[data-fancybox="gallery"]`, { Hash: false });
-  const tables = document.querySelectorAll(".content table");
-  function tableWrap() {
-    if (window.matchMedia("(max-width:767.98px)").matches) {
-      for (const table of tables) {
-        const tableWrap = document.createElement("div");
-        tableWrap.classList.add("table-wrap");
-        table.parentNode.insertBefore(tableWrap, table);
-        tableWrap.appendChild(table);
-      }
-    }
-  }
-  tableWrap();
 });
 </script>
 
