@@ -197,7 +197,7 @@ onMounted(() => {});
 @use "assets/scss/vars.scss" as *;
 .app-cart {
   position: fixed;
-  z-index: 30;
+  z-index: 31;
   top: 0;
   right: 0;
   height: 100dvh;
