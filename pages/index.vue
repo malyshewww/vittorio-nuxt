@@ -13,6 +13,7 @@ const url = `${runtimeConfig.public.apiBase}/wsapi/packs/front?_format=json`;
 const { data: front } = await useAsyncData("front", () => $fetch(url, {}), {
   transform: (res) => {
     const { data, metatag } = res;
+    console.log(data);
     const countries = computed(() => {
       return data.country_front.map((item) => {
         const arrTitle = item.title.split(" ");

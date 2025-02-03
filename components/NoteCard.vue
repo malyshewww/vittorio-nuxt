@@ -74,7 +74,7 @@ const formData = {
 };
 
 const cartData = {
-  image: props.product.field_image_product_front[0].markup,
+  image: props.product.field_images[0].markup,
   volume: props.product.volume,
 };
 
