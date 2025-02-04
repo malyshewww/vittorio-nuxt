@@ -123,9 +123,9 @@ const currentPosition = ref(0);
 
 onMounted(() => {
   const { bodyScrollBar } = useScrollbar();
-  setTimeout(() => {
-    ScrollTrigger.refresh();
-  }, 1000);
+  // setTimeout(() => {
+  //   ScrollTrigger.refresh();
+  // }, 1000);
   ScrollTrigger.scrollerProxy(scroller.value, {
     scrollTop(value) {
       if (arguments.length > 0) {
