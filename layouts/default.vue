@@ -54,17 +54,22 @@ let initialPosition = 0;
 
 const scroll = () => {
   let currentPosition = window.scrollY;
+  const fullScrollPos = () => {
+    // Высота видимой части окна
+    const viewportHeight = window.innerHeight;
+    // Высота всей страницы
+    const documentHeight = document.documentElement.scrollHeight;
+    return currentPosition + viewportHeight >= documentHeight;
+  };
   if (route.name !== "index") {
-    if (currentPosition > initialPosition && initialPosition > 0) {
+    if (
+      (currentPosition > initialPosition && initialPosition > 0) ||
+      fullScrollPos()
+    ) {
       appStore.isHeaderVisible = false;
     } else {
       appStore.isHeaderVisible = true;
     }
-    // if (initialPosition <= currentPosition && initialPosition > 0) {
-    //   appStore.isHeaderVisible = false;
-    // } else {
-    //   appStore.isHeaderVisible = true;
-    // }
   }
   initialPosition = currentPosition;
 };
