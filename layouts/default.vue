@@ -54,16 +54,22 @@ let initialPosition = 0;
 
 const scroll = () => {
   let currentPosition = window.scrollY;
+  // Функция для iphone (устраняем проблемы показа шапки при условии, что мы доскролили до конца страницы)
   const fullScrollPos = () => {
-    // Высота видимой части окна
     const viewportHeight = window.innerHeight;
-    // Высота всей страницы
     const documentHeight = document.documentElement.scrollHeight;
     return currentPosition + viewportHeight >= documentHeight;
   };
+  const headerHeight = () => {
+    const headerHeight = getComputedStyle(
+      document.documentElement
+    ).getPropertyValue("--header-height");
+    const cleanedNumber = headerHeight.trim().replace("px", "");
+    return Number(cleanedNumber);
+  };
   if (route.name !== "index") {
     if (
-      (currentPosition > initialPosition && initialPosition > 0) ||
+      (currentPosition > initialPosition && initialPosition > headerHeight()) ||
       fullScrollPos()
     ) {
       appStore.isHeaderVisible = false;
