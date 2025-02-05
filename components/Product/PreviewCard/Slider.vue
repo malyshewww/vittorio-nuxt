@@ -7,8 +7,8 @@
 		.preview-slider__pagination.image-pagination(v-if="images.length > 1")
 			ul.image-pagination__list
 				li.image-pagination__item(v-for="(image, idx) in images" :key="idx" :class="{active: currentImage === idx}" @click="switchImages(idx)")
-		.swiper-pagination-wrap
-			.swiper-pagination(ref="imagePagination" v-if="images.length > 1" )
+		//- .swiper-pagination-wrap
+		//- 	.swiper-pagination(ref="imagePagination" v-if="images.length > 1" )
 </template>
 
 <script setup>
@@ -42,40 +42,51 @@ const initialState = () => {
 
 const imageSlider = ref("");
 const imageSwiper = ref("");
-const imagePagination = ref("");
+// const imagePagination = ref("");
+
+function initializeSwiper() {
+  imageSwiper.value = new Swiper(imageSlider.value, {
+    modules: [Pagination],
+    wrapperClass: "image-switch",
+    slideClass: "image-switch__item",
+    spaceBetween: 10,
+    slidesPerView: 1,
+    speed: 800,
+    centeredSlides: true,
+    on: {
+      slideChange: function (swiper) {
+        const activeIndex = swiper.activeIndex;
+        switchImages(activeIndex);
+      },
+    },
+    // pagination: {
+    //   el: imagePagination.value,
+    //   clickable: true,
+    // },
+  });
+}
+function destroySwiper() {
+  if (imageSwiper.value) {
+    imageSwiper.value.destroy();
+    imageSwiper.value = null;
+  }
+}
+function checkScreenWidth() {
+  // window.matchMedia("(max-width: 1024px)").matches
+  if (window.innerWidth < 1024) {
+    initializeSwiper();
+  } else if (window.innerWidth > 1024) {
+    destroySwiper();
+  }
+}
 
 onMounted(() => {
-  function initializeSwiper() {
-    imageSwiper.value = new Swiper(imageSlider.value, {
-      modules: [Pagination],
-      wrapperClass: "image-switch",
-      slideClass: "image-switch__item",
-      spaceBetween: 10,
-      slidesPerView: 1,
-      speed: 800,
-      centeredSlides: true,
-      pagination: {
-        el: imagePagination.value,
-        clickable: true,
-      },
-    });
-  }
-  function destroySwiper() {
-    if (imageSwiper.value) {
-      imageSwiper.value.destroy();
-      imageSwiper.value = null;
-    }
-  }
-  function checkScreenWidth() {
-    // window.matchMedia("(max-width: 1024px)").matches
-    if (window.innerWidth < 1024) {
-      initializeSwiper();
-    } else if (window.innerWidth > 1024) {
-      destroySwiper();
-    }
-  }
   checkScreenWidth();
   window.addEventListener("resize", checkScreenWidth);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("resize", checkScreenWidth);
 });
 </script>
 
@@ -191,7 +202,10 @@ onMounted(() => {
   transform: translateY(100%);
   transition: opacity $time * 2 $ttm, transform $time * 2 $ttm;
   @include bp-xl {
-    display: none;
+    pointer-events: none;
+    transform: translateY(0);
+    opacity: 1;
+    // display: none;
   }
   &__list {
     @include reset-list;
