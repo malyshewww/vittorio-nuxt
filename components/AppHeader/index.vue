@@ -4,12 +4,12 @@
 			.header__body
 				button(type="button" @click="openMenu" :class="{disabled: appStore.isDisabledBurger}").header__burger.burger
 					span.burger__lines
-				nuxt-link(to="/" v-if="$route.name === 'index'").header__logo.logo
+				nuxt-link(v-if="$route.name === 'index'" to="/" @click="removeHash").header__logo.logo
 					picture
 						source(:srcset="`/images/${isColor == 'white' ? 'logo-white' : 'logo-dark'}.svg`" media="(min-width: 767.98px)")
 						source(:srcset="`/images/${isColor == 'white' ? 'logo-white' : 'logo-dark'}.svg`" media="(min-width: 300px)")
 						img(:src="`/images/${isColor === 'white' ? 'logo-white' : 'logo-dark'}.svg`")
-				nuxt-link(to="/" v-else).header__logo.logo
+				nuxt-link(v-else to="/" @click="removeHash").header__logo.logo
 					picture
 						source(:srcset="`/images/logo-dark.svg`" media="(min-width: 767.98px)")
 						source(:srcset="`/images/logo-dark.svg`" media="(min-width: 300px)")
@@ -69,6 +69,11 @@ watch(
     observeHeader();
   }
 );
+
+const removeHash = () => {
+  appStore.currentHash = null;
+  appStore.isBackWithAroma = false;
+};
 
 // const device = useDevice();
 
