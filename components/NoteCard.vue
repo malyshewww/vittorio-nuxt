@@ -218,7 +218,19 @@ const addToCart = async () => {
   gap: 50px;
   // padding: 120px 50px;
   padding: 12.245vh 2.604vw;
+  position: relative;
   background: radial-gradient(92.2% 92.2% at 30% 40%, #6a4464 0%, #382d32 100%);
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent url("/images/noise.png") repeat-y 0 0;
+    background-repeat: repeat;
+    background-blend-mode: soft-light;
+    pointer-events: none;
+  }
   @media (min-width: 1024px) and (max-height: 800px) {
     padding: 20px 2.604vw;
   }

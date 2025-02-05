@@ -50,17 +50,27 @@ function anchorSectionMobile(hash) {
 //   }
 // );
 
-onMounted(() => {
-  let initialPosition = window.scrollY;
+let initialPosition = 0;
+
+const scroll = () => {
   let currentPosition = window.scrollY;
-  window.addEventListener("scroll", () => {
-    if (route.name !== "index") {
-      currentPosition = window.scrollY;
-      appStore.isHeaderVisible =
-        initialPosition <= currentPosition ? false : true;
-      initialPosition = currentPosition;
+  if (route.name !== "index") {
+    if (currentPosition > initialPosition && initialPosition > 0) {
+      appStore.isHeaderVisible = false;
+    } else {
+      appStore.isHeaderVisible = true;
     }
-  });
+    // if (initialPosition <= currentPosition && initialPosition > 0) {
+    //   appStore.isHeaderVisible = false;
+    // } else {
+    //   appStore.isHeaderVisible = true;
+    // }
+  }
+  initialPosition = currentPosition;
+};
+
+onMounted(() => {
+  window.addEventListener("scroll", scroll);
   watch(
     () => route.fullPath,
     (newPath, oldPath) => {
@@ -87,6 +97,10 @@ onMounted(() => {
   if (route.hash) {
     anchorSectionMobile(route.hash);
   }
+});
+
+onUnmounted(() => {
+  window.removeEventListener("scroll", scroll);
 });
 </script>
 

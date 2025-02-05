@@ -102,6 +102,7 @@ onMounted(() => {
     replaceDevice();
   }, 1000);
   window.addEventListener("resize", watchResize);
+  addTouchClass();
 });
 </script>
 

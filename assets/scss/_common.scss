@@ -29,3 +29,7 @@
 body.is-safari input {
   border-radius: 0 !important;
 }
+
+html._touch body.lock {
+  overflow: hidden;
+}
