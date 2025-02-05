@@ -77,7 +77,7 @@ const errors = ref(0);
 
 // eslint-disable-next-line
 async function formSend() {
-  console.log("formdat", formData);
+  // console.log("formdat", formData);
   const { error } = formValidate();
   if (error === 0) {
     const options = {

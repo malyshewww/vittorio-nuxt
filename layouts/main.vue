@@ -180,12 +180,6 @@ onMounted(() => {
     }
   );
 });
-
-onUnmounted(() => {
-  if (scrollbar) {
-    scrollbar.destroy();
-  }
-});
 </script>
 
 <style lang="scss">
