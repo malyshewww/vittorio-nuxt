@@ -7,7 +7,7 @@
           .footer__main.main-footer(v-if="route.name !== 'contacts'")
             AppFooterSubscribeForm
             .main-footer__middle
-              nuxt-link(to="/").main-footer__logo
+              nuxt-link(to="/" @click="removeHash").main-footer__logo
                 img(:src="`/images/footer-logo.svg`" alt="логотип")
               UiSocial(class-names="footer-social")
             .main-footer__contacts.footer-contacts
@@ -26,8 +26,15 @@
 
 <script setup>
 import { useMainInfoStore } from "~/stores/maininfo";
+import { useAppStore } from "~/stores/app";
 
 const mainInfoStore = useMainInfoStore();
+
+const appStore = useAppStore();
+
+const removeHash = () => {
+  appStore.removeHash();
+};
 
 // eslint-disable-next-line
 const { links } = mainInfoStore;

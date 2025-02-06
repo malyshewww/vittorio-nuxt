@@ -40,10 +40,13 @@ const menuStore = useMenuStore();
 const cartStore = useCartStore();
 const appStore = useAppStore();
 
+const removeHash = () => {
+  appStore.removeHash();
+};
+
 // eslint-disable-next-line
 const openMenu = () => {
-  appStore.currentHash = null;
-  appStore.isBackWithAroma = false;
+  removeHash();
   appStore.isDisabledBurger = !appStore.isDisabledBurger;
   setTimeout(() => {
     appStore.isDisabledBurger = !appStore.isDisabledBurger;
@@ -69,11 +72,6 @@ watch(
     observeHeader();
   }
 );
-
-const removeHash = () => {
-  appStore.currentHash = null;
-  appStore.isBackWithAroma = false;
-};
 
 // const device = useDevice();
 

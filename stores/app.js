@@ -9,6 +9,10 @@ export const useAppStore = defineStore("app", () => {
   const isBackWithAroma = ref(false);
   const isButtonUpVisible = ref(false);
   const isButtonUpMode = ref(false);
+  const removeHash = () => {
+    currentHash.value = null;
+    isBackWithAroma.value = false;
+  };
   return {
     isHeaderVisible,
     scrollY,
@@ -20,5 +24,6 @@ export const useAppStore = defineStore("app", () => {
     isButtonUpVisible,
     isButtonUpMode,
     isBackWithAroma,
+    removeHash,
   };
 });
