@@ -22,6 +22,8 @@ const router = useRouter();
 
 const { scrollbar } = useScrollbar();
 
+const { $ScrollTrigger: ScrollTrigger } = useNuxtApp();
+
 nuxtApp.hook("page:loading:end", () => {
   if (window.innerWidth > 1024) {
     const targetElem = document.getElementById(route.query.anchor);
@@ -36,6 +38,24 @@ nuxtApp.hook("page:loading:end", () => {
     }
   }
 });
+
+// nuxtApp.hook("page:transition:finish", () => {
+//   ScrollTrigger.refresh();
+//   if (window.innerWidth > 1024) {
+//     const targetElem = document.getElementById(route.query.anchor);
+//     const { bodyScrollBar } = useScrollbar();
+//     if (route.query.anchor) {
+//       const targetElemPosition =
+//         targetElem.getBoundingClientRect().top + bodyScrollBar.scrollTop;
+//       setTimeout(() => {
+//         bodyScrollBar.scrollTo(0, targetElemPosition, 600);
+//       }, 100);
+//     }
+//     if (appStore.isBackWithAroma === true && appStore.currentHash !== "") {
+//       anchorSection(appStore.currentHash);
+//     }
+//   }
+// });
 
 function anchorSection(hash) {
   const { bodyScrollBar } = useScrollbar();
@@ -114,8 +134,6 @@ function anchorSection(hash) {
   }
 }
 
-const { $ScrollTrigger: ScrollTrigger } = useNuxtApp();
-
 const scroller = ref(null);
 
 const initialPosition = ref(0);
@@ -123,9 +141,9 @@ const currentPosition = ref(0);
 
 onMounted(() => {
   const { bodyScrollBar } = useScrollbar();
-  // setTimeout(() => {
-  //   ScrollTrigger.refresh();
-  // }, 1000);
+  setTimeout(() => {
+    ScrollTrigger.refresh();
+  }, 1000);
   ScrollTrigger.scrollerProxy(scroller.value, {
     scrollTop(value) {
       if (arguments.length > 0) {

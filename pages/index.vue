@@ -1,9 +1,10 @@
 <template lang="pug">
-	SectionMainHero
-	.page-sections
-		SectionMainFragrances(:countries="front.countries")
-		SectionMainNotes(:products="front.products" :half="front.halfProducts")
-		SectionMainWelcome(:text="front.text")
+	div
+		SectionMainHero
+		.page-sections
+			SectionMainFragrances(:countries="front.countries")
+			SectionMainNotes(:products="front.products" :half="front.halfProducts")
+			SectionMainWelcome(:text="front.text")
 </template>
 
 <script setup>
@@ -58,6 +59,13 @@ useHead({
   bodyAttrs: {
     class: "page--home",
   },
+  meta: [
+    { name: "yandex-verification", content: "34de1046d444580b" },
+    {
+      name: "google-site-verification",
+      content: "O6dzXcg83zo52OxcVgjhULfDtpLLbDv22dmZq2ANPF4",
+    },
+  ],
 });
 
 onMounted(() => {});
