@@ -21,10 +21,11 @@ const nuxtApp = useNuxtApp();
 
 nuxtApp.hook("page:loading:end", () => {
   if (!route.hash) {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
+    // window.scrollTo({
+    //   top: 0,
+    //   behavior: "smooth",
+    // });
+    window.scrollTo(0, 0);
   }
   // if (isBack.value === true) {
   //   anchorSectionMobile(appStore.currentHash);
@@ -35,10 +36,7 @@ function anchorSectionMobile(hash) {
   const header = document.querySelector(".header");
   const targetElement = document.querySelector(hash);
   window.scrollTo({
-    top:
-      targetElement.getBoundingClientRect().top +
-      window.scrollY -
-      header.clientHeight,
+    top: targetElement.getBoundingClientRect().top + window.scrollY - header.clientHeight,
     behavior: "smooth",
   });
 }
@@ -61,17 +59,12 @@ const scroll = () => {
     return currentPosition + viewportHeight >= documentHeight;
   };
   const headerHeight = () => {
-    const headerHeight = getComputedStyle(
-      document.documentElement
-    ).getPropertyValue("--header-height");
+    const headerHeight = getComputedStyle(document.documentElement).getPropertyValue("--header-height");
     const cleanedNumber = headerHeight.trim().replace("px", "");
     return Number(cleanedNumber);
   };
   if (route.name !== "index") {
-    if (
-      (currentPosition > initialPosition && initialPosition > headerHeight()) ||
-      fullScrollPos()
-    ) {
+    if ((currentPosition > initialPosition && initialPosition > headerHeight()) || fullScrollPos()) {
       appStore.isHeaderVisible = false;
     } else {
       appStore.isHeaderVisible = true;
@@ -87,10 +80,11 @@ onMounted(() => {
     (newPath, oldPath) => {
       appStore.isHeaderVisible = true;
       if (!route.hash) {
-        window.scrollTo({
-          top: 0,
-          behavior: "smooth",
-        });
+        window.scrollTo(0, 0);
+        // window.scrollTo({
+        //   top: 0,
+        //   behavior: "smooth",
+        // });
       }
       // if (oldPath.includes("products")) {
       //   const lastPath = oldPath.split("/").pop();

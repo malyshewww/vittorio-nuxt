@@ -140,10 +140,10 @@ onMounted(() => {
     () => route.path,
     (newPath, oldPath) => {
       if (!route.query.anchor || oldPath.split("/").length > 1) {
+        bodyScrollBar.scrollTop = 0;
         setTimeout(() => {
-          bodyScrollBar.scrollTop = 0;
           appStore.isHeaderVisible = true;
-        }, 200);
+        }, 1);
       }
       if (oldPath.includes("products") && appStore.currentHash) {
         const lastPath = oldPath.split("/").pop();

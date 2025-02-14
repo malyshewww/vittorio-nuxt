@@ -69,8 +69,7 @@ onMounted(() => {
   opacity: 0;
   pointer-events: none;
   z-index: 10;
-  transition: transform $time * 2 $ttm, opacity $time * 2 $ttm,
-    bottom $time * 2 $ttm;
+  transition: transform $time * 2 $ttm, opacity $time * 2 $ttm, bottom $time * 2 $ttm;
   &.active {
     transform: translateY(0);
     opacity: 1;
