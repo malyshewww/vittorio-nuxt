@@ -3,14 +3,18 @@
 		.bottom-footer__item
 			.footer__copy © {{getFullYear}}. Vittorio 
 		.bottom-footer__item.bottom-footer__item--politic
-			UiLinkUnderLine(text="Политика конфиденциальности" path="/page/policy" :is-blank="true")
+			UiLinkUnderLine(text="Политика конфиденциальности" :path="other[0].url.href" :is-blank="true")
 		.bottom-footer__item.company-footer
 			.company-footer__caption Создание сайта:
 			a(href="https://webshop.ru/" target="_blank").company-footer__logo
 				img(:src="`/images/icons/webshop-logo.svg`" alt="логотип компании")
 </template>
 
-<script setup></script>
+<script setup>
+import { useMainInfoStore } from "~/stores/maininfo";
+const mainInfoStore = useMainInfoStore();
+const { other } = mainInfoStore;
+</script>
 
 <style lang="scss" scoped>
 @use "assets/scss/_vars" as *;

@@ -13,7 +13,7 @@
 				FormCheckbox(id="agreement-1" type="checkbox" name="agreement" :modelValue="model.agree.val" @update:modelValue="$event => (model.agree.val = $event)" :error-message="formStatus.agree.message" :is-valid="formStatus.agree.isValid")
 					template(#text)
 						| я даю согласие на обработку персональных данных в соответствии с
-						| #[UiLinkUnderLine(text="политикой обработки персональных данных" path="/page/policy" :is-blank="true" class-names="link-border")]
+						| #[UiLinkUnderLine(text="политикой обработки персональных данных" :path="other[0].url.href" :is-blank="true" class-names="link-border")]
 				FormCheckbox(id="agreement-2" type="checkbox" name="agreement-2" :modelValue="model.mailing.val" @update:modelValue="$event => (model.mailing.val = $event)" :is-valid="formStatus.mailing.isValid" :error-message="formStatus.mailing.message")
 					template(#text)
 						| я даю согласие на получение рекламных рассылок в виде e-mail, sms, push или в мессенджерах
@@ -21,6 +21,9 @@
 
 <script setup>
 import { useOrderStore } from "~/stores/cart-order";
+import { useMainInfoStore } from "~/stores/maininfo";
+const mainInfoStore = useMainInfoStore();
+const { other } = mainInfoStore;
 
 const orderStore = useOrderStore();
 

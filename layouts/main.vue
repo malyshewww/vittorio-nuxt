@@ -1,12 +1,13 @@
 <template lang="pug">
-	SectionMainHeroVideo(v-if="route.name === 'index'")
-	AppHeader
-	div(ref="scroller").scroller
-		.page
-			slot
-		AppFooter
-	UiButtonScrollUp
-	NotesNavigation
+	div
+		SectionMainHeroVideo(v-if="route.name === 'index'")
+		AppHeader
+		div(ref="scroller").scroller
+			.page
+				slot
+			AppFooter
+		UiButtonScrollUp
+		NotesNavigation
 </template>
 
 <script setup>
@@ -29,8 +30,7 @@ nuxtApp.hook("page:loading:end", () => {
     const targetElem = document.getElementById(route.query.anchor);
     const { bodyScrollBar } = useScrollbar();
     if (route.query.anchor) {
-      const targetElemPosition =
-        targetElem.getBoundingClientRect().top + bodyScrollBar.scrollTop;
+      const targetElemPosition = targetElem.getBoundingClientRect().top + bodyScrollBar.scrollTop;
       bodyScrollBar.scrollTo(0, targetElemPosition, 600);
     }
     if (appStore.isBackWithAroma === true && appStore.currentHash !== "") {
@@ -67,65 +67,31 @@ function anchorSection(hash) {
     let pos;
     switch (id) {
       case "legend":
-        pos = parseInt(
-          panelsSection.getBoundingClientRect().top + bodyScrollBar.scrollTop
-        );
+        pos = parseInt(panelsSection.getBoundingClientRect().top + bodyScrollBar.scrollTop);
         break;
       case "santal":
-        pos = parseInt(
-          panelsSection.getBoundingClientRect().top +
-            bodyScrollBar.scrollTop +
-            innerHeight * 2.07
-        );
+        pos = parseInt(panelsSection.getBoundingClientRect().top + bodyScrollBar.scrollTop + innerHeight * 2.07);
         break;
       case "protagonist":
-        pos = parseInt(
-          panelsSection.getBoundingClientRect().top +
-            bodyScrollBar.scrollTop +
-            innerHeight * 4.19
-        );
+        pos = parseInt(panelsSection.getBoundingClientRect().top + bodyScrollBar.scrollTop + innerHeight * 4.19);
         break;
       case "musk":
-        pos = parseInt(
-          panelsSection.getBoundingClientRect().top +
-            bodyScrollBar.scrollTop +
-            innerHeight * 6.32
-        );
+        pos = parseInt(panelsSection.getBoundingClientRect().top + bodyScrollBar.scrollTop + innerHeight * 6.32);
         break;
       case "essay":
-        pos = parseInt(
-          panelsSection.getBoundingClientRect().top +
-            bodyScrollBar.scrollTop +
-            innerHeight * 8.44
-        );
+        pos = parseInt(panelsSection.getBoundingClientRect().top + bodyScrollBar.scrollTop + innerHeight * 8.44);
         break;
       case "ethnos":
-        pos = parseInt(
-          panelsSection.getBoundingClientRect().top +
-            bodyScrollBar.scrollTop +
-            innerHeight * 10.57
-        );
+        pos = parseInt(panelsSection.getBoundingClientRect().top + bodyScrollBar.scrollTop + innerHeight * 10.57);
         break;
       case "erato":
-        pos = parseInt(
-          panelsSection.getBoundingClientRect().top +
-            bodyScrollBar.scrollTop +
-            innerHeight * 12.69
-        );
+        pos = parseInt(panelsSection.getBoundingClientRect().top + bodyScrollBar.scrollTop + innerHeight * 12.69);
         break;
       case "voice":
-        pos = parseInt(
-          panelsSection.getBoundingClientRect().top +
-            bodyScrollBar.scrollTop +
-            innerHeight * 14.82
-        );
+        pos = parseInt(panelsSection.getBoundingClientRect().top + bodyScrollBar.scrollTop + innerHeight * 14.82);
         break;
       case "velvet":
-        pos = parseInt(
-          panelsSection.getBoundingClientRect().top +
-            bodyScrollBar.scrollTop +
-            innerHeight * 16.94
-        );
+        pos = parseInt(panelsSection.getBoundingClientRect().top + bodyScrollBar.scrollTop + innerHeight * 16.94);
         break;
       default:
         break;
@@ -158,8 +124,7 @@ onMounted(() => {
   bodyScrollBar.addListener(({ offset }) => {
     if (route.name !== "index") {
       currentPosition.value = offset.y;
-      appStore.isHeaderVisible =
-        initialPosition.value <= currentPosition.value ? false : true;
+      appStore.isHeaderVisible = initialPosition.value <= currentPosition.value ? false : true;
       initialPosition.value = currentPosition.value;
     }
     appStore.scrollY = offset.y;

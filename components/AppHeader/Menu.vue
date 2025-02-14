@@ -23,7 +23,7 @@
 							UiStores(class-names="header-stores" :isFooterStores="true" :isMenu="true" :link-apple="links.field_goldapple" :link-letu="links.field_leturu")
 					.menu-header__inner
 						.menu-header__copy © {{getFullYear}}. Vittorio
-						UiLinkUnderLine(text="Политика конфиденциальности" path="/page/policy" :is-blank="true" class-names="link-white")
+						UiLinkUnderLine(text="Политика конфиденциальности" :path="other[0].url.href" :is-blank="true" class-names="link-white")
 </template>
 
 <script setup>
@@ -37,7 +37,7 @@ const appStore = useAppStore();
 const mainInfoStore = useMainInfoStore();
 
 // eslint-disable-next-line
-const { menuMain, menuProduct, links } = mainInfoStore;
+const { menuMain, menuProduct, links, other } = mainInfoStore;
 
 // eslint-disable-next-line
 const setNumber = (num) => {
@@ -79,10 +79,7 @@ const goToAnchor = (link) => {
       const targetElement = document.getElementById(id);
       router.push({ path: "/", query: { anchor: id } });
       if (targetElement) {
-        const targetElementPosition =
-          targetElement.getBoundingClientRect().top +
-          bodyScrollBar.scrollTop -
-          10;
+        const targetElementPosition = targetElement.getBoundingClientRect().top + bodyScrollBar.scrollTop - 10;
         setTimeout(() => {
           bodyScrollBar.scrollTo(0, targetElementPosition, 500);
         }, 1200);
