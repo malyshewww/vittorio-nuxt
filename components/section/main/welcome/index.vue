@@ -128,6 +128,11 @@ function endVideo() {
 }
 
 onMounted(() => {
+  // if (!appStore.isMobile) {
+  //   video.value.play();
+  //   isVideoAutoplay.value = true;
+  //   isVideoLoop.value = true;
+  // }
   state.textHeight = hiddenBlockContent.value.content.clientHeight;
   if (state.textHeight > hiddenBlockWrap.value.clientHeight) {
     state.isVisible = true;
@@ -245,11 +250,7 @@ function toggleHiddenBlock() {
     text-align: center;
     max-width: 65%;
     margin: 0 auto;
-    background: linear-gradient(
-      to bottom,
-      var(--bg-smoke) var(--percent),
-      var(--bg-white) var(--percent)
-    );
+    background: linear-gradient(to bottom, var(--bg-smoke) var(--percent), var(--bg-white) var(--percent));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     mix-blend-mode: screen;

@@ -88,6 +88,9 @@ export default defineNuxtConfig({
       ],
     },
   },
+  // experimental: {
+  //   watcher: "chokidar", // 'chokidar' or 'parcel' are also options
+  // },
   devServer: {
     host: "localhost",
     port: 3000,
