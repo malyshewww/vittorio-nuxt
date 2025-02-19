@@ -6,10 +6,10 @@
 					.welcome__video-wrap(ref="videoBlock")
 						.welcome__video.ibg
 							video(ref="video" :loop="isVideoLoop" :muted="isVideoMuted" playsinline :autoplay="isVideoAutoplay" :controls="isVideoControls && !isVideoMuted" @ended="endVideo()" :poster="`/images/sections/welcome/poster.jpg`")
-								source(:src="`/welcome.mp4`" type="video/mp4")
+								source(:src="`/welcome-new.mp4`" type="video/mp4")
 								p.
 									Ваш браузер не поддерживает встроенные видео. Попробуйте скачать его по
-									| #[a(href="/welcome.mp4") этой ссылке]
+									| #[a(href="/welcome-new.mp4") этой ссылке]
 						button(type="button" @click="startVideo" :class="{hidden: isVideoPlay}").welcome__video-btn
 				.container
 					.welcome__main

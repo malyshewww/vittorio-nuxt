@@ -1,10 +1,10 @@
 <template lang="pug">
 	.page-video
-      video(loop muted playsinline autoplay)
-         source(src="/hero.mp4" type="video/mp4")
-         p.
-            Ваш браузер не поддерживает встроенные видео. Попробуйте скачать его по
-            | #[a(href="/welcome.mp4") этой ссылке]
+		video(loop muted playsinline autoplay)
+				source(src="/hero.mp4" type="video/mp4")
+				p.
+					Ваш браузер не поддерживает встроенные видео. Попробуйте скачать его по
+					| #[a(href="/hero.mp4") этой ссылке]
 </template>
 
 <style lang="scss">
