@@ -105,7 +105,7 @@ onMounted(() => {
     "contextmenu",
     function handler(e) {
       const target = e.target;
-      if (target.tagName === "A" || target.tagName === "IMG" || target.tagName === "VIDEO") {
+      if (target.tagName === "A" || target.tagName === "IMG") {
         e.preventDefault();
       }
       // document.body.removeEventListener("contextmenu", handler);
