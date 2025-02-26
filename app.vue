@@ -101,6 +101,12 @@ onMounted(() => {
   }, 1000);
   window.addEventListener("resize", watchResize);
   addTouchClass();
+  document.body.addEventListener("contextmenu", (e) => {
+    const target = e.target;
+    if (target.tagName === "A" || target.tagName === "IMG" || target.tagName === "VIDEO") {
+      e.preventDefault();
+    }
+  });
 });
 </script>
 
