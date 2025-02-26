@@ -101,12 +101,35 @@ onMounted(() => {
   }, 1000);
   window.addEventListener("resize", watchResize);
   addTouchClass();
-  document.body.addEventListener("contextmenu", (e) => {
-    const target = e.target;
-    if (target.tagName === "A" || target.tagName === "IMG" || target.tagName === "VIDEO") {
-      e.preventDefault();
+  document.body.addEventListener(
+    "contextmenu",
+    function handler(e) {
+      const target = e.target;
+      if (target.tagName === "A" || target.tagName === "IMG" || target.tagName === "VIDEO") {
+        e.preventDefault();
+      }
+      // document.body.removeEventListener("contextmenu", handler);
     }
-  });
+    // { once: true }
+  );
+  function blockImageOpeningInNewTab() {
+    document.addEventListener("click", function (event) {
+      // Проверяем, была ли нажата клавиша Ctrl и левая кнопка мыши
+      if (event.ctrlKey && event.button === 0) {
+        // Проверяем, был ли клик на изображении, видео или ссылке
+        if (
+          event.target.tagName.toLowerCase() === "img" ||
+          event.target.tagName.toLowerCase() === "video" ||
+          event.target.tagName.toLowerCase() === "a"
+        ) {
+          // Отменяем стандартное поведение браузера
+          event.preventDefault();
+          // console.log("Открытие изображения в новой вкладке заблокировано.");
+        }
+      }
+    });
+  }
+  blockImageOpeningInNewTab();
 });
 </script>
 
