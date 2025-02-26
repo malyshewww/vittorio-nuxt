@@ -29,7 +29,9 @@
 video,
 img {
   user-select: none;
-  // pointer-events: none;
+}
+img {
+  pointer-events: none;
 }
 
 body.is-safari input {
