@@ -65,8 +65,8 @@ onServerPrefetch(async () => {
 const layout = ref("");
 
 const replaceDevice = () => {
-  layout.value = window.innerWidth > 1024 ? "main" : "default";
-  appStore.isMobile = window.innerWidth > 1024 ? false : true;
+  layout.value = device.isDesktop ? "main" : "default";
+  appStore.isMobile = device.isDesktop ? false : true;
 };
 
 const loadCart = () => {

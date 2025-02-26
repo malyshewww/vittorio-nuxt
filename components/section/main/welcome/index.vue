@@ -4,12 +4,14 @@
 				.welcome__anim(ref="videoWrap")#welcome
 					h2.welcome__title Добро пожаловать в&nbsp;мир&nbsp;Vittorio
 					.welcome__video-wrap(ref="videoBlock")
-						.welcome__video.ibg
+						.welcome__video.welcome__video--pc.ibg
 							video(ref="video" :loop="isVideoLoop" :muted="isVideoMuted" playsinline :autoplay="isVideoAutoplay" :controls="isVideoControls && !isVideoMuted" @ended="endVideo()" :poster="`/images/sections/welcome/poster.jpg`")
 								source(:src="`/welcome-new.mp4`" type="video/mp4")
 								p.
 									Ваш браузер не поддерживает встроенные видео. Попробуйте скачать его по
 									| #[a(href="/welcome-new.mp4") этой ссылке]
+						a(href="/welcome-new.mp4" data-fancybox="video-gallery").welcome__video.welcome__video--mobile.ibg
+							img(:src="`/images/sections/welcome/poster.jpg`")
 						button(type="button" @click="startVideo" :class="{hidden: isVideoPlay}").welcome__video-btn
 				.container
 					.welcome__main
@@ -32,6 +34,9 @@
 <script setup>
 import { useAppStore } from "~/stores/app";
 import { throttle } from "lodash-es";
+
+import { Fancybox } from "@fancyapps/ui";
+import "@fancyapps/ui/dist/fancybox/fancybox.css";
 
 const appStore = useAppStore();
 
@@ -128,11 +133,6 @@ function endVideo() {
 }
 
 onMounted(() => {
-  // if (!appStore.isMobile) {
-  //   video.value.play();
-  //   isVideoAutoplay.value = true;
-  //   isVideoLoop.value = true;
-  // }
   state.textHeight = hiddenBlockContent.value.content.clientHeight;
   if (state.textHeight > hiddenBlockWrap.value.clientHeight) {
     state.isVisible = true;
@@ -143,6 +143,8 @@ onMounted(() => {
     animation();
   }, 1000);
   window.addEventListener("resize", watchResize);
+
+  Fancybox.bind(`[data-fancybox="video-gallery"]`, { Hash: false });
 });
 
 watch(
@@ -318,6 +320,17 @@ function toggleHiddenBlock() {
       clip-path: initial;
       padding-bottom: math.div(220, 335) * 100%;
     }
+    &--pc {
+      @include bp-xl {
+        display: none;
+      }
+    }
+    &--mobile {
+      display: none;
+      @include bp-xl {
+        display: block;
+      }
+    }
   }
   &__video-btn {
     border: 1px solid rgba(248, 245, 241, 0.4);
@@ -333,6 +346,7 @@ function toggleHiddenBlock() {
     place-items: center;
     transition: opacity $time ease 0s;
     display: none;
+    pointer-events: none;
     &::before {
       content: "";
       display: block;
