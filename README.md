@@ -1,75 +1,58 @@
-# Nuxt Minimal Starter
+# Витторио
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+[Ссылка на проект в системе](https://s.w-nn.ru/p/10498)
 
-## Setup
-
-Make sure to install dependencies:
+## Установка
 
 ```bash
-# npm
 npm install
-
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
 ```
 
-## Development Server
+## Запуск дев-режима
 
-Start the development server on `http://localhost:3000`:
+Запускает дев-режим на `http://localhost:3000`:
 
 ```bash
-# npm
 npm run dev
-
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
 ```
 
-## Production
+## Прод
 
-Build the application for production:
+Сбилдить проект:
 
 ```bash
-# npm
 npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
 ```
 
-Locally preview production build:
+Локально посмотреть билд:
 
 ```bash
-# npm
 npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
 ```
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+## Роутинг
+
+В проекте используется статический роутинг.
+
+## Редирект на файлы с админки
+
+Чтобы не копировать себе файлы, загруженные с админки, в папке /server/middleware есть файл 01.static-files.ts. Этот файл отрабатывает только в режиме разработки. Если нам нужен файл с папки /sites, то выполняется редирект на боевой сайт. Файлы, загруженные с админки, будут отображаться локально
+
+## Сторы
+
+Проект использует pinia для стейт-менеджмента:
+
+## Лейауты
+
+В проекте есть 2 лейаута:
+
+- main.vue - лейаут для пк. Реализован при помощи библиотеки [smooth-scrollbar](https://github.com/idiotWu/smooth-scrollbar). **Важно!** Данная библиотека отрубает нативный скролл. Из-за этого position fixed и sticky работать не будут. Не будет отрабатывать скролл элементов с overflow: auto. В js scroll-ивент так же работать не будет. Обходы таких моментов можно найти в документации на библиотеку
+- default.vue - лейаут для мобильных устройств и планшетов
+
+## Карты
+
+В проекте используется [3-я версия яндекс карт](https://yandex.ru/dev/jsapi30/doc/ru/common/quickstart.html)
+
+## Анимации
+
+Для анимаций в проекте используется [gsap](https://gsap.com/)

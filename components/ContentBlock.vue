@@ -107,6 +107,7 @@ onMounted(() => {
     font-weight: 400;
     line-height: 22px;
     margin-bottom: 16px;
+    font-family: var(--font-family);
     @include bp-md {
       font-size: 14px;
       line-height: 18px;
