@@ -16,21 +16,17 @@
 const runtimeConfig = useRuntimeConfig();
 const url = `${runtimeConfig.public.apiBase}/contacts?_format=json`;
 
-const { data: contacts } = await useAsyncData(
-  "contacts",
-  () => $fetch(url, {}),
-  {
-    transform: (res) => {
-      const { breadcrumb, data, metatag } = res;
-      const metadata = useMetatags(metatag.html_head);
-      return {
-        breadcrumb,
-        metadata,
-        title: data.title,
-      };
-    },
-  }
-);
+const { data: contacts } = await useAsyncData("contacts", () => $fetch(url, {}), {
+  transform: (res) => {
+    const { breadcrumb, data, metatag } = res;
+    const metadata = useMetatags(metatag.html_head);
+    return {
+      breadcrumb,
+      metadata,
+      title: data.title,
+    };
+  },
+});
 
 useHead({ ...contacts.value.metadata, bodyAttrs: { class: `page--contacts` } });
 
