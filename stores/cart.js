@@ -68,16 +68,13 @@ export const useCartStore = defineStore("cart", () => {
   async function getCartItems() {
     isLoading.value = true;
     try {
-      const response = await fetch(
-        `${URL}/jsonapi/carts?include=order_items,coupons&jsonapi_include=1`,
-        {
-          headers: {
-            Accept: "application/vnd.api+json",
-            "Content-Type": "application/vnd.api+json",
-            "Commerce-Cart-Token": token,
-          },
-        }
-      );
+      const response = await fetch(`${URL}/jsonapi/carts?include=order_items,coupons&jsonapi_include=1`, {
+        headers: {
+          Accept: "application/vnd.api+json",
+          "Content-Type": "application/vnd.api+json",
+          "Commerce-Cart-Token": token,
+        },
+      });
       const { data } = await response.json();
       if (data[0]) {
         // console.log("Корзина", data);
@@ -114,23 +111,17 @@ export const useCartStore = defineStore("cart", () => {
   function getCartTotal() {
     if (orderItems.value.length) {
       // Вычисляем общую сумму заказа
-      totalPrice.value = orderItems.value.reduce(
-        (currentSum, currentNumber) => {
-          return currentSum + parseInt(currentNumber.total_price.number);
-        },
-        0
-      );
+      totalPrice.value = orderItems.value.reduce((currentSum, currentNumber) => {
+        return currentSum + parseInt(currentNumber.total_price.number);
+      }, 0);
     }
   }
   function getTotalCount() {
     if (orderItems.value.length) {
       // Вычисляем общую сумму заказа
-      totalCount.value = orderItems.value.reduce(
-        (currentSum, currentNumber) => {
-          return currentSum + parseInt(currentNumber.quantity);
-        },
-        0
-      );
+      totalCount.value = orderItems.value.reduce((currentSum, currentNumber) => {
+        return currentSum + parseInt(currentNumber.quantity);
+      }, 0);
       // console.log("total count", totalCount.value);
     }
   }
@@ -161,18 +152,15 @@ export const useCartStore = defineStore("cart", () => {
           },
         },
       };
-      const response = await fetch(
-        `${URL}/jsonapi/carts/${ORDER_ID.value}/items/${product.id}`,
-        {
-          method: "PATCH",
-          headers: {
-            Accept: "application/vnd.api+json",
-            "Content-Type": "application/vnd.api+json",
-            "Commerce-Cart-Token": token,
-          },
-          body: JSON.stringify(opts),
-        }
-      );
+      const response = await fetch(`${URL}/jsonapi/carts/${ORDER_ID.value}/items/${product.id}`, {
+        method: "PATCH",
+        headers: {
+          Accept: "application/vnd.api+json",
+          "Content-Type": "application/vnd.api+json",
+          "Commerce-Cart-Token": token,
+        },
+        body: JSON.stringify(opts),
+      });
       if (response.ok) {
         // const result = await response.json();
         // Обновить корзину
@@ -222,17 +210,14 @@ export const useCartStore = defineStore("cart", () => {
           },
         ],
       };
-      const response = await fetch(
-        `${URL}/jsonapi/carts/${ORDER_ID.value}/items`,
-        {
-          method: "DELETE",
-          headers: {
-            Accept: "application/vnd.api+json",
-            "Commerce-Cart-Token": token,
-          },
-          body: JSON.stringify(options),
-        }
-      );
+      const response = await fetch(`${URL}/jsonapi/carts/${ORDER_ID.value}/items`, {
+        method: "DELETE",
+        headers: {
+          Accept: "application/vnd.api+json",
+          "Commerce-Cart-Token": token,
+        },
+        body: JSON.stringify(options),
+      });
       // const result = await response.json();
       // console.log(result);
       if (response.ok) {
@@ -256,18 +241,15 @@ export const useCartStore = defineStore("cart", () => {
           },
         ],
       };
-      const response = await fetch(
-        `${URL}/jsonapi/carts/${ORDER_ID.value}/coupons`,
-        {
-          method: "PATCH",
-          headers: {
-            Accept: "application/vnd.api+json",
-            "Content-Type": "application/vnd.api+json",
-            "Commerce-Cart-Token": token,
-          },
-          body: JSON.stringify(options),
-        }
-      );
+      const response = await fetch(`${URL}/jsonapi/carts/${ORDER_ID.value}/coupons`, {
+        method: "PATCH",
+        headers: {
+          Accept: "application/vnd.api+json",
+          "Content-Type": "application/vnd.api+json",
+          "Commerce-Cart-Token": token,
+        },
+        body: JSON.stringify(options),
+      });
       // const result = await response.json();
       // console.log(result);
       if (response.ok) {
@@ -275,16 +257,19 @@ export const useCartStore = defineStore("cart", () => {
         promocodeMessage.value = "промокод применён";
         promocodeValue.value = inputValue;
         // console.log("value", promocodeValue.value);
+        // console.log("промокод применён");
       } else {
         isPromocodeValid.value = false;
         promocodeMessage.value = "промокод не найден";
-        throw new Error(`${response.status}, ${response.statusText}`);
+        // console.log("промокод не найден");
+        // throw new Error(`${response.status}, ${response.statusText}`);
       }
     } catch (error) {
       isPromocodeValid.value = false;
       promocodeValue.value = "";
       promocodeMessage.value = "промокод не найден";
-      throw new Error("Error from delete item", error);
+      // console.log("промокод не найден");
+      // throw new Error("Error from delete item", error);
     } finally {
       getCartItems();
     }
@@ -299,18 +284,15 @@ export const useCartStore = defineStore("cart", () => {
           },
         ],
       };
-      const response = await fetch(
-        `${URL}/jsonapi/carts/${ORDER_ID.value}/coupons`,
-        {
-          method: "DELETE",
-          headers: {
-            Accept: "application/vnd.api+json",
-            "Content-Type": "application/vnd.api+json",
-            "Commerce-Cart-Token": token,
-          },
-          body: JSON.stringify(options),
-        }
-      );
+      const response = await fetch(`${URL}/jsonapi/carts/${ORDER_ID.value}/coupons`, {
+        method: "DELETE",
+        headers: {
+          Accept: "application/vnd.api+json",
+          "Content-Type": "application/vnd.api+json",
+          "Commerce-Cart-Token": token,
+        },
+        body: JSON.stringify(options),
+      });
       if (response.ok) {
         isPromocodeValid.value = false;
         promocodeMessage.value = "";

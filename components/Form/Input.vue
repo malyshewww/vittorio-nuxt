@@ -1,6 +1,6 @@
 <template lang="pug">
 	.form-item(v-if="isPromocode")
-		.form-field(:class="{'promocode': isPromocode, 'active-arrow': isActiveArrow || promocodeValue, 'error': cartStore.isPromocodeChecked && !isPromocodeValid}")
+		.form-field(:class="{'promocode': isPromocode, 'active-arrow': isActiveArrow || promocodeValue, 'error': cartStore.isPromocodeChecked && !cartStore.isPromocodeValid, 'valid': cartStore.isPromocodeValid}")
 			input(:type="type" :name="name" :placeholder="placeholder" :disabled="isDisabled" v-on:keyup.enter="checkPromocode" v-model.trim="promocodeInput" @focus="focusInput" @blur="blurInput" @input="changeInput")
 			span.form-item__arrow(v-if="!isButtonCloseVisible" @click="checkPromocode")
 			.form-item__actions(v-if="isButtonCloseVisible")
@@ -219,6 +219,12 @@ if (promocodeValue.value) {
     & input,
     & textarea {
       border-color: var(--system-error);
+    }
+  }
+  &.valid {
+    & input,
+    & textarea {
+      border-color: var(--system-success);
     }
   }
 }
