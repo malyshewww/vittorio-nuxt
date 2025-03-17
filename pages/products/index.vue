@@ -32,7 +32,7 @@ const { data: catalog } = await useAsyncData("catalog", () => $fetch(url, {}), {
 useHead({ ...catalog.value.metadata, bodyAttrs: { class: `page--catalog` } });
 
 onMounted(() => {
-  appStore.isHeaderVisible = true;
+  // appStore.isHeaderVisible = true;
 });
 </script>
 

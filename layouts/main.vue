@@ -19,10 +19,6 @@ const nuxtApp = useNuxtApp();
 
 const route = useRoute();
 
-const router = useRouter();
-
-const { scrollbar } = useScrollbar();
-
 const { $ScrollTrigger: ScrollTrigger } = useNuxtApp();
 
 nuxtApp.hook("page:loading:end", () => {

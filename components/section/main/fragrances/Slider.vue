@@ -4,7 +4,8 @@
 			.swiper-wrapper
 				.swiper-slide.fragrances-slide(v-for="(item, idx) in countries" :key="idx" :data-slide-key="item.key")
 					.fragrances-slide__body
-						nuxt-link(:to="item.url" v-html="item.field_images[0].markup").fragrances-slide__image.ibg
+						nuxt-link(:to="item.url").fragrances-slide__image.ibg
+							div(v-html="item.field_images[0].markup")
 							//- picture
 							//- 	img(:src="`/images/notes/${item.img}.jpg`" :alt="item.title" loading="lazy")
 						.fragrances-slide__content
@@ -114,14 +115,9 @@ function changeSlide(swiper, index) {
 const slides = ref(null);
 
 const initSlider = () => {
-  const buttonPrev = slider.value.parentNode.querySelector(
-    ".slider-button-prev"
-  );
-  const buttonNext = slider.value.parentNode.querySelector(
-    ".slider-button-next"
-  );
-  const pagination =
-    slider.value.parentNode.querySelector(".slider-pagination");
+  const buttonPrev = slider.value.parentNode.querySelector(".slider-button-prev");
+  const buttonNext = slider.value.parentNode.querySelector(".slider-button-next");
+  const pagination = slider.value.parentNode.querySelector(".slider-pagination");
   swiper.value = new Swiper(slider.value, {
     modules: [Navigation, Pagination, Autoplay, EffectFade],
     autoHeight: true,
@@ -151,8 +147,7 @@ const initSlider = () => {
       slideChange: function (swiper) {
         const activeIndex = swiper.activeIndex;
         const slides = swiper.slides;
-        const currentSlideKey =
-          slides[activeIndex].getAttribute("data-slide-key");
+        const currentSlideKey = slides[activeIndex].getAttribute("data-slide-key");
         changeArea(currentSlideKey);
         const markers = document.querySelectorAll(".marker");
         if (markers.length) {

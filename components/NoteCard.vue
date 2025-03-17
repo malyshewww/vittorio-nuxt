@@ -7,12 +7,14 @@
 				.preview-note__title-mobile(v-if="product.title")
 					span(v-html="product.title")
 				.preview-note__image-wrap
-					nuxt-link.preview-note__image.ibg(v-if="product.field_image_on_gradient" :to="product.url" v-html="product.field_image_on_gradient[0].markup" @mouseenter="mouseEnter" @mouseleave="mouseLeave")
+					nuxt-link.preview-note__image.ibg(v-if="product.field_image_on_gradient" :to="product.url" @mouseenter="mouseEnter" @mouseleave="mouseLeave")
+						div(v-html="product.field_image_on_gradient[0].markup")
 						//- img(:src="`/images/main/legend_fragment.jpg`" alt="fragment")
 					nuxt-link(:to="product.url" @mouseenter="mouseEnter" @mouseleave="mouseLeave").main-note__circle
 				.preview-note__description(v-if="product.field_title_on_gradient" v-html="product.field_title_on_gradient")
 				UiLinkLine(text="Узнать больше" :path="product.url" class-names="preview-note__link short-link")
-			nuxt-link.main-note__image.ibg(v-if="product.field_bg_image" :to="product.url" v-html="product.field_bg_image[0].markup" @mouseenter="mouseEnter" @mouseleave="mouseLeave")
+			nuxt-link.main-note__image.ibg(v-if="product.field_bg_image" :to="product.url" @mouseenter="mouseEnter" @mouseleave="mouseLeave")
+				div(v-html="product.field_bg_image[0].markup")
 				//- img(:src="`/images/main/legend_scene.jpg`" alt="product")
 		section.note-card.info-note
 			.info-note__content
@@ -60,6 +62,9 @@ const props = defineProps({
     required: true,
   },
 });
+
+console.log(props.product);
+
 const formData = {
   data: [
     {
@@ -149,6 +154,9 @@ const addToCart = async () => {
   &__image {
     width: 50vw;
     display: block;
+    & div {
+      pointer-events: none;
+    }
     //   padding-bottom: math.div(980, 960) * 100%;
     @include bp-xxxl {
       width: 40vw;
@@ -247,67 +255,31 @@ const addToCart = async () => {
     padding: 32px 20px;
   }
   .main-note--legend & {
-    background: radial-gradient(
-      92.2% 92.2% at 30% 40%,
-      #6a4464 0%,
-      #382d32 100%
-    );
+    background: radial-gradient(92.2% 92.2% at 30% 40%, #6a4464 0%, #382d32 100%);
   }
   .main-note--santal & {
-    background: radial-gradient(
-      92.2% 92.2% at 30% 40%,
-      #ba6935 0%,
-      #7e4725 100%
-    );
+    background: radial-gradient(92.2% 92.2% at 30% 40%, #ba6935 0%, #7e4725 100%);
   }
   .main-note--protagonist & {
-    background: radial-gradient(
-      92.2% 92.2% at 30% 40%,
-      #ceaf76 0%,
-      #877553 100%
-    );
+    background: radial-gradient(92.2% 92.2% at 30% 40%, #ceaf76 0%, #877553 100%);
   }
   .main-note--musk & {
-    background: radial-gradient(
-      91.82% 91.82% at 30.5% 40%,
-      #a1513a 0%,
-      #713b3b 100%
-    );
+    background: radial-gradient(91.82% 91.82% at 30.5% 40%, #a1513a 0%, #713b3b 100%);
   }
   .main-note--essay & {
-    background: radial-gradient(
-      91.87% 91.87% at 30% 40.5%,
-      #969a62 0%,
-      #625e37 100%
-    );
+    background: radial-gradient(91.87% 91.87% at 30% 40.5%, #969a62 0%, #625e37 100%);
   }
   .main-note--ethnos & {
-    background: radial-gradient(
-      92.2% 92.2% at 30% 40%,
-      #749486 0%,
-      #394c4b 100%
-    );
+    background: radial-gradient(92.2% 92.2% at 30% 40%, #749486 0%, #394c4b 100%);
   }
   .main-note--erato & {
-    background: radial-gradient(
-      92.2% 92.2% at 30% 40%,
-      #82a0ac 0%,
-      #4b7078 100%
-    );
+    background: radial-gradient(92.2% 92.2% at 30% 40%, #82a0ac 0%, #4b7078 100%);
   }
   .main-note--voice & {
-    background: radial-gradient(
-      92.2% 92.2% at 30% 40%,
-      #1e6e8f 0%,
-      #2e4568 100%
-    );
+    background: radial-gradient(92.2% 92.2% at 30% 40%, #1e6e8f 0%, #2e4568 100%);
   }
   .main-note--velvet & {
-    background: radial-gradient(
-      92.2% 92.2% at 30% 40%,
-      #a63d6f 0%,
-      #70445c 100%
-    );
+    background: radial-gradient(92.2% 92.2% at 30% 40%, #a63d6f 0%, #70445c 100%);
   }
   &__title-mobile {
     display: none;
@@ -340,6 +312,9 @@ const addToCart = async () => {
     height: 100%;
     display: block;
     padding-bottom: math.div(320, 270) * 100%;
+    & div {
+      pointer-events: none;
+    }
     @include bp-xl {
       width: 100%;
       padding-bottom: math.div(112, 95) * 100%;

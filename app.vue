@@ -21,7 +21,7 @@ const cartStore = useCartStore();
 
 const appStore = useAppStore();
 
-// const nuxtApp = useNuxtApp();
+const nuxtApp = useNuxtApp();
 
 const isLoad = ref(true);
 
@@ -62,10 +62,9 @@ onServerPrefetch(async () => {
   }
 });
 
-const layout = ref("");
+const layout = ref(device.isDesktop === true ? "main" : "default");
 
 const replaceDevice = () => {
-  layout.value = device.isDesktop ? "main" : "default";
   appStore.isMobile = device.isDesktop ? false : true;
 };
 
