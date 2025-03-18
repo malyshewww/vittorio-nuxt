@@ -41,11 +41,11 @@
 							//- img(:src="`/images/main/legend_product.jpg`" alt="product")
 						.product-note__decor-title(v-if="product.field_svg_title")
 							img(:src="product.field_svg_title[0].markup" :alt="product.field_svg_title[0].alt")
-						button(type="button" @click="addToCart" :class="cartStore.isActiveCartPopup ? 'disabled' : ''").product-note__button #[span В корзину]
+						button(type="button" @click="addToCart").product-note__button #[span В корзину]
 					.product-note__options(v-if="product.price || product.volume")
 						.product-note__option(v-if="product.volume") {{product.volume}}
 						.product-note__option(v-if="product.price") {{product.price}}
-					UiButtonPrimary(title="В корзину" class-names="product-note__button-mobile" :is-disabled="cartStore.isActiveCartPopup" @button-action="addToCart")
+					UiButtonPrimary(title="В корзину" class-names="product-note__button-mobile" @button-action="addToCart")
 </template>
 
 <script setup>
@@ -62,8 +62,6 @@ const props = defineProps({
     required: true,
   },
 });
-
-console.log(props.product);
 
 const formData = {
   data: [
@@ -90,9 +88,11 @@ const mouseEnter = () => {
 const mouseLeave = () => {
   appStore.currentHash = "";
 };
+const { $toast } = useNuxtApp();
 
 // eslint-disable-next-line
 const addToCart = async () => {
+  $toast.showCustomToast(cartData.image, props.product.title, cartData.volume);
   await cartStore.addToCart(formData, cartData);
 };
 </script>

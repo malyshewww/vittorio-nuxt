@@ -5,7 +5,7 @@
 		NuxtPage
 	AppCart
 	AppPopups
-	AppCartPopup
+	//- AppCartPopup(:image="cartStore.productInfo.image" :title="cartStore.productInfo.title" :volume="cartStore.productInfo.volume")
 </template>
 <script setup>
 import { throttle } from "lodash-es";

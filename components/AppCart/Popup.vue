@@ -1,11 +1,11 @@
 <template lang="pug">
 	.app-cart-popup(ref="popup" :class="{active: cartStore.isActiveCartPopup}")
 		.app-cart-popup__body
-			.app-cart-popup__image(v-html="cartStore.productInfo.image")
+			.app-cart-popup__image(v-html="image")
 			.app-cart-popup__content
 				.app-cart-popup__caption Добавлен в корзину
-				.app-cart-popup__title {{cartStore.productInfo.title}}
-				.app-cart-popup__volume {{cartStore.productInfo.volume}}
+				.app-cart-popup__title {{title}}
+				.app-cart-popup__volume {{volume}}
 </template>
 
 <script setup>
@@ -15,22 +15,38 @@ import { useCartStore } from "~/stores/cart";
 const cartStore = useCartStore();
 // eslint-disable-next-line
 const popup = ref("");
+
+defineProps({
+  image: {
+    type: String,
+    required: true,
+  },
+  title: {
+    type: String,
+    required: true,
+  },
+  volume: {
+    type: String,
+    required: true,
+  },
+});
 </script>
 
 <style lang="scss">
 @use "assets/scss/vars" as *;
+
 .app-cart-popup {
-  position: fixed;
-  top: var(--header-height);
-  right: 50px;
+  // position: fixed;
+  // top: var(--header-height);
+  // right: 50px;
   width: 300px;
   min-height: 112px;
   color: var(--bg-white);
   background-color: var(--bg-smoke);
-  opacity: 0;
-  pointer-events: none;
-  z-index: 30;
-  transition: opacity $time ease-in-out 0s;
+  // opacity: 0;
+  // pointer-events: none;
+  // z-index: 30;
+  // transition: opacity $time ease-in-out 0s;
   &.active {
     opacity: 1;
   }

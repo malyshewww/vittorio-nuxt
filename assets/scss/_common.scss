@@ -41,3 +41,26 @@ body.is-safari input {
 html._touch body.lock {
   overflow: hidden;
 }
+
+.v-toast {
+  padding: 50px;
+  padding-top: var(--header-height);
+  z-index: 30;
+  @include m.bp-xl {
+    padding: 30px;
+    padding-top: var(--header-height);
+  }
+  @include m.bp-md {
+    padding: 16px;
+    padding-top: var(--header-height);
+  }
+}
+.v-toast__item {
+  min-height: auto;
+}
+.v-toast__item .v-toast__icon {
+  display: none;
+}
+.v-toast__item .v-toast__text {
+  padding: 0;
+}

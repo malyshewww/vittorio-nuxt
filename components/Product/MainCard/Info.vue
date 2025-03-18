@@ -50,6 +50,7 @@ const props = defineProps({
 // eslint-disable-next-line
 const smallCartData = {
   image: props.images[0].markup,
+  title: props.info.title,
   volume: props.info.variations[0].field_volume[0],
 };
 
