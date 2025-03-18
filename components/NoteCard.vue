@@ -88,11 +88,9 @@ const mouseEnter = () => {
 const mouseLeave = () => {
   appStore.currentHash = "";
 };
-const { $toast } = useNuxtApp();
 
 // eslint-disable-next-line
 const addToCart = async () => {
-  $toast.showCustomToast(cartData.image, props.product.title, cartData.volume);
   await cartStore.addToCart(formData, cartData);
 };
 </script>

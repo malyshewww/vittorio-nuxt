@@ -36,6 +36,7 @@ export const useCartStore = defineStore("cart", () => {
     cartToken.value = token;
   };
   async function addToCart(options, cartData) {
+    const { $toast } = useNuxtApp();
     const URL = useRuntimeConfig().public.apiBase;
     try {
       const response = await fetch(`${URL}/jsonapi/cart/add`, {
@@ -55,6 +56,7 @@ export const useCartStore = defineStore("cart", () => {
         productInfo.volume = cartData.volume;
         productInfo.title = title;
         isActiveCartPopup.value = true;
+        $toast.showCustomToast(productInfo.image, productInfo.title, productInfo.volume);
         getCartItems();
         clearTimeout(timer.value);
         timer.value = setTimeout(() => {

@@ -22,7 +22,7 @@ export default defineNuxtPlugin((nuxtApp) => {
       toast.open({
         message: htmlContent,
         position: "top-right",
-        duration: 5000,
+        duration: 4000,
         dangerouslyUseHTMLString: true, // Разрешаем использование HTML
         type: "default", // Отключаем стандартные иконки
       });
