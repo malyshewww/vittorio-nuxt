@@ -53,65 +53,31 @@ const scrollToSection = (e) => {
     let pos;
     switch (id) {
       case "legend":
-        pos = parseInt(
-          panelsSection.getBoundingClientRect().top + bodyScrollBar.scrollTop
-        );
+        pos = parseInt(panelsSection.getBoundingClientRect().top + bodyScrollBar.scrollTop);
         break;
       case "santal":
-        pos = parseInt(
-          panelsSection.getBoundingClientRect().top +
-            bodyScrollBar.scrollTop +
-            innerHeight * 2.07
-        );
+        pos = parseInt(panelsSection.getBoundingClientRect().top + bodyScrollBar.scrollTop + innerHeight * 2.07);
         break;
       case "protagonist":
-        pos = parseInt(
-          panelsSection.getBoundingClientRect().top +
-            bodyScrollBar.scrollTop +
-            innerHeight * 4.19
-        );
+        pos = parseInt(panelsSection.getBoundingClientRect().top + bodyScrollBar.scrollTop + innerHeight * 4.19);
         break;
       case "musk":
-        pos = parseInt(
-          panelsSection.getBoundingClientRect().top +
-            bodyScrollBar.scrollTop +
-            innerHeight * 6.32
-        );
+        pos = parseInt(panelsSection.getBoundingClientRect().top + bodyScrollBar.scrollTop + innerHeight * 6.32);
         break;
       case "essay":
-        pos = parseInt(
-          panelsSection.getBoundingClientRect().top +
-            bodyScrollBar.scrollTop +
-            innerHeight * 8.44
-        );
+        pos = parseInt(panelsSection.getBoundingClientRect().top + bodyScrollBar.scrollTop + innerHeight * 8.44);
         break;
       case "ethnos":
-        pos = parseInt(
-          panelsSection.getBoundingClientRect().top +
-            bodyScrollBar.scrollTop +
-            innerHeight * 10.57
-        );
+        pos = parseInt(panelsSection.getBoundingClientRect().top + bodyScrollBar.scrollTop + innerHeight * 10.57);
         break;
       case "erato":
-        pos = parseInt(
-          panelsSection.getBoundingClientRect().top +
-            bodyScrollBar.scrollTop +
-            innerHeight * 12.69
-        );
+        pos = parseInt(panelsSection.getBoundingClientRect().top + bodyScrollBar.scrollTop + innerHeight * 12.69);
         break;
       case "voice":
-        pos = parseInt(
-          panelsSection.getBoundingClientRect().top +
-            bodyScrollBar.scrollTop +
-            innerHeight * 14.82
-        );
+        pos = parseInt(panelsSection.getBoundingClientRect().top + bodyScrollBar.scrollTop + innerHeight * 14.82);
         break;
       case "velvet":
-        pos = parseInt(
-          panelsSection.getBoundingClientRect().top +
-            bodyScrollBar.scrollTop +
-            innerHeight * 16.94
-        );
+        pos = parseInt(panelsSection.getBoundingClientRect().top + bodyScrollBar.scrollTop + innerHeight * 16.94);
         break;
       default:
         break;
@@ -221,8 +187,7 @@ const list = [
 ];
 </script>
 
-<style lang="scss">
-@use "assets/scss/vars" as *;
+<style lang="scss" scoped>
 .notes-navigation {
   position: fixed;
   bottom: 0px;
@@ -239,7 +204,7 @@ const list = [
   align-items: center;
   transform: translateY(120%);
   pointer-events: none;
-  transition: transform $time * 2 $ttm;
+  transition: transform calc(var(--time) * 2) var(--ttm);
   &.active {
     transform: translateY(0);
     pointer-events: all;

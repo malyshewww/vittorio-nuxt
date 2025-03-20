@@ -57,7 +57,6 @@ const increaseCartSum = () => {
 
 <style lang="scss">
 @use "sass:math";
-@use "assets/scss/vars" as *;
 .app-cart {
   &__item {
   }
@@ -157,7 +156,7 @@ const increaseCartSum = () => {
     opacity: 0;
     pointer-events: none;
     transform: translateY(20%);
-    transition: opacity $time $ttm 0s, transform $time $ttm 0s;
+    transition: opacity var(--time) var(--ttm) 0s, transform var(--time) var(--ttm) 0s;
     &::before {
       content: "";
       display: block;
@@ -208,7 +207,7 @@ const increaseCartSum = () => {
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: background-color $time $ttm, border-color $time $ttm;
+    transition: background-color var(--time) var(--ttm), border-color var(--time) var(--ttm);
     &::before {
       content: "";
       display: block;
@@ -218,7 +217,7 @@ const increaseCartSum = () => {
       mask-position: center;
       background-color: var(--bg-smoke);
       mask-size: 16px 16px;
-      transition: background-color $time $ttm;
+      transition: background-color var(--time) var(--ttm);
     }
     &.btn-decrement {
       &::before {

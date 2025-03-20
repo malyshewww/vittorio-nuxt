@@ -26,7 +26,6 @@ defineProps({
 </script>
 
 <style lang="scss" scoped>
-@use "assets/scss/vars" as *;
 .social {
   &__list {
     @include reset-list;
@@ -68,7 +67,7 @@ defineProps({
     font-weight: 500;
     font-size: 36px;
     line-height: 44px;
-    transition: color $time * 2 $ttm;
+    transition: color calc(var(--time) * 2) var(--ttm);
     .footer-social & {
       font-family: var(--font-family);
       font-weight: 700;
@@ -85,7 +84,7 @@ defineProps({
     }
     & svg {
       & path {
-        transition: fill $time * 2 $ttm;
+        transition: fill calc(var(--time) * 2) var(--ttm);
       }
     }
     @include hover {

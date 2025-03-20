@@ -44,7 +44,6 @@ defineProps({
 </script>
 
 <style lang="scss" scoped>
-@use "assets/scss/vars" as *;
 .stores {
   @include bp-sm {
     width: 100%;
@@ -75,7 +74,7 @@ defineProps({
     justify-content: center;
     border: 1px solid var(--bg-smoke);
     border-radius: 100px;
-    transition: filter $time * 3 $ttm, border-color $time * 3 $ttm;
+    transition: filter calc(var(--time) * 3) var(--ttm), border-color calc(var(--time) * 3) var(--ttm);
     & img {
       pointer-events: none;
     }
@@ -87,23 +86,11 @@ defineProps({
       min-height: 32px;
       padding: 7px 15px;
       border: 1px solid var(--text-gray);
-      // filter: invert(1);
-      // @include hover {
-      //   &:hover {
-      //     filter: invert(0);
-      //   }
-      // }
     }
     @include bp-xl {
       min-height: 40px;
       padding: 10px 14px;
     }
-    // @include hover {
-    //   &:hover {
-    //     filter: invert(1);
-    //     border-color: var(--text-gray);
-    //   }
-    // }
   }
 }
 </style>

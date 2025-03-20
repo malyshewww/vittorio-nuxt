@@ -33,8 +33,6 @@ defineProps({
 </script>
 
 <style lang="scss">
-@use "assets/scss/vars" as *;
-
 .app-cart-popup {
   // position: fixed;
   // top: var(--header-height);
@@ -46,7 +44,7 @@ defineProps({
   // opacity: 0;
   // pointer-events: none;
   // z-index: 30;
-  // transition: opacity $time ease-in-out 0s;
+  // transition: opacity var(--time) ease-in-out 0s;
   &.active {
     opacity: 1;
   }

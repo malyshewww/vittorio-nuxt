@@ -17,7 +17,6 @@ const { other } = mainInfoStore;
 </script>
 
 <style lang="scss" scoped>
-@use "assets/scss/_vars" as *;
 .bottom-footer {
   display: flex;
   justify-content: space-between;

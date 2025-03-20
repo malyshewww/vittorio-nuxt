@@ -32,12 +32,8 @@ const gallerySwiper = ref(null);
 
 const initializeSlider = () => {
   if (gallerySlider.value) {
-    const buttonPrev = gallerySlider.value
-      .closest(".gallery")
-      .querySelector(".slider-button-prev");
-    const buttonNext = gallerySlider.value
-      .closest(".gallery")
-      .querySelector(".slider-button-next");
+    const buttonPrev = gallerySlider.value.closest(".gallery").querySelector(".slider-button-prev");
+    const buttonNext = gallerySlider.value.closest(".gallery").querySelector(".slider-button-next");
     gallerySwiper.value = new Swiper(gallerySlider.value, {
       modules: [Navigation],
       speed: 800,
@@ -94,7 +90,6 @@ onMounted(() => {
 
 <style lang="scss">
 @use "sass:math";
-@use "assets/scss/vars" as *;
 .gallery {
   padding-top: 140px;
   & .slider-controls {
@@ -136,7 +131,7 @@ onMounted(() => {
     padding-bottom: math.div(440, 425) * 100%;
     overflow: hidden;
     & img {
-      transition: transform $time * 4 $ttm;
+      transition: transform calc(var(--time) * 4) var(--ttm);
     }
     @include hover {
       &:hover {

@@ -93,18 +93,15 @@ async function formSend() {
         },
       },
     };
-    const response = await fetch(
-      `${runtimeConfig.public.apiBase}/jsonapi/checkout-parfum/${cartStore.ORDER_ID}`,
-      {
-        headers: {
-          Accept: "application/vnd.api+json",
-          "Content-Type": "application/vnd.api+json",
-          "Commerce-Cart-Token": token,
-        },
-        method: "POST",
-        body: JSON.stringify(options),
-      }
-    );
+    const response = await fetch(`${runtimeConfig.public.apiBase}/jsonapi/checkout-parfum/${cartStore.ORDER_ID}`, {
+      headers: {
+        Accept: "application/vnd.api+json",
+        "Content-Type": "application/vnd.api+json",
+        "Commerce-Cart-Token": token,
+      },
+      method: "POST",
+      body: JSON.stringify(options),
+    });
     if (response.ok) {
       // const result = await response.json();
       cartStore.closeCart();
@@ -143,10 +140,7 @@ function formValidate() {
     formStatus.address.message = "поле Адрес обязательно для заполенния";
     errors.value++;
   }
-  if (
-    model.email.val.length === 0 ||
-    !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(model.email.val)
-  ) {
+  if (model.email.val.length === 0 || !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(model.email.val)) {
     formStatus.email.isValid = false;
     formStatus.email.message = "некорректный email";
     errors.value++;
@@ -194,7 +188,6 @@ onMounted(() => {});
 </script>
 
 <style lang="scss">
-@use "assets/scss/vars.scss" as *;
 .app-cart {
   position: fixed;
   z-index: 31;
@@ -207,7 +200,7 @@ onMounted(() => {});
   background: rgba(#24221f, 0.2);
   opacity: 0;
   pointer-events: none;
-  transition: opacity $time $ttm;
+  transition: opacity var(--time) var(--ttm);
   &.active {
     opacity: 1;
     pointer-events: all;
@@ -222,7 +215,7 @@ onMounted(() => {});
     overflow-x: hidden;
     height: 100%;
     transform: translateX(100%);
-    transition: transform $time * 2 $ttm;
+    transition: transform calc(var(--time) * 2) var(--ttm);
     &::-webkit-scrollbar {
       display: none;
     }

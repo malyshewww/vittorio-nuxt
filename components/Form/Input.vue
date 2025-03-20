@@ -187,7 +187,6 @@ if (promocodeValue.value) {
 </script>
 
 <style lang="scss" scoped>
-@use "assets/scss/vars" as *;
 .form-field {
   position: relative;
   &.active-arrow {
@@ -285,7 +284,7 @@ if (promocodeValue.value) {
       border-radius: 50%;
       background-color: var(--bg-smoke);
       transform: scale(0);
-      transition: transform $time * 2 $ttm;
+      transition: transform calc(var(--time) * 2) var(--ttm);
       z-index: -1;
     }
     &::before {
@@ -297,7 +296,7 @@ if (promocodeValue.value) {
       mask-repeat: no-repeat;
       mask-position: center;
       background-color: var(--bg-smoke);
-      transition: background-color $time * 2 $ttm;
+      transition: background-color calc(var(--time) * 2) var(--ttm);
     }
     &.active-arrow {
       pointer-events: all;
@@ -333,7 +332,7 @@ if (promocodeValue.value) {
     background-color: transparent;
     border-bottom: 1px solid var(--bg-smoke);
     border-radius: 0;
-    transition: border-color $time * 2 $ttm;
+    transition: border-color calc(var(--time) * 2) var(--ttm);
     &::placeholder {
       font-family: inherit;
       font-size: inherit;

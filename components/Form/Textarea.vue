@@ -50,7 +50,6 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-@use "assets/scss/vars" as *;
 .form-field {
   display: flex;
   &.error {
@@ -71,7 +70,7 @@ onMounted(() => {
     color: var(--bg-smoke);
     background-color: transparent;
     border-bottom: 1px solid var(--bg-smoke);
-    transition: border-color $time * 2 $ttm;
+    transition: border-color calc(var(--time) * 2) var(--ttm);
     min-height: 96px;
     resize: none;
     &::placeholder {

@@ -23,7 +23,6 @@ const { links } = mainInfoStore;
 </script>
 
 <style lang="scss" scoped>
-@use "assets/scss/vars" as *;
 .actions-contacts {
   display: grid;
   grid-template-columns: 100%;
@@ -55,7 +54,7 @@ const { links } = mainInfoStore;
     line-height: 44px;
     text-transform: uppercase;
     color: var(--bg-smoke);
-    transition: color $time * 2 $ttm;
+    transition: color calc(var(--time) * 2) var(--ttm);
     @include hover {
       &:hover {
         color: var(--text-gray);

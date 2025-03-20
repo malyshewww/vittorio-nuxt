@@ -12,7 +12,6 @@ defineProps({
 </script>
 
 <style lang="scss" scoped>
-@use "~/assets/scss/_vars" as *;
 .slider-button {
   width: 48px;
   height: 48px;
@@ -28,7 +27,7 @@ defineProps({
     mask-position: center;
     background-color: var(--bg-smoke);
     mask-size: 38px 20px;
-    transition: background-color $time * 2 $ttm;
+    transition: background-color calc(var(--time) * 2) var(--ttm);
   }
   &-prev {
     transform: rotate(180deg);

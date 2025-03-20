@@ -78,9 +78,7 @@ onMounted(() => {
   function initDraggable() {
     if (window.innerWidth <= 1400) {
       const image = document.querySelector(".location-fragrances__map");
-      const container = document.querySelector(
-        ".location-fragrances__map-container"
-      );
+      const container = document.querySelector(".location-fragrances__map-container");
 
       let isDragging = false;
       let startX, startY, initialLeft, initialTop;
@@ -112,11 +110,9 @@ onMounted(() => {
 
           // Проверяем границы
           if (newLeft > 0) newLeft = 0; // Левый край
-          if (newLeft < containerWidth - imageWidth)
-            newLeft = containerWidth - imageWidth; // Правый край
+          if (newLeft < containerWidth - imageWidth) newLeft = containerWidth - imageWidth; // Правый край
           if (newTop > 0) newTop = 0; // Верхний край
-          if (newTop < containerHeight - imageHeight)
-            newTop = containerHeight - imageHeight; // Нижний край
+          if (newTop < containerHeight - imageHeight) newTop = containerHeight - imageHeight; // Нижний край
 
           image.style.left = newLeft + "px";
           image.style.top = newTop + "px";
@@ -144,7 +140,6 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-@use "assets/scss/vars" as *;
 .fragrances {
   padding: 257px 0 140px;
   background-color: var(--bg-milk);
@@ -240,7 +235,7 @@ onMounted(() => {
       // left: 50px;
       width: 1310px;
       height: 100%;
-      transition: top $time ease 0s, left $time ease 0s;
+      transition: top var(--time) ease 0s, left var(--time) ease 0s;
       & img {
         display: none;
       }
@@ -261,9 +256,8 @@ onMounted(() => {
     height: 44px;
     backdrop-filter: blur(4px);
     background: rgba(60, 58, 55, 0.6);
-    animation: bounceLocation 1600ms infinite
-      cubic-bezier(0.445, 0.05, 0.55, 0.95);
-    transition: opacity $time cubic-bezier(0.445, 0.05, 0.55, 0.95);
+    animation: bounceLocation 1600ms infinite cubic-bezier(0.445, 0.05, 0.55, 0.95);
+    transition: opacity var(--time) cubic-bezier(0.445, 0.05, 0.55, 0.95);
     pointer-events: none;
     display: none;
     &.hidden {

@@ -10,7 +10,6 @@ const { other } = mainInfoStore;
 </script>
 
 <style lang="scss" scoped>
-@use "assets/scss/vars" as *;
 .form {
   &__agreement {
     font-size: 14px;
@@ -19,7 +18,7 @@ const { other } = mainInfoStore;
     & a {
       color: currentColor;
       border-bottom: 1px solid currentColor;
-      transition: color $time * 2 $ttm;
+      transition: color calc(var(--time) * 2) var(--ttm);
       @include hover {
         &:hover {
           color: var(--bg-smoke);

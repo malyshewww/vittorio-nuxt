@@ -28,10 +28,9 @@ defineProps({
 </script>
 
 <style lang="scss">
-@use "~/assets/scss/vars" as *;
 .link-under {
   position: relative;
-  transition: color $time * 2 $ttm;
+  transition: color calc(var(--time) * 2) var(--ttm);
   color: var(--text-gray);
   &::before {
     content: "";
@@ -42,7 +41,7 @@ defineProps({
     bottom: 0;
     left: 0;
     transform: scale(0);
-    transition: transform $time * 2 $ttm;
+    transition: transform calc(var(--time) * 2) var(--ttm);
     transform-origin: center center;
   }
   &.link-white {

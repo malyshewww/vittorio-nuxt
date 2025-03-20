@@ -283,65 +283,31 @@ const scrollToSection = (e) => {
       let pos;
       switch (id) {
         case "legend":
-          pos = parseInt(
-            panelsSection.getBoundingClientRect().top + bodyScrollBar.scrollTop
-          );
+          pos = parseInt(panelsSection.getBoundingClientRect().top + bodyScrollBar.scrollTop);
           break;
         case "santal":
-          pos = parseInt(
-            panelsSection.getBoundingClientRect().top +
-              bodyScrollBar.scrollTop +
-              innerHeight * 2.07
-          );
+          pos = parseInt(panelsSection.getBoundingClientRect().top + bodyScrollBar.scrollTop + innerHeight * 2.07);
           break;
         case "protagonist":
-          pos = parseInt(
-            panelsSection.getBoundingClientRect().top +
-              bodyScrollBar.scrollTop +
-              innerHeight * 4.19
-          );
+          pos = parseInt(panelsSection.getBoundingClientRect().top + bodyScrollBar.scrollTop + innerHeight * 4.19);
           break;
         case "musk":
-          pos = parseInt(
-            panelsSection.getBoundingClientRect().top +
-              bodyScrollBar.scrollTop +
-              innerHeight * 6.32
-          );
+          pos = parseInt(panelsSection.getBoundingClientRect().top + bodyScrollBar.scrollTop + innerHeight * 6.32);
           break;
         case "essay":
-          pos = parseInt(
-            panelsSection.getBoundingClientRect().top +
-              bodyScrollBar.scrollTop +
-              innerHeight * 8.44
-          );
+          pos = parseInt(panelsSection.getBoundingClientRect().top + bodyScrollBar.scrollTop + innerHeight * 8.44);
           break;
         case "ethnos":
-          pos = parseInt(
-            panelsSection.getBoundingClientRect().top +
-              bodyScrollBar.scrollTop +
-              innerHeight * 10.57
-          );
+          pos = parseInt(panelsSection.getBoundingClientRect().top + bodyScrollBar.scrollTop + innerHeight * 10.57);
           break;
         case "erato":
-          pos = parseInt(
-            panelsSection.getBoundingClientRect().top +
-              bodyScrollBar.scrollTop +
-              innerHeight * 12.69
-          );
+          pos = parseInt(panelsSection.getBoundingClientRect().top + bodyScrollBar.scrollTop + innerHeight * 12.69);
           break;
         case "voice":
-          pos = parseInt(
-            panelsSection.getBoundingClientRect().top +
-              bodyScrollBar.scrollTop +
-              innerHeight * 14.82
-          );
+          pos = parseInt(panelsSection.getBoundingClientRect().top + bodyScrollBar.scrollTop + innerHeight * 14.82);
           break;
         case "velvet":
-          pos = parseInt(
-            panelsSection.getBoundingClientRect().top +
-              bodyScrollBar.scrollTop +
-              innerHeight * 16.94
-          );
+          pos = parseInt(panelsSection.getBoundingClientRect().top + bodyScrollBar.scrollTop + innerHeight * 16.94);
           break;
         default:
           break;
@@ -350,10 +316,7 @@ const scrollToSection = (e) => {
     } else {
       const header = document.querySelector(".header");
       window.scrollTo({
-        top:
-          targetElement.getBoundingClientRect().top +
-          window.scrollY -
-          header.clientHeight,
+        top: targetElement.getBoundingClientRect().top + window.scrollY - header.clientHeight,
         behavior: "smooth",
       });
     }
@@ -439,8 +402,7 @@ const hoverMarker = (key, index) => {
 onMounted(() => {});
 </script>
 
-<style lang="scss">
-@use "assets/scss/vars" as *;
+<style lang="scss" scoped>
 .fragrances {
   &__svg {
     position: absolute;
@@ -452,7 +414,7 @@ onMounted(() => {});
       height: 100%;
     }
     & path {
-      transition: fill $time * 5 $ttm;
+      transition: fill calc(var(--time) * 5) var(--ttm);
     }
   }
   &__markers {
@@ -527,7 +489,7 @@ onMounted(() => {});
     align-items: center;
     justify-content: center;
     opacity: 0;
-    transition: opacity $time * 2 $ttm;
+    transition: opacity calc(var(--time) * 2) var(--ttm);
     pointer-events: none;
     user-select: none;
     .marker-legend & {

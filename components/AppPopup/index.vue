@@ -25,7 +25,6 @@ const closePopup = () => {
 </script>
 
 <style lang="scss">
-@use "assets/scss/vars" as *;
 .popup {
   position: fixed;
   top: 0;
@@ -76,7 +75,7 @@ const closePopup = () => {
     padding: 72px 60px;
     position: relative;
     opacity: 0;
-    transition: all $time * 2 ease 0s;
+    transition: all calc(var(--time) * 2) ease 0s;
     .popup-politic & {
       max-width: 1000px;
     }

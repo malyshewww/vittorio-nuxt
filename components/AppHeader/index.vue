@@ -103,7 +103,6 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-@use "assets/scss/vars" as *;
 .header {
   position: fixed;
   left: 0;
@@ -115,7 +114,7 @@ onMounted(() => {
   padding: 20px 0;
   z-index: 21;
   isolation: isolate;
-  transition: transform $time * 2 $ttm, background-color $time * 2 $ttm;
+  transition: transform calc(var(--time) * 2) var(--ttm), background-color calc(var(--time) * 2) var(--ttm);
   &::before {
     content: "";
     position: absolute;
@@ -127,7 +126,7 @@ onMounted(() => {
     background-blend-mode: soft-light;
     pointer-events: none;
     z-index: -1;
-    transition: opacity $time * 2 $ttm;
+    transition: opacity calc(var(--time) * 2) var(--ttm);
   }
   @include bp-md {
     padding: 14px 0;
@@ -195,7 +194,7 @@ onMounted(() => {
     width: 132px;
     height: 64px;
     display: block;
-    transition: opacity $time $ttm;
+    transition: opacity var(--time) var(--ttm);
     position: absolute;
     top: 8px;
     left: 50%;
@@ -259,7 +258,7 @@ body:not(.page--home) .header {
       background-color: var(--bg-milk);
       width: 16px;
       height: 2px;
-      transition: all $time * 2 $ttm;
+      transition: all calc(var(--time) * 2) var(--ttm);
       @include bp-md {
         height: 1.3px;
         width: 13px;
@@ -300,7 +299,7 @@ body:not(.page--home) .header {
   letter-spacing: 0.02em;
   text-transform: uppercase;
   font-weight: 700;
-  transition: background-color $time * 2 $ttm;
+  transition: background-color calc(var(--time) * 2) var(--ttm);
   & span {
     pointer-events: none;
   }
@@ -346,7 +345,7 @@ body:not(.page--home) .header {
   }
   &__text {
     color: currentColor;
-    transition: color $time * 2 $ttm;
+    transition: color calc(var(--time) * 2) var(--ttm);
     @include bp-md {
       display: none;
     }

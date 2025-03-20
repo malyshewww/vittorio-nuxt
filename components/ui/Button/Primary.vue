@@ -45,7 +45,6 @@ const buttonAction = () => {
 </script>
 
 <style lang="scss" scoped>
-@use "assets/scss/_vars" as *;
 .btn {
   border-radius: 100px;
   padding: 10px 32px;
@@ -61,8 +60,7 @@ const buttonAction = () => {
   letter-spacing: 0.02em;
   text-transform: uppercase;
   color: var(--bg-white);
-  transition: background-color $time * 2 $ttm, opacity $time * 2 $ttm,
-    color $time * 2 $ttm;
+  transition: background-color calc(var(--time) * 2) var(--ttm), opacity calc(var(--time) * 2) var(--ttm), color calc(var(--time) * 2) var(--ttm);
   &.btn-small {
     min-height: 40px;
     padding: 10px 20px;

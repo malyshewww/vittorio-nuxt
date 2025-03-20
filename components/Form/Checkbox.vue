@@ -51,8 +51,7 @@ defineProps({
 });
 </script>
 
-<style lang="scss">
-@use "assets/scss/vars" as *;
+<style lang="scss" scoped>
 .real-checkbox {
   clip: rect(0 0 0 0);
   clip-path: inset(50%);
@@ -80,7 +79,7 @@ defineProps({
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: background-color $time ease-in 0s, border-color $time ease-in 0s;
+  transition: background-color var(--time) ease-in 0s, border-color var(--time) ease-in 0s;
   &::before {
     content: "";
     display: block;
@@ -91,7 +90,7 @@ defineProps({
     mask-repeat: no-repeat;
     mask-position: center;
     opacity: 0;
-    transition: opacity $time ease-in 0s;
+    transition: opacity var(--time) ease-in 0s;
   }
 }
 .checkbox {

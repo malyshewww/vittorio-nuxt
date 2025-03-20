@@ -111,8 +111,7 @@ const closeMenu = (e) => {
 };
 </script>
 
-<style lang="scss">
-@use "assets/scss/vars" as *;
+<style lang="scss" scoped>
 .menu-header {
   color: var(--bg-white);
   position: fixed;
@@ -122,7 +121,7 @@ const closeMenu = (e) => {
   width: 100%;
   opacity: 0;
   pointer-events: none;
-  transition: opacity $time * 2 $ttm;
+  transition: opacity calc(var(--time) * 2) var(--ttm);
   isolation: isolate;
   &::before {
     content: "";
@@ -290,7 +289,7 @@ const closeMenu = (e) => {
       opacity: 0;
       z-index: -1;
       pointer-events: none;
-      transition: transform $time * 2 $ttm, opacity $time $ttm;
+      transition: transform calc(var(--time) * 2) var(--ttm), opacity var(--time) var(--ttm);
       @include bp-xl {
         content: none;
       }

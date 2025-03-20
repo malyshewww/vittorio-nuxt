@@ -26,7 +26,6 @@ defineProps({
 </script>
 
 <style lang="scss">
-@use "assets/scss/vars" as *;
 .preview-card {
   @include hover {
     &:hover {
@@ -61,7 +60,7 @@ defineProps({
       bottom: 0;
       transform-origin: center;
       transform: scale(0);
-      transition: transform $time * 3 $ttm;
+      transition: transform calc(var(--time) * 3) var(--ttm);
       @include bp-xl {
         transform: scale(1);
       }

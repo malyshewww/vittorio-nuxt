@@ -35,7 +35,6 @@ onMounted(() => {
 </script>
 
 <style lang="scss">
-@use "assets/scss/vars" as *;
 .content-blocks {
   display: grid;
   gap: 80px;
@@ -217,7 +216,7 @@ onMounted(() => {
     // line-height: 22px;
     color: var(--text-gray);
     border-bottom: 1px solid currentColor;
-    transition: color $time, border-color $time;
+    transition: color var(--time), border-color var(--time);
     @media (any-hover: hover) {
       &:hover {
         border-color: var(--bg-smoke);

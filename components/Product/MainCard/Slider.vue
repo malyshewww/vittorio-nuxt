@@ -42,12 +42,8 @@ const mainSwiper = ref(null);
 const direction = ref("vertical");
 
 const initSlider = (direction) => {
-  const buttonPrev = thumbSlider.value.parentNode.querySelector(
-    ".slider-button-prev"
-  );
-  const buttonNext = thumbSlider.value.parentNode.querySelector(
-    ".slider-button-next"
-  );
+  const buttonPrev = thumbSlider.value.parentNode.querySelector(".slider-button-prev");
+  const buttonNext = thumbSlider.value.parentNode.querySelector(".slider-button-next");
   thumbSwiper.value = new Swiper(thumbSlider.value, {
     modules: [Navigation],
     spaceBetween: 10,
@@ -117,7 +113,6 @@ onMounted(() => {
 
 <style lang="scss">
 @use "sass:math";
-@use "~/assets/scss/_vars" as *;
 .product-card {
   &__slider {
     display: flex;
@@ -208,7 +203,7 @@ onMounted(() => {
       width: 100%;
       height: 100%;
       opacity: 0;
-      transition: opacity $time * 2 $ttm;
+      transition: opacity calc(var(--time) * 2) var(--ttm);
       pointer-events: none;
       z-index: 2;
     }
@@ -222,7 +217,7 @@ onMounted(() => {
     }
     & img {
       transform-origin: center;
-      transition: transform $time * 2 $ttm;
+      transition: transform calc(var(--time) * 2) var(--ttm);
     }
   }
 }
@@ -260,7 +255,7 @@ onMounted(() => {
     display: flex;
     justify-content: center;
     height: 100%;
-    transition: transform $time * 2 $ttm;
+    transition: transform calc(var(--time) * 2) var(--ttm);
     &::before {
       width: 34px;
       height: 34px;

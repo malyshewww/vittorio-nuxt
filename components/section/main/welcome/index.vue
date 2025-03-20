@@ -171,7 +171,6 @@ function toggleHiddenBlock() {
 
 <style lang="scss">
 @use "sass:math";
-@use "assets/scss/vars" as *;
 
 .hidden-block {
   display: grid;
@@ -184,7 +183,7 @@ function toggleHiddenBlock() {
     position: relative;
     max-height: 356px;
     overflow: hidden;
-    transition: max-height $time * 2 linear;
+    transition: max-height calc(var(--time) * 2) linear;
     @include bp-md {
       max-height: 300px;
     }
@@ -344,7 +343,7 @@ function toggleHiddenBlock() {
     inset: 0;
     display: grid;
     place-items: center;
-    transition: opacity $time ease 0s;
+    transition: opacity var(--time) ease 0s;
     display: none;
     pointer-events: none;
     &::before {

@@ -92,7 +92,6 @@ onUnmounted(() => {
 
 <style lang="scss">
 @use "sass:math";
-@use "assets/scss/vars" as *;
 .preview-card {
   &__slider {
     width: 100%;
@@ -200,7 +199,7 @@ onUnmounted(() => {
   z-index: 5;
   opacity: 0;
   transform: translateY(100%);
-  transition: opacity $time * 2 $ttm, transform $time * 2 $ttm;
+  transition: opacity calc(var(--time) * 2) var(--ttm), transform calc(var(--time) * 2) var(--ttm);
   @include bp-xl {
     pointer-events: none;
     transform: translateY(0);
@@ -219,7 +218,7 @@ onUnmounted(() => {
     opacity: 0.3;
     flex-grow: 1;
     height: 2px;
-    transition: opacity $time * 2 $ttm;
+    transition: opacity calc(var(--time) * 2) var(--ttm);
     &.active {
       opacity: 1;
     }

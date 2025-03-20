@@ -35,7 +35,6 @@ const buttonAction = () => {
 </script>
 
 <style lang="scss" scoped>
-@use "assets/scss/vars" as *;
 .btn-line {
   font-weight: 700;
   font-size: 12px;
@@ -53,7 +52,7 @@ const buttonAction = () => {
     width: 30px;
     height: 1px;
     background-color: currentColor;
-    transition: width $time * 2 $ttm;
+    transition: width calc(var(--time) * 2) var(--ttm);
   }
   @include hover {
     &:hover {

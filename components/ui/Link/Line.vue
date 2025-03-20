@@ -34,7 +34,6 @@ const linkAction = () => {
 </script>
 
 <style lang="scss" scoped>
-@use "assets/scss/_vars" as *;
 .link-line {
   font-weight: 500;
   font-size: 20px;
@@ -80,7 +79,7 @@ const linkAction = () => {
     width: 50px;
     height: 1px;
     background-color: currentColor;
-    transition: width $time * 2 $ttm;
+    transition: width calc(var(--time) * 2) var(--ttm);
     position: relative;
     top: -2px;
     @include bp-md {

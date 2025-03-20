@@ -65,8 +65,7 @@ onMounted(() => {
 });
 </script>
 
-<style lang="scss">
-@use "assets/scss/vars" as *;
+<style lang="scss" scoped>
 .footer-wrap {
   position: relative;
   background-color: var(--bg-milk);
@@ -234,7 +233,7 @@ onMounted(() => {
   &__link {
     font-weight: 700;
     line-height: 22px;
-    transition: color $time * 2 $ttm;
+    transition: color calc(var(--time) * 2) var(--ttm);
     @include hover {
       &:hover {
         color: var(--text-gray);

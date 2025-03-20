@@ -97,8 +97,6 @@ const addToCart = async () => {
 
 <style lang="scss" scoped>
 @use "sass:math";
-@use "assets/scss/vars" as *;
-
 .note-sections {
   position: absolute;
   top: 0;
@@ -521,7 +519,7 @@ const addToCart = async () => {
     text-transform: uppercase;
     text-align: center;
     color: var(--bg-white);
-    transition: background-color $time * 2 $ttm;
+    transition: background-color calc(var(--time) * 2) var(--ttm);
     &.disabled,
     &:disabled {
       background-color: var(--system-disabled);
