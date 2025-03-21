@@ -54,6 +54,12 @@ const { other } = mainInfoStore;
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: opacity var(--time);
+    @include hover {
+      &:hover {
+        opacity: 0.7;
+      }
+    }
   }
 }
 </style>

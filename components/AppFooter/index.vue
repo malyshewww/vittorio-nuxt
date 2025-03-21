@@ -176,16 +176,16 @@ onMounted(() => {
       height: 52px;
     }
   }
-}
-.footer-title {
-  font-family: var(--second-family);
-  font-weight: 500;
-  font-size: 36px;
-  line-height: 44px;
-  text-transform: uppercase;
-  @include bp-md {
-    font-size: 22px;
-    line-height: 28px;
+  & :deep(.footer-title) {
+    font-family: var(--second-family);
+    font-weight: 500;
+    font-size: 36px;
+    line-height: 44px;
+    text-transform: uppercase;
+    @include bp-md {
+      font-size: 22px;
+      line-height: 28px;
+    }
   }
 }
 .footer-contacts {
