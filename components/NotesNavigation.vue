@@ -4,12 +4,14 @@
 			.swiper(ref="slider")
 				ul.notes-navigation__list.swiper-wrapper
 					li.notes-navigation__item.swiper-slide(v-for="(item, index) in list" :key="index")
-						a(:href="item.path" @click.prevent="scrollToSection($event)").notes-navigation__link {{item.title}}
+						a(:href="item.path" @click.prevent="anchorSection($event)").notes-navigation__link {{item.title}}
 		UiButtonPrimary(:is-link="true" title="Полная коллекция" path="/products" class-names="btn-small")
 </template>
 
 <script setup>
 import { useAppStore } from "~/stores/app";
+
+import scrollToSection from "~/utils/ScrollToSection";
 
 import Swiper from "swiper";
 import "swiper/css";
@@ -39,51 +41,12 @@ const initializeSwiper = () => {
 const router = useRouter();
 
 // eslint-disable-next-line
-const scrollToSection = (e) => {
-  const { bodyScrollBar } = useScrollbar();
+const anchorSection = (e) => {
   const target = e.target;
   if (!target) return;
   const targetId = target.getAttribute("href");
   const targetElement = document.querySelector(targetId);
-  // По возможности переписать костыль для десктопа
-  if (targetElement) {
-    const panelsSection = document.querySelector("#panels");
-    const id = targetElement.getAttribute("id");
-    const { innerHeight } = window;
-    let pos;
-    switch (id) {
-      case "legend":
-        pos = parseInt(panelsSection.getBoundingClientRect().top + bodyScrollBar.scrollTop);
-        break;
-      case "santal":
-        pos = parseInt(panelsSection.getBoundingClientRect().top + bodyScrollBar.scrollTop + innerHeight * 2.07);
-        break;
-      case "protagonist":
-        pos = parseInt(panelsSection.getBoundingClientRect().top + bodyScrollBar.scrollTop + innerHeight * 4.19);
-        break;
-      case "musk":
-        pos = parseInt(panelsSection.getBoundingClientRect().top + bodyScrollBar.scrollTop + innerHeight * 6.32);
-        break;
-      case "essay":
-        pos = parseInt(panelsSection.getBoundingClientRect().top + bodyScrollBar.scrollTop + innerHeight * 8.44);
-        break;
-      case "ethnos":
-        pos = parseInt(panelsSection.getBoundingClientRect().top + bodyScrollBar.scrollTop + innerHeight * 10.57);
-        break;
-      case "erato":
-        pos = parseInt(panelsSection.getBoundingClientRect().top + bodyScrollBar.scrollTop + innerHeight * 12.69);
-        break;
-      case "voice":
-        pos = parseInt(panelsSection.getBoundingClientRect().top + bodyScrollBar.scrollTop + innerHeight * 14.82);
-        break;
-      case "velvet":
-        pos = parseInt(panelsSection.getBoundingClientRect().top + bodyScrollBar.scrollTop + innerHeight * 16.94);
-        break;
-      default:
-        break;
-    }
-    bodyScrollBar.scrollTo(0, pos, 800);
-  }
+  scrollToSection(targetElement, 800);
 };
 
 const route = useRoute();
