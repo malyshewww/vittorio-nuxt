@@ -1,13 +1,28 @@
 <template lang="pug">
-	button(type="button" :class="`slider-button-${direction === 'prev' ? 'prev' : 'next'}`").slider-button
+	button.slider-button(
+		ref="button"
+		type="button"
+		:class="`slider-button-${validDirection}`"
+	)
 </template>
 
 <script setup>
-defineProps({
+const props = defineProps({
   direction: {
     type: String,
-    required: true,
+    default: "next",
+    validator: (value) => ["prev", "next"].includes(value),
   },
+});
+
+const button = ref("");
+
+const validDirection = computed(() => {
+  return props.direction === "prev" ? "prev" : "next";
+});
+
+defineExpose({
+  button,
 });
 </script>
 

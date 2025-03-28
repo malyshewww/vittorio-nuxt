@@ -38,8 +38,6 @@ const initializeSwiper = () => {
   });
 };
 
-const router = useRouter();
-
 // eslint-disable-next-line
 const anchorSection = (e) => {
   const target = e.target;

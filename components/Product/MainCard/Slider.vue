@@ -1,8 +1,8 @@
 <template lang="pug">
 	.product-card__slider.product-slider
 		.product-slider__vertical
-			UiSliderButton(direction="prev")
-			UiSliderButton(direction="next")
+			UiSliderButton(ref="buttonPrev" direction="prev")
+			UiSliderButton(ref="buttonNext" direction="next")
 			.vertical-slider.swiper(ref="thumbSlider")
 				.vertical-slider__wrapper.swiper-wrapper
 					.vertical-slider__item.swiper-slide(v-for="(image, index) in images" :key="index" @click="changeSlide(index)")
@@ -13,8 +13,8 @@
 				.main-slider__item.swiper-slide(v-for="(image, index) in images" :key="index")
 					a(:href="image.raw" data-fancybox="gallery" v-html="image.markup").main-slider__image.ibg
 						//- img(:src="`/images/notes/${image}.jpg`" :alt="image")
-			UiSliderButton(direction="prev")
-			UiSliderButton(direction="next")
+			UiSliderButton(ref="mainButtonPrev" direction="prev")
+			UiSliderButton(ref="mainButtonNext" direction="next")
 </template>
 
 <script setup>
@@ -39,11 +39,15 @@ const thumbSwiper = ref(null);
 const mainSlider = ref("");
 const mainSwiper = ref(null);
 
+const buttonPrev = ref("");
+const buttonNext = ref("");
+
+const mainButtonPrev = ref("");
+const mainButtonNext = ref("");
+
 const direction = ref("vertical");
 
 const initSlider = (direction) => {
-  const buttonPrev = thumbSlider.value.parentNode.querySelector(".slider-button-prev");
-  const buttonNext = thumbSlider.value.parentNode.querySelector(".slider-button-next");
   thumbSwiper.value = new Swiper(thumbSlider.value, {
     modules: [Navigation],
     spaceBetween: 10,
@@ -53,8 +57,8 @@ const initSlider = (direction) => {
     watchSlidesProgress: true,
     observer: true,
     navigation: {
-      nextEl: buttonNext,
-      prevEl: buttonPrev,
+      nextEl: buttonNext.value.button,
+      prevEl: buttonPrev.value.button,
     },
     breakpoints: {
       0: {
@@ -68,14 +72,12 @@ const initSlider = (direction) => {
       init: function (swiper) {
         const slides = swiper.slides;
         if (slides.length <= 3) {
-          buttonPrev.remove();
-          buttonNext.remove();
+          buttonPrev.value.button.remove();
+          buttonNext.value.button.remove();
         }
       },
     },
   });
-  const mainButtonPrev = mainSlider.value.querySelector(".slider-button-prev");
-  const mainButtonNext = mainSlider.value.querySelector(".slider-button-next");
   mainSwiper.value = new Swiper(mainSlider.value, {
     modules: [Navigation, Thumbs],
     spaceBetween: 10,
@@ -85,15 +87,15 @@ const initSlider = (direction) => {
       swiper: thumbSwiper.value,
     },
     navigation: {
-      nextEl: mainButtonNext,
-      prevEl: mainButtonPrev,
+      nextEl: mainButtonNext.value.button,
+      prevEl: mainButtonPrev.value.button,
     },
     on: {
       init: function (swiper) {
         const slides = swiper.slides;
         if (slides.length <= 1) {
-          mainButtonPrev.remove();
-          mainButtonNext.remove();
+          mainButtonPrev.value.button.remove();
+          mainButtonNext.value.button.remove();
         }
       },
     },

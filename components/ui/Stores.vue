@@ -1,20 +1,16 @@
 <template lang="pug">
-	.stores(:class="classNames")
-		ul.stores__list
-			li.stores__item(v-if="linkApple")
-				a(:href="`${linkApple ? linkApple : '/'}`" target="_blank").stores__link
-					img(v-if="isFooterStores && !isMenu" :src="`/images/icons/stores/apple-small.svg`")
-					img(v-else-if="isFooterStores && isMenu" :src="`/images/icons/stores/apple-white.svg`")
-					img(v-else :src="`/images/icons/stores/apple.svg`")
-			li.stores__item(v-if="linkLetu")
-				a(:href="`${linkLetu ? linkLetu : '/'}`" target="_blank").stores__link
-					img(v-if="isFooterStores && !isMenu" :src="`/images/icons/stores/letual-small.svg`")
-					img(v-else-if="isFooterStores && isMenu" :src="`/images/icons/stores/letual-white.svg`")
-					img(v-else :src="`/images/icons/stores/letual.svg`")
+  .stores(:class="classNames")
+    ul.stores__list
+      li.stores__item(v-if="linkApple")
+        a.stores__link(:href="linkApple || '/'" target="_blank")
+          img(:src="getStoreIcon('apple')")
+      li.stores__item(v-if="linkLetu")
+        a.stores__link(:href="linkLetu || '/'" target="_blank")
+          img(:src="getStoreIcon('letual')")
 </template>
 
 <script setup>
-defineProps({
+const props = defineProps({
   classNames: {
     type: String,
     required: false,
@@ -40,6 +36,16 @@ defineProps({
     type: String,
     default: "",
   },
+});
+
+const getStoreIcon = computed(() => {
+  return (store) => {
+    const basePath = "/images/icons/stores";
+    if (props.isFooterStores) {
+      return props.isMenu ? `${basePath}/${store}-white.svg` : `${basePath}/${store}-small.svg`;
+    }
+    return `${basePath}/${store}.svg`;
+  };
 });
 </script>
 

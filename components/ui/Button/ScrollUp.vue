@@ -30,6 +30,7 @@ const setNewButtonState = (y) => {
 const scrollTop = () => {
   const { bodyScrollBar } = useScrollbar();
   if (window.innerWidth > 1024) {
+    if (!bodyScrollBar) return;
     bodyScrollBar.scrollTo(0, 0, 500);
   } else {
     window.scrollTo({
@@ -41,6 +42,7 @@ const scrollTop = () => {
 onMounted(() => {
   if (window.innerWidth > 1024) {
     const { bodyScrollBar } = useScrollbar();
+    if (!bodyScrollBar) return;
     bodyScrollBar.addListener(({ offset }) => {
       setNewButtonState(offset.y);
     });

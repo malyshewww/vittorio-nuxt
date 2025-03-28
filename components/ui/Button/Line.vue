@@ -1,6 +1,10 @@
 <template lang="pug">
-	button(v-if="isAnchor" type="button" :class="classNames" :data-scroll-to-href="path" @click="buttonAction").link-line {{text}}
-	button(v-else type="button" :class="classNames" @click="buttonAction").btn-line {{text}}
+	button(
+		type="button",
+		:class="[isAnchor ? 'link-line' : 'btn-line', classNames]",
+		:data-scroll-to-href="isAnchor && path",
+		@click="buttonAction"
+	) {{ text }}
 </template>
 
 <script setup>

@@ -15,21 +15,12 @@ const appStore = useAppStore();
 
 const route = useRoute();
 
-const router = useRouter();
-
 const nuxtApp = useNuxtApp();
 
 nuxtApp.hook("page:loading:end", () => {
   if (!route.hash) {
-    // window.scrollTo({
-    //   top: 0,
-    //   behavior: "smooth",
-    // });
     window.scrollTo(0, 0);
   }
-  // if (isBack.value === true) {
-  //   anchorSectionMobile(appStore.currentHash);
-  // }
 });
 
 function anchorSectionMobile(hash) {
@@ -40,13 +31,6 @@ function anchorSectionMobile(hash) {
     behavior: "smooth",
   });
 }
-
-// watch(
-//   () => route.hash,
-//   (hash) => {
-//     appStore.currentHash = hash;
-//   }
-// );
 
 let initialPosition = 0;
 
@@ -81,10 +65,6 @@ onMounted(() => {
       appStore.isHeaderVisible = true;
       if (!route.hash) {
         window.scrollTo(0, 0);
-        // window.scrollTo({
-        //   top: 0,
-        //   behavior: "smooth",
-        // });
       }
       // if (oldPath.includes("products")) {
       //   const lastPath = oldPath.split("/").pop();

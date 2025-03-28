@@ -2,7 +2,7 @@
 	.gallery
 		.heading
 			h2.heading__title Фотогалерея
-			UiSliderControls
+			UiSliderControls(ref="sliderControls")
 		.gallery-slider
 			.gallery-slider__body.swiper(ref="gallerySlider")
 				.gallery-slider__wrapper.swiper-wrapper
@@ -29,58 +29,48 @@ defineProps({
 
 const gallerySlider = ref(null);
 const gallerySwiper = ref(null);
+const sliderControls = ref("");
 
 const initializeSlider = () => {
-  if (gallerySlider.value) {
-    const buttonPrev = gallerySlider.value.closest(".gallery").querySelector(".slider-button-prev");
-    const buttonNext = gallerySlider.value.closest(".gallery").querySelector(".slider-button-next");
-    gallerySwiper.value = new Swiper(gallerySlider.value, {
-      modules: [Navigation],
-      speed: 800,
-      watchOverflow: true,
-      navigation: {
-        nextEl: buttonNext,
-        prevEl: buttonPrev,
-      },
-      breakpoints: {
-        300: {
-          slidesPerView: 1,
-          spaceBetween: 15,
-        },
-        767.98: {
-          slidesPerView: 2,
-          spaceBetween: 20,
-        },
-        1024: {
-          slidesPerView: 3,
-          spaceBetween: 30,
-        },
-        1400: {
-          slidesPerView: 4,
-          spaceBetween: 40,
-        },
-      },
-      on: {
-        // init: function (swiper) {
-        //   const slides = swiper.slides;
-        //   const sliderControls =
-        //     swiper.navigation.prevEl.parentNode ||
-        //     swiper.navigation.nextEl.parentNode;
-        //   const breakpoints = swiper.passedParams.breakpoints;
-        //   for (const param in breakpoints) {
-        //     const value = breakpoints[param];
-        //     if (
-        //       slides.length <= value.slidesPerView &&
-        //       param <= window.innerWidth
-        //     ) {
-        //       swiper.navigation.destroy();
-        //       sliderControls.remove();
-        //     }
-        //   }
-        // },
-      },
-    });
-  }
+  if (!gallerySlider.value) return;
+  const { controls } = sliderControls.value;
+  const options = {
+    modules: [Navigation],
+    speed: 800,
+    watchOverflow: true,
+    navigation: {
+      nextEl: controls.querySelector(".slider-button-next"),
+      prevEl: controls.querySelector(".slider-button-prev"),
+    },
+    breakpoints: {
+      300: { slidesPerView: 1, spaceBetween: 15 },
+      767.98: { slidesPerView: 2, spaceBetween: 20 },
+      1024: { slidesPerView: 3, spaceBetween: 30 },
+      1400: { slidesPerView: 4, spaceBetween: 40 },
+    },
+  };
+  gallerySwiper.value = new Swiper(gallerySlider.value, {
+    ...options,
+    on: {
+      // init: function (swiper) {
+      //   const slides = swiper.slides;
+      //   const sliderControls =
+      //     swiper.navigation.prevEl.parentNode ||
+      //     swiper.navigation.nextEl.parentNode;
+      //   const breakpoints = swiper.passedParams.breakpoints;
+      //   for (const param in breakpoints) {
+      //     const value = breakpoints[param];
+      //     if (
+      //       slides.length <= value.slidesPerView &&
+      //       param <= window.innerWidth
+      //     ) {
+      //       swiper.navigation.destroy();
+      //       sliderControls.remove();
+      //     }
+      //   }
+      // },
+    },
+  });
 };
 onMounted(() => {
   initializeSlider();

@@ -3,7 +3,7 @@
 		SectionMainHero
 		.page-sections
 			SectionMainFragrances(:countries="front.countries")
-			SectionMainNotes(:products="front.products" :half="front.halfProducts")
+			SectionMainNotes(:products="front.products")
 			SectionMainWelcome(:text="front.text")
 </template>
 
@@ -32,22 +32,10 @@ const { data: front } = await useAsyncData("front", () => $fetch(url, {}), {
         };
       });
     });
-    const halfProducts = computed(() => {
-      return data.product_front
-        .map((item) => {
-          const arrTitle = item.title.split(" ");
-          return {
-            ...item,
-            key: arrTitle[0].trim().toLowerCase(),
-          };
-        })
-        .filter((el, idx) => idx !== 0);
-    });
     const metadata = useMetatags(metatag.html_head);
     return {
       countries,
       products,
-      halfProducts,
       metadata,
       text: data.text_front[0],
     };

@@ -20,10 +20,6 @@ const goBack = () => {
   useRouter().go(-1);
   if (!route.hash) {
     window.scrollTo(0, 0);
-    // window.scrollTo({
-    //   top: 0,
-    //   behavior: "smooth",
-    // });
   }
 };
 

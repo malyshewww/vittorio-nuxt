@@ -31,6 +31,8 @@ import { useMainInfoStore } from "~/stores/maininfo";
 import { useMenuStore } from "~/stores/menu";
 import { useAppStore } from "~/stores/app";
 
+import scrollToAnchor from "~/utils/ScrollToAnchor.js";
+
 const menuStore = useMenuStore();
 const appStore = useAppStore();
 
@@ -45,7 +47,6 @@ const setNumber = (num) => {
 };
 
 const route = useRoute();
-const router = useRouter();
 
 watch(
   () => route.fullPath,
@@ -70,31 +71,13 @@ const mouseLeave = () => {
   // console.log("leave");
 };
 
-const goToAnchor = (link) => {
-  if (window.innerWidth > 1024) {
-    const { bodyScrollBar } = useScrollbar();
-    const href = link.getAttribute("href");
-    if (href.includes("#")) {
-      const id = href.replace("/#", "");
-      const targetElement = document.getElementById(id);
-      router.push({ path: "/", query: { anchor: id } });
-      if (targetElement) {
-        const targetElementPosition = targetElement.getBoundingClientRect().top + bodyScrollBar.scrollTop - 10;
-        setTimeout(() => {
-          bodyScrollBar.scrollTo(0, targetElementPosition, 500);
-        }, 1200);
-      }
-    }
-  }
-};
-
 // eslint-disable-next-line
 const closeMenu = (e) => {
   const target = e.target;
   if (target.tagName == "A") {
     menuStore.closeMenu();
     bodyLock(menuStore.isOpen);
-    goToAnchor(target);
+    scrollToAnchor(target);
     if (!appStore.isDisabledBurger) {
       appStore.isDisabledBurger = true;
       setTimeout(() => {

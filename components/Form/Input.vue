@@ -1,25 +1,69 @@
 <template lang="pug">
-	.form-item(v-if="isPromocode")
-		.form-field(:class="{'promocode': isPromocode, 'active-arrow': isActiveArrow || promocodeValue, 'error': cartStore.isPromocodeChecked && !cartStore.isPromocodeValid, 'valid': cartStore.isPromocodeValid}")
-			input(:type="type" :name="name" :placeholder="placeholder" :disabled="isDisabled" v-on:keyup.enter="checkPromocode" v-model.trim="promocodeInput" @focus="focusInput" @blur="blurInput" @input="changeInput")
-			span.form-item__arrow(v-if="!isButtonCloseVisible" @click="checkPromocode")
-			.form-item__actions(v-if="isButtonCloseVisible")
-				button(type="button" @click="deletePromocode").form-item__close
-		FormPromocodeMessage(v-if="cartStore.isPromocodeChecked" :is-valid="cartStore.isPromocodeValid" :text="cartStore.promocodeMessage")
-	.form-item(v-else-if="isSubscribe")
-		.form-field(:class="{error: !isValid}").subscribe
-			input(:type="type" :name="name" :placeholder="placeholder" :disabled="isDisabled" v-model="modelVal" @input="emit('update:modelValue', $event.target.value)")
-			button(type="button" @click="subscribe" :class="{'active-arrow': isActiveArrow}").form-item__arrow
-			//- .form-item__actions(v-if="!isValid")
-			//- 	button(type="button" @click="clearInput").form-item__close
-		FormErrorMessage(v-if="!isValid" :text="errorMessage")
-	.form-item(v-else)
-		.form-field(:class="{error: !isValid, 'subscribe': isSubscribe}")
-			input(v-if="name === 'phone'" :type="type" :name="name" v-maska="'+7 (###) ### ## ##'" :placeholder="placeholder" :disabled="isDisabled" @input="emit('update:modelValue', $event.target.value)")
-			input(v-else :type="type" :name="name" :placeholder="placeholder" :disabled="isDisabled" @input="emit('update:modelValue', $event.target.value)")
-		span(v-if="isExampleText").form-item__example
-			slot(name="example")
-		FormErrorMessage(v-if="!isValid" :text="errorMessage")
+  .form-item
+    template(v-if="isPromocode")
+      .form-field(
+        :class="{'promocode': true, 'active-arrow': isActiveArrow || promocodeValue, 'error': cartStore.isPromocodeChecked && !cartStore.isPromocodeValid, 'valid': cartStore.isPromocodeValid}"
+      )
+        input(
+          :type="type",
+          :name="name",
+          :placeholder="placeholder",
+          :disabled="isDisabled",
+          v-model.trim="promocodeInput",
+          @keyup.enter="checkPromocode",
+          @focus="focusInput",
+          @blur="blurInput",
+          @input="changeInput"
+        )
+        span.form-item__arrow(
+          v-if="!isButtonCloseVisible",
+          @click="checkPromocode"
+        )
+        .form-item__actions(v-if="isButtonCloseVisible")
+          button.form-item__close(
+            type="button",
+            @click="deletePromocode"
+          )
+      FormPromocodeMessage(
+        v-if="cartStore.isPromocodeChecked",
+        :is-valid="cartStore.isPromocodeValid",
+        :text="cartStore.promocodeMessage"
+      )
+    template(v-else-if="isSubscribe")
+      .form-field.subscribe(:class="{error: !isValid}")
+        input(
+          :type="type",
+          :name="name",
+          :placeholder="placeholder",
+          :disabled="isDisabled",
+          v-model="modelVal",
+          @input="emit('update:modelValue', $event.target.value)"
+        )
+        button.form-item__arrow(
+          type="button",
+          :class="{'active-arrow': isActiveArrow}"
+          @click="subscribe",
+        )
+      FormErrorMessage(
+        v-if="!isValid",
+        :text="errorMessage"
+      )
+    template(v-else)
+      .form-field(:class="{error: !isValid, 'subscribe': isSubscribe}")
+        input(
+          :type="type",
+          :name="name",
+          :placeholder="placeholder",
+          :disabled="isDisabled",
+          v-maska="name === 'phone' ? '+7 (###) ### ## ##' : undefined",
+          @input="emit('update:modelValue', $event.target.value)"
+        )
+      span.form-item__example(v-if="isExampleText")
+        slot(name="example")
+      FormErrorMessage(
+        v-if="!isValid",
+        :text="errorMessage"
+      )
 </template>
 
 <script setup>

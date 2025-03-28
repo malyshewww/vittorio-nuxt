@@ -14,8 +14,8 @@
 							UiLinkLine(text="подробнее" classNames="short-link" :path="item.url")
 		.slider-controls
 			.slider-pagination
-			UiSliderButton(direction="prev")
-			UiSliderButton(direction="next")
+			UiSliderButton(ref="buttonPrev" direction="prev")
+			UiSliderButton(ref="buttonNext" direction="next")
 </template>
 
 <script setup>
@@ -113,10 +113,10 @@ function changeSlide(swiper, index) {
 }
 
 const slides = ref(null);
+const buttonPrev = ref("");
+const buttonNext = ref("");
 
 const initSlider = () => {
-  const buttonPrev = slider.value.parentNode.querySelector(".slider-button-prev");
-  const buttonNext = slider.value.parentNode.querySelector(".slider-button-next");
   const pagination = slider.value.parentNode.querySelector(".slider-pagination");
   swiper.value = new Swiper(slider.value, {
     modules: [Navigation, Pagination, Autoplay, EffectFade],
@@ -128,8 +128,8 @@ const initSlider = () => {
       crossFade: true,
     },
     navigation: {
-      nextEl: buttonNext,
-      prevEl: buttonPrev,
+      nextEl: buttonNext.value.button,
+      prevEl: buttonPrev.value.button,
     },
     pagination: {
       el: pagination,

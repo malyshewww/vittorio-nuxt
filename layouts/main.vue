@@ -100,8 +100,6 @@ onMounted(() => {
       } else {
         appStore.isBackWithAroma = false;
       }
-      // console.log("appStore.isBackWithAroma", appStore.isBackWithAroma);
-      // console.log("appStore.currentHash", appStore.currentHash);
     }
   );
 });

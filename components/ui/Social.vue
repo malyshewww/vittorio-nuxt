@@ -1,12 +1,12 @@
 <template lang="pug">
 	.social(:class="classNames")
 		ul.social__list
-			li.social__item(v-if="links.field_vk")
-				a(:href="links.field_vk" target="_blank").social__link Vk
-			li.social__item(v-if="links.field_instagram")
-				a(:href="links.field_instagram" target="_blank").social__link Ig
-			li.social__item(v-if="links.field_telegram")
-				a(:href="links.field_telegram" target="_blank").social__link Tg
+			each link, key in { vk: 'Vk', instagram: 'Ig', telegram: 'Tg' }
+				li.social__item(v-if=`links['field_${key}']`)
+					a.social__link(
+						:href=`links['field_${key}']`,
+						target="_blank"
+					)= link
 </template>
 
 <script setup>

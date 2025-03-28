@@ -1,5 +1,5 @@
 <template lang="pug">
-    .loader(:class="{white: isWhite}")
+	.loader(:class="{white: isWhite}")
 </template>
 
 <script setup>
@@ -19,21 +19,9 @@ defineProps({
   display: grid;
   color: #000;
   background: linear-gradient(currentColor 0 0) top/100% 2px,
-    radial-gradient(
-        farthest-side at top,
-        #0000 calc(100% - 2px),
-        currentColor calc(100% - 1px),
-        #0000
-      )
-      top,
+    radial-gradient(farthest-side at top, #0000 calc(100% - 2px), currentColor calc(100% - 1px), #0000) top,
     linear-gradient(currentColor 0 0) bottom/100% 2px,
-    radial-gradient(
-        farthest-side at bottom,
-        #0000 calc(100% - 2px),
-        currentColor calc(100% - 1px),
-        #0000
-      )
-      bottom;
+    radial-gradient(farthest-side at bottom, #0000 calc(100% - 2px), currentColor calc(100% - 1px), #0000) bottom;
   background-size: 100% 1px, 100% 50%;
   background-repeat: no-repeat;
   animation: loader 4s infinite linear;

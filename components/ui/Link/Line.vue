@@ -1,10 +1,16 @@
 <template lang="pug">
-	nuxt-link(v-if="isAnchor" :class="classNames" :href="path" :data-href="path" @click="linkAction").link-line #[span {{text}}]
-	nuxt-link(v-else :to="path" :class="classNames").link-line {{text}}
+	nuxt-link.link-line(
+    ref="link"
+		:class="classNames",
+		v-bind="linkAttrs"
+    @click="linkAction"
+	)
+		span(v-if="isAnchor") {{ text }}
+		template(v-else) {{ text }}
 </template>
 
 <script setup>
-defineProps({
+const props = defineProps({
   path: {
     type: String,
     required: false,
@@ -25,12 +31,17 @@ defineProps({
     default: () => false,
   },
 });
+
 const emit = defineEmits(["linkAction"]);
 
 // eslint-disable-next-line
-const linkAction = () => {
-  emit("linkAction");
+const linkAction = (e) => {
+  emit("linkAction", e);
 };
+
+const linkAttrs = computed(() => {
+  return props.isAnchor ? { href: props.path, "data-href": props.path } : { to: props.path };
+});
 </script>
 
 <style lang="scss" scoped>
@@ -46,6 +57,9 @@ const linkAction = () => {
   align-items: center;
   gap: 16px;
   padding: 4px 0;
+  & span {
+    pointer-events: none;
+  }
   &.short-link {
     font-family: var(--font-family);
     gap: 12px;

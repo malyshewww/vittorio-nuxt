@@ -4,7 +4,7 @@
 </template>
 
 <script setup>
-defineProps({
+const props = defineProps({
   type: {
     type: String,
     required: false,
@@ -67,6 +67,7 @@ const buttonAction = () => {
   }
   @include hover {
     &:hover {
+      cursor: pointer;
       background-color: var(--bg-dark);
     }
     &:active {

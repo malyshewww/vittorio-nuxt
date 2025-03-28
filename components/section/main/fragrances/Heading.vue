@@ -10,30 +10,13 @@
 </template>
 
 <script setup>
+import scrollToAnchor from "~/utils/ScrollToAnchor.js";
 const fragrances = ref("");
-const router = useRouter();
 
 // eslint-disable-next-line
-const goToAnchor = () => {
-  if (window.innerWidth > 1024) {
-    const { bodyScrollBar } = useScrollbar();
-    const link = fragrances.value.querySelector(".link-line");
-    const href = link.getAttribute("href");
-    if (href.includes("#")) {
-      const id = href.replace("/#", "");
-      const targetElement = document.getElementById(id);
-      router.push({ path: "/", query: { anchor: id } });
-      if (targetElement) {
-        const targetElementPosition =
-          targetElement.getBoundingClientRect().top +
-          bodyScrollBar.scrollTop -
-          10;
-        setTimeout(() => {
-          bodyScrollBar.scrollTo(0, targetElementPosition, 500);
-        }, 1200);
-      }
-    }
-  }
+const goToAnchor = (e) => {
+  const target = e.target;
+  scrollToAnchor(target);
 };
 </script>
 

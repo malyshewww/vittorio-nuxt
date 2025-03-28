@@ -21,7 +21,7 @@ const cartStore = useCartStore();
 
 const appStore = useAppStore();
 
-const nuxtApp = useNuxtApp();
+// const nuxtApp = useNuxtApp();
 
 const isLoad = ref(true);
 

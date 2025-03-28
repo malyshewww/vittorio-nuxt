@@ -5,17 +5,6 @@
 			.container
 				PageTop(:title="pageText.title")
 				ContentBlock(:content="pageText.content")
-				//- .content.content-table(v-if="contentTable.rows.length")
-				//- 	h3 Static Таблица
-				//- 	table
-				//- 		thead
-				//- 			tr
-				//- 				th(v-for="(item, index) in contentTable.header" :key="index") {{item}}
-				//- 		tbody
-				//- 			tr(v-for="(item, index) in contentTable.rows")
-				//- 				td {{item.name}}
-				//- 				td {{item.price}}
-				//- 				td {{item.salePrice}}
 				PhotoGallery(v-if="pageText.gallery && pageText.gallery.length" :gallery="pageText.gallery")
 </template>
 
@@ -45,37 +34,6 @@ useHead({
     class: "page--text",
   },
 });
-
-// eslint-disable-next-line
-const contentTable = {
-  header: [
-    "Наименование товара",
-    "Стоимость товара без скидки",
-    "Стоимость товара с максимальной скидкой",
-  ],
-  rows: [
-    {
-      name: "Парфюмерная вода “Legend № 11.01”",
-      price: "8 200 руб.",
-      salePrice: "8 100 руб.",
-    },
-    {
-      name: "Парфюмерная вода “Santal & Leather”",
-      price: "9 300 руб.",
-      salePrice: "9 250 руб.",
-    },
-    {
-      name: "Парфюмерная вода “Legend № 11.01” Парфюмерная вода “Legend № 11.01”",
-      price: "8 200 руб.",
-      salePrice: "8 100 руб.",
-    },
-    {
-      name: "Парфюмерная вода “Santal & Leather”",
-      price: "9 300 руб.",
-      salePrice: "9 250 руб.",
-    },
-  ],
-};
 </script>
 
 <style lang="scss" scoped>

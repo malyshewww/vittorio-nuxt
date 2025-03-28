@@ -17,8 +17,6 @@
 <script setup>
 import { useCartStore } from "~/stores/cart";
 const cartStore = useCartStore();
-// eslint-disable-next-line
-const { orderTotal, cartTotalPrice } = cartStore;
 </script>
 
 <style lang="scss">
